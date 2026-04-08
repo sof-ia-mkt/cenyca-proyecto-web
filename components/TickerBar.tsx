@@ -41,9 +41,18 @@ export default function TickerBar() {
       {/* CTA */}
       <Link
         href="/admisiones"
-        className="shrink-0 mx-3 px-4 py-1.5 bg-[#00D4FF] text-[#1B2040] text-xs font-bold uppercase tracking-wide rounded-full hover:bg-white transition-colors"
+        className="hidden sm:block shrink-0 mx-3 px-4 py-1.5 bg-[#00D4FF] text-[#1B2040] text-xs font-bold uppercase tracking-wide rounded-full hover:bg-white transition-colors"
       >
         Inscríbete
+      </Link>
+      <Link
+        href="/admisiones"
+        className="sm:hidden shrink-0 mx-2 p-1.5 bg-[#00D4FF] text-[#1B2040] rounded-full hover:bg-white transition-colors"
+        aria-label="Inscríbete"
+      >
+        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
       </Link>
 
       <style>{`

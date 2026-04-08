@@ -23,6 +23,32 @@ const navItems = [
   },
 ]
 
+const mobileGroups = [
+  {
+    label: 'Institución',
+    items: [
+      { label: 'Nosotros', href: '/nosotros' },
+      { label: 'CENYCA Comunica', href: '/noticias' },
+    ],
+  },
+  {
+    label: 'Oferta educativa',
+    items: [
+      { label: 'Licenciaturas', href: '/licenciaturas' },
+      { label: 'Posgrados', href: '/posgrados' },
+      { label: 'Educación Continua', href: '/educacion-continua' },
+      { label: 'Intercambios', href: '/intercambios' },
+    ],
+  },
+  {
+    label: 'Ingreso',
+    items: [
+      { label: 'Admisiones', href: '/admisiones' },
+      { label: 'Becas', href: '/becas' },
+    ],
+  },
+]
+
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
@@ -119,53 +145,35 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         {mobileOpen && (
-          <div className="xl:hidden border-t border-[rgba(0,212,255,0.15)] py-4 space-y-1">
-            {navItems.map((item) =>
-              item.submenu ? (
-                <div key={item.label}>
-                  <button
-                    onClick={() =>
-                      setOpenDropdown(openDropdown === item.label ? null : item.label)
-                    }
-                    className="flex items-center justify-between w-full px-3 py-2.5 text-sm font-semibold uppercase tracking-wide text-white/80 hover:text-[#00D4FF] transition-colors"
-                  >
-                    {item.label}
-                    <svg
-                      className={`w-4 h-4 transition-transform ${openDropdown === item.label ? 'rotate-180' : ''}`}
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2.5}
+          <div className="xl:hidden border-t border-[rgba(0,212,255,0.15)] py-4 space-y-5">
+            {mobileGroups.map((group) => (
+              <div key={group.label}>
+                <p className="px-3 mb-1 text-[10px] font-bold uppercase tracking-[0.25em] text-[#00D4FF]/70">
+                  {group.label}
+                </p>
+                <div className="space-y-0.5">
+                  {group.items.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMobileOpen(false)}
+                      className="block px-3 py-2.5 text-sm font-semibold uppercase tracking-wide text-white/80 hover:text-[#00D4FF] hover:bg-[rgba(0,212,255,0.06)] rounded-lg transition-colors"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
-                  {openDropdown === item.label && (
-                    <div className="ml-4 space-y-1 mt-1">
-                      {item.submenu.map((sub) => (
-                        <Link
-                          key={sub.href}
-                          href={sub.href}
-                          onClick={() => { setOpenDropdown(null); setMobileOpen(false) }}
-                          className="block px-3 py-2 text-sm font-medium text-[#00D4FF] hover:text-white transition-colors"
-                        >
-                          — {sub.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
+                      {item.label}
+                    </Link>
+                  ))}
                 </div>
-              ) : (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="block px-3 py-2.5 text-sm font-semibold uppercase tracking-wide text-white/80 hover:text-[#00D4FF] transition-colors"
-                >
-                  {item.label}
-                </Link>
-              )
-            )}
+              </div>
+            ))}
+            <div className="px-3 pt-2 border-t border-[rgba(0,212,255,0.1)]">
+              <Link
+                href="/admisiones"
+                onClick={() => setMobileOpen(false)}
+                className="block w-full text-center py-3 bg-[#00D4FF] text-[#1B2040] font-bold uppercase tracking-wide text-sm rounded-xl hover:bg-white transition-colors"
+              >
+                Inscríbete ahora
+              </Link>
+            </div>
           </div>
         )}
       </nav>

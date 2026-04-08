@@ -64,10 +64,10 @@ export default function InstalacionesCarousel() {
             ))}
           </div>
 
-          {/* Nav buttons */}
+          {/* Nav buttons — hidden on mobile, swipe instead */}
           <button
             onClick={prev}
-            className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[rgba(27,32,64,0.8)] border border-[rgba(0,212,255,0.3)] text-[#00D4FF] flex items-center justify-center hover:bg-[rgba(27,32,64,0.95)] transition-colors backdrop-blur-sm z-10"
+            className="hidden md:flex absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[rgba(27,32,64,0.8)] border border-[rgba(0,212,255,0.3)] text-[#00D4FF] items-center justify-center hover:bg-[rgba(27,32,64,0.95)] transition-colors backdrop-blur-sm z-10"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -75,7 +75,7 @@ export default function InstalacionesCarousel() {
           </button>
           <button
             onClick={next}
-            className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[rgba(27,32,64,0.8)] border border-[rgba(0,212,255,0.3)] text-[#00D4FF] flex items-center justify-center hover:bg-[rgba(27,32,64,0.95)] transition-colors backdrop-blur-sm z-10"
+            className="hidden md:flex absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[rgba(27,32,64,0.8)] border border-[rgba(0,212,255,0.3)] text-[#00D4FF] items-center justify-center hover:bg-[rgba(27,32,64,0.95)] transition-colors backdrop-blur-sm z-10"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
