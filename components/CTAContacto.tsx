@@ -23,7 +23,7 @@ function useCountdown(targetDate: Date) {
 }
 
 export default function CTAContacto() {
-  const deadline = new Date(Date.now() + 15 * 24 * 60 * 60 * 1000)
+  const [deadline] = useState(() => new Date(Date.now() + 15 * 24 * 60 * 60 * 1000))
   const { dias, horas, minutos, segundos } = useCountdown(deadline)
   const [form, setForm] = useState({ nombre: '', telefono: '', carrera: '', modalidad: '' })
   const [enviado, setEnviado] = useState(false)
