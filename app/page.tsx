@@ -6,20 +6,8 @@ import { urlFor } from '@/sanity/lib/image'
 import ModalidadesSection from '@/components/ModalidadesSection'
 import InstalacionesCarousel from '@/components/InstalacionesCarousel'
 import CTAContacto from '@/components/CTAContacto'
-
-const licenciaturas = [
-  { nombre: 'Derecho', icono: '⚖️' },
-  { nombre: 'Administración de Empresas', icono: '📊' },
-  { nombre: 'Contaduría Pública y Finanzas', icono: '💰' },
-  { nombre: 'Psicología Organizacional', icono: '🧠' },
-  { nombre: 'Ciencias de la Educación', icono: '📚' },
-  { nombre: 'Criminología y Criminalística', icono: '🔍' },
-  { nombre: 'Gastronomía', icono: '🍽️' },
-  { nombre: 'Ing. Mecatrónica', icono: '🤖' },
-  { nombre: 'Ing. Electromécanica', icono: '⚡' },
-  { nombre: 'Ing. en Sistemas Computacionales', icono: '💻' },
-  { nombre: 'Ing. Industrial', icono: '🏭' },
-]
+import { licenciaturas } from '@/lib/licenciaturas'
+import IconoCarrera from '@/components/IconoCarrera'
 
 export default async function Home() {
   const { data: noticias } = await sanityFetch({ query: ultimasNoticiasQuery })
@@ -98,13 +86,15 @@ export default async function Home() {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-            {licenciaturas.map(({ nombre, icono }) => (
+            {licenciaturas.map(({ id, nombre }) => (
               <Link
-                key={nombre}
+                key={id}
                 href="/licenciaturas"
                 className="group flex flex-col items-center gap-3 p-6 rounded-2xl border border-[rgba(0,212,255,0.15)] bg-[#252B52] hover:border-[rgba(0,212,255,0.5)] hover:bg-[rgba(0,212,255,0.05)] transition-all duration-300 text-center backdrop-blur-sm"
               >
-                <span className="text-3xl">{icono}</span>
+                <span className="text-[#00D4FF] group-hover:scale-110 transition-transform duration-300">
+                  <IconoCarrera id={id} />
+                </span>
                 <span className="text-xs font-bold uppercase tracking-wide text-white/80 group-hover:text-[#00D4FF] transition-colors">
                   {nombre}
                 </span>
