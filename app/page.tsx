@@ -9,11 +9,16 @@ import CTAContacto from '@/components/CTAContacto'
 
 const licenciaturas = [
   { nombre: 'Derecho', icono: '⚖️' },
-  { nombre: 'Psicología', icono: '🧠' },
-  { nombre: 'Administración', icono: '📊' },
-  { nombre: 'Contaduría', icono: '🔢' },
-  { nombre: 'Pedagogía', icono: '📚' },
-  { nombre: 'Comunicación', icono: '📡' },
+  { nombre: 'Administración de Empresas', icono: '📊' },
+  { nombre: 'Contaduría Pública y Finanzas', icono: '💰' },
+  { nombre: 'Psicología Organizacional', icono: '🧠' },
+  { nombre: 'Ciencias de la Educación', icono: '📚' },
+  { nombre: 'Criminología y Criminalística', icono: '🔍' },
+  { nombre: 'Gastronomía', icono: '🍽️' },
+  { nombre: 'Ing. Mecatrónica', icono: '🤖' },
+  { nombre: 'Ing. Electromécanica', icono: '⚡' },
+  { nombre: 'Ing. en Sistemas Computacionales', icono: '💻' },
+  { nombre: 'Ing. Industrial', icono: '🏭' },
 ]
 
 export default async function Home() {
@@ -92,7 +97,7 @@ export default async function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
             {licenciaturas.map(({ nombre, icono }) => (
               <Link
                 key={nombre}
