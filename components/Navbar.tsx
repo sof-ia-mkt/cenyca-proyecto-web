@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const navItems = [
   { label: 'Nosotros', href: '/nosotros' },
@@ -43,12 +44,10 @@ export default function Navbar() {
       <nav ref={navRef} className="max-w-7xl mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link
-            href="/"
-            className="text-xl font-black uppercase tracking-widest text-white hover:text-[#00D4FF] transition-colors"
-          >
-            CENYCA
-            <span className="text-[#00D4FF]">.</span>
+          <Link href="/" className="flex items-center gap-3 shrink-0">
+            <Image src="/logo.avif" alt="CENYCA Universidad" width={120} height={44} className="h-11 w-auto object-contain" priority />
+            <span className="hidden sm:block w-px h-8 bg-white/30" />
+            <Image src="/slogan.avif" alt="Donde tu potencial se vuelve éxito" width={140} height={36} className="hidden sm:block h-9 w-auto object-contain opacity-90" />
           </Link>
 
           {/* Desktop nav */}

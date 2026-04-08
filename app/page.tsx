@@ -3,6 +3,9 @@ import Image from 'next/image'
 import { sanityFetch } from '@/sanity/lib/live'
 import { ultimasNoticiasQuery } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
+import ModalidadesSection from '@/components/ModalidadesSection'
+import InstalacionesCarousel from '@/components/InstalacionesCarousel'
+import CTAContacto from '@/components/CTAContacto'
 
 const licenciaturas = [
   { nombre: 'Derecho', icono: '⚖️' },
@@ -172,39 +175,11 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* CONTACTO */}
-      <section className="py-24 border-t border-[rgba(0,212,255,0.1)]">
-        <div className="max-w-7xl mx-auto px-4 lg:px-8">
-          <div className="rounded-3xl border border-[rgba(0,212,255,0.2)] bg-[#252B52] p-10 sm:p-16 text-center relative overflow-hidden">
-            <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-[#00D4FF] opacity-[0.05] blur-[80px]" />
-            </div>
-            <div className="relative">
-              <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#00D4FF] mb-3">¿Listo para empezar?</p>
-              <h2 className="text-3xl sm:text-5xl font-black uppercase text-white mb-4 leading-tight">
-                Solicita tu Admisión
-              </h2>
-              <p className="text-white/60 max-w-md mx-auto mb-10">
-                Nuestro equipo de admisiones está listo para orientarte. Da el primer paso hacia tu futuro profesional.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  href="/admisiones"
-                  className="inline-flex items-center justify-center gap-2 bg-[#00D4FF] text-[#1B2040] font-bold uppercase tracking-wide px-10 py-4 rounded-full text-sm hover:bg-white transition-colors"
-                >
-                  Iniciar proceso
-                </Link>
-                <a
-                  href="tel:+525500000000"
-                  className="inline-flex items-center justify-center gap-2 border border-[rgba(0,212,255,0.4)] text-white font-bold uppercase tracking-wide px-10 py-4 rounded-full text-sm hover:border-[#00D4FF] hover:text-[#00D4FF] transition-colors"
-                >
-                  Llamar ahora
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ModalidadesSection />
+
+      <InstalacionesCarousel />
+
+      <CTAContacto />
     </>
   )
 }

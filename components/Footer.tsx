@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Footer() {
   return (
@@ -7,9 +8,8 @@ export default function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div>
-            <p className="text-2xl font-black uppercase tracking-widest text-white mb-3">
-              CENYCA<span className="text-[#00D4FF]">.</span>
-            </p>
+            <Image src="/logo.avif" alt="CENYCA Universidad" width={130} height={48} className="h-12 w-auto object-contain mb-3" />
+            <Image src="/slogan.avif" alt="Donde tu potencial se vuelve éxito" width={150} height={30} className="h-7 w-auto object-contain opacity-70 mb-4" />
             <p className="text-sm text-white/60 leading-relaxed">
               Formación universitaria con excelencia académica y compromiso con el desarrollo integral.
             </p>

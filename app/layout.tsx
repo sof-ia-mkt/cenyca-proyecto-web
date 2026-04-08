@@ -3,6 +3,7 @@ import { Montserrat } from "next/font/google";
 import { SanityLive } from "@/sanity/lib/live";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import TickerBar from "@/components/TickerBar";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -23,10 +24,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={`${montserrat.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-navy text-white">
+      <body className="min-h-full flex flex-col bg-navy text-white pb-10">
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
+        <TickerBar />
         <SanityLive />
       </body>
     </html>
