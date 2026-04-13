@@ -1,7 +1,21 @@
-import type {StructureResolver} from 'sanity/structure'
+import type { StructureResolver } from 'sanity/structure'
 
-// https://www.sanity.io/docs/structure-builder-cheat-sheet
+// Configuracion es un singleton — solo puede existir un documento con ID fijo
 export const structure: StructureResolver = (S) =>
   S.list()
     .title('Content')
-    .items(S.documentTypeListItems())
+    .items([
+      // Singleton: siempre abre el mismo documento ID "configuracion"
+      S.listItem()
+        .title('Configuración General')
+        .child(
+          S.document()
+            .schemaType('configuracion')
+            .documentId('configuracion')
+        ),
+      S.divider(),
+      // Resto de tipos (sin configuracion para evitar duplicados en el menú)
+      ...S.documentTypeListItems().filter(
+        (item) => item.getId() !== 'configuracion'
+      ),
+    ])

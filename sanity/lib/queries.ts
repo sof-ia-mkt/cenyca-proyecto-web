@@ -53,7 +53,7 @@ export const todosCampusQuery = groq`
 // ─── Configuración ────────────────────────────────────────────────────────────
 
 export const configuracionQuery = groq`
-  *[_type == "configuracion"][0] {
+  *[_type == "configuracion" && (_id == "configuracion" || _id == "drafts.configuracion")] | order(_updatedAt desc) [0] {
     nombreUniversidad,
     contacto,
     redesSociales,
