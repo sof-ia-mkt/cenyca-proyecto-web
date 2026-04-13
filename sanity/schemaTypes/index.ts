@@ -3,6 +3,10 @@ import { carrera } from "./carrera";
 import { campus } from "./campus";
 import { directorio } from "./directorio";
 import { configuracion } from "./configuracion";
+import { noticia } from "./noticia";
+import { documento } from "./documento";
+import { avisoPrivacidad } from "./avisoPrivacidad";
+import { pagina } from "./pagina";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -10,6 +14,10 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     carrera,
     campus,
     directorio,
+    noticia,
+    documento,
+    avisoPrivacidad,
+    pagina,
     // Configuración global (singleton)
     configuracion,
   ],
