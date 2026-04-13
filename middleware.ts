@@ -14,7 +14,7 @@ import type { NextRequest } from "next/server";
  *   STUDIO_PASSWORD=tu_contrasena_segura
  */
 
-export function proxy(request: NextRequest) {
+export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Solo proteger rutas del Studio
