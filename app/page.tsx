@@ -10,6 +10,7 @@ import type { LucideIcon } from "lucide-react";
 import { client } from "@/sanity/lib/client";
 import { todasCarrerasQuery, todosCampusQuery, configuracionQuery } from "@/sanity/lib/queries";
 import HeroCarrusel, { type HeroSlide } from "@/app/components/HeroCarrusel";
+import { FadeUp, FadeLeft, FadeRight, StaggerContainer, StaggerItem, ScaleIn } from "@/app/components/ScrollReveal";
 
 // ─── Mapeos de iconos y colores (UI concern, no van en Sanity) ────────────────
 
@@ -88,7 +89,7 @@ function SeccionCarreras({ carreras }: { carreras: Carrera[] }) {
     <section className="bg-[#1B2040] py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Encabezado */}
-        <div className="text-center mb-14">
+        <FadeUp className="text-center mb-14">
           <h2 className="font-bebas text-white text-5xl sm:text-6xl tracking-wide mb-3">
             Oferta Académica
           </h2>
@@ -96,52 +97,49 @@ function SeccionCarreras({ carreras }: { carreras: Carrera[] }) {
           <p className="font-montserrat text-white/60 max-w-xl mx-auto">
             Programas diseñados para responder a las necesidades del mercado laboral del noroeste del país.
           </p>
-        </div>
+        </FadeUp>
 
-        {/* Grid de carreras */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {carreras.map((c, i) => {
+        {/* Grid de carreras con stagger */}
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {carreras.map((c) => {
             const Icon = SLUG_ICON[c.slug] ?? GraduationCap;
             const color = AREA_COLOR[c.area] ?? "#00D4FF";
             const areaLabel = AREA_LABEL[c.area] ?? c.area;
             return (
-              <Link
-                key={c._id}
-                href={`/carreras/${c.slug}`}
-                className="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white hover:border-[#00D4FF] hover:shadow-[0_0_30px_rgba(0,212,255,0.15)] transition-all duration-300 hover:-translate-y-1 flex items-start gap-4"
-                style={{ animationDelay: `${i * 80}ms` }}
-              >
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors duration-300"
-                  style={{ backgroundColor: `${color}25` }}
+              <StaggerItem key={c._id}>
+                <Link
+                  href={`/carreras/${c.slug}`}
+                  className="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white hover:border-[#00D4FF] hover:shadow-[0_0_30px_rgba(0,212,255,0.15)] transition-all duration-300 hover:-translate-y-2 flex items-start gap-4 block"
                 >
-                  <Icon size={22} style={{ color }} strokeWidth={1.75} />
-                </div>
-                <div>
-                  <span
-                    className="text-xs font-montserrat font-semibold uppercase tracking-wider"
-                    style={{ color }}
+                  <div
+                    className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors duration-300"
+                    style={{ backgroundColor: `${color}25` }}
                   >
-                    {areaLabel}
-                  </span>
-                  <h3 className="font-montserrat font-bold text-white group-hover:text-[#1B2040] text-base mt-0.5 transition-colors duration-300">
-                    {c.nombre}
-                  </h3>
-                </div>
-              </Link>
+                    <Icon size={22} style={{ color }} strokeWidth={1.75} />
+                  </div>
+                  <div>
+                    <span className="text-xs font-montserrat font-semibold uppercase tracking-wider" style={{ color }}>
+                      {areaLabel}
+                    </span>
+                    <h3 className="font-montserrat font-bold text-white group-hover:text-[#1B2040] text-base mt-0.5 transition-colors duration-300">
+                      {c.nombre}
+                    </h3>
+                  </div>
+                </Link>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerContainer>
 
         {/* CTA */}
-        <div className="text-center mt-12">
+        <FadeUp delay={0.2} className="text-center mt-12">
           <Link
             href="/licenciaturas"
             className="inline-flex items-center gap-2 font-montserrat font-semibold text-[#1B2040] bg-[#00D4FF] px-8 py-3.5 rounded-full hover:bg-white transition-all duration-300 hover:scale-105 shadow-[0_0_20px_rgba(0,212,255,0.3)]"
           >
             Ver todas las carreras →
           </Link>
-        </div>
+        </FadeUp>
       </div>
     </section>
   );
@@ -151,7 +149,7 @@ function SeccionBeneficios() {
   return (
     <section className="bg-white py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-14">
+        <FadeUp className="text-center mb-14">
           <h2 className="font-bebas text-[#1B2040] text-5xl sm:text-6xl tracking-wide mb-3">
             ¿Por qué elegir CENYCA?
           </h2>
@@ -159,18 +157,20 @@ function SeccionBeneficios() {
           <p className="font-montserrat text-[#666] max-w-xl mx-auto">
             Más de 18 años formando profesionistas comprometidos con el desarrollo de Baja California.
           </p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
+        </FadeUp>
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
           {beneficios.map((b) => (
-            <div key={b.titulo} className="bg-[#F5F5F5] rounded-2xl p-7 hover:shadow-md transition-shadow duration-300">
-              <div className="w-14 h-14 bg-[#1B2040] rounded-xl flex items-center justify-center mb-5">
-                <b.Icon size={26} color="#00D4FF" strokeWidth={1.5} />
+            <StaggerItem key={b.titulo}>
+              <div className="bg-[#F5F5F5] rounded-2xl p-7 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full">
+                <div className="w-14 h-14 bg-[#1B2040] rounded-xl flex items-center justify-center mb-5">
+                  <b.Icon size={26} color="#00D4FF" strokeWidth={1.5} />
+                </div>
+                <h3 className="font-montserrat font-bold text-[#1B2040] text-lg mb-2">{b.titulo}</h3>
+                <p className="font-montserrat text-[#666] text-sm leading-relaxed">{b.desc}</p>
               </div>
-              <h3 className="font-montserrat font-bold text-[#1B2040] text-lg mb-2">{b.titulo}</h3>
-              <p className="font-montserrat text-[#666] text-sm leading-relaxed">{b.desc}</p>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );
@@ -187,7 +187,7 @@ function SeccionPlanteles({ campus }: { campus: Campus[] }) {
         <div className="absolute bottom-10 right-10 w-96 h-96 rounded-full border border-[#00D4FF]" />
       </div>
       <div className="relative z-10 max-w-7xl mx-auto">
-        <div className="text-center mb-14">
+        <FadeUp className="text-center mb-14">
           <h2 className="font-bebas text-white text-5xl sm:text-6xl tracking-wide mb-3">
             Nuestros Planteles
           </h2>
@@ -195,30 +195,32 @@ function SeccionPlanteles({ campus }: { campus: Campus[] }) {
           <p className="font-montserrat text-white/60 max-w-xl mx-auto">
             {campus.length} campus en Baja California. Cerca de donde tú vives y trabajas.
           </p>
-        </div>
+        </FadeUp>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {campus.map((p) => (
-            <div key={p._id} className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors duration-300">
-              <div className="text-4xl mb-4">📍</div>
-              <h3 className="font-bebas text-[#00D4FF] text-2xl tracking-wide mb-1">{p.nombre}</h3>
-              <p className="font-montserrat text-white/40 text-xs uppercase tracking-wider mb-3">
-                {CIUDAD_LABEL[p.ciudad] ?? p.ciudad}
-                {p.esPrincipal && <span className="ml-2 bg-[#00D4FF]/20 text-[#00D4FF] px-2 py-0.5 rounded-full">Principal</span>}
-              </p>
-              <p className="font-montserrat text-white/60 text-sm leading-relaxed">{p.direccion}</p>
-            </div>
+            <StaggerItem key={p._id}>
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 hover:border-[#00D4FF]/40 hover:-translate-y-1 transition-all duration-300 h-full">
+                <div className="text-4xl mb-4">📍</div>
+                <h3 className="font-bebas text-[#00D4FF] text-2xl tracking-wide mb-1">{p.nombre}</h3>
+                <p className="font-montserrat text-white/40 text-xs uppercase tracking-wider mb-3">
+                  {CIUDAD_LABEL[p.ciudad] ?? p.ciudad}
+                  {p.esPrincipal && <span className="ml-2 bg-[#00D4FF]/20 text-[#00D4FF] px-2 py-0.5 rounded-full">Principal</span>}
+                </p>
+                <p className="font-montserrat text-white/60 text-sm leading-relaxed">{p.direccion}</p>
+              </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
 
-        <div className="text-center">
+        <FadeUp delay={0.2} className="text-center">
           <Link
             href="/directorio"
             className="inline-flex items-center gap-2 font-montserrat font-semibold text-white border border-white/30 px-8 py-3.5 rounded-full hover:bg-white/10 transition-all duration-300"
           >
             Ver directorio completo →
           </Link>
-        </div>
+        </FadeUp>
       </div>
     </section>
   );
@@ -231,12 +233,15 @@ function SeccionCTA({ config }: { config: Configuracion | null }) {
   return (
     <section className="bg-[#00D4FF] py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="font-bebas text-[#1B2040] text-5xl sm:text-6xl lg:text-7xl tracking-wide mb-4">
-          El momento es ahora
-        </h2>
-        <p className="font-montserrat text-[#1B2040]/70 text-lg mb-10 max-w-xl mx-auto">
-          Inicia tu trámite de inscripción hoy. Cupo limitado para el ciclo Mayo 2026.
-        </p>
+        <ScaleIn>
+          <h2 className="font-bebas text-[#1B2040] text-5xl sm:text-6xl lg:text-7xl tracking-wide mb-4">
+            El momento es ahora
+          </h2>
+          <p className="font-montserrat text-[#1B2040]/70 text-lg mb-10 max-w-xl mx-auto">
+            Inicia tu trámite de inscripción hoy. Cupo limitado para el ciclo Mayo 2026.
+          </p>
+        </ScaleIn>
+        <FadeUp delay={0.2}>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
             href={inscripciones}
@@ -255,6 +260,7 @@ function SeccionCTA({ config }: { config: Configuracion | null }) {
             💬 Escríbenos por WhatsApp
           </a>
         </div>
+        </FadeUp>
       </div>
     </section>
   );
