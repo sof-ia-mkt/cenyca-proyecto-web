@@ -7,7 +7,9 @@ const commonHeaders = [
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), interest-cohort=()" },
 ];
 
-// Headers para el sitio público — sin unsafe-eval, sin iframes
+const isDev = process.env.NODE_ENV !== "production";
+
+// Headers para el sitio público — sin unsafe-eval en producción
 const publicHeaders = [
   ...commonHeaders,
   { key: "X-Frame-Options", value: "DENY" },
@@ -16,7 +18,7 @@ const publicHeaders = [
     key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' https://connect.facebook.net",
+      `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} https://connect.facebook.net`,
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
       "img-src 'self' data: blob: https://cdn.sanity.io https://www.facebook.com",
