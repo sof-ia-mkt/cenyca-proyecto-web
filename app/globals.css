@@ -1,26 +1,70 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ============================================================
+   CENYCA Universidad — Design Tokens
+   ============================================================ */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Fuentes */
+  --font-bebas: var(--font-bebas);
+  --font-montserrat: var(--font-montserrat);
+
+  /* Colores de marca */
+  --color-navy:        #1B2040;
+  --color-navy-light:  #252B52;
+  --color-cyan:        #00D4FF;
+  --color-cyan-dark:   #00B8DB;
+
+  /* Grises */
+  --color-blanco:      #FFFFFF;
+  --color-gris-claro:  #F5F5F5;
+  --color-gris:        #666666;
+  --color-gris-medio:  #CCCCCC;
+  --color-gris-oscuro: #333333;
+  --color-negro:       #1A1A1A;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Variables CSS globales */
+:root {
+  --navy:        #1B2040;
+  --navy-light:  #252B52;
+  --cyan:        #00D4FF;
+  --cyan-dark:   #00B8DB;
+  --blanco:      #FFFFFF;
+  --gris-claro:  #F5F5F5;
+  --gris:        #666666;
+  --gris-medio:  #CCCCCC;
+  --gris-oscuro: #333333;
+  --negro:       #1A1A1A;
+}
+
+/* Base */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-montserrat), 'Segoe UI', sans-serif;
+  font-weight: 400;
+  color: var(--gris-oscuro);
+  line-height: 1.6;
+  overflow-x: hidden;
+  background: var(--blanco);
 }
+
+/* Tipografía */
+h1, h2 {
+  font-family: var(--font-bebas), sans-serif;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+h3, h4, h5, h6 {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 600;
+}
+
+/* Utilidades de fuente para Tailwind */
+.font-bebas     { font-family: var(--font-bebas), sans-serif; }
+.font-montserrat{ font-family: var(--font-montserrat), sans-serif; }
