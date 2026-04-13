@@ -57,7 +57,15 @@ export const configuracionQuery = groq`
     nombreUniversidad,
     contacto,
     redesSociales,
-    sistemas
+    sistemas,
+    "heroSlides": heroSlides[] {
+      titulo,
+      subtitulo,
+      ctaTexto,
+      ctaUrl,
+      "imagenUrl": imagen.asset->url,
+      "imagenLqip": imagen.asset->metadata.lqip
+    }
   }
 `
 

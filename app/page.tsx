@@ -7,6 +7,7 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { client } from "@/sanity/lib/client";
 import { todasCarrerasQuery, todosCampusQuery, configuracionQuery } from "@/sanity/lib/queries";
+import HeroCarrusel, { type HeroSlide } from "@/app/components/HeroCarrusel";
 
 // ─── Mapeos de iconos y colores (UI concern, no van en Sanity) ────────────────
 
@@ -74,30 +75,11 @@ type Campus = {
 type Configuracion = {
   contacto?: { whatsapp?: string };
   sistemas?: { inscripciones?: string };
+  heroSlides?: HeroSlide[];
 };
 
 // ─── Secciones ────────────────────────────────────────────────────────────────
 
-function SeccionHero() {
-  return (
-    <section className="relative h-[60vh] min-h-[420px] flex items-center justify-center overflow-hidden bg-[#1B2040]">
-      <video
-        autoPlay muted loop playsInline
-        className="absolute inset-0 w-full h-full object-cover"
-      >
-        <source src="/videos/hero-bg.webm" type="video/webm" />
-        <source src="/videos/hero-bg.mp4"  type="video/mp4" />
-      </video>
-      <div className="absolute inset-0 bg-[#1B2040]/60" />
-      <div className="relative z-10 text-center px-4">
-        <h1 className="font-bebas text-white leading-none tracking-wide">
-          <span className="block text-5xl sm:text-6xl lg:text-7xl">Tu futuro empieza</span>
-          <span className="block text-5xl sm:text-6xl lg:text-7xl text-[#00D4FF]">en CENYCA Universidad</span>
-        </h1>
-      </div>
-    </section>
-  );
-}
 
 function SeccionCarreras({ carreras }: { carreras: Carrera[] }) {
   return (
@@ -283,7 +265,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <SeccionHero />
+      <HeroCarrusel slides={config?.heroSlides ?? []} />
       <SeccionCarreras carreras={carreras} />
       <SeccionBeneficios />
       <SeccionPlanteles campus={campus} />

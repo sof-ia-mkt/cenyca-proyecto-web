@@ -93,6 +93,56 @@ export const configuracion = defineType({
       ],
     }),
 
+    // --- HERO / CARRUSEL ---
+    defineField({
+      name: "heroSlides",
+      title: "Hero / Carrusel",
+      description: "Imágenes y texto que aparecen en el carrusel principal de la página de inicio.",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          name: "slide",
+          title: "Slide",
+          fields: [
+            defineField({
+              name: "imagen",
+              title: "Imagen de fondo",
+              type: "image",
+              options: { hotspot: true },
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "titulo",
+              title: "Título principal",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "subtitulo",
+              title: "Subtítulo",
+              type: "string",
+            }),
+            defineField({
+              name: "ctaTexto",
+              title: "Texto del botón",
+              type: "string",
+              description: 'Ejemplo: "Inscríbete ahora"',
+            }),
+            defineField({
+              name: "ctaUrl",
+              title: "Link del botón",
+              type: "string",
+              description: 'Ejemplo: /admisiones o https://inscripciones.cenyca.edu.mx',
+            }),
+          ],
+          preview: {
+            select: { title: "titulo", media: "imagen" },
+          },
+        },
+      ],
+    }),
+
     // --- AVISO DE PRIVACIDAD ---
     defineField({
       name: "avisoPrivacidad",
