@@ -85,20 +85,22 @@ type Configuracion = {
 
 function SeccionCarreras({ carreras }: { carreras: Carrera[] }) {
   return (
-    <section className="bg-[#F5F5F5] py-24 px-4 sm:px-6 lg:px-8">
+    <section className="bg-[#1B2040] py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
+        {/* Encabezado */}
         <div className="text-center mb-14">
-          <h2 className="font-bebas text-[#1B2040] text-5xl sm:text-6xl tracking-wide mb-3">
+          <h2 className="font-bebas text-white text-5xl sm:text-6xl tracking-wide mb-3">
             Oferta Académica
           </h2>
           <div className="w-16 h-1 bg-[#00D4FF] rounded mx-auto mb-4" />
-          <p className="font-montserrat text-[#666] max-w-xl mx-auto">
+          <p className="font-montserrat text-white/60 max-w-xl mx-auto">
             Programas diseñados para responder a las necesidades del mercado laboral del noroeste del país.
           </p>
         </div>
 
+        {/* Grid de carreras */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {carreras.map((c) => {
+          {carreras.map((c, i) => {
             const Icon = SLUG_ICON[c.slug] ?? GraduationCap;
             const color = AREA_COLOR[c.area] ?? "#00D4FF";
             const areaLabel = AREA_LABEL[c.area] ?? c.area;
@@ -106,11 +108,12 @@ function SeccionCarreras({ carreras }: { carreras: Carrera[] }) {
               <Link
                 key={c._id}
                 href={`/carreras/${c.slug}`}
-                className="group bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex items-start gap-4"
+                className="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white hover:border-[#00D4FF] hover:shadow-[0_0_30px_rgba(0,212,255,0.15)] transition-all duration-300 hover:-translate-y-1 flex items-start gap-4"
+                style={{ animationDelay: `${i * 80}ms` }}
               >
                 <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                  style={{ backgroundColor: `${color}18` }}
+                  className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors duration-300"
+                  style={{ backgroundColor: `${color}25` }}
                 >
                   <Icon size={22} style={{ color }} strokeWidth={1.75} />
                 </div>
@@ -121,7 +124,7 @@ function SeccionCarreras({ carreras }: { carreras: Carrera[] }) {
                   >
                     {areaLabel}
                   </span>
-                  <h3 className="font-montserrat font-bold text-[#1B2040] text-base mt-0.5 group-hover:text-[#00D4FF] transition-colors">
+                  <h3 className="font-montserrat font-bold text-white group-hover:text-[#1B2040] text-base mt-0.5 transition-colors duration-300">
                     {c.nombre}
                   </h3>
                 </div>
@@ -130,10 +133,11 @@ function SeccionCarreras({ carreras }: { carreras: Carrera[] }) {
           })}
         </div>
 
-        <div className="text-center mt-10">
+        {/* CTA */}
+        <div className="text-center mt-12">
           <Link
             href="/licenciaturas"
-            className="inline-flex items-center gap-2 font-montserrat font-semibold text-[#1B2040] border-2 border-[#1B2040] px-8 py-3.5 rounded-full hover:bg-[#1B2040] hover:text-white transition-all duration-300"
+            className="inline-flex items-center gap-2 font-montserrat font-semibold text-[#1B2040] bg-[#00D4FF] px-8 py-3.5 rounded-full hover:bg-white transition-all duration-300 hover:scale-105 shadow-[0_0_20px_rgba(0,212,255,0.3)]"
           >
             Ver todas las carreras →
           </Link>
