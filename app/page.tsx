@@ -12,6 +12,27 @@ import { todasCarrerasQuery, todosCampusQuery, configuracionQuery } from "@/sani
 import HeroCarrusel, { type HeroSlide } from "@/app/components/HeroCarrusel";
 import { FadeUp, FadeLeft, FadeRight, StaggerContainer, StaggerItem, ScaleIn } from "@/app/components/ScrollReveal";
 
+// ─── Divisor diagonal entre secciones ────────────────────────────────────────
+function DiagonalDivider({ from, to, flip = false }: { from: string; to: string; flip?: boolean }) {
+  return (
+    <div style={{ lineHeight: 0, marginTop: "-1px", marginBottom: "-1px" }}>
+      <svg
+        viewBox="0 0 1440 70"
+        xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="none"
+        style={{ display: "block", width: "100%", height: "70px" }}
+      >
+        <rect width="1440" height="70" fill={to} />
+        {flip ? (
+          <polygon points="0,0 1440,70 0,70" fill={from} />
+        ) : (
+          <polygon points="0,0 1440,0 0,70" fill={from} />
+        )}
+      </svg>
+    </div>
+  );
+}
+
 // ─── Mapeos de iconos y colores (UI concern, no van en Sanity) ────────────────
 
 const SLUG_ICON: Record<string, LucideIcon> = {
@@ -278,9 +299,17 @@ export default async function HomePage() {
   return (
     <>
       <HeroCarrusel slides={config?.heroSlides ?? []} />
+      {/* Hero (#1B2040) → Oferta Académica (#1B2040) — misma sección, diagonal hacia blanco */}
+      <DiagonalDivider from="#1B2040" to="#1B2040" />
       <SeccionCarreras carreras={carreras} />
+      {/* Oferta Académica (#1B2040) → Beneficios (white) */}
+      <DiagonalDivider from="#1B2040" to="#ffffff" flip />
       <SeccionBeneficios />
+      {/* Beneficios (white) → Planteles (#1B2040) */}
+      <DiagonalDivider from="#ffffff" to="#1B2040" />
       <SeccionPlanteles campus={campus} />
+      {/* Planteles (#1B2040) → CTA (#00D4FF) */}
+      <DiagonalDivider from="#1B2040" to="#00D4FF" flip />
       <SeccionCTA config={config} />
     </>
   );
