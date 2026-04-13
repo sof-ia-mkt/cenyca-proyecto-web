@@ -1,3 +1,5 @@
+export const revalidate = 0; // Siempre datos frescos desde Sanity
+
 import Link from "next/link";
 import {
   Settings2, Monitor, Factory, BarChart2, DollarSign,
