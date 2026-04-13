@@ -11,7 +11,7 @@ export const structure: StructureResolver = (S) =>
         .child(
           S.document()
             .schemaType('configuracion')
-            .documentId('configuracion')
+            .documentId('configuracion-general')
         ),
       S.divider(),
       // Resto de tipos (sin configuracion para evitar duplicados en el menú)
