@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /studio/
+
+Sitemap: https://cenyca-proyecto-web.vercel.app/sitemap.xml
