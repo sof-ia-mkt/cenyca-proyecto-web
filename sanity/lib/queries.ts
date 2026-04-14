@@ -65,6 +65,12 @@ export const configuracionQuery = groq`
       ctaUrl,
       "imagenUrl": imagen.asset->url,
       "imagenLqip": imagen.asset->metadata.lqip
+    },
+    "imagenesPrograma": {
+      "bachillerato": imagenesPrograma.bachillerato.asset->url,
+      "licenciaturas": imagenesPrograma.licenciaturas.asset->url,
+      "posgrados": imagenesPrograma.posgrados.asset->url,
+      "especialidades": imagenesPrograma.especialidades.asset->url
     }
   }
 `

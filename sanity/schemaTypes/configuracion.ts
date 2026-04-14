@@ -143,6 +143,44 @@ export const configuracion = defineType({
       ],
     }),
 
+    // --- IMÁGENES SECCIÓN "ELIGE TU PROGRAMA" ---
+    defineField({
+      name: "imagenesPrograma",
+      title: "Imágenes — Elige tu Programa",
+      description: "Fotos de fondo para cada tarjeta de programa en la página de inicio.",
+      type: "object",
+      fields: [
+        defineField({
+          name: "bachillerato",
+          title: "Bachillerato CENYCA",
+          type: "image",
+          options: { hotspot: true },
+          description: "Tamaño recomendado: 800 × 520 px",
+        }),
+        defineField({
+          name: "licenciaturas",
+          title: "Licenciaturas Ejecutivas",
+          type: "image",
+          options: { hotspot: true },
+          description: "Tamaño recomendado: 800 × 520 px",
+        }),
+        defineField({
+          name: "posgrados",
+          title: "Posgrados",
+          type: "image",
+          options: { hotspot: true },
+          description: "Tamaño recomendado: 800 × 360 px",
+        }),
+        defineField({
+          name: "especialidades",
+          title: "Especialidades / Educación Continua",
+          type: "image",
+          options: { hotspot: true },
+          description: "Tamaño recomendado: 800 × 360 px",
+        }),
+      ],
+    }),
+
     // --- AVISO DE PRIVACIDAD ---
     defineField({
       name: "avisoPrivacidad",

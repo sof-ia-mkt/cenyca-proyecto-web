@@ -5,6 +5,8 @@ import {
   Settings2, Monitor, Factory, BarChart2, DollarSign,
   Scale, Search, ChefHat, BookOpen, Zap,
   GraduationCap, Calendar, BadgeCheck, Landmark, Users, MapPin,
+  School, BriefcaseBusiness, FlaskConical, Layers,
+  ArrowRight,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { client } from "@/sanity/lib/client";
@@ -43,6 +45,199 @@ function StatementBar() {
         </svg>
       </div>
     </div>
+  );
+}
+
+// ─── Elige tu Programa ────────────────────────────────────────────────────────
+const programas = [
+  {
+    id: "bachillerato",
+    titulo: "Bachillerato CENYCA",
+    tagline: "Preparatoria en 4 meses",
+    desc: "El camino más rápido y oficial hacia la universidad. Válido ante la SEP.",
+    href: "/bachillerato",
+    Icon: School,
+    gradient: "from-[#0D1F3C] via-[#1B2040] to-[#0a1628]",
+    accent: "#00D4FF",
+    grande: true,
+  },
+  {
+    id: "licenciaturas",
+    titulo: "Licenciaturas Ejecutivas",
+    tagline: "Titúlate en 3 años",
+    desc: "10 programas con RVOE, horarios flexibles y modelo cuatrimestral.",
+    href: "/licenciaturas",
+    Icon: BriefcaseBusiness,
+    gradient: "from-[#1B2040] via-[#162038] to-[#0D1F3C]",
+    accent: "#00D4FF",
+    grande: true,
+  },
+  {
+    id: "posgrados",
+    titulo: "Posgrados",
+    tagline: "Maestrías y especialidades",
+    desc: "Eleva tu perfil profesional con programas de alto nivel académico.",
+    href: "/posgrados",
+    Icon: FlaskConical,
+    gradient: "from-[#1a1040] via-[#1B2040] to-[#0D1428]",
+    accent: "#A78BFA",
+    grande: false,
+  },
+  {
+    id: "especialidades",
+    titulo: "Especialidades",
+    tagline: "Educación continua",
+    desc: "Cursos y diplomados diseñados para el mercado industrial de BC.",
+    href: "/educacion-continua",
+    Icon: Layers,
+    gradient: "from-[#0D2030] via-[#1B2040] to-[#0a1f2e]",
+    accent: "#34D399",
+    grande: false,
+  },
+] as const;
+
+function SeccionProgramas({ imagenes }: { imagenes?: ImagenesPrograma }) {
+  const fotosPorId: Record<string, string | undefined> = {
+    bachillerato:  imagenes?.bachillerato,
+    licenciaturas: imagenes?.licenciaturas,
+    posgrados:     imagenes?.posgrados,
+    especialidades: imagenes?.especialidades,
+  };
+  return (
+    <section className="bg-[#1B2040] py-20 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <FadeUp className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-10 gap-4">
+          <div>
+            <h2 className="font-bebas text-white text-5xl sm:text-6xl tracking-wide">
+              Elige tu Programa
+            </h2>
+            <p className="font-montserrat text-white/50 mt-2 max-w-sm">
+              Conoce las opciones que tenemos para cada etapa de tu vida académica.
+            </p>
+          </div>
+          <Link
+            href="/licenciaturas"
+            className="font-montserrat text-[#00D4FF] text-sm font-semibold flex items-center gap-1.5 hover:gap-3 transition-all duration-300 whitespace-nowrap"
+          >
+            Ver todos los programas <ArrowRight size={16} />
+          </Link>
+        </FadeUp>
+
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Fila 1 — dos grandes */}
+          {programas.filter(p => p.grande).map((p, i) => {
+            const foto = fotosPorId[p.id];
+            return (
+            <FadeUp key={p.id} delay={i * 0.1}>
+              <Link
+                href={p.href}
+                className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${p.gradient} border border-white/10 hover:border-white/30 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.4)] flex flex-col p-8 min-h-[260px]`}
+              >
+                {/* Foto de fondo si existe */}
+                {foto && (
+                  <div
+                    className="absolute inset-0 bg-cover bg-center opacity-30 group-hover:opacity-40 transition-opacity duration-500"
+                    style={{ backgroundImage: `url(${foto})` }}
+                  />
+                )}
+                {/* Overlay oscuro siempre activo */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${p.gradient} ${foto ? "opacity-70" : "opacity-100"}`} />
+                {/* Brillo de hover */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-2xl"
+                  style={{ background: `radial-gradient(ellipse at top left, ${p.accent}, transparent 70%)` }}
+                />
+                {/* Círculo decorativo */}
+                <div
+                  className="absolute -bottom-12 -right-12 w-48 h-48 rounded-full opacity-[0.07] group-hover:opacity-[0.13] transition-opacity duration-500"
+                  style={{ background: p.accent }}
+                />
+
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-auto flex-shrink-0"
+                  style={{ backgroundColor: `${p.accent}20` }}
+                >
+                  <p.Icon size={22} style={{ color: p.accent }} strokeWidth={1.5} />
+                </div>
+
+                <div className="mt-10">
+                  <span
+                    className="font-montserrat text-xs font-semibold uppercase tracking-widest mb-2 block"
+                    style={{ color: p.accent }}
+                  >
+                    {p.tagline}
+                  </span>
+                  <h3 className="font-bebas text-white text-3xl sm:text-4xl tracking-wide mb-2 leading-tight">
+                    {p.titulo}
+                  </h3>
+                  <p className="font-montserrat text-white/50 text-sm leading-relaxed mb-4">
+                    {p.desc}
+                  </p>
+                  <span
+                    className="inline-flex items-center gap-1.5 font-montserrat text-sm font-semibold group-hover:gap-3 transition-all duration-300"
+                    style={{ color: p.accent }}
+                  >
+                    Conocer más <ArrowRight size={14} />
+                  </span>
+                </div>
+              </Link>
+            </FadeUp>
+          );
+          })}
+
+          {/* Fila 2 — dos medianas */}
+          {programas.filter(p => !p.grande).map((p, i) => {
+            const foto = fotosPorId[p.id];
+            return (
+            <FadeUp key={p.id} delay={0.2 + i * 0.1}>
+              <Link
+                href={p.href}
+                className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${p.gradient} border border-white/10 hover:border-white/30 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.4)] flex flex-col sm:flex-row items-start sm:items-center gap-5 p-7`}
+              >
+                {foto && (
+                  <div
+                    className="absolute inset-0 bg-cover bg-center opacity-25 group-hover:opacity-35 transition-opacity duration-500"
+                    style={{ backgroundImage: `url(${foto})` }}
+                  />
+                )}
+                <div className={`absolute inset-0 bg-gradient-to-br ${p.gradient} ${foto ? "opacity-75" : "opacity-100"}`} />
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-2xl"
+                  style={{ background: `radial-gradient(ellipse at top left, ${p.accent}, transparent 70%)` }}
+                />
+
+                <div
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0"
+                  style={{ backgroundColor: `${p.accent}20` }}
+                >
+                  <p.Icon size={24} style={{ color: p.accent }} strokeWidth={1.5} />
+                </div>
+
+                <div className="relative z-10">
+                  <span
+                    className="font-montserrat text-xs font-semibold uppercase tracking-widest mb-1 block"
+                    style={{ color: p.accent }}
+                  >
+                    {p.tagline}
+                  </span>
+                  <h3 className="font-bebas text-white text-2xl tracking-wide mb-1">{p.titulo}</h3>
+                  <p className="font-montserrat text-white/50 text-sm leading-relaxed">{p.desc}</p>
+                </div>
+
+                <ArrowRight
+                  size={18}
+                  className="ml-auto flex-shrink-0 opacity-30 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 hidden sm:block relative z-10"
+                  style={{ color: p.accent }}
+                />
+              </Link>
+            </FadeUp>
+          );
+          })}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -130,10 +325,18 @@ type Campus = {
   direccion: string; esPrincipal: boolean;
 };
 
+type ImagenesPrograma = {
+  bachillerato?: string;
+  licenciaturas?: string;
+  posgrados?: string;
+  especialidades?: string;
+};
+
 type Configuracion = {
   contacto?: { whatsapp?: string };
   sistemas?: { inscripciones?: string };
   heroSlides?: HeroSlide[];
+  imagenesPrograma?: ImagenesPrograma;
 };
 
 // ─── Secciones ────────────────────────────────────────────────────────────────
@@ -334,7 +537,8 @@ export default async function HomePage() {
     <>
       <HeroCarrusel slides={config?.heroSlides ?? []} />
       <StatementBar />
-      {/* Statement Bar → Oferta Académica (ambos #1B2040) */}
+      <SeccionProgramas imagenes={config?.imagenesPrograma} />
+      {/* Programas → Oferta Académica (ambos #1B2040, divisor decorativo) */}
       <DiagonalDivider from="#1B2040" to="#1B2040" />
       <SeccionCarreras carreras={carreras} />
       {/* Oferta Académica (#1B2040) → Beneficios (white) */}
