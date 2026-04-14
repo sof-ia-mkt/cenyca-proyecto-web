@@ -12,6 +12,40 @@ import { todasCarrerasQuery, todosCampusQuery, configuracionQuery } from "@/sani
 import HeroCarrusel, { type HeroSlide } from "@/app/components/HeroCarrusel";
 import { FadeUp, FadeLeft, FadeRight, StaggerContainer, StaggerItem, ScaleIn } from "@/app/components/ScrollReveal";
 
+// ─── Statement Bar — debajo del hero ─────────────────────────────────────────
+function StatementBar() {
+  return (
+    <div className="relative bg-[#1B2040] overflow-hidden">
+      {/* Gradiente brillante central */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#1B2040] via-[#00D4FF]/20 to-[#1B2040]" />
+      {/* Línea cyan superior */}
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#00D4FF] to-transparent" />
+      {/* Línea cyan inferior */}
+      <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#00D4FF] to-transparent" />
+
+      <div className="relative z-10 py-5 px-4 flex items-center justify-center gap-4 sm:gap-8">
+        {/* Estrella izquierda */}
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#00D4FF" className="flex-shrink-0 opacity-80">
+          <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+        </svg>
+
+        <p className="font-bebas text-white text-xl sm:text-2xl lg:text-3xl tracking-widest text-center">
+          La Universidad{" "}
+          <span className="text-[#00D4FF] drop-shadow-[0_0_12px_rgba(0,212,255,0.8)]">
+            #1
+          </span>{" "}
+          en Ingenierías del Noroeste
+        </p>
+
+        {/* Estrella derecha */}
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#00D4FF" className="flex-shrink-0 opacity-80">
+          <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+        </svg>
+      </div>
+    </div>
+  );
+}
+
 // ─── Divisor diagonal entre secciones ────────────────────────────────────────
 function DiagonalDivider({ from, to, flip = false }: { from: string; to: string; flip?: boolean }) {
   return (
@@ -299,7 +333,8 @@ export default async function HomePage() {
   return (
     <>
       <HeroCarrusel slides={config?.heroSlides ?? []} />
-      {/* Hero (#1B2040) → Oferta Académica (#1B2040) — misma sección, diagonal hacia blanco */}
+      <StatementBar />
+      {/* Statement Bar → Oferta Académica (ambos #1B2040) */}
       <DiagonalDivider from="#1B2040" to="#1B2040" />
       <SeccionCarreras carreras={carreras} />
       {/* Oferta Académica (#1B2040) → Beneficios (white) */}
