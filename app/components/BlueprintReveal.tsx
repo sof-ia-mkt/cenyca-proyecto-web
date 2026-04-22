@@ -1,14 +1,17 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
+import type { Variants } from "framer-motion";
 import { useRef } from "react";
 
-const trace = {
+const traceEase: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
+
+const trace: Variants = {
   hidden: { pathLength: 0, opacity: 0 },
   visible: (delay: number) => ({
     pathLength: 1,
     opacity: 1,
-    transition: { pathLength: { duration: 1.4, delay, ease: [0.25, 0.1, 0.25, 1] }, opacity: { duration: 0.2, delay } },
+    transition: { pathLength: { duration: 1.4, delay, ease: traceEase }, opacity: { duration: 0.2, delay } },
   }),
 };
 

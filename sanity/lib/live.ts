@@ -6,4 +6,8 @@ import { client } from './client'
 
 export const { sanityFetch, SanityLive } = defineLive({
   client,
+  // Sin tokens: el sitio solo consume contenido publicado. Si más adelante quieres
+  // preview de drafts live, cambia estos `false` por tokens de Sanity con rol Viewer.
+  serverToken: false,
+  browserToken: false,
 });

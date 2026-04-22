@@ -6,11 +6,3 @@ export const dataset =
 
 export const projectId =
   process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '1zsi1hi5'
-
-function assertValue<T>(v: T | undefined, errorMessage: string): T {
-  if (v === undefined) {
-    throw new Error(errorMessage)
-  }
-
-  return v
-}

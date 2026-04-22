@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import path from "path";
 
 const commonHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
@@ -55,6 +56,11 @@ const studioHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // Fija la raíz del workspace para Turbopack (evita que infiera mal por el lockfile del directorio padre)
+  turbopack: {
+    root: path.resolve(__dirname),
+  },
+
   async headers() {
     return [
       { source: "/((?!studio).*)", headers: publicHeaders },
