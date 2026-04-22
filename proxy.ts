@@ -55,7 +55,7 @@ export function proxy(request: NextRequest) {
     return new NextResponse("Acceso restringido.", {
       status: 401,
       headers: {
-        "WWW-Authenticate": 'Basic realm="Cenyca Studio — Solo administradores"',
+        "WWW-Authenticate": 'Basic realm="Cenyca Studio - Solo administradores"',
         "Content-Type": "text/plain",
       },
     });
