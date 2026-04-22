@@ -206,17 +206,35 @@ function SeccionExcelencia({ carreras }: { carreras: Carrera[] }) {
 
 // ─── Lo humano detrás de cada industria (Licenciaturas) ──────────────────────
 
-const LICENCIATURAS = [
-  { titulo: "Derecho",                         tagline: "Argumentación y justicia aplicada",       slug: "derecho",                         icon: Scale },
-  { titulo: "Administración de Empresas",      tagline: "Estrategia y crecimiento",                slug: "administracion-de-empresas",      icon: BarChart2 },
-  { titulo: "Contaduría Pública y Finanzas",   tagline: "Números que sostienen decisiones",        slug: "contaduria-y-finanzas",           icon: DollarSign },
-  { titulo: "Psicología Organizacional",       tagline: "El factor humano del rendimiento",        slug: "psicologia-organizacional",       icon: Users },
-  { titulo: "Criminología y Criminalística",   tagline: "Investigación forense y seguridad",       slug: "criminologia-y-criminalistica",   icon: Search },
-  { titulo: "Ciencias de la Educación",        tagline: "Formar a quienes forman",                 slug: "ciencias-de-la-educacion",        icon: BookOpen },
-  { titulo: "Gastronomía",                     tagline: "Oficio, cultura y disciplina culinaria",  slug: "gastronomia",                     icon: ChefHat },
+// Las dos licenciaturas "estrella" comercialmente hablando: tienen mayor demanda
+// y reciben tratamiento visual destacado (imagen + copy enriquecido + badge).
+const FEATURED_LICENCIATURAS = [
+  {
+    titulo: "Gastronomía",
+    tagline: "Cocina de autor, cultura del sabor y disciplina profesional para la industria restaurantera de Baja California.",
+    slug: "gastronomia",
+    icon: ChefHat,
+  },
+  {
+    titulo: "Criminología y Criminalística",
+    tagline: "Ciencia forense aplicada, investigación criminal y seguridad ciudadana en la frontera.",
+    slug: "criminologia-y-criminalistica",
+    icon: Search,
+  },
 ] as const;
 
-function SeccionLicenciaturas() {
+// Las cinco complementarias: orden basado en volumen/reconocimiento de mercado.
+const COMPACT_LICENCIATURAS = [
+  { titulo: "Derecho",                       tagline: "Argumentación y justicia aplicada", slug: "derecho",                    icon: Scale },
+  { titulo: "Administración de Empresas",    tagline: "Estrategia y crecimiento",          slug: "administracion-de-empresas", icon: BarChart2 },
+  { titulo: "Contaduría Pública y Finanzas", tagline: "Números que sostienen decisiones",  slug: "contaduria-y-finanzas",      icon: DollarSign },
+  { titulo: "Psicología Organizacional",     tagline: "El factor humano del rendimiento",  slug: "psicologia-organizacional",  icon: Users },
+  { titulo: "Ciencias de la Educación",      tagline: "Formar a quienes forman",           slug: "ciencias-de-la-educacion",   icon: BookOpen },
+] as const;
+
+function SeccionLicenciaturas({ carreras }: { carreras: Carrera[] }) {
+  const imgBySlug = new Map(carreras.map((c) => [c.slug, sanityImg(c.imagenUrl, 1600)]));
+
   return (
     <section className="py-32 px-6 md:px-12 bg-white">
       <div className="max-w-screen-2xl mx-auto">
@@ -260,41 +278,84 @@ function SeccionLicenciaturas() {
                 href="/licenciaturas"
                 className="group inline-flex items-center gap-2 text-[#E9C176] font-bold text-sm uppercase tracking-[0.15em] hover:gap-3 transition-all duration-300"
               >
-                Ver las 7 licenciaturas <ArrowRight size={14} />
+                Ver catálogo de licenciaturas completo <ArrowRight size={14} />
               </Link>
             </FadeRight>
           </div>
         </div>
 
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {LICENCIATURAS.map((lic) => {
+        {/* Row 1 — Par destacado (50/50) con imagen, copy enriquecido y badge "Más solicitada" */}
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          {FEATURED_LICENCIATURAS.map((lic) => {
+            const Icon = lic.icon;
+            const img = imgBySlug.get(lic.slug);
+            return (
+              <StaggerItem
+                key={lic.slug}
+                className="group relative overflow-hidden rounded-xl bg-[#121B33] aspect-[16/10] md:aspect-auto md:h-[500px]"
+              >
+                <Link href={`/carreras/${lic.slug}`} className="block w-full h-full">
+                  {img ? (
+                    <div
+                      className="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                      style={{ backgroundImage: `url(${img})` }}
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-[#E9C176] to-[#8B6A2E]" />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+                  <div
+                    aria-hidden
+                    className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#E9C176]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  />
+                  <div className="absolute bottom-10 left-10 right-10">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-11 h-11 rounded-lg flex items-center justify-center bg-[#E9C176]/20 backdrop-blur-sm border border-[#E9C176]/30">
+                        <Icon size={20} className="text-[#E9C176]" strokeWidth={1.75} />
+                      </div>
+                      <span className="text-[#E9C176] font-bold text-[10px] uppercase tracking-[0.25em] px-2.5 py-1 rounded-full border border-[#E9C176]/40 bg-[#E9C176]/10 backdrop-blur-sm">
+                        Más solicitada
+                      </span>
+                    </div>
+                    <h3
+                      className="text-white font-bold text-3xl md:text-4xl mb-3"
+                      style={{ letterSpacing: "-0.02em", lineHeight: 1.1 }}
+                    >
+                      {lic.titulo}
+                    </h3>
+                    <p className="text-white/80 text-base leading-relaxed max-w-xl">
+                      {lic.tagline}
+                    </p>
+                  </div>
+                </Link>
+              </StaggerItem>
+            );
+          })}
+        </StaggerContainer>
+
+        {/* Row 2 — Las otras 5 en grid compacto (5 cols desktop, 3 tablet, 2 mobile) */}
+        <StaggerContainer className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+          {COMPACT_LICENCIATURAS.map((lic) => {
             const Icon = lic.icon;
             return (
               <StaggerItem key={lic.slug}>
                 <Link
                   href={`/carreras/${lic.slug}`}
-                  className="group block relative overflow-hidden rounded-xl bg-[#F9F9FB] border border-[#E9C176]/10 hover:border-[#E9C176]/40 hover:-translate-y-1 transition-all duration-300 p-8 h-full"
+                  className="group block relative overflow-hidden rounded-xl bg-[#F9F9FB] border border-[#E9C176]/10 hover:border-[#E9C176]/40 hover:-translate-y-1 transition-all duration-300 p-6 h-full"
                 >
-                  <div
-                    aria-hidden
-                    className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-[#E9C176]/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  />
-                  <div className="relative z-10 flex flex-col h-full">
-                    <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-6 bg-[#E9C176]/10 group-hover:bg-[#E9C176]/20 transition-colors duration-300">
-                      <Icon size={22} className="text-[#E9C176]" strokeWidth={1.75} />
+                  <div className="flex flex-col h-full gap-4">
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-[#E9C176]/10 group-hover:bg-[#E9C176]/20 transition-colors duration-300">
+                      <Icon size={18} className="text-[#E9C176]" strokeWidth={1.75} />
                     </div>
                     <h3
-                      className="text-[#121B33] font-bold text-xl mb-2"
+                      className="text-[#121B33] font-bold text-sm md:text-base leading-snug"
                       style={{ letterSpacing: "-0.01em" }}
                     >
                       {lic.titulo}
                     </h3>
-                    <p className="text-[#76777E] text-sm leading-relaxed flex-1">
+                    <p className="text-[#76777E] text-xs leading-relaxed mt-auto">
                       {lic.tagline}
                     </p>
-                    <div className="flex items-center gap-1.5 text-[#E9C176] text-xs font-bold uppercase tracking-wider mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      Explorar <ArrowRight size={12} />
-                    </div>
                   </div>
                 </Link>
               </StaggerItem>
@@ -730,7 +791,7 @@ export default async function HomePage() {
       <HeroAnimado slides={config?.heroSlides ?? []} />
       <BlueprintReveal />
       <SeccionExcelencia carreras={carreras} />
-      <SeccionLicenciaturas />
+      <SeccionLicenciaturas carreras={carreras} />
       <SeccionStats />
       <SeccionPlanteles campus={campus} />
       <SeccionCTA config={config} />
