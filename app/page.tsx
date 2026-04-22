@@ -17,6 +17,7 @@ import { sanityImg } from "@/sanity/lib/image-url";
 import {
   FadeUp, FadeLeft, FadeRight,
   StaggerContainer, StaggerItem, ScaleIn,
+  WordReveal,
 } from "@/app/components/ScrollReveal";
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
@@ -124,28 +125,50 @@ function SeccionExcelencia({ carreras }: { carreras: Carrera[] }) {
   return (
     <section className="py-32 px-6 md:px-12 bg-[#F9F9FB]">
       <div className="max-w-screen-2xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
-          <FadeLeft className="max-w-2xl">
-            <p className="text-[#E9C176] font-bold tracking-[0.2em] uppercase mb-4 text-sm">
-              Formación de Élite
-            </p>
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-10">
+          <div className="max-w-3xl">
+            <FadeLeft>
+              <div className="flex items-center gap-3 mb-6">
+                <span aria-hidden className="block w-[2px] h-6 bg-[#00D4FF]" />
+                <p className="text-[#E9C176] font-bold tracking-[0.2em] uppercase text-xs">
+                  Frontera · Ingenierías Core
+                </p>
+              </div>
+            </FadeLeft>
             <h2
-              className="font-extrabold text-[#121B33]"
+              className="font-black text-[#121B33]"
               style={{
-                fontSize: "clamp(2.5rem, 5vw, 4rem)",
-                letterSpacing: "-0.03em",
-                lineHeight: 1.05,
+                fontSize: "clamp(3rem, 6vw, 5.25rem)",
+                letterSpacing: "-0.04em",
+                lineHeight: 1.0,
               }}
             >
-              Excelencia Académica
+              <WordReveal text="Ingeniería" delay={0.15} />{" "}
+              <WordReveal
+                text="de frontera"
+                delay={0.35}
+                className="text-[#00D4FF]"
+                underline
+              />
             </h2>
-          </FadeLeft>
-          <FadeRight>
-            <p className="text-[#45464D] text-lg max-w-md leading-relaxed">
-              Desarrollamos líderes capaces de orquestar la tecnología para resolver
-              los desafíos más complejos de la humanidad.
-            </p>
-          </FadeRight>
+          </div>
+          <div className="flex flex-col items-start md:items-end gap-5 md:max-w-md">
+            <FadeRight delay={0.5}>
+              <p className="text-[#45464D] text-xl leading-relaxed">
+                Manufactura avanzada, arquitectura de software, robótica aplicada.
+                Nuestros ingenieros no estudian la industria del futuro —
+                la están construyendo hoy en Baja California.
+              </p>
+            </FadeRight>
+            <FadeRight delay={0.65}>
+              <Link
+                href="/licenciaturas"
+                className="group inline-flex items-center gap-2 text-[#00D4FF] font-bold text-sm uppercase tracking-[0.15em] hover:gap-3 transition-all duration-300"
+              >
+                Ver las 4 ingenierías <ArrowRight size={14} />
+              </Link>
+            </FadeRight>
+          </div>
         </div>
 
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-12 gap-8">
@@ -170,6 +193,108 @@ function SeccionExcelencia({ carreras }: { carreras: Carrera[] }) {
                     <p className="text-white/70 font-medium tracking-wide uppercase text-xs">
                       {ing.tagline}
                     </p>
+                  </div>
+                </Link>
+              </StaggerItem>
+            );
+          })}
+        </StaggerContainer>
+      </div>
+    </section>
+  );
+}
+
+// ─── Lo humano detrás de cada industria (Licenciaturas) ──────────────────────
+
+const LICENCIATURAS = [
+  { titulo: "Derecho",                         tagline: "Argumentación y justicia aplicada",       slug: "derecho",                         icon: Scale },
+  { titulo: "Administración de Empresas",      tagline: "Estrategia y crecimiento",                slug: "administracion-de-empresas",      icon: BarChart2 },
+  { titulo: "Contaduría Pública y Finanzas",   tagline: "Números que sostienen decisiones",        slug: "contaduria-y-finanzas",           icon: DollarSign },
+  { titulo: "Psicología Organizacional",       tagline: "El factor humano del rendimiento",        slug: "psicologia-organizacional",       icon: Users },
+  { titulo: "Criminología y Criminalística",   tagline: "Investigación forense y seguridad",       slug: "criminologia-y-criminalistica",   icon: Search },
+  { titulo: "Ciencias de la Educación",        tagline: "Formar a quienes forman",                 slug: "ciencias-de-la-educacion",        icon: BookOpen },
+  { titulo: "Gastronomía",                     tagline: "Oficio, cultura y disciplina culinaria",  slug: "gastronomia",                     icon: ChefHat },
+] as const;
+
+function SeccionLicenciaturas() {
+  return (
+    <section className="py-32 px-6 md:px-12 bg-white">
+      <div className="max-w-screen-2xl mx-auto">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-10">
+          <div className="max-w-3xl">
+            <FadeLeft>
+              <div className="flex items-center gap-3 mb-6">
+                <span aria-hidden className="block w-[2px] h-6 bg-[#E9C176]" />
+                <p className="text-[#E9C176] font-bold tracking-[0.2em] uppercase text-xs">
+                  Humanidades · Liderazgo con propósito
+                </p>
+              </div>
+            </FadeLeft>
+            <h2
+              className="font-black text-[#121B33]"
+              style={{
+                fontSize: "clamp(2.5rem, 5vw, 4.75rem)",
+                letterSpacing: "-0.03em",
+                lineHeight: 1.05,
+              }}
+            >
+              <WordReveal text="Lo humano" delay={0.15} />{" "}
+              <WordReveal
+                text="detrás de cada industria"
+                delay={0.35}
+                className="text-[#E9C176]"
+                underline
+              />
+            </h2>
+          </div>
+          <div className="flex flex-col items-start md:items-end gap-5 md:max-w-md">
+            <FadeRight delay={0.5}>
+              <p className="text-[#45464D] text-xl leading-relaxed">
+                Detrás de cada industria hay decisiones legales, estrategias de negocio
+                y seres humanos que cuidar. Formamos a quienes equilibran el pulso
+                humano del crecimiento económico de Baja California.
+              </p>
+            </FadeRight>
+            <FadeRight delay={0.65}>
+              <Link
+                href="/licenciaturas"
+                className="group inline-flex items-center gap-2 text-[#E9C176] font-bold text-sm uppercase tracking-[0.15em] hover:gap-3 transition-all duration-300"
+              >
+                Ver las 7 licenciaturas <ArrowRight size={14} />
+              </Link>
+            </FadeRight>
+          </div>
+        </div>
+
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {LICENCIATURAS.map((lic) => {
+            const Icon = lic.icon;
+            return (
+              <StaggerItem key={lic.slug}>
+                <Link
+                  href={`/carreras/${lic.slug}`}
+                  className="group block relative overflow-hidden rounded-xl bg-[#F9F9FB] border border-[#E9C176]/10 hover:border-[#E9C176]/40 hover:-translate-y-1 transition-all duration-300 p-8 h-full"
+                >
+                  <div
+                    aria-hidden
+                    className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-[#E9C176]/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  />
+                  <div className="relative z-10 flex flex-col h-full">
+                    <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-6 bg-[#E9C176]/10 group-hover:bg-[#E9C176]/20 transition-colors duration-300">
+                      <Icon size={22} className="text-[#E9C176]" strokeWidth={1.75} />
+                    </div>
+                    <h3
+                      className="text-[#121B33] font-bold text-xl mb-2"
+                      style={{ letterSpacing: "-0.01em" }}
+                    >
+                      {lic.titulo}
+                    </h3>
+                    <p className="text-[#76777E] text-sm leading-relaxed flex-1">
+                      {lic.tagline}
+                    </p>
+                    <div className="flex items-center gap-1.5 text-[#E9C176] text-xs font-bold uppercase tracking-wider mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      Explorar <ArrowRight size={12} />
+                    </div>
                   </div>
                 </Link>
               </StaggerItem>
@@ -605,6 +730,7 @@ export default async function HomePage() {
       <HeroAnimado slides={config?.heroSlides ?? []} />
       <BlueprintReveal />
       <SeccionExcelencia carreras={carreras} />
+      <SeccionLicenciaturas />
       <SeccionStats />
       <SeccionPlanteles campus={campus} />
       <SeccionCTA config={config} />

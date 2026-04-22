@@ -129,6 +129,60 @@ export function FadeRight({
   );
 }
 
+// ─── Split-text por palabra con entrada secuencial al entrar en viewport ─────
+// Cada palabra entra con blur + translate + fade, con un pequeño stagger.
+// Si `underline` es true, dibuja una línea cian (4px) debajo del texto una
+// vez terminado el reveal de las palabras.
+export function WordReveal({
+  text,
+  delay = 0,
+  className = "",
+  underline = false,
+  stagger = 0.08,
+}: {
+  text: string;
+  delay?: number;
+  className?: string;
+  underline?: boolean;
+  stagger?: number;
+}) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const words = text.split(" ");
+
+  return (
+    <span ref={ref} className={`inline-block ${className}`}>
+      {words.map((word, i) => (
+        <span key={i} className="inline-block whitespace-nowrap">
+          <motion.span
+            className="inline-block"
+            initial={{ opacity: 0, filter: "blur(10px)", y: 14 }}
+            animate={inView ? { opacity: 1, filter: "blur(0px)", y: 0 } : {}}
+            transition={{ duration: 0.65, delay: delay + i * stagger, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {word}
+          </motion.span>
+          {i < words.length - 1 && "\u00A0"}
+        </span>
+      ))}
+      {underline && (
+        <motion.span
+          aria-hidden
+          className="block h-[4px] mt-1 origin-left rounded-full"
+          style={{ backgroundColor: "currentColor" }}
+          initial={{ scaleX: 0 }}
+          animate={inView ? { scaleX: 1 } : {}}
+          transition={{
+            duration: 0.7,
+            delay: delay + words.length * stagger + 0.15,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        />
+      )}
+    </span>
+  );
+}
+
 // ─── Escala al entrar ─────────────────────────────────────────────────────────
 export function ScaleIn({
   children,
