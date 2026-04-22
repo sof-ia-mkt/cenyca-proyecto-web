@@ -24,9 +24,9 @@ export default async function NoticiasPage() {
             <Link
               key={noticia._id}
               href={`/noticias/${noticia.slug.current}`}
-              className="group flex flex-col rounded-2xl border border-[rgba(0,212,255,0.15)] bg-[#252B52] overflow-hidden hover:border-[rgba(0,212,255,0.4)] transition-all duration-300"
+              className="group flex flex-col rounded-2xl border border-[rgba(0,212,255,0.15)] bg-[#1E2D4A] overflow-hidden hover:border-[rgba(0,212,255,0.4)] transition-all duration-300"
             >
-              <div className="relative h-48 bg-[#1B2040] overflow-hidden">
+              <div className="relative h-48 bg-[#121B33] overflow-hidden">
                 {noticia.imagen ? (
                   <Image
                     src={urlFor(noticia.imagen).width(600).height(192).url()}

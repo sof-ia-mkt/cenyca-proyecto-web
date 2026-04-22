@@ -21,7 +21,7 @@ export default async function AvisosPage() {
           {avisos.map((aviso: any) => (
             <div
               key={aviso._id}
-              className="flex items-center justify-between gap-4 p-5 rounded-2xl border border-[rgba(0,212,255,0.15)] bg-[#252B52] hover:border-[rgba(0,212,255,0.35)] transition-colors"
+              className="flex items-center justify-between gap-4 p-5 rounded-2xl border border-[rgba(0,212,255,0.15)] bg-[#1E2D4A] hover:border-[rgba(0,212,255,0.35)] transition-colors"
             >
               <div>
                 <h2 className="font-bold text-white">{aviso.titulo}</h2>

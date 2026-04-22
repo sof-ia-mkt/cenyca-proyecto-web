@@ -11,7 +11,8 @@ export const todasCarrerasQuery = groq`
     grado,
     modalidades,
     descripcionCorta,
-    color
+    color,
+    "imagenUrl": imagen.asset->url
   }
 `
 
@@ -71,22 +72,15 @@ export const configuracionQuery = groq`
       "licenciaturas": imagenesPrograma.licenciaturas.asset->url,
       "posgrados": imagenesPrograma.posgrados.asset->url,
       "especialidades": imagenesPrograma.especialidades.asset->url
+    },
+    "imagenesOferta": {
+      "ingenierias": imagenesOferta.ingenierias.asset->url,
+      "licenciaturas": imagenesOferta.licenciaturas.asset->url
     }
   }
 `
 
 // ─── Noticias ────────────────────────────────────────────────────────────────
-
-export const ultimasNoticiasQuery = groq`
-  *[_type == "noticia"] | order(fecha desc) [0...3] {
-    _id,
-    titulo,
-    slug,
-    fecha,
-    categoria,
-    imagen
-  }
-`
 
 export const todasNoticiasQuery = groq`
   *[_type == "noticia"] | order(fecha desc) {

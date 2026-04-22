@@ -6,14 +6,22 @@
 
 @theme inline {
   /* Fuentes */
-  --font-bebas: var(--font-bebas);
-  --font-montserrat: var(--font-montserrat);
+  --font-inter: var(--font-inter);
+
+  /* Aliases para compatibilidad con código existente */
+  --font-bebas:      var(--font-inter);
+  --font-montserrat: var(--font-inter);
 
   /* Colores de marca */
-  --color-navy:        #1B2040;
-  --color-navy-light:  #252B52;
+  --color-navy:        #121B33;
+  --color-navy-light:  #1E2D4A;
   --color-cyan:        #00D4FF;
   --color-cyan-dark:   #00B8DB;
+
+  /* Superficies (sistema Stitch) */
+  --color-surface:              #F9F9FB;
+  --color-surface-low:          #F3F3F5;
+  --color-surface-container:    #EEEEF0;
 
   /* Grises */
   --color-blanco:      #FFFFFF;
@@ -21,13 +29,13 @@
   --color-gris:        #666666;
   --color-gris-medio:  #CCCCCC;
   --color-gris-oscuro: #333333;
-  --color-negro:       #1A1A1A;
+  --color-negro:       #1A1C1D;
 }
 
 /* Variables CSS globales */
 :root {
-  --navy:        #1B2040;
-  --navy-light:  #252B52;
+  --navy:        #121B33;
+  --navy-light:  #1E2D4A;
   --cyan:        #00D4FF;
   --cyan-dark:   #00B8DB;
   --blanco:      #FFFFFF;
@@ -35,7 +43,7 @@
   --gris:        #666666;
   --gris-medio:  #CCCCCC;
   --gris-oscuro: #333333;
-  --negro:       #1A1A1A;
+  --negro:       #1A1C1D;
 }
 
 /* Base */
@@ -45,7 +53,7 @@ html {
 }
 
 body {
-  font-family: var(--font-montserrat), 'Segoe UI', sans-serif;
+  font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
   font-weight: 400;
   color: var(--gris-oscuro);
   line-height: 1.6;
@@ -53,18 +61,19 @@ body {
   background: var(--blanco);
 }
 
-/* Tipografía */
+/* Tipografía — Inter con jerarquía por peso */
 h1, h2 {
-  font-family: var(--font-bebas), sans-serif;
-  font-weight: 400;
-  letter-spacing: 1px;
+  font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 h3, h4, h5, h6 {
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
   font-weight: 600;
 }
 
-/* Utilidades de fuente para Tailwind */
-.font-bebas     { font-family: var(--font-bebas), sans-serif; }
-.font-montserrat{ font-family: var(--font-montserrat), sans-serif; }
+/* Utilidades de fuente */
+.font-inter      { font-family: var(--font-inter), 'Inter', system-ui, sans-serif; }
+.font-bebas      { font-family: var(--font-inter), 'Inter', system-ui, sans-serif; font-weight: 800; letter-spacing: -0.02em; }
+.font-montserrat { font-family: var(--font-inter), 'Inter', system-ui, sans-serif; }

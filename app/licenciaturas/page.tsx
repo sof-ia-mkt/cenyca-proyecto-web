@@ -74,7 +74,7 @@ export default async function LicenciaturasPage() {
   return (
     <>
       {/* Header */}
-      <section className="bg-[#1B2040] py-20 px-4 sm:px-6 lg:px-8 border-b border-white/5">
+      <section className="bg-[#121B33] py-20 px-4 sm:px-6 lg:px-8 border-b border-white/5">
         <div className="max-w-5xl mx-auto">
           <p className="text-xs font-montserrat font-bold uppercase tracking-[0.3em] text-[#00D4FF] mb-3">
             CENYCA Universidad
@@ -100,7 +100,7 @@ export default async function LicenciaturasPage() {
                 {/* Encabezado de área */}
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-1 h-8 rounded-full" style={{ backgroundColor: color }} />
-                  <h2 className="font-bebas text-[#1B2040] text-3xl tracking-wide">
+                  <h2 className="font-bebas text-[#121B33] text-3xl tracking-wide">
                     {areaLabel}
                   </h2>
                 </div>
@@ -125,7 +125,7 @@ export default async function LicenciaturasPage() {
                           <span className="font-montserrat text-xs font-semibold uppercase tracking-wider" style={{ color }}>
                             {gradoLabel}
                           </span>
-                          <h3 className="font-montserrat font-bold text-[#1B2040] text-base mt-0.5 mb-2 group-hover:text-[#00D4FF] transition-colors leading-snug">
+                          <h3 className="font-montserrat font-bold text-[#121B33] text-base mt-0.5 mb-2 group-hover:text-[#00D4FF] transition-colors leading-snug">
                             {c.nombre}
                           </h3>
                           {c.descripcionCorta && (
@@ -152,7 +152,7 @@ export default async function LicenciaturasPage() {
             href="https://wa.me/526632093980"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#1B2040] text-white font-montserrat font-bold px-10 py-4 rounded-full hover:bg-[#252B52] transition-colors"
+            className="inline-flex items-center gap-2 bg-[#121B33] text-white font-montserrat font-bold px-10 py-4 rounded-full hover:bg-[#1E2D4A] transition-colors"
           >
             💬 Hablar con un asesor
           </a>

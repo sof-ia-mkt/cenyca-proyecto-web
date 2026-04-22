@@ -101,7 +101,7 @@ export default async function CarreraPage(
   return (
     <>
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
-      <section className="bg-[#1B2040] pt-10 pb-20 px-4 sm:px-6 lg:px-8">
+      <section className="bg-[#121B33] pt-10 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
 
           {/* Breadcrumb */}
@@ -151,7 +151,7 @@ export default async function CarreraPage(
               href={inscripciones}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-[#00D4FF] text-[#1B2040] font-montserrat font-bold px-8 py-4 rounded-full hover:bg-white transition-colors duration-300"
+              className="inline-flex items-center justify-center gap-2 bg-[#00D4FF] text-[#121B33] font-montserrat font-bold px-8 py-4 rounded-full hover:bg-white transition-colors duration-300"
             >
               <GraduationCap size={18} />
               Inscribirme ahora
@@ -173,7 +173,7 @@ export default async function CarreraPage(
       {carrera.beneficios && carrera.beneficios.length > 0 && (
         <section className="bg-white py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-5xl mx-auto">
-            <h2 className="font-bebas text-[#1B2040] text-4xl sm:text-5xl tracking-wide mb-3 text-center">
+            <h2 className="font-bebas text-[#121B33] text-4xl sm:text-5xl tracking-wide mb-3 text-center">
               ¿Por qué estudiar {carrera.nombre}?
             </h2>
             <div className="w-14 h-1 bg-[#00D4FF] rounded mx-auto mb-12" />
@@ -188,7 +188,7 @@ export default async function CarreraPage(
                     <span className="text-3xl flex-shrink-0">{b.icono}</span>
                   )}
                   <div>
-                    <h3 className="font-montserrat font-bold text-[#1B2040] text-base mb-1">
+                    <h3 className="font-montserrat font-bold text-[#121B33] text-base mb-1">
                       {b.titulo}
                     </h3>
                     {b.descripcion && (
@@ -210,7 +210,7 @@ export default async function CarreraPage(
           <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
               <div>
-                <h2 className="font-bebas text-[#1B2040] text-4xl sm:text-5xl tracking-wide mb-3">
+                <h2 className="font-bebas text-[#121B33] text-4xl sm:text-5xl tracking-wide mb-3">
                   Perfil de Egresado
                 </h2>
                 <div className="w-14 h-1 bg-[#00D4FF] rounded mb-8" />
@@ -233,7 +233,7 @@ export default async function CarreraPage(
 
       {/* ── CAMPO LABORAL ─────────────────────────────────────────────────── */}
       {carrera.campoLaboral && carrera.campoLaboral.length > 0 && (
-        <section className="bg-[#1B2040] py-20 px-4 sm:px-6 lg:px-8">
+        <section className="bg-[#121B33] py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="font-bebas text-white text-4xl sm:text-5xl tracking-wide mb-3">
@@ -262,11 +262,11 @@ export default async function CarreraPage(
       {/* ── CTA FINAL ─────────────────────────────────────────────────────── */}
       <section className="bg-[#00D4FF] py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center">
-          <BookOpen size={40} className="text-[#1B2040]/40 mx-auto mb-5" strokeWidth={1.5} />
-          <h2 className="font-bebas text-[#1B2040] text-5xl sm:text-6xl tracking-wide mb-4">
+          <BookOpen size={40} className="text-[#121B33]/40 mx-auto mb-5" strokeWidth={1.5} />
+          <h2 className="font-bebas text-[#121B33] text-5xl sm:text-6xl tracking-wide mb-4">
             Comienza tu historia en CENYCA
           </h2>
-          <p className="font-montserrat text-[#1B2040]/70 mb-8 max-w-md mx-auto">
+          <p className="font-montserrat text-[#121B33]/70 mb-8 max-w-md mx-auto">
             Cupo limitado para el ciclo Mayo 2026. No dejes pasar tu lugar.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -274,7 +274,7 @@ export default async function CarreraPage(
               href={inscripciones}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#1B2040] text-white font-montserrat font-bold px-10 py-4 rounded-full hover:bg-[#252B52] transition-colors"
+              className="bg-[#121B33] text-white font-montserrat font-bold px-10 py-4 rounded-full hover:bg-[#1E2D4A] transition-colors"
             >
               Inscribirme ahora
             </a>
@@ -282,7 +282,7 @@ export default async function CarreraPage(
               href={`https://wa.me/${whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="border-2 border-[#1B2040] text-[#1B2040] font-montserrat font-bold px-10 py-4 rounded-full hover:bg-[#1B2040] hover:text-white transition-colors"
+              className="border-2 border-[#121B33] text-[#121B33] font-montserrat font-bold px-10 py-4 rounded-full hover:bg-[#121B33] hover:text-white transition-colors"
             >
               💬 WhatsApp
             </a>
