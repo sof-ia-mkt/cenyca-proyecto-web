@@ -36,11 +36,22 @@ function AnimatedText({ text, delay = 0, className = "" }: { text: string; delay
   );
 }
 
+// Tiempo entre cambios de slide (ms). 6s es un buen balance: no apresura al lector
+// pero mantiene movimiento en la página.
+const SLIDE_INTERVAL_MS = 6000;
+
 export default function HeroAnimado({ slides }: { slides: HeroSlide[] }) {
-  const bgImage = sanityImg(slides[0]?.imagenUrl, 2560);
   const ref = useRef<HTMLDivElement>(null);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [currentIndex, setCurrentIndex] = useState(0);
 
+  // Precalcula las URLs optimizadas una sola vez (evita recomputar en cada render)
+  const slideImages = slides
+    .map((s) => sanityImg(s.imagenUrl, 2560))
+    .filter((u): u is string => Boolean(u));
+  const hasMultiple = slideImages.length > 1;
+
+  // Parallax sutil con el mouse
   useEffect(() => {
     function onMove(e: MouseEvent) {
       const el = ref.current;
@@ -57,21 +68,41 @@ export default function HeroAnimado({ slides }: { slides: HeroSlide[] }) {
     return () => window.removeEventListener("mousemove", onMove);
   }, []);
 
+  // Rotación automática del carrusel
+  useEffect(() => {
+    if (!hasMultiple) return;
+    const id = setInterval(() => {
+      setCurrentIndex((i) => (i + 1) % slideImages.length);
+    }, SLIDE_INTERVAL_MS);
+    return () => clearInterval(id);
+  }, [hasMultiple, slideImages.length]);
+
   return (
     <section
       ref={ref}
       className="relative h-screen flex items-center justify-center overflow-hidden bg-[#121B33]"
     >
-      {bgImage && (
+      {slideImages.length > 0 && (
         <motion.div
           className="absolute inset-0 z-0"
           animate={{ x: offset.x, y: offset.y }}
           transition={{ type: "spring", stiffness: 40, damping: 18, mass: 0.8 }}
         >
-          <div
-            className="w-full h-full bg-cover bg-center scale-110"
-            style={{ backgroundImage: `url(${bgImage})`, opacity: 0.6, mixBlendMode: "luminosity" }}
-          />
+          {/* Apila todas las imágenes y cruza opacidades — el browser precarga todas */}
+          {slideImages.map((src, i) => (
+            <motion.div
+              key={src}
+              className="absolute inset-0"
+              initial={false}
+              animate={{ opacity: i === currentIndex ? 1 : 0 }}
+              transition={{ duration: 1.2, ease: "easeInOut" }}
+            >
+              <div
+                className="w-full h-full bg-cover bg-center scale-110"
+                style={{ backgroundImage: `url(${src})`, opacity: 0.6, mixBlendMode: "luminosity" }}
+              />
+            </motion.div>
+          ))}
           <div className="absolute inset-0 bg-gradient-to-b from-[#121B33]/20 via-transparent to-[#121B33]/60" />
         </motion.div>
       )}
