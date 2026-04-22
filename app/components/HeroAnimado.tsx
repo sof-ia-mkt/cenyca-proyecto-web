@@ -120,16 +120,20 @@ export default function HeroAnimado({ slides }: { slides: HeroSlide[] }) {
         transition={{ duration: 2, ease: "easeInOut", delay: 0.4 }}
       />
 
-      <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
+      <div className="relative z-10 text-center px-6 max-w-6xl mx-auto">
         <h1
-          className="text-white mb-10 font-extrabold"
+          className="text-white mb-8 font-extrabold"
           style={{
-            fontSize: "clamp(3rem, 8vw, 5.5rem)",
-            lineHeight: 1.05,
-            letterSpacing: "-0.04em",
+            fontSize: "clamp(2.25rem, 5.5vw, 4.25rem)",
+            lineHeight: 1.1,
+            letterSpacing: "-0.03em",
           }}
         >
-          <AnimatedText text="La Ingeniería del Mañana," delay={0.2} />
+          <AnimatedText
+            text="La Ingeniería del Mañana,"
+            delay={0.2}
+            className="block md:whitespace-nowrap"
+          />
           <AnimatedText
             text="Diseñada Hoy."
             delay={0.9}
