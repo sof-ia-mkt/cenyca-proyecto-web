@@ -181,6 +181,30 @@ export const configuracion = defineType({
       ],
     }),
 
+    // --- IMÁGENES OFERTA ACADÉMICA ---
+    defineField({
+      name: "imagenesOferta",
+      title: "Imágenes — Oferta Académica",
+      description: "Fotos de fondo para los bloques grandes de la página /oferta-academica.",
+      type: "object",
+      fields: [
+        defineField({
+          name: "ingenierias",
+          title: "Ingenierías",
+          type: "image",
+          options: { hotspot: true },
+          description: "Tamaño recomendado: 1600 × 1200 px. Sugerencia: brazo robótico, CNC, circuitos, laboratorio técnico.",
+        }),
+        defineField({
+          name: "licenciaturas",
+          title: "Licenciaturas",
+          type: "image",
+          options: { hotspot: true },
+          description: "Tamaño recomendado: 1600 × 1200 px. Sugerencia: escena ejecutiva, laptops, reunión moderna.",
+        }),
+      ],
+    }),
+
     // --- AVISO DE PRIVACIDAD ---
     defineField({
       name: "avisoPrivacidad",

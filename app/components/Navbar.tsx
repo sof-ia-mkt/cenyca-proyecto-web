@@ -7,7 +7,7 @@ import { useState } from "react";
 const navLinks = [
   { label: "Inicio", href: "/" },
   { label: "Nosotros", href: "/nosotros" },
-  { label: "Oferta Académica", href: "/oferta" },
+  { label: "Oferta Académica", href: "/oferta-academica" },
   { label: "Vida Estudiantil", href: "/vida-estudiantil" },
   { label: "Vinculación", href: "/vinculacion" },
   { label: "Directorio", href: "/directorio" },
@@ -17,7 +17,7 @@ export default function Navbar() {
   const [menuAbierto, setMenuAbierto] = useState(false);
 
   return (
-    <header className="bg-[#1B2040] shadow-lg fixed top-0 left-0 right-0 z-50">
+    <header className="bg-[#121B33] shadow-lg fixed top-0 left-0 right-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-[72px]">
 
@@ -60,7 +60,7 @@ export default function Navbar() {
               href="https://inscripciones.cenyca.edu.mx"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#00D4FF] text-[#1B2040] text-sm font-bold px-5 py-2.5 rounded-full hover:bg-[#00B8DB] transition-all duration-300 hover:scale-105 shadow-[0_0_15px_rgba(0,212,255,0.3)]"
+              className="bg-[#00D4FF] text-[#121B33] text-sm font-bold px-5 py-2.5 rounded-full hover:bg-[#00B8DB] transition-all duration-300 hover:scale-105 shadow-[0_0_15px_rgba(0,212,255,0.3)]"
             >
               Inscríbete
             </a>
@@ -81,7 +81,7 @@ export default function Navbar() {
 
       {/* Menú mobile */}
       <div className={`lg:hidden overflow-hidden transition-all duration-300 ${menuAbierto ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}`}>
-        <div className="bg-[#252B52] px-4 py-4 flex flex-col gap-1 border-t border-white/10">
+        <div className="bg-[#1E2D4A] px-4 py-4 flex flex-col gap-1 border-t border-white/10">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -105,7 +105,7 @@ export default function Navbar() {
               href="https://inscripciones.cenyca.edu.mx"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#00D4FF] text-[#1B2040] text-sm font-bold px-5 py-3 rounded-full text-center hover:bg-[#00B8DB] transition-colors"
+              className="bg-[#00D4FF] text-[#121B33] text-sm font-bold px-5 py-3 rounded-full text-center hover:bg-[#00B8DB] transition-colors"
             >
               Inscríbete
             </a>
