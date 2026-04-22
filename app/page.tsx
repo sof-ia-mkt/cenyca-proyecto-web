@@ -13,6 +13,7 @@ import { client } from "@/sanity/lib/client";
 import { todasCarrerasQuery, todosCampusQuery, configuracionQuery } from "@/sanity/lib/queries";
 import HeroAnimado, { type HeroSlide } from "@/app/components/HeroAnimado";
 import BlueprintReveal from "@/app/components/BlueprintReveal";
+import LoadingIntro from "@/app/components/LoadingIntro";
 import { sanityImg } from "@/sanity/lib/image-url";
 import {
   FadeUp, FadeLeft, FadeRight,
@@ -602,6 +603,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <LoadingIntro />
       <HeroAnimado slides={config?.heroSlides ?? []} />
       <BlueprintReveal />
       <SeccionExcelencia carreras={carreras} />
