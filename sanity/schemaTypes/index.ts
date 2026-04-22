@@ -1,7 +1,6 @@
 import { type SchemaTypeDefinition } from "sanity";
 import { carrera } from "./carrera";
 import { campus } from "./campus";
-import { directorio } from "./directorio";
 import { configuracion } from "./configuracion";
 import { noticia } from "./noticia";
 import { documento } from "./documento";
@@ -13,7 +12,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     // Contenido principal
     carrera,
     campus,
-    directorio,
     noticia,
     documento,
     avisoPrivacidad,
