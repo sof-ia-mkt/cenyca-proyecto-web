@@ -300,7 +300,7 @@ function SeccionLicenciaturas({ carreras }: { carreras: Carrera[] }) {
         {/* Row 2 — Las otras 5 en grid compacto (5 cols desktop, 3 tablet, 2 mobile)
            con tratamiento "premium polish": ícono más grande, número de marca de agua,
            hover con glow dorado, tipografía con jerarquía mayor. */}
-        <StaggerContainer className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-5 gap-4">
           {COMPACT_LICENCIATURAS.map((lic, i) => {
             const Icon = lic.icon;
             return (
