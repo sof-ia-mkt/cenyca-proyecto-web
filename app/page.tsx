@@ -11,6 +11,7 @@ import { client } from "@/sanity/lib/client";
 import { todasCarrerasQuery, todosCampusQuery, configuracionQuery } from "@/sanity/lib/queries";
 import HeroAnimado, { type HeroSlide } from "@/app/components/HeroAnimado";
 import BlueprintReveal from "@/app/components/BlueprintReveal";
+import SeccionModalidades from "@/app/components/SeccionModalidades";
 import { sanityImg } from "@/sanity/lib/image-url";
 import {
   FadeUp, FadeLeft, FadeRight,
@@ -251,7 +252,7 @@ function SeccionLicenciaturas({ carreras }: { carreras: Carrera[] }) {
           </div>
         </div>
 
-        {/* Row 1 — Par destacado (50/50) con imagen, copy enriquecido y badge "Más solicitada" */}
+        {/* Row 1 — Par destacado (50/50) con imagen y copy enriquecido */}
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           {FEATURED_LICENCIATURAS.map((lic) => {
             const Icon = lic.icon;
@@ -276,13 +277,8 @@ function SeccionLicenciaturas({ carreras }: { carreras: Carrera[] }) {
                     className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#E9C176]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   />
                   <div className="absolute bottom-10 left-10 right-10">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-11 h-11 rounded-lg flex items-center justify-center bg-[#E9C176]/20 backdrop-blur-sm border border-[#E9C176]/30">
-                        <Icon size={20} className="text-[#E9C176]" strokeWidth={1.75} />
-                      </div>
-                      <span className="text-[#E9C176] font-bold text-[10px] uppercase tracking-[0.25em] px-2.5 py-1 rounded-full border border-[#E9C176]/40 bg-[#E9C176]/10 backdrop-blur-sm">
-                        Más solicitada
-                      </span>
+                    <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-[#E9C176]/20 backdrop-blur-sm border border-[#E9C176]/30 mb-5">
+                      <Icon size={22} className="text-[#E9C176]" strokeWidth={1.75} />
                     </div>
                     <h3
                       className="text-white font-bold text-3xl md:text-4xl mb-3"
@@ -300,23 +296,40 @@ function SeccionLicenciaturas({ carreras }: { carreras: Carrera[] }) {
           })}
         </StaggerContainer>
 
-        {/* Row 2 — Las otras 5 en grid compacto (5 cols desktop, 3 tablet, 2 mobile) */}
+        {/* Row 2 — Las otras 5 en grid compacto (5 cols desktop, 3 tablet, 2 mobile)
+           con tratamiento "premium polish": ícono más grande, número de marca de agua,
+           hover con glow dorado, tipografía con jerarquía mayor. */}
         <StaggerContainer className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-          {COMPACT_LICENCIATURAS.map((lic) => {
+          {COMPACT_LICENCIATURAS.map((lic, i) => {
             const Icon = lic.icon;
             return (
               <StaggerItem key={lic.slug}>
                 <Link
                   href={`/carreras/${lic.slug}`}
-                  className="group block relative overflow-hidden rounded-xl bg-[#F9F9FB] border border-[#E9C176]/10 hover:border-[#E9C176]/40 hover:-translate-y-1 transition-all duration-300 p-6 h-full"
+                  className="group block relative overflow-hidden rounded-xl bg-[#F9F9FB] border border-[#E9C176]/15 hover:border-[#E9C176]/50 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(233,193,118,0.18)] transition-all duration-300 p-7 h-full"
                 >
-                  <div className="flex flex-col h-full gap-4">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-[#E9C176]/10 group-hover:bg-[#E9C176]/20 transition-colors duration-300">
-                      <Icon size={18} className="text-[#E9C176]" strokeWidth={1.75} />
+                  {/* Número de marca de agua */}
+                  <span
+                    aria-hidden
+                    className="absolute top-4 right-5 text-[#E9C176]/15 font-black text-5xl select-none pointer-events-none"
+                    style={{ letterSpacing: "-0.05em", lineHeight: 1 }}
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+
+                  {/* Glow dorado en hover */}
+                  <div
+                    aria-hidden
+                    className="absolute -top-10 -right-10 w-32 h-32 bg-[#E9C176]/30 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                  />
+
+                  <div className="relative z-10 flex flex-col h-full gap-5">
+                    <div className="w-14 h-14 rounded-xl flex items-center justify-center bg-[#E9C176]/10 group-hover:bg-[#E9C176]/25 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                      <Icon size={26} className="text-[#E9C176]" strokeWidth={1.5} />
                     </div>
                     <h3
-                      className="text-[#121B33] font-bold text-sm md:text-base leading-snug"
-                      style={{ letterSpacing: "-0.01em" }}
+                      className="text-[#121B33] font-extrabold text-base md:text-lg leading-snug"
+                      style={{ letterSpacing: "-0.015em" }}
                     >
                       {lic.titulo}
                     </h3>
@@ -369,6 +382,8 @@ function SeccionStats() {
     </section>
   );
 }
+
+// ─── (SeccionModalidades extraído a app/components/SeccionModalidades.tsx) ──
 
 // ─── Beneficios ───────────────────────────────────────────────────────────────
 
@@ -537,6 +552,7 @@ export default async function HomePage() {
       <SeccionExcelencia carreras={carreras} />
       <SeccionLicenciaturas carreras={carreras} />
       <SeccionStats />
+      <SeccionModalidades />
       <SeccionPlanteles campus={campus} />
       <SeccionCTA config={config} />
     </>
