@@ -12,6 +12,7 @@ import { todasCarrerasQuery, todosCampusQuery, configuracionQuery } from "@/sani
 import HeroAnimado, { type HeroSlide } from "@/app/components/HeroAnimado";
 import BlueprintReveal from "@/app/components/BlueprintReveal";
 import SeccionModalidades from "@/app/components/SeccionModalidades";
+import SectionDivider from "@/app/components/SectionDivider";
 import { sanityImg } from "@/sanity/lib/image-url";
 import {
   FadeUp, FadeLeft, FadeRight,
@@ -549,12 +550,16 @@ export default async function HomePage() {
     <>
       <HeroAnimado slides={config?.heroSlides ?? []} />
       <BlueprintReveal />
+      <SectionDivider chapter="01" label="Ingenierías" accent="#00D4FF" bg="#F9F9FB" />
       <SeccionExcelencia carreras={carreras} />
+      <SectionDivider chapter="02" label="Licenciaturas" accent="#E9C176" bg="#FFFFFF" />
       <SeccionLicenciaturas carreras={carreras} />
-      <SeccionStats />
+      {/* <SeccionStats /> — oculta temporalmente */}
+      <SectionDivider chapter="03" label="Modalidades" accent="#00D4FF" bg="#121B33" dark />
       <SeccionModalidades />
+      <SectionDivider chapter="04" label="Planteles" accent="#00D4FF" bg="#121B33" dark />
       <SeccionPlanteles campus={campus} />
-      <SeccionCTA config={config} />
+      {/* <SeccionCTA config={config} /> — oculta temporalmente */}
     </>
   );
 }
