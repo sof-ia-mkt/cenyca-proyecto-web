@@ -42,6 +42,9 @@ public/videos/*.mov
 # vercel
 .vercel
 
+# sanity studio build artifacts
+.sanity/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
