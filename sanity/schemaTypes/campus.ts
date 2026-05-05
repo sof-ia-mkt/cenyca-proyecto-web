@@ -77,7 +77,7 @@ export const campus = defineType({
     }),
     defineField({
       name: "imagen",
-      title: "Foto del campus",
+      title: "Foto principal del campus",
       type: "image",
       options: { hotspot: true },
       fields: [
@@ -87,6 +87,27 @@ export const campus = defineType({
           type: "string",
         }),
       ],
+    }),
+    defineField({
+      name: "galeria",
+      title: "Galería de fotos",
+      description:
+        "Fotos adicionales del campus. Se usan en el carrusel del campus principal en la página de inicio.",
+      type: "array",
+      of: [
+        {
+          type: "image",
+          options: { hotspot: true },
+          fields: [
+            defineField({
+              name: "alt",
+              title: "Texto alternativo",
+              type: "string",
+            }),
+          ],
+        },
+      ],
+      options: { layout: "grid" },
     }),
     defineField({
       name: "esPrincipal",

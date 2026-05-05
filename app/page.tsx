@@ -4,15 +4,17 @@ import Link from "next/link";
 import {
   BarChart2, DollarSign, Scale, Search, ChefHat, BookOpen,
   GraduationCap, Calendar, BadgeCheck, Landmark, Users, MapPin,
-  ArrowRight,
+  ArrowRight, Phone, Clock,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { client } from "@/sanity/lib/client";
-import { todasCarrerasQuery, todosCampusQuery, configuracionQuery } from "@/sanity/lib/queries";
+import { todasCarrerasQuery, todosCampusQuery, configuracionQuery, noticiasHomeQuery } from "@/sanity/lib/queries";
+import { urlFor } from "@/sanity/lib/image";
 import HeroAnimado, { type HeroSlide } from "@/app/components/HeroAnimado";
 import BlueprintReveal from "@/app/components/BlueprintReveal";
 import SeccionModalidades from "@/app/components/SeccionModalidades";
-import SectionDivider from "@/app/components/SectionDivider";
+import SeccionNoticias, { type NoticiaCard } from "@/app/components/SeccionNoticias";
+import CampusCarrusel from "@/app/components/CampusCarrusel";
 import { sanityImg } from "@/sanity/lib/image-url";
 import {
   FadeUp, FadeLeft, FadeRight,
@@ -29,9 +31,14 @@ type Carrera = {
   imagenUrl?: string;
 };
 
+type CampusFoto = { url: string; alt?: string };
+
 type Campus = {
   _id: string; nombre: string; ciudad: string;
   direccion: string; esPrincipal: boolean;
+  telefono?: string; horario?: string; urlMaps?: string;
+  imagenUrl?: string;
+  galeria?: CampusFoto[];
 };
 
 type ImagenesPrograma = {
@@ -100,7 +107,7 @@ function SeccionExcelencia({ carreras }: { carreras: Carrera[] }) {
               <div className="flex items-center gap-3 mb-6">
                 <span aria-hidden className="block w-[2px] h-6 bg-[#00D4FF]" />
                 <p className="text-[#E9C176] font-bold tracking-[0.2em] uppercase text-xs">
-                  Frontera · Ingenierías Core
+                  Líderes en ingeniería · Noroeste
                 </p>
               </div>
             </FadeLeft>
@@ -112,9 +119,9 @@ function SeccionExcelencia({ carreras }: { carreras: Carrera[] }) {
                 lineHeight: 1.0,
               }}
             >
-              <WordReveal text="Ingeniería" delay={0.15} />{" "}
+              <WordReveal text="La #1 en ingenierías" delay={0.15} />{" "}
               <WordReveal
-                text="de frontera"
+                text="del noroeste"
                 delay={0.35}
                 className="text-[#00D4FF]"
                 underline
@@ -124,9 +131,9 @@ function SeccionExcelencia({ carreras }: { carreras: Carrera[] }) {
           <div className="flex flex-col items-start md:items-end gap-5 md:max-w-md">
             <FadeRight delay={0.5}>
               <p className="text-[#45464D] text-xl leading-relaxed">
-                Manufactura avanzada, arquitectura de software, robótica aplicada.
-                Nuestros ingenieros no estudian la industria del futuro —
-                la están construyendo hoy en Baja California.
+                La universidad de mayor crecimiento en el noroeste de México.
+                Formamos a los ingenieros que están construyendo la nueva
+                industria de Baja California — desde el aula al piso de planta.
               </p>
             </FadeRight>
             <FadeRight delay={0.65}>
@@ -192,12 +199,11 @@ const FEATURED_LICENCIATURAS = [
   },
 ] as const;
 
-// Las cinco complementarias: orden basado en volumen/reconocimiento de mercado.
+// Complementarias: orden basado en volumen/reconocimiento de mercado.
 const COMPACT_LICENCIATURAS = [
   { titulo: "Derecho",                       tagline: "Argumentación y justicia aplicada", slug: "derecho",                    icon: Scale },
   { titulo: "Administración de Empresas",    tagline: "Estrategia y crecimiento",          slug: "administracion-de-empresas", icon: BarChart2 },
   { titulo: "Contaduría Pública y Finanzas", tagline: "Números que sostienen decisiones",  slug: "contaduria-y-finanzas",      icon: DollarSign },
-  { titulo: "Psicología Organizacional",     tagline: "El factor humano del rendimiento",  slug: "psicologia-organizacional",  icon: Users },
   { titulo: "Ciencias de la Educación",      tagline: "Formar a quienes forman",           slug: "ciencias-de-la-educacion",   icon: BookOpen },
 ] as const;
 
@@ -256,7 +262,6 @@ function SeccionLicenciaturas({ carreras }: { carreras: Carrera[] }) {
         {/* Row 1 — Par destacado (50/50) con imagen y copy enriquecido */}
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           {FEATURED_LICENCIATURAS.map((lic) => {
-            const Icon = lic.icon;
             const img = imgBySlug.get(lic.slug);
             return (
               <StaggerItem
@@ -278,9 +283,6 @@ function SeccionLicenciaturas({ carreras }: { carreras: Carrera[] }) {
                     className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#E9C176]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   />
                   <div className="absolute bottom-10 left-10 right-10">
-                    <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-[#E9C176]/20 backdrop-blur-sm border border-[#E9C176]/30 mb-5">
-                      <Icon size={22} className="text-[#E9C176]" strokeWidth={1.75} />
-                    </div>
                     <h3
                       className="text-white font-bold text-3xl md:text-4xl mb-3"
                       style={{ letterSpacing: "-0.02em", lineHeight: 1.1 }}
@@ -297,44 +299,46 @@ function SeccionLicenciaturas({ carreras }: { carreras: Carrera[] }) {
           })}
         </StaggerContainer>
 
-        {/* Row 2 — Las otras 5 en grid compacto (5 cols desktop, 3 tablet, 2 mobile)
-           con tratamiento "premium polish": ícono más grande, número de marca de agua,
-           hover con glow dorado, tipografía con jerarquía mayor. */}
+        {/* Row 2 — Las compactas con foto de fondo + overlay (mismo tamaño, look premium) */}
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-5 gap-4">
-          {COMPACT_LICENCIATURAS.map((lic, i) => {
-            const Icon = lic.icon;
+          {COMPACT_LICENCIATURAS.map((lic) => {
+            const img = imgBySlug.get(lic.slug);
             return (
               <StaggerItem key={lic.slug}>
                 <Link
                   href={`/carreras/${lic.slug}`}
-                  className="group block relative overflow-hidden rounded-xl bg-[#F9F9FB] border border-[#E9C176]/15 hover:border-[#E9C176]/50 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(233,193,118,0.18)] transition-all duration-300 p-7 h-full"
+                  className="group relative block overflow-hidden rounded-xl bg-[#121B33] h-[280px] md:h-[300px] hover:-translate-y-1 hover:shadow-[0_18px_46px_rgba(233,193,118,0.25)] transition-all duration-300"
                 >
-                  {/* Número de marca de agua */}
-                  <span
+                  {/* Foto de fondo o gradient fallback */}
+                  {img ? (
+                    <div
+                      className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                      style={{ backgroundImage: `url(${img})` }}
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#E9C176] via-[#c19a4a] to-[#5a3f15]" />
+                  )}
+
+                  {/* Overlay oscuro para legibilidad */}
+                  <div
                     aria-hidden
-                    className="absolute top-4 right-5 text-[#E9C176]/15 font-black text-5xl select-none pointer-events-none"
-                    style={{ letterSpacing: "-0.05em", lineHeight: 1 }}
-                  >
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
+                    className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/15"
+                  />
 
                   {/* Glow dorado en hover */}
                   <div
                     aria-hidden
-                    className="absolute -top-10 -right-10 w-32 h-32 bg-[#E9C176]/30 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    className="absolute -top-10 -right-10 w-32 h-32 bg-[#E9C176]/40 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                   />
 
-                  <div className="relative z-10 flex flex-col h-full gap-5">
-                    <div className="w-14 h-14 rounded-xl flex items-center justify-center bg-[#E9C176]/10 group-hover:bg-[#E9C176]/25 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
-                      <Icon size={26} className="text-[#E9C176]" strokeWidth={1.5} />
-                    </div>
+                  <div className="relative z-10 flex flex-col h-full justify-end p-6">
                     <h3
-                      className="text-[#121B33] font-extrabold text-base md:text-lg leading-snug"
+                      className="text-white font-extrabold text-base md:text-lg leading-snug mb-1.5"
                       style={{ letterSpacing: "-0.015em" }}
                     >
                       {lic.titulo}
                     </h3>
-                    <p className="text-[#76777E] text-xs leading-relaxed mt-auto">
+                    <p className="text-white/70 text-xs leading-relaxed">
                       {lic.tagline}
                     </p>
                   </div>
@@ -437,54 +441,241 @@ function SeccionBeneficios() {
 // ─── Planteles ────────────────────────────────────────────────────────────────
 
 function SeccionPlanteles({ campus }: { campus: Campus[] }) {
+  const principal = campus.find((c) => c.esPrincipal) ?? campus[0];
+  const otros = campus.filter((c) => c._id !== principal?._id);
+
   return (
     <section className="bg-[#121B33] py-24 px-6 sm:px-10 lg:px-16 relative overflow-hidden">
       <div className="relative z-10 max-w-screen-xl mx-auto">
-        <FadeUp className="mb-14">
-          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#00D4FF] mb-3">
-            Presencia Regional
-          </p>
-          <h2
-            className="font-black text-white"
-            style={{ fontSize: "clamp(2rem, 4vw, 3rem)", letterSpacing: "-0.02em" }}
-          >
-            Nuestros Planteles
-          </h2>
-          <p className="text-white/50 mt-3 text-sm">
-            {campus.length} campus en Baja California, cerca de donde vives y trabajas.
-          </p>
-        </FadeUp>
-
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
-          {campus.map((p) => (
-            <StaggerItem key={p._id}>
-              <div className="bg-white/5 border border-white/10 rounded-xl p-7 hover:bg-white/10 hover:border-[#00D4FF]/30 hover:-translate-y-1 transition-all duration-300 h-full">
-                <MapPin size={24} className="text-[#00D4FF] mb-4" strokeWidth={1.5} />
-                <h3 className="font-bold text-white text-base mb-1" style={{ letterSpacing: "-0.01em" }}>{p.nombre}</h3>
-                <p className="text-white/40 text-xs uppercase tracking-wider mb-3 flex items-center gap-2">
-                  {CIUDAD_LABEL[p.ciudad] ?? p.ciudad}
-                  {p.esPrincipal && (
-                    <span className="bg-[#00D4FF]/15 text-[#00D4FF] px-2 py-0.5 rounded-full text-[10px]">
-                      Principal
-                    </span>
-                  )}
-                </p>
-                <p className="text-white/55 text-sm leading-relaxed">{p.direccion}</p>
-              </div>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
-
-        <FadeUp delay={0.2}>
-          <Link
-            href="/directorio"
-            className="inline-flex items-center gap-2 text-white border border-white/20 px-8 py-3.5 rounded-full font-bold text-sm uppercase tracking-wider hover:bg-white/10 transition-colors duration-300"
-          >
-            Ver directorio completo <ArrowRight size={16} />
-          </Link>
-        </FadeUp>
+        {principal && (
+          <FadeUp delay={0.05}>
+            <CampusHero campus={principal} otros={otros} />
+          </FadeUp>
+        )}
       </div>
     </section>
+  );
+}
+
+function CampusHero({ campus: c, otros = [] }: { campus: Campus; otros?: Campus[] }) {
+  const ciudadLabel = CIUDAD_LABEL[c.ciudad] ?? c.ciudad;
+  // Construye la lista de fotos: principal + galería (sin duplicar la principal).
+  const photos: CampusFoto[] = [];
+  if (c.imagenUrl) photos.push({ url: c.imagenUrl });
+  if (c.galeria?.length) {
+    for (const item of c.galeria) {
+      if (item?.url && item.url !== c.imagenUrl) photos.push(item);
+    }
+  }
+  return (
+    <div>
+      {/* Header monumental — pill cyan + headline gigante con glow + línea vertical */}
+      <div className="mb-12 md:mb-16 flex gap-6 md:gap-8">
+        {/* Línea decorativa vertical */}
+        <span
+          aria-hidden
+          className="hidden md:block w-[2px] shrink-0 self-stretch bg-gradient-to-b from-[#00D4FF] via-[#00D4FF]/40 to-transparent"
+        />
+
+        <div className="flex-1">
+          {/* Pill cyan */}
+          <span className="inline-flex items-center gap-2 bg-[#00D4FF]/15 border border-[#00D4FF]/40 text-[#00D4FF] px-3.5 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-[0.28em] mb-7 shadow-[0_4px_14px_rgba(0,212,255,0.18)]">
+            <span aria-hidden>★</span> Campus Principal · {ciudadLabel}
+          </span>
+
+          {/* Headline monumental — 2 líneas */}
+          <h3
+            className="text-white font-black"
+            style={{
+              fontSize: "clamp(2.6rem, 6vw, 5.5rem)",
+              letterSpacing: "-0.04em",
+              lineHeight: 0.98,
+            }}
+          >
+            <span className="block">Diseñado a la altura</span>
+            <span
+              className="block bg-clip-text text-transparent inline-block"
+              style={{
+                backgroundImage:
+                  "linear-gradient(110deg, #00D4FF 0%, #00D4FF 35%, #B3F0FF 48%, #FFFFFF 50%, #B3F0FF 52%, #00D4FF 65%, #00D4FF 100%)",
+                backgroundSize: "250% 100%",
+                animation: "textShimmer 5s ease-in-out infinite",
+                filter:
+                  "drop-shadow(0 0 22px rgba(0,212,255,0.45)) drop-shadow(0 0 8px rgba(0,212,255,0.4))",
+              }}
+            >
+              de tu ambición.
+            </span>
+          </h3>
+        </div>
+      </div>
+
+      {/* Carrusel cinematográfico — auto-rotate + Ken Burns */}
+      <CampusCarrusel photos={photos} altBase={c.nombre} />
+
+      {/* CTA + pines de otros planteles */}
+      <div className="relative mt-16 md:mt-20">
+        {/* Glow ambient detrás */}
+        <div
+          aria-hidden
+          className="absolute left-1/4 top-1/2 -translate-y-1/2 w-[500px] h-[260px] bg-[#00D4FF]/12 blur-[100px] pointer-events-none"
+        />
+
+        <div className="relative grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-10 lg:gap-16 items-center">
+          {/* Izquierda — CTA (centrado en mobile, izquierda en lg+) */}
+          <div className="text-center lg:text-left">
+            {/* Pill admisiones */}
+            <span className="inline-flex items-center gap-2 bg-[#00D4FF]/15 border border-[#00D4FF]/40 text-[#00D4FF] px-3.5 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-[0.28em] mb-6 shadow-[0_4px_14px_rgba(0,212,255,0.18)]">
+              <span aria-hidden>★</span> Admisiones Septiembre 2026 · Abiertas
+            </span>
+
+            {/* Headline en 2 líneas */}
+            <h4
+              className="text-white font-black mb-4"
+              style={{
+                fontSize: "clamp(1.9rem, 3.6vw, 3rem)",
+                letterSpacing: "-0.03em",
+                lineHeight: 1.05,
+              }}
+            >
+              <span className="block">Donde tu potencial</span>
+              <span
+                className="block bg-clip-text text-transparent inline-block"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(110deg, #00D4FF 0%, #00D4FF 35%, #B3F0FF 48%, #FFFFFF 50%, #B3F0FF 52%, #00D4FF 65%, #00D4FF 100%)",
+                  backgroundSize: "250% 100%",
+                  animation: "textShimmer 5s ease-in-out infinite",
+                  filter:
+                    "drop-shadow(0 0 16px rgba(0,212,255,0.4)) drop-shadow(0 0 6px rgba(0,212,255,0.35))",
+                }}
+              >
+                se vuelve éxito.
+              </span>
+            </h4>
+
+            <p className="text-white/65 text-base md:text-lg mb-8 max-w-xl mx-auto lg:mx-0">
+              Conoce el campus en persona antes de inscribirte. Sin costo, sin compromiso.
+            </p>
+
+            <Link
+              href="#agenda-recorrido"
+              className="inline-flex items-center gap-3 bg-[#00D4FF] text-[#121B33] px-8 py-4 rounded-full font-extrabold text-sm md:text-base uppercase tracking-wider hover:bg-[#33DDFF] hover:-translate-y-0.5 hover:shadow-[0_14px_40px_rgba(0,212,255,0.55)] shadow-[0_8px_28px_rgba(0,212,255,0.35)] transition-all"
+            >
+              Agenda tu recorrido <ArrowRight size={18} />
+            </Link>
+
+            {/* Ubicación Casa Blanca + link Google Maps */}
+            <div className="mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-x-2 gap-y-1 text-white/60 text-sm">
+              <MapPin size={14} className="text-[#00D4FF]" strokeWidth={2} />
+              <span>{c.direccion}</span>
+              {c.urlMaps && (
+                <>
+                  <span aria-hidden className="text-white/25">·</span>
+                  <a
+                    href={c.urlMaps}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-[#00D4FF] font-bold uppercase tracking-[0.18em] text-xs hover:gap-2 transition-all"
+                  >
+                    Ver en Google Maps <ArrowRight size={12} />
+                  </a>
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Derecha — pines de otros planteles (solo lg+ para mantener mobile limpio) */}
+          {otros.length > 0 && (
+            <div className="hidden lg:block">
+              <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/40 mb-5 flex items-center gap-3">
+                <span aria-hidden className="block w-6 h-px bg-white/30" />
+                También nos encuentras en
+              </p>
+              <ul className="space-y-3">
+                {otros.map((o) => (
+                  <li key={o._id}>
+                    <CampusPin campus={o} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+function CampusPin({ campus: c }: { campus: Campus }) {
+  const ciudad = CIUDAD_LABEL[c.ciudad] ?? c.ciudad;
+  const Wrapper: any = c.urlMaps ? "a" : "div";
+  const wrapperProps = c.urlMaps
+    ? { href: c.urlMaps, target: "_blank", rel: "noopener noreferrer" }
+    : {};
+  return (
+    <Wrapper
+      {...wrapperProps}
+      className="group flex items-start gap-4 bg-white/[0.04] border border-white/10 rounded-xl px-5 py-4 hover:bg-white/[0.08] hover:border-[#00D4FF]/40 transition-all"
+    >
+      <span className="shrink-0 w-9 h-9 rounded-full bg-[#00D4FF]/15 border border-[#00D4FF]/30 flex items-center justify-center group-hover:bg-[#00D4FF]/25 transition-colors">
+        <MapPin size={16} className="text-[#00D4FF]" strokeWidth={2} />
+      </span>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-baseline gap-2 mb-0.5">
+          <h4
+            className="font-bold text-white text-sm"
+            style={{ letterSpacing: "-0.01em" }}
+          >
+            {c.nombre}
+          </h4>
+          <span className="text-[#00D4FF] text-[9px] font-bold uppercase tracking-[0.22em]">
+            {ciudad}
+          </span>
+        </div>
+        <p className="text-white/55 text-xs leading-relaxed">{c.direccion}</p>
+      </div>
+      {c.urlMaps && (
+        <ArrowRight
+          size={14}
+          className="shrink-0 text-white/30 group-hover:text-[#00D4FF] group-hover:translate-x-0.5 transition-all mt-2"
+        />
+      )}
+    </Wrapper>
+  );
+}
+
+function CampusCompacto({ campus: c }: { campus: Campus }) {
+  return (
+    <div className="group relative h-full bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:bg-white/10 hover:border-[#00D4FF]/30 hover:-translate-y-1 transition-all duration-300 flex flex-col">
+      {c.imagenUrl && (
+        <div className="relative h-32 overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
+            style={{ backgroundImage: `url(${c.imagenUrl})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#121B33] via-[#121B33]/40 to-transparent" />
+        </div>
+      )}
+      <div className="p-6 flex flex-col flex-1">
+        {!c.imagenUrl && (
+          <MapPin size={20} className="text-[#00D4FF] mb-3" strokeWidth={1.5} />
+        )}
+        <p className="text-white/40 text-[10px] uppercase tracking-[0.25em] font-bold mb-1.5">
+          {CIUDAD_LABEL[c.ciudad] ?? c.ciudad}
+        </p>
+        <h3
+          className="font-bold text-white text-base mb-2"
+          style={{ letterSpacing: "-0.01em" }}
+        >
+          {c.nombre}
+        </h3>
+        <p className="text-white/55 text-xs leading-relaxed mt-auto">
+          {c.direccion}
+        </p>
+      </div>
+    </div>
   );
 }
 
@@ -540,24 +731,31 @@ function SeccionCTA({ config }: { config: Configuracion | null }) {
 // ─── Página principal ─────────────────────────────────────────────────────────
 
 export default async function HomePage() {
-  const [carreras, campus, config] = await Promise.all([
+  const [carreras, campus, config, noticiasRaw] = await Promise.all([
     client.fetch<Carrera[]>(todasCarrerasQuery),
     client.fetch<Campus[]>(todosCampusQuery),
     client.fetch<Configuracion>(configuracionQuery),
+    client.fetch<any[]>(noticiasHomeQuery),
   ]);
+
+  const noticias: NoticiaCard[] = (noticiasRaw ?? []).map((n) => ({
+    _id: n._id,
+    titulo: n.titulo,
+    slug: n.slug,
+    fecha: n.fecha,
+    categoria: n.categoria,
+    imagenUrl: n.imagen ? urlFor(n.imagen).width(720).height(450).fit("crop").url() : undefined,
+  }));
 
   return (
     <>
       <HeroAnimado slides={config?.heroSlides ?? []} />
       <BlueprintReveal />
-      <SectionDivider chapter="01" label="Ingenierías" accent="#00D4FF" bg="#F9F9FB" />
+      {noticias.length > 0 && <SeccionNoticias noticias={noticias} />}
       <SeccionExcelencia carreras={carreras} />
-      <SectionDivider chapter="02" label="Licenciaturas" accent="#E9C176" bg="#FFFFFF" />
       <SeccionLicenciaturas carreras={carreras} />
       {/* <SeccionStats /> — oculta temporalmente */}
-      <SectionDivider chapter="03" label="Modalidades" accent="#00D4FF" bg="#121B33" dark />
       <SeccionModalidades />
-      <SectionDivider chapter="04" label="Planteles" accent="#00D4FF" bg="#121B33" dark />
       <SeccionPlanteles campus={campus} />
       {/* <SeccionCTA config={config} /> — oculta temporalmente */}
     </>

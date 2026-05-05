@@ -2,7 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const traceEase: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
@@ -20,14 +20,33 @@ const fade = {
   visible: (delay: number) => ({ opacity: 1, transition: { duration: 0.5, delay } }),
 };
 
+function FormField({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <label className="block">
+      <span className="block text-[10px] font-mono tracking-[0.25em] text-[#00D4FF]/70 mb-1">
+        {label}
+      </span>
+      {children}
+    </label>
+  );
+}
+
 export default function BlueprintReveal() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-20%" });
+  const [form, setForm] = useState({ nombre: "", telefono: "", carrera: "" });
+  const [enviado, setEnviado] = useState(false);
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setEnviado(true);
+  }
 
   return (
     <section
+      id="agenda-recorrido"
       ref={ref}
-      className="relative overflow-hidden bg-[#121B33] py-32 px-6 md:px-12"
+      className="relative overflow-hidden bg-[#121B33] py-32 px-6 md:px-12 scroll-mt-20"
     >
       {/* grid pattern */}
       <div
@@ -123,64 +142,71 @@ export default function BlueprintReveal() {
               custom={0.5}
             />
 
-            {/* Outer gear teeth (approximated as polygon) */}
-            <motion.path
-              d={gearPath(200, 200, 140, 110, 16)}
-              variants={trace}
-              initial="hidden"
-              animate={inView ? "visible" : "hidden"}
-              custom={0.6}
-            />
-
-            {/* Inner rings */}
-            <motion.circle
-              cx="200"
-              cy="200"
-              r="85"
-              variants={trace}
-              initial="hidden"
-              animate={inView ? "visible" : "hidden"}
-              custom={0.9}
-            />
-            <motion.circle
-              cx="200"
-              cy="200"
-              r="55"
-              variants={trace}
-              initial="hidden"
-              animate={inView ? "visible" : "hidden"}
-              custom={1.05}
-            />
-            <motion.circle
-              cx="200"
-              cy="200"
-              r="18"
-              fill="#00D4FF"
-              fillOpacity={0.15}
-              variants={trace}
-              initial="hidden"
-              animate={inView ? "visible" : "hidden"}
-              custom={1.2}
-            />
-
-            {/* Mounting holes */}
-            {[
-              [140, 140],
-              [260, 140],
-              [140, 260],
-              [260, 260],
-            ].map(([cx, cy], i) => (
-              <motion.circle
-                key={`${cx}-${cy}`}
-                cx={cx}
-                cy={cy}
-                r="6"
+            {/* Engrane completo — rota despacio en bucle alrededor del centro (200,200) */}
+            <motion.g
+              style={{ transformOrigin: "200px 200px", transformBox: "fill-box" }}
+              animate={{ rotate: 360 }}
+              transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+            >
+              {/* Outer gear teeth */}
+              <motion.path
+                d={gearPath(200, 200, 140, 110, 16)}
                 variants={trace}
                 initial="hidden"
                 animate={inView ? "visible" : "hidden"}
-                custom={1.3 + i * 0.08}
+                custom={0.6}
               />
-            ))}
+
+              {/* Inner rings */}
+              <motion.circle
+                cx="200"
+                cy="200"
+                r="85"
+                variants={trace}
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
+                custom={0.9}
+              />
+              <motion.circle
+                cx="200"
+                cy="200"
+                r="55"
+                variants={trace}
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
+                custom={1.05}
+              />
+              <motion.circle
+                cx="200"
+                cy="200"
+                r="18"
+                fill="#00D4FF"
+                fillOpacity={0.15}
+                variants={trace}
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
+                custom={1.2}
+              />
+
+              {/* Mounting holes */}
+              {[
+                [140, 140],
+                [260, 140],
+                [140, 260],
+                [260, 260],
+              ].map(([cx, cy], i) => (
+                <motion.circle
+                  key={`${cx}-${cy}`}
+                  cx={cx}
+                  cy={cy}
+                  r="6"
+                  variants={trace}
+                  initial="hidden"
+                  animate={inView ? "visible" : "hidden"}
+                  custom={1.3 + i * 0.08}
+                />
+              ))}
+            </motion.g>
 
             {/* Annotation leader lines + labels */}
             <motion.path
@@ -266,35 +292,111 @@ export default function BlueprintReveal() {
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
             custom={0.6}
-            className="text-white/60 text-lg leading-relaxed max-w-lg mb-10"
+            className="text-white/60 text-base leading-relaxed max-w-lg mb-8"
           >
-            Cada programa se construye como un sistema: con tolerancias claras,
-            retroalimentación constante y salidas medibles al mercado.
+            Cada programa se construye como un sistema. Cuéntanos qué quieres
+            estudiar y un asesor te contacta.
           </motion.p>
 
-          <div className="space-y-5">
-            {[
-              { code: "01", label: "Laboratorios de prototipado industrial" },
-              { code: "02", label: "Proyectos integradores cada cuatrimestre" },
-              { code: "03", label: "Vinculación directa con la industria de BC" },
-            ].map((item, i) => (
-              <motion.div
-                key={item.code}
-                variants={fade}
-                initial="hidden"
-                animate={inView ? "visible" : "hidden"}
-                custom={0.9 + i * 0.15}
-                className="flex items-baseline gap-5"
-              >
-                <span className="text-[#E9C176] font-mono text-xs tracking-widest">
-                  {item.code}
-                </span>
-                <span className="text-white/80 text-base leading-snug border-b border-[#00D4FF]/0 hover:border-[#00D4FF]/40 transition-colors">
-                  {item.label}
-                </span>
-              </motion.div>
-            ))}
-          </div>
+          <motion.form
+            onSubmit={handleSubmit}
+            variants={fade}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+            custom={0.9}
+            className="relative rounded-xl border border-[#00D4FF]/20 bg-[#0d1430]/60 backdrop-blur-sm p-6 max-w-lg"
+          >
+            {/* form corner markers */}
+            <span aria-hidden className="absolute -top-px -left-px w-3 h-3 border-t border-l border-[#00D4FF]/60" />
+            <span aria-hidden className="absolute -top-px -right-px w-3 h-3 border-t border-r border-[#00D4FF]/60" />
+            <span aria-hidden className="absolute -bottom-px -left-px w-3 h-3 border-b border-l border-[#00D4FF]/60" />
+            <span aria-hidden className="absolute -bottom-px -right-px w-3 h-3 border-b border-r border-[#00D4FF]/60" />
+
+            {enviado ? (
+              <div className="text-center py-6">
+                <p className="text-[#00D4FF] font-mono text-xs tracking-[0.25em] uppercase mb-3">
+                  STATUS · OK
+                </p>
+                <h3 className="text-xl font-bold text-white mb-2">
+                  Solicitud recibida
+                </h3>
+                <p className="text-white/60 text-sm">
+                  Un asesor te contactará en las próximas horas.
+                </p>
+              </div>
+            ) : (
+              <>
+                <p className="text-[#E9C176] font-mono text-[10px] tracking-[0.25em] uppercase mb-4">
+                  FORM_01 · SOLICITA INFORMACIÓN
+                </p>
+
+                <div className="space-y-4">
+                  <FormField label="NOMBRE">
+                    <input
+                      type="text"
+                      required
+                      placeholder="Tu nombre"
+                      value={form.nombre}
+                      onChange={(e) => setForm({ ...form, nombre: e.target.value })}
+                      className="w-full bg-transparent border-b border-white/15 focus:border-[#00D4FF] outline-none text-white placeholder-white/25 text-sm py-2 transition-colors"
+                    />
+                  </FormField>
+
+                  <FormField label="WHATSAPP">
+                    <input
+                      type="tel"
+                      required
+                      placeholder="664 000 0000"
+                      value={form.telefono}
+                      onChange={(e) => setForm({ ...form, telefono: e.target.value })}
+                      className="w-full bg-transparent border-b border-white/15 focus:border-[#00D4FF] outline-none text-white placeholder-white/25 text-sm py-2 transition-colors"
+                    />
+                  </FormField>
+
+                  <FormField label="CARRERA">
+                    <select
+                      required
+                      value={form.carrera}
+                      onChange={(e) => setForm({ ...form, carrera: e.target.value })}
+                      className="w-full bg-transparent border-b border-white/15 focus:border-[#00D4FF] outline-none text-sm py-2 transition-colors appearance-none"
+                      style={{ color: form.carrera ? "white" : "rgba(255,255,255,0.25)" }}
+                    >
+                      <option value="" disabled style={{ background: "#0d1430" }}>
+                        Selecciona una opción
+                      </option>
+                      {[
+                        "Gastronomía",
+                        "Criminología",
+                        "Derecho",
+                        "Psicología",
+                        "Administración",
+                        "Contaduría",
+                        "Pedagogía",
+                        "Comunicación",
+                        "Ing. en Sistemas",
+                        "Ing. Industrial",
+                      ].map((c) => (
+                        <option key={c} value={c} style={{ background: "#0d1430" }}>
+                          {c}
+                        </option>
+                      ))}
+                    </select>
+                  </FormField>
+                </div>
+
+                <button
+                  type="submit"
+                  className="group mt-6 w-full bg-[#00D4FF] hover:bg-[#00D4FF]/90 text-[#0d1430] font-bold text-sm uppercase tracking-wider py-3 rounded-md transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_24px_rgba(0,212,255,0.35)]"
+                >
+                  Quiero información →
+                </button>
+
+                <p className="text-white/35 text-[10px] font-mono tracking-[0.2em] uppercase text-center mt-3">
+                  Respuesta en minutos · Sin compromiso
+                </p>
+              </>
+            )}
+          </motion.form>
         </div>
       </div>
     </section>

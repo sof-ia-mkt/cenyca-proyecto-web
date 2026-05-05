@@ -77,3 +77,15 @@ h3, h4, h5, h6 {
 .font-inter      { font-family: var(--font-inter), 'Inter', system-ui, sans-serif; }
 .font-bebas      { font-family: var(--font-inter), 'Inter', system-ui, sans-serif; font-weight: 800; letter-spacing: -0.02em; }
 .font-montserrat { font-family: var(--font-inter), 'Inter', system-ui, sans-serif; }
+
+/* Ticker noticias */
+@keyframes noticiasTicker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Shimmer "resplandor" — banda de luz que cruza el texto */
+@keyframes textShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -50% 0; }
+}

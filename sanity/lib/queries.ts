@@ -47,7 +47,12 @@ export const todosCampusQuery = groq`
     whatsapp,
     horario,
     esPrincipal,
-    urlMaps
+    urlMaps,
+    "imagenUrl": imagen.asset->url,
+    "galeria": galeria[]{
+      "url": asset->url,
+      alt
+    }
   }
 `
 
@@ -84,6 +89,17 @@ export const configuracionQuery = groq`
 
 export const todasNoticiasQuery = groq`
   *[_type == "noticia"] | order(fecha desc) {
+    _id,
+    titulo,
+    slug,
+    fecha,
+    categoria,
+    imagen
+  }
+`
+
+export const noticiasHomeQuery = groq`
+  *[_type == "noticia"] | order(fecha desc) [0...8] {
     _id,
     titulo,
     slug,
