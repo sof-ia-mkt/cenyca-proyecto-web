@@ -1,11 +1,11 @@
 import type { StructureResolver } from 'sanity/structure'
 
-// Configuracion es un singleton — solo puede existir un documento con ID fijo
+// Configuración e Historia son singletons — solo un documento con ID fijo
 export const structure: StructureResolver = (S) =>
   S.list()
     .title('Content')
     .items([
-      // Singleton: siempre abre el mismo documento ID "configuracion"
+      // Singleton: Configuración General
       S.listItem()
         .title('Configuración General')
         .child(
@@ -13,9 +13,17 @@ export const structure: StructureResolver = (S) =>
             .schemaType('configuracion')
             .documentId('configuracion-general')
         ),
+      // Singleton: Historia / Nosotros (Home)
+      S.listItem()
+        .title('Historia / Nosotros (Home)')
+        .child(
+          S.document()
+            .schemaType('historia')
+            .documentId('historia-home')
+        ),
       S.divider(),
-      // Resto de tipos (sin configuracion para evitar duplicados en el menú)
+      // Resto de tipos (sin singletons para evitar duplicados en el menú)
       ...S.documentTypeListItems().filter(
-        (item) => item.getId() !== 'configuracion'
+        (item) => !['configuracion', 'historia'].includes(item.getId() ?? '')
       ),
     ])

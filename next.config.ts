@@ -46,7 +46,7 @@ const studioHeaders = [
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' data: https://fonts.gstatic.com",
       "img-src 'self' data: blob: https://cdn.sanity.io https://lh3.googleusercontent.com",
-      "connect-src 'self' https://*.api.sanity.io https://*.apicdn.sanity.io wss://*.api.sanity.io https://api.sanity.io",
+      "connect-src 'self' https://*.api.sanity.io https://*.apicdn.sanity.io wss://*.api.sanity.io https://api.sanity.io https://sanity-cdn.com https://*.sanity-cdn.com",
       "frame-src 'self' https://cdn.sanity.io",
       "media-src 'self' https://cdn.sanity.io",
       "object-src 'none'",

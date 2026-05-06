@@ -81,6 +81,27 @@ export const configuracion = defineType({
       ],
     }),
 
+    // --- POPUP DE PROMOCIÓN ---
+    defineField({
+      name: "popupPromo",
+      title: "Popup de promoción",
+      description:
+        "Imagen de fondo que aparece en el popup de promoción del home (al scrollear).",
+      type: "object",
+      fields: [
+        defineField({
+          name: "imagen",
+          title: "Imagen de fondo del popup",
+          description: "Recomendado: 1080x1080 o más, vertical/cuadrada se ve mejor.",
+          type: "image",
+          options: { hotspot: true },
+          fields: [
+            defineField({ name: "alt", title: "Texto alternativo", type: "string" }),
+          ],
+        }),
+      ],
+    }),
+
     // --- SEO GLOBAL ---
     defineField({
       name: "seo",

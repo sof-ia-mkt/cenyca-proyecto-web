@@ -6,6 +6,7 @@ import { noticia } from "./noticia";
 import { documento } from "./documento";
 import { avisoPrivacidad } from "./avisoPrivacidad";
 import { pagina } from "./pagina";
+import { historia } from "./historia";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -16,7 +17,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     documento,
     avisoPrivacidad,
     pagina,
-    // Configuración global (singleton)
+    // Singletons
     configuracion,
+    historia,
   ],
 };

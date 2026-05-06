@@ -109,6 +109,25 @@ export const noticiasHomeQuery = groq`
   }
 `
 
+// ─── Historia / Nosotros (singleton) ────────────────────────────────────────
+
+export const historiaHomeQuery = groq`
+  *[_type == "historia" && _id == "historia-home"][0] {
+    kicker,
+    headline,
+    parrafo,
+    ctaTexto,
+    ctaUrl,
+    "momentos": momentos[] {
+      year,
+      caption,
+      descripcion,
+      "imagenUrl": imagen.asset->url,
+      "alt": imagen.alt
+    }
+  }
+`
+
 export const noticiaBySlugQuery = groq`
   *[_type == "noticia" && slug.current == $slug][0] {
     _id,

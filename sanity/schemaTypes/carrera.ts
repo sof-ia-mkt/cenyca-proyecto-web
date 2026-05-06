@@ -61,7 +61,6 @@ export const carrera = defineType({
           { title: "Ejecutivo", value: "ejecutivo" },
           { title: "En línea", value: "en-linea" },
         ],
-        layout: "tags",
       },
       validation: (Rule) => Rule.required().min(1),
     }),

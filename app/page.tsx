@@ -8,10 +8,10 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { client } from "@/sanity/lib/client";
-import { todasCarrerasQuery, todosCampusQuery, configuracionQuery, noticiasHomeQuery } from "@/sanity/lib/queries";
+import { todasCarrerasQuery, todosCampusQuery, configuracionQuery, noticiasHomeQuery, historiaHomeQuery } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import HeroAnimado, { type HeroSlide } from "@/app/components/HeroAnimado";
-import BlueprintReveal from "@/app/components/BlueprintReveal";
+import SeccionHistoria, { type HistoriaData } from "@/app/components/SeccionHistoria";
 import SeccionModalidades from "@/app/components/SeccionModalidades";
 import SeccionNoticias, { type NoticiaCard } from "@/app/components/SeccionNoticias";
 import CampusCarrusel from "@/app/components/CampusCarrusel";
@@ -266,7 +266,7 @@ function SeccionLicenciaturas({ carreras }: { carreras: Carrera[] }) {
             return (
               <StaggerItem
                 key={lic.slug}
-                className="group relative overflow-hidden rounded-xl bg-[#121B33] aspect-[16/10] md:aspect-auto md:h-[500px]"
+                className="group relative overflow-hidden rounded-xl bg-[#121B33] aspect-[4/5] md:aspect-auto md:h-[500px]"
               >
                 <Link href={`/carreras/${lic.slug}`} className="block w-full h-full">
                   {img ? (
@@ -277,19 +277,20 @@ function SeccionLicenciaturas({ carreras }: { carreras: Carrera[] }) {
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-[#E9C176] to-[#8B6A2E]" />
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+                  {/* Gradient más suave en mobile, intenso en desktop */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent md:from-black/85 md:via-black/25" />
                   <div
                     aria-hidden
                     className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#E9C176]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   />
-                  <div className="absolute bottom-10 left-10 right-10">
+                  <div className="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10 md:right-10">
                     <h3
-                      className="text-white font-bold text-3xl md:text-4xl mb-3"
+                      className="text-white font-bold text-2xl md:text-4xl mb-2 md:mb-3"
                       style={{ letterSpacing: "-0.02em", lineHeight: 1.1 }}
                     >
                       {lic.titulo}
                     </h3>
-                    <p className="text-white/80 text-base leading-relaxed max-w-xl">
+                    <p className="text-white/80 text-sm md:text-base leading-relaxed max-w-xl">
                       {lic.tagline}
                     </p>
                   </div>
@@ -558,12 +559,14 @@ function CampusHero({ campus: c, otros = [] }: { campus: Campus; otros?: Campus[
               Conoce el campus en persona antes de inscribirte. Sin costo, sin compromiso.
             </p>
 
-            <Link
-              href="#agenda-recorrido"
+            <a
+              href="https://wa.me/526641300236?text=Hola%2C%20me%20gustar%C3%ADa%20agendar%20un%20recorrido%20por%20el%20campus%20Casa%20Blanca."
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-3 bg-[#00D4FF] text-[#121B33] px-8 py-4 rounded-full font-extrabold text-sm md:text-base uppercase tracking-wider hover:bg-[#33DDFF] hover:-translate-y-0.5 hover:shadow-[0_14px_40px_rgba(0,212,255,0.55)] shadow-[0_8px_28px_rgba(0,212,255,0.35)] transition-all"
             >
               Agenda tu recorrido <ArrowRight size={18} />
-            </Link>
+            </a>
 
             {/* Ubicación Casa Blanca + link Google Maps */}
             <div className="mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-x-2 gap-y-1 text-white/60 text-sm">
@@ -731,11 +734,12 @@ function SeccionCTA({ config }: { config: Configuracion | null }) {
 // ─── Página principal ─────────────────────────────────────────────────────────
 
 export default async function HomePage() {
-  const [carreras, campus, config, noticiasRaw] = await Promise.all([
+  const [carreras, campus, config, noticiasRaw, historia] = await Promise.all([
     client.fetch<Carrera[]>(todasCarrerasQuery),
     client.fetch<Campus[]>(todosCampusQuery),
     client.fetch<Configuracion>(configuracionQuery),
     client.fetch<any[]>(noticiasHomeQuery),
+    client.fetch<HistoriaData | null>(historiaHomeQuery).catch(() => null),
   ]);
 
   const noticias: NoticiaCard[] = (noticiasRaw ?? []).map((n) => ({
@@ -750,7 +754,7 @@ export default async function HomePage() {
   return (
     <>
       <HeroAnimado slides={config?.heroSlides ?? []} />
-      <BlueprintReveal />
+      {historia && <SeccionHistoria data={historia} />}
       {noticias.length > 0 && <SeccionNoticias noticias={noticias} />}
       <SeccionExcelencia carreras={carreras} />
       <SeccionLicenciaturas carreras={carreras} />
