@@ -3,7 +3,17 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
-// ─── Fade up al entrar en viewport ────────────────────────────────────────────
+// ─── ScrollReveal helpers ─────────────────────────────────────────────────────
+// Estrategia actual: animaciones SUTILES de entrada solo para headers de
+// sección (FadeUp / FadeLeft / FadeRight / ScaleIn / WordReveal). Los
+// contenedores de stagger se quedan como passthrough — los cards/grids
+// aparecen sin animación para evitar ruido.
+// Todos los reveals usan `once: true` (no re-animan al volver a entrar).
+
+const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+const DURATION = 0.55;
+
+// ─── Fade up al entrar en viewport (headers, bloques de texto) ───────────────
 export function FadeUp({
   children,
   delay = 0,
@@ -20,64 +30,16 @@ export function FadeUp({
     <motion.div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: DURATION, delay, ease: EASE }}
     >
       {children}
     </motion.div>
   );
 }
 
-// ─── Contenedor con hijos escalonados ─────────────────────────────────────────
-export function StaggerContainer({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
-
-  return (
-    <motion.div
-      ref={ref}
-      className={className}
-      initial="hidden"
-      animate={inView ? "visible" : "hidden"}
-      variants={{
-        hidden: {},
-        visible: { transition: { staggerChildren: 0.08 } },
-      }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-// ─── Hijo del stagger container ───────────────────────────────────────────────
-export function StaggerItem({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <motion.div
-      className={className}
-      variants={{
-        hidden: { opacity: 0, y: 30 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
-      }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-// ─── Fade desde izquierda ─────────────────────────────────────────────────────
+// ─── Fade desde izquierda (kickers, columnas izquierdas) ──────────────────────
 export function FadeLeft({
   children,
   delay = 0,
@@ -88,22 +50,22 @@ export function FadeLeft({
   className?: string;
 }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
     <motion.div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, x: -40 }}
+      initial={{ opacity: 0, x: -24 }}
       animate={inView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: DURATION, delay, ease: EASE }}
     >
       {children}
     </motion.div>
   );
 }
 
-// ─── Fade desde derecha ───────────────────────────────────────────────────────
+// ─── Fade desde derecha (textos auxiliares, CTAs) ────────────────────────────
 export function FadeRight({
   children,
   delay = 0,
@@ -114,76 +76,22 @@ export function FadeRight({
   className?: string;
 }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
     <motion.div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, x: 40 }}
+      initial={{ opacity: 0, x: 24 }}
       animate={inView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: DURATION, delay, ease: EASE }}
     >
       {children}
     </motion.div>
   );
 }
 
-// ─── Split-text por palabra con entrada secuencial al entrar en viewport ─────
-// Cada palabra entra con blur + translate + fade, con un pequeño stagger.
-// Si `underline` es true, dibuja una línea cian (4px) debajo del texto una
-// vez terminado el reveal de las palabras.
-export function WordReveal({
-  text,
-  delay = 0,
-  className = "",
-  underline = false,
-  stagger = 0.08,
-}: {
-  text: string;
-  delay?: number;
-  className?: string;
-  underline?: boolean;
-  stagger?: number;
-}) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  const words = text.split(" ");
-
-  return (
-    <span ref={ref} className={`inline-block ${className}`}>
-      {words.map((word, i) => (
-        <span key={i} className="inline-block whitespace-nowrap">
-          <motion.span
-            className="inline-block"
-            initial={{ opacity: 0, filter: "blur(10px)", y: 14 }}
-            animate={inView ? { opacity: 1, filter: "blur(0px)", y: 0 } : {}}
-            transition={{ duration: 0.65, delay: delay + i * stagger, ease: [0.22, 1, 0.36, 1] }}
-          >
-            {word}
-          </motion.span>
-          {i < words.length - 1 && "\u00A0"}
-        </span>
-      ))}
-      {underline && (
-        <motion.span
-          aria-hidden
-          className="block h-[4px] mt-1 origin-left rounded-full"
-          style={{ backgroundColor: "currentColor" }}
-          initial={{ scaleX: 0 }}
-          animate={inView ? { scaleX: 1 } : {}}
-          transition={{
-            duration: 0.7,
-            delay: delay + words.length * stagger + 0.15,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-        />
-      )}
-    </span>
-  );
-}
-
-// ─── Escala al entrar ─────────────────────────────────────────────────────────
+// ─── Escala sutil (CTAs grandes, números) ────────────────────────────────────
 export function ScaleIn({
   children,
   delay = 0,
@@ -200,11 +108,75 @@ export function ScaleIn({
     <motion.div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, scale: 0.9 }}
+      initial={{ opacity: 0, scale: 0.96 }}
       animate={inView ? { opacity: 1, scale: 1 } : {}}
-      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: DURATION, delay, ease: EASE }}
     >
       {children}
     </motion.div>
   );
+}
+
+// ─── Reveal de texto (subtítulos, headlines) ────────────────────────────────
+// Versión simple: fade-up del texto completo (sin stagger por palabra para
+// evitar el efecto "carga lenta" en headlines largos).
+export function WordReveal({
+  text,
+  delay = 0,
+  className = "",
+  underline = false,
+}: {
+  text: string;
+  delay?: number;
+  className?: string;
+  underline?: boolean;
+  stagger?: number;
+}) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+
+  return (
+    <motion.span
+      ref={ref}
+      className={`inline-block ${className}`}
+      initial={{ opacity: 0, y: 14 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: DURATION, delay, ease: EASE }}
+    >
+      {text}
+      {underline && (
+        <motion.span
+          aria-hidden
+          className="block h-[4px] mt-1 origin-left rounded-full"
+          style={{ backgroundColor: "currentColor" }}
+          initial={{ scaleX: 0 }}
+          animate={inView ? { scaleX: 1 } : {}}
+          transition={{ duration: 0.7, delay: delay + 0.3, ease: EASE }}
+        />
+      )}
+    </motion.span>
+  );
+}
+
+// ─── Stagger container/item — passthrough (sin animación) ───────────────────
+// Los grids de cards aparecen sin animación para mantener la home sobria.
+// Los componentes se conservan para no romper call-sites.
+export function StaggerContainer({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return <div className={className}>{children}</div>;
+}
+
+export function StaggerItem({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return <div className={className}>{children}</div>;
 }

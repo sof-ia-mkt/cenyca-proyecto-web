@@ -1,9 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { X, ArrowRight } from "lucide-react";
-
-const STORAGE_KEY = "promoPopupDismissed";
 
 export default function PromoPopup({
   inscripcionesUrl,
@@ -13,33 +11,20 @@ export default function PromoPopup({
   backgroundUrl?: string;
 }) {
   const [open, setOpen] = useState(false);
+  // Una vez mostrado, no se vuelve a abrir hasta que el usuario refresque la página
+  // (refresh o entrar de nuevo desde fuera). Navegación interna no lo re-dispara
+  // porque el componente vive en el layout y no se desmonta.
+  const shownRef = useRef(false);
   const url = inscripcionesUrl || "https://inscripciones.cenyca.edu.mx";
 
-  // Trigger: scroll > 35% del documento O 14s en página, lo que ocurra primero.
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (sessionStorage.getItem(STORAGE_KEY)) return;
-
-    let fired = false;
-    const fire = () => {
-      if (fired) return;
-      fired = true;
-      setOpen(true);
-    };
-
-    const onScroll = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      if (max <= 0) return;
-      if (window.scrollY / max > 0.35) fire();
-    };
-
-    const timer = setTimeout(fire, 14000);
-    window.addEventListener("scroll", onScroll, { passive: true });
-
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener("scroll", onScroll);
-    };
+    const timer = setTimeout(() => {
+      if (!shownRef.current) {
+        shownRef.current = true;
+        setOpen(true);
+      }
+    }, 10000);
+    return () => clearTimeout(timer);
   }, []);
 
   // ESC cierra
@@ -63,9 +48,6 @@ export default function PromoPopup({
 
   function dismiss() {
     setOpen(false);
-    if (typeof window !== "undefined") {
-      sessionStorage.setItem(STORAGE_KEY, "1");
-    }
   }
 
   if (!open) return null;
