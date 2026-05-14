@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { sanityFetch } from '@/sanity/lib/live'
 import { todasNoticiasQuery } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
+import NewsletterSuscripcion from '@/app/components/NewsletterSuscripcion'
 
 export const metadata = { title: 'CENYCA Comunica — Noticias' }
 
@@ -68,6 +69,8 @@ export default async function NoticiasPage() {
           ))}
         </div>
       )}
+
+      <NewsletterSuscripcion />
     </div>
   )
 }
