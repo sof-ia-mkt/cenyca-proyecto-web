@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import { ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react";
 import type { HistoriaMomento } from "./SeccionHistoria";
 
@@ -74,11 +75,14 @@ export default function HistoriaTimeline({
           aria-label={`Ver foto completa: ${active.caption}`}
         >
           {sorted.map((m, i) => (
-            <img
+            <Image
               key={i}
               src={m.imagenUrl}
               alt={m.alt || m.caption}
-              className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[900ms] ease-in-out"
+              fill
+              sizes="(max-width: 1024px) 100vw, 60vw"
+              priority={i === 0}
+              className="object-cover transition-opacity duration-[900ms] ease-in-out"
               style={{ opacity: i === idx ? 1 : 0 }}
               aria-hidden={i !== idx}
             />
@@ -244,10 +248,13 @@ export default function HistoriaTimeline({
           >
             <X size={20} />
           </button>
-          <img
+          <Image
             src={active.imagenUrl}
             alt={active.alt || active.caption}
-            className="max-w-full max-h-[88vh] object-contain rounded-xl shadow-[0_40px_120px_rgba(0,0,0,0.6)]"
+            width={1600}
+            height={1200}
+            sizes="100vw"
+            className="max-w-full max-h-[88vh] w-auto h-auto object-contain rounded-xl shadow-[0_40px_120px_rgba(0,0,0,0.6)]"
             onClick={(e) => e.stopPropagation()}
           />
         </div>

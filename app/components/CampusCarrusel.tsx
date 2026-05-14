@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type Foto = { url: string; alt?: string };
@@ -102,10 +103,12 @@ export default function CampusCarrusel({
                        w-[85%] sm:w-[calc((100%-1rem)/2)] md:w-[calc((100%-2.5rem)/3)]
                        aspect-[4/3]"
           >
-            <img
+            <Image
               src={p.url}
               alt={p.alt || `${altBase} — foto ${i + 1}`}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              fill
+              sizes="(max-width: 640px) 85vw, (max-width: 768px) 50vw, 33vw"
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
             />
             {/* Título (alt) — sin overlay, las fotos ya vienen con su propio tratamiento */}
             {p.alt && (
