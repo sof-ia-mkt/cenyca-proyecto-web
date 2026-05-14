@@ -14,13 +14,15 @@ export default function HistoriaTimeline({
 }) {
   // Ordena cronológicamente: 2007 → 2010s → 2019 → 2024 → Hoy
   const sorted = useMemo(() => {
-    return [...momentos].sort((a, b) => {
-      const ya = parseInt(a.year, 10);
-      const yb = parseInt(b.year, 10);
-      const va = isNaN(ya) ? (a.year.toLowerCase() === "hoy" ? 9999 : 0) : ya;
-      const vb = isNaN(yb) ? (b.year.toLowerCase() === "hoy" ? 9999 : 0) : yb;
-      return va - vb;
-    });
+    return [...momentos]
+      .filter((m): m is typeof m & { imagenUrl: string } => !!m.imagenUrl)
+      .sort((a, b) => {
+        const ya = parseInt(a.year, 10);
+        const yb = parseInt(b.year, 10);
+        const va = isNaN(ya) ? (a.year.toLowerCase() === "hoy" ? 9999 : 0) : ya;
+        const vb = isNaN(yb) ? (b.year.toLowerCase() === "hoy" ? 9999 : 0) : yb;
+        return va - vb;
+      });
   }, [momentos]);
 
   const [idx, setIdx] = useState(0);
