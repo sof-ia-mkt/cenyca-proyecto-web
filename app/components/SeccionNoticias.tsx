@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useSyncExternalStore } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
@@ -21,19 +21,19 @@ export default function SeccionNoticias({ noticias }: { noticias: NoticiaCard[] 
   const trackRef = useRef<HTMLDivElement>(null);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(true);
-  const [hoy, setHoy] = useState("");
-
-  useEffect(() => {
-    const formatted = new Intl.DateTimeFormat("es-MX", {
-      weekday: "long",
-      day: "numeric",
-      month: "short",
-    })
-      .format(new Date())
-      .replace(/\./g, "")
-      .toUpperCase();
-    setHoy(formatted);
-  }, []);
+  const hoy = useSyncExternalStore(
+    () => () => {},
+    () =>
+      new Intl.DateTimeFormat("es-MX", {
+        weekday: "long",
+        day: "numeric",
+        month: "short",
+      })
+        .format(new Date())
+        .replace(/\./g, "")
+        .toUpperCase(),
+    () => "",
+  );
 
   // Items para el ticker — categoría + título de cada noticia. Si hay pocas, se duplica.
   const tickerItems = (() => {

@@ -138,7 +138,7 @@ export default function CTAContacto() {
                             type={type}
                             placeholder={placeholder}
                             required
-                            value={(form as any)[name]}
+                            value={form[name as keyof typeof form]}
                             onChange={(e) => setForm({ ...form, [name]: e.target.value })}
                             className="w-full pl-10 pr-4 py-3 rounded-xl text-sm text-white placeholder-white/30 outline-none transition-all"
                             style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)' }}

@@ -31,7 +31,12 @@ export const carreraBySlugQuery = groq`
     perfilEgresado,
     campoLaboral,
     color,
-    "imagenUrl": imagen.asset->url
+    "imagenUrl": imagen.asset->url,
+    "seo": {
+      "titulo": seo.titulo,
+      "descripcion": seo.descripcion,
+      "imagenUrl": seo.imagen.asset->url
+    }
   }
 `
 
@@ -136,7 +141,29 @@ export const noticiaBySlugQuery = groq`
     fecha,
     categoria,
     imagen,
-    contenido
+    "contenido": contenido[]{
+      ...,
+      _type == "image" => {
+        ...,
+        "url": asset->url,
+        "lqip": asset->metadata.lqip,
+        "dimensions": asset->metadata.dimensions,
+        "alt": coalesce(alt, "")
+      }
+    }
+  }
+`
+
+export const noticiasRelacionadasQuery = groq`
+  *[_type == "noticia" && slug.current != $slug] | order(
+    select(categoria == $categoria => 0, 1), fecha desc
+  )[0...3] {
+    _id,
+    titulo,
+    slug,
+    fecha,
+    categoria,
+    imagen
   }
 `
 

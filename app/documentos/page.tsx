@@ -17,7 +17,13 @@ export default async function DocumentosPage() {
         <p className="text-white/40">No hay documentos publicados aún.</p>
       ) : (
         <div className="space-y-3">
-          {documentos.map((doc: any) => (
+          {documentos.map((doc: {
+            _id: string;
+            titulo: string;
+            categoria?: string;
+            descripcion?: string;
+            archivoUrl?: string;
+          }) => (
             <div
               key={doc._id}
               className="flex items-center gap-5 p-5 rounded-2xl border border-[rgba(0,212,255,0.15)] bg-[#1E2D4A] hover:border-[rgba(0,212,255,0.35)] transition-colors group"

@@ -3,10 +3,8 @@ export const revalidate = 0;
 import Link from "next/link";
 import {
   BarChart2, DollarSign, Scale, Search, ChefHat, BookOpen,
-  GraduationCap, Calendar, BadgeCheck, Landmark, Users, MapPin,
-  ArrowRight, Phone, Clock,
+  MapPin, ArrowRight,
 } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
 import { client } from "@/sanity/lib/client";
 import { todasCarrerasQuery, todosCampusQuery, configuracionQuery, noticiasHomeQuery, historiaHomeQuery } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
@@ -18,7 +16,7 @@ import CampusCarrusel from "@/app/components/CampusCarrusel";
 import { sanityImg } from "@/sanity/lib/image-url";
 import {
   FadeUp, FadeLeft, FadeRight,
-  StaggerContainer, StaggerItem, ScaleIn,
+  StaggerContainer, StaggerItem,
   WordReveal,
 } from "@/app/components/ScrollReveal";
 
@@ -53,6 +51,15 @@ type Configuracion = {
   sistemas?: { inscripciones?: string };
   heroSlides?: HeroSlide[];
   imagenesPrograma?: ImagenesPrograma;
+};
+
+type NoticiaRaw = {
+  _id: string;
+  titulo: string;
+  slug: { current: string };
+  fecha?: string;
+  categoria?: string;
+  imagen?: { asset?: { _ref?: string } } | null;
 };
 
 // ─── Mapeos UI ────────────────────────────────────────────────────────────────
@@ -355,89 +362,7 @@ function SeccionLicenciaturas({ carreras }: { carreras: Carrera[] }) {
 
 // ─── Innovation Stats ─────────────────────────────────────────────────────────
 
-const stats = [
-  { num: "95%", label: "Empleabilidad", desc: "Nuestros egresados lideran en las empresas más importantes del noroeste desde el primer año." },
-  { num: "18+", label: "Años de Trayectoria", desc: "Casi dos décadas formando a los ingenieros y profesionistas de Baja California." },
-  { num: "5",   label: "Campus en BC",      desc: "Presencia consolidada en Tijuana, Tecate y Ensenada, cerca de donde vives." },
-  { num: "#1",  label: "Ingenierías del NO", desc: "Liderazgo indiscutible en calidad educativa e investigación aplicada en el noroeste." },
-];
-
-function SeccionStats() {
-  return (
-    <section className="py-32 bg-[#F3F3F5]">
-      <div className="max-w-screen-2xl mx-auto px-6 md:px-12">
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {stats.map((s) => (
-            <StaggerItem key={s.label}>
-              <div className="bg-white p-12 rounded-xl h-full">
-                <div
-                  className="font-black text-[#121B33] mb-4"
-                  style={{ fontSize: "clamp(3.5rem, 6vw, 4.5rem)", letterSpacing: "-0.04em", lineHeight: 1 }}
-                >
-                  {s.num}
-                </div>
-                <div className="text-xs font-bold tracking-[0.2em] uppercase text-[#45464D]">
-                  {s.label}
-                </div>
-                <p className="mt-4 text-sm text-[#76777E] leading-relaxed">{s.desc}</p>
-              </div>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
-      </div>
-    </section>
-  );
-}
-
 // ─── (SeccionModalidades extraído a app/components/SeccionModalidades.tsx) ──
-
-// ─── Beneficios ───────────────────────────────────────────────────────────────
-
-const beneficios: { Icon: LucideIcon; titulo: string; desc: string }[] = [
-  { Icon: GraduationCap, titulo: "Titúlate en 3 años",     desc: "Modelo cuatrimestral que acelera tu formación sin sacrificar calidad." },
-  { Icon: Calendar,      titulo: "Horarios Flexibles",      desc: "Modalidad ejecutiva con clases entre semana y fines de semana." },
-  { Icon: BadgeCheck,    titulo: "Validez Oficial SEP",     desc: "Todos nuestros programas cuentan con RVOE reconocido a nivel nacional." },
-  { Icon: Landmark,      titulo: "Becas Disponibles",       desc: "Diferentes esquemas de apoyo económico para que nada te detenga." },
-  { Icon: Users,         titulo: "Docentes Especializados", desc: "Profesores con experiencia real en la industria de Baja California." },
-  { Icon: MapPin,        titulo: "5 Campus en BC",          desc: "Tijuana, Tecate y Ensenada. Cerca de donde tú estás." },
-];
-
-function SeccionBeneficios() {
-  return (
-    <section className="bg-white py-24 px-6 sm:px-10 lg:px-16">
-      <div className="max-w-screen-xl mx-auto">
-        <FadeUp className="mb-14">
-          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#00D4FF] mb-3">
-            Por qué CENYCA
-          </p>
-          <h2
-            className="font-black text-[#121B33]"
-            style={{ fontSize: "clamp(2rem, 4vw, 3rem)", letterSpacing: "-0.02em" }}
-          >
-            Más de 18 años formando<br />
-            profesionistas de excelencia.
-          </h2>
-        </FadeUp>
-
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {beneficios.map((b) => (
-            <StaggerItem key={b.titulo}>
-              <div className="bg-[#F3F3F5] rounded-xl p-8 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 h-full">
-                <div className="w-12 h-12 bg-[#121B33] rounded-lg flex items-center justify-center mb-5">
-                  <b.Icon size={22} color="#00D4FF" strokeWidth={1.5} />
-                </div>
-                <h3 className="font-bold text-[#121B33] text-base mb-2" style={{ letterSpacing: "-0.01em" }}>
-                  {b.titulo}
-                </h3>
-                <p className="text-[#45464D] text-sm leading-relaxed">{b.desc}</p>
-              </div>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
-      </div>
-    </section>
-  );
-}
 
 // ─── Planteles ────────────────────────────────────────────────────────────────
 
@@ -613,7 +538,7 @@ function CampusHero({ campus: c, otros = [] }: { campus: Campus; otros?: Campus[
 
 function CampusPin({ campus: c }: { campus: Campus }) {
   const ciudad = CIUDAD_LABEL[c.ciudad] ?? c.ciudad;
-  const Wrapper: any = c.urlMaps ? "a" : "div";
+  const Wrapper = (c.urlMaps ? "a" : "div") as React.ElementType;
   const wrapperProps = c.urlMaps
     ? { href: c.urlMaps, target: "_blank", rel: "noopener noreferrer" }
     : {};
@@ -649,88 +574,6 @@ function CampusPin({ campus: c }: { campus: Campus }) {
   );
 }
 
-function CampusCompacto({ campus: c }: { campus: Campus }) {
-  return (
-    <div className="group relative h-full bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:bg-white/10 hover:border-[#00D4FF]/30 hover:-translate-y-1 transition-all duration-300 flex flex-col">
-      {c.imagenUrl && (
-        <div className="relative h-32 overflow-hidden">
-          <div
-            className="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
-            style={{ backgroundImage: `url(${c.imagenUrl})` }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#121B33] via-[#121B33]/40 to-transparent" />
-        </div>
-      )}
-      <div className="p-6 flex flex-col flex-1">
-        {!c.imagenUrl && (
-          <MapPin size={20} className="text-[#00D4FF] mb-3" strokeWidth={1.5} />
-        )}
-        <p className="text-white/40 text-[10px] uppercase tracking-[0.25em] font-bold mb-1.5">
-          {CIUDAD_LABEL[c.ciudad] ?? c.ciudad}
-        </p>
-        <h3
-          className="font-bold text-white text-base mb-2"
-          style={{ letterSpacing: "-0.01em" }}
-        >
-          {c.nombre}
-        </h3>
-        <p className="text-white/55 text-xs leading-relaxed mt-auto">
-          {c.direccion}
-        </p>
-      </div>
-    </div>
-  );
-}
-
-// ─── CTA Final (light bg, gradient blobs) ─────────────────────────────────────
-
-function SeccionCTA({ config }: { config: Configuracion | null }) {
-  const whatsapp = config?.contacto?.whatsapp ?? "526632093980";
-  const inscripciones = config?.sistemas?.inscripciones ?? "https://inscripciones.cenyca.edu.mx";
-
-  return (
-    <section className="py-40 bg-[#F9F9FB] relative overflow-hidden">
-      <div className="max-w-screen-xl mx-auto px-6 text-center relative z-10">
-        <ScaleIn>
-          <h2
-            className="font-black text-[#121B33] mb-8"
-            style={{ fontSize: "clamp(2.8rem, 7vw, 5rem)", letterSpacing: "-0.04em", lineHeight: 1.05 }}
-          >
-            El futuro no se espera.<br />Se construye.
-          </h2>
-          <p className="text-xl text-[#45464D] max-w-2xl mx-auto mb-12 leading-relaxed">
-            Comienza tu proceso de admisión hoy y asegura tu lugar en la élite de
-            la ingeniería del noroeste.
-          </p>
-        </ScaleIn>
-        <FadeUp delay={0.2}>
-          <div className="inline-flex flex-col sm:flex-row gap-6">
-            <a
-              href={inscripciones}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#121B33] text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-[#3D4660] transition-all"
-            >
-              Iniciar Aplicación
-            </a>
-            <a
-              href={`https://wa.me/${whatsapp}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#121B33] px-10 py-5 rounded-full font-bold text-lg border border-[#76777E] hover:bg-[#E8E8EA] transition-all"
-            >
-              Hablar con un Mentor
-            </a>
-          </div>
-        </FadeUp>
-      </div>
-
-      <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#E9C176]/20 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#00D4FF]/20 blur-[120px] rounded-full pointer-events-none" />
-    </section>
-  );
-}
-
 // ─── Página principal ─────────────────────────────────────────────────────────
 
 export default async function HomePage() {
@@ -738,7 +581,7 @@ export default async function HomePage() {
     client.fetch<Carrera[]>(todasCarrerasQuery),
     client.fetch<Campus[]>(todosCampusQuery),
     client.fetch<Configuracion>(configuracionQuery),
-    client.fetch<any[]>(noticiasHomeQuery),
+    client.fetch<NoticiaRaw[]>(noticiasHomeQuery),
     client.fetch<HistoriaData | null>(historiaHomeQuery).catch(() => null),
   ]);
 
@@ -758,10 +601,8 @@ export default async function HomePage() {
       {noticias.length > 0 && <SeccionNoticias noticias={noticias} />}
       <SeccionExcelencia carreras={carreras} />
       <SeccionLicenciaturas carreras={carreras} />
-      {/* <SeccionStats /> — oculta temporalmente */}
       <SeccionModalidades />
       <SeccionPlanteles campus={campus} />
-      {/* <SeccionCTA config={config} /> — oculta temporalmente */}
     </>
   );
 }

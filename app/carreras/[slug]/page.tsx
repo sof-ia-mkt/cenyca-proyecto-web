@@ -46,7 +46,7 @@ type Carrera = {
   perfilEgresado?: string[];
   campoLaboral?: string[];
   imagenUrl?: string;
-  seo?: { titulo?: string; descripcion?: string };
+  seo?: { titulo?: string; descripcion?: string; imagenUrl?: string };
 };
 
 type Configuracion = {
@@ -73,9 +73,29 @@ export async function generateMetadata(
   const { slug } = await params;
   const carrera = await client.fetch<Carrera>(carreraBySlugQuery, { slug });
   if (!carrera) return { title: "Carrera no encontrada" };
+
+  const title = carrera.seo?.titulo ?? carrera.nombre;
+  const description = carrera.seo?.descripcion ?? carrera.descripcionCorta;
+  const ogImage = carrera.seo?.imagenUrl ?? carrera.imagenUrl;
+  const url = `/carreras/${carrera.slug}`;
+
   return {
-    title: carrera.seo?.titulo ?? carrera.nombre,
-    description: carrera.seo?.descripcion ?? carrera.descripcionCorta,
+    title: { absolute: title },
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url,
+      type: "website",
+      ...(ogImage ? { images: [{ url: ogImage, width: 1200, height: 630, alt: carrera.nombre }] } : {}),
+    },
+    twitter: {
+      card: ogImage ? "summary_large_image" : "summary",
+      title,
+      description,
+      ...(ogImage ? { images: [ogImage] } : {}),
+    },
   };
 }
 

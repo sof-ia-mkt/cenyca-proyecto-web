@@ -20,7 +20,14 @@ export default async function NoticiasPage() {
         <p className="text-white/40">No hay noticias publicadas aún.</p>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {noticias.map((noticia: any) => (
+          {noticias.map((noticia: {
+            _id: string;
+            titulo: string;
+            slug: { current: string };
+            fecha?: string;
+            categoria?: string;
+            imagen?: { asset?: { _ref?: string } } | null;
+          }) => (
             <Link
               key={noticia._id}
               href={`/noticias/${noticia.slug.current}`}

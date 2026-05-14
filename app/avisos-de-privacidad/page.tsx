@@ -18,7 +18,12 @@ export default async function AvisosPage() {
         <p className="text-white/40">No hay avisos de privacidad publicados aún.</p>
       ) : (
         <div className="space-y-3">
-          {avisos.map((aviso: any) => (
+          {avisos.map((aviso: {
+            _id: string;
+            titulo: string;
+            slug: { current: string };
+            fecha?: string;
+          }) => (
             <div
               key={aviso._id}
               className="flex items-center justify-between gap-4 p-5 rounded-2xl border border-[rgba(0,212,255,0.15)] bg-[#1E2D4A] hover:border-[rgba(0,212,255,0.35)] transition-colors"
