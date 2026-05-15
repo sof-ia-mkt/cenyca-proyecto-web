@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { X, ArrowRight } from "lucide-react";
 
 export default function PromoPopup({
@@ -10,6 +11,7 @@ export default function PromoPopup({
   inscripcionesUrl?: string;
   backgroundUrl?: string;
 }) {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   // Una vez mostrado, no se vuelve a abrir hasta que el usuario refresque la página
   // (refresh o entrar de nuevo desde fuera). Navegación interna no lo re-dispara
@@ -18,14 +20,16 @@ export default function PromoPopup({
   const url = inscripcionesUrl || "https://inscripciones.cenyca.edu.mx";
 
   useEffect(() => {
+    // Solo en home; en otras rutas no se dispara.
+    if (pathname !== "/") return;
     const timer = setTimeout(() => {
       if (!shownRef.current) {
         shownRef.current = true;
         setOpen(true);
       }
-    }, 10000);
+    }, 25000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [pathname]);
 
   // ESC cierra
   useEffect(() => {
@@ -40,10 +44,9 @@ export default function PromoPopup({
   // Bloquea scroll del body
   useEffect(() => {
     if (!open) return;
-    const original = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = original;
+      document.body.style.removeProperty("overflow");
     };
   }, [open]);
 

@@ -48,9 +48,8 @@ export default function HistoriaTimeline({
   // Bloquea scroll cuando lightbox abierto
   useEffect(() => {
     if (!lightbox) return;
-    const original = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = original; };
+    return () => { document.body.style.removeProperty("overflow"); };
   }, [lightbox]);
 
   function go(dir: 1 | -1) {

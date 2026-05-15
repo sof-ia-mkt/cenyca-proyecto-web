@@ -10,6 +10,7 @@ export const todasCarrerasQuery = groq`
     area,
     grado,
     modalidades,
+    duracion,
     descripcionCorta,
     color,
     "imagenUrl": imagen.asset->url

@@ -9,9 +9,11 @@ type Foto = { url: string; alt?: string };
 export default function CampusCarrusel({
   photos,
   altBase = "Campus",
+  showCaption = true,
 }: {
   photos: Foto[];
   altBase?: string;
+  showCaption?: boolean;
 }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [canPrev, setCanPrev] = useState(false);
@@ -111,7 +113,7 @@ export default function CampusCarrusel({
               className="object-cover transition-transform duration-700 group-hover:scale-105"
             />
             {/* Título (alt) — sin overlay, las fotos ya vienen con su propio tratamiento */}
-            {p.alt && (
+            {showCaption && p.alt && (
               <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
                 <h4
                   className="text-white font-extrabold uppercase tracking-wide text-base md:text-lg drop-shadow-[0_2px_10px_rgba(0,0,0,0.85)]"

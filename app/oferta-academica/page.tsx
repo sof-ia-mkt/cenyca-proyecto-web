@@ -3,12 +3,21 @@ export const revalidate = 0;
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { client } from "@/sanity/lib/client";
-import { todasCarrerasQuery, configuracionQuery } from "@/sanity/lib/queries";
+import { todasCarrerasQuery, todosCampusQuery, configuracionQuery } from "@/sanity/lib/queries";
 import { sanityImg } from "@/sanity/lib/image-url";
 import { FadeUp, FadeLeft, FadeRight } from "@/app/components/ScrollReveal";
 import FormularioLead from "@/app/components/FormularioLead";
+import AnimatedCounter from "@/app/components/AnimatedCounter";
+import CampusCarrusel from "@/app/components/CampusCarrusel";
 
 type Carrera = { _id: string; nombre: string; area: string };
+
+type CampusItem = {
+  _id: string;
+  nombre: string;
+  imagenUrl?: string;
+  galeria?: { url: string; alt?: string }[];
+};
 
 type Configuracion = {
   imagenesOferta?: {
@@ -18,27 +27,48 @@ type Configuracion = {
 };
 
 export default async function OfertaAcademicaPage() {
-  const [carreras, config] = await Promise.all([
+  const [carreras, campus, config] = await Promise.all([
     client.fetch<Carrera[]>(todasCarrerasQuery),
+    client.fetch<CampusItem[]>(todosCampusQuery),
     client.fetch<Configuracion>(configuracionQuery),
   ]);
 
   const totalIngenierias = carreras.filter((c) => c.area === "ingenieria").length;
   const totalLicenciaturas = carreras.length - totalIngenierias;
+  const totalProgramas = carreras.length;
   const nombresCarreras = carreras.map((c) => c.nombre);
 
   const imgIngenierias = sanityImg(config?.imagenesOferta?.ingenierias, 1600);
   const imgLicenciaturas = sanityImg(config?.imagenesOferta?.licenciaturas, 1600);
 
+  // Reel: foto principal + galería de cada campus, sin duplicar.
+  const reelPhotos: { url: string; alt?: string }[] = [];
+  const seen = new Set<string>();
+  for (const c of campus) {
+    if (c.imagenUrl && !seen.has(c.imagenUrl)) {
+      seen.add(c.imagenUrl);
+      reelPhotos.push({ url: c.imagenUrl, alt: c.nombre });
+    }
+    if (c.galeria) {
+      for (const g of c.galeria) {
+        if (g.url && !seen.has(g.url)) {
+          seen.add(g.url);
+          reelPhotos.push({ url: g.url, alt: g.alt || c.nombre });
+        }
+      }
+    }
+  }
+
   return (
     <>
-      <HeaderOferta />
+      <HeaderOferta totalProgramas={totalProgramas} />
       <BloquesPrincipales
         imgIngenierias={imgIngenierias}
         imgLicenciaturas={imgLicenciaturas}
         totalIngenierias={totalIngenierias}
         totalLicenciaturas={totalLicenciaturas}
       />
+      {reelPhotos.length > 0 && <ReelCampus photos={reelPhotos} />}
       <FranjaProximamente />
       <FormularioLead carreras={nombresCarreras} />
     </>
@@ -47,7 +77,14 @@ export default async function OfertaAcademicaPage() {
 
 // ─── Header ───────────────────────────────────────────────────────────────────
 
-function HeaderOferta() {
+function HeaderOferta({ totalProgramas }: { totalProgramas: number }) {
+  const stats: { value: number; suffix?: string; prefix?: string; label: string }[] = [
+    { value: 19, label: "Años formando talento" },
+    { value: totalProgramas, label: "Programas con RVOE" },
+    { value: 5, label: "Campus en Baja California" },
+    { value: 5000, prefix: "+", label: "Egresados en el noroeste" },
+  ];
+
   return (
     <section className="relative bg-[#F9F9FB] pt-32 md:pt-40 pb-16 md:pb-20 px-6 md:px-12">
       <div className="relative max-w-screen-2xl mx-auto">
@@ -76,9 +113,69 @@ function HeaderOferta() {
             </p>
           </FadeRight>
         </div>
-        {/* Divisor editorial */}
+
+        {/* Stats — contadores animados */}
+        <FadeUp delay={0.2}>
+          <div className="mt-14 md:mt-20 grid grid-cols-2 md:grid-cols-4 gap-px bg-[#121B33]/10 border border-[#121B33]/10 rounded-2xl overflow-hidden">
+            {stats.map((s) => (
+              <div key={s.label} className="bg-[#F9F9FB] px-6 py-7 md:px-8 md:py-9">
+                <p
+                  className="text-[#121B33] font-extrabold mb-2"
+                  style={{
+                    fontSize: "clamp(2.2rem, 4vw, 3.4rem)",
+                    letterSpacing: "-0.035em",
+                    lineHeight: 1,
+                  }}
+                >
+                  <AnimatedCounter
+                    value={s.value}
+                    prefix={s.prefix}
+                    suffix={s.suffix}
+                  />
+                </p>
+                <p className="text-[#45464D] text-xs md:text-sm font-medium leading-snug">
+                  {s.label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </FadeUp>
+      </div>
+    </section>
+  );
+}
+
+// ─── Reel Campus ──────────────────────────────────────────────────────────────
+
+function ReelCampus({ photos }: { photos: { url: string; alt?: string }[] }) {
+  return (
+    <section className="relative bg-[#121B33] py-24 md:py-28 px-6 md:px-12 overflow-hidden">
+      {/* Glow ambient */}
+      <div
+        aria-hidden
+        className="absolute -top-32 left-1/3 w-[520px] h-[260px] bg-[#00D4FF]/12 blur-[120px] pointer-events-none"
+      />
+      <div className="relative max-w-screen-2xl mx-auto">
+        <FadeUp>
+          <div className="flex items-baseline gap-4 mb-3">
+            <span className="text-[#00D4FF] text-[11px] font-bold tracking-[0.3em] uppercase">
+              Vive CENYCA
+            </span>
+            <span className="h-px flex-1 bg-white/10 max-w-[200px]" />
+          </div>
+          <h2
+            className="text-white font-extrabold mb-12 md:mb-14 max-w-3xl"
+            style={{
+              fontSize: "clamp(1.9rem, 3.6vw, 2.9rem)",
+              letterSpacing: "-0.025em",
+              lineHeight: 1.08,
+            }}
+          >
+            Espacios diseñados para tu formación.
+          </h2>
+        </FadeUp>
         <FadeUp delay={0.15}>
-          <div className="mt-16 md:mt-20 h-px bg-[#121B33]/10" />
+          <CampusCarrusel photos={photos} altBase="Campus CENYCA" showCaption={false} />
         </FadeUp>
       </div>
     </section>

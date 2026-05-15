@@ -131,25 +131,25 @@ export default function SeccionNoticias({ noticias }: { noticias: NoticiaCard[] 
             initial={{ opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="flex items-center gap-3"
+            className="flex items-center gap-3 shrink-0"
           >
             <button
               type="button"
               onClick={() => scrollByCards(-1)}
               disabled={!canPrev}
               aria-label="Anterior"
-              className="w-11 h-11 rounded-full border border-[#1B2040]/15 bg-white text-[#1B2040] flex items-center justify-center transition-all hover:border-[#00D4FF] hover:text-[#00D4FF] disabled:opacity-30 disabled:cursor-not-allowed"
+              className="w-12 h-12 rounded-full bg-[#00D4FF] text-[#1B2040] flex items-center justify-center shadow-[0_8px_24px_rgba(0,212,255,0.4)] hover:bg-[#33DDFF] hover:scale-105 disabled:bg-[#1B2040]/10 disabled:text-[#1B2040]/40 disabled:shadow-none disabled:cursor-not-allowed disabled:hover:scale-100 transition-all"
             >
-              <ArrowLeft className="w-4 h-4" />
+              <ArrowLeft className="w-5 h-5" strokeWidth={2.5} />
             </button>
             <button
               type="button"
               onClick={() => scrollByCards(1)}
               disabled={!canNext}
               aria-label="Siguiente"
-              className="w-11 h-11 rounded-full border border-[#1B2040]/15 bg-white text-[#1B2040] flex items-center justify-center transition-all hover:border-[#00D4FF] hover:text-[#00D4FF] disabled:opacity-30 disabled:cursor-not-allowed"
+              className="w-12 h-12 rounded-full bg-[#00D4FF] text-[#1B2040] flex items-center justify-center shadow-[0_8px_24px_rgba(0,212,255,0.4)] hover:bg-[#33DDFF] hover:scale-105 disabled:bg-[#1B2040]/10 disabled:text-[#1B2040]/40 disabled:shadow-none disabled:cursor-not-allowed disabled:hover:scale-100 transition-all"
             >
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-5 h-5" strokeWidth={2.5} />
             </button>
           </motion.div>
         </div>
@@ -179,7 +179,27 @@ export default function SeccionNoticias({ noticias }: { noticias: NoticiaCard[] 
           </div>
         )}
 
-        {/* Carousel track */}
+        {/* Carousel track + overlay arrows (desktop) */}
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => scrollByCards(-1)}
+            disabled={!canPrev}
+            aria-label="Anterior"
+            className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-[#00D4FF] text-[#1B2040] items-center justify-center shadow-[0_10px_30px_rgba(0,212,255,0.5)] hover:bg-[#33DDFF] hover:scale-105 disabled:opacity-0 disabled:pointer-events-none transition-all"
+          >
+            <ArrowLeft className="w-5 h-5" strokeWidth={2.5} />
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollByCards(1)}
+            disabled={!canNext}
+            aria-label="Siguiente"
+            className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-[#00D4FF] text-[#1B2040] items-center justify-center shadow-[0_10px_30px_rgba(0,212,255,0.5)] hover:bg-[#33DDFF] hover:scale-105 disabled:opacity-0 disabled:pointer-events-none transition-all"
+          >
+            <ArrowRight className="w-5 h-5" strokeWidth={2.5} />
+          </button>
+
         <div
           ref={trackRef}
           className="flex gap-4 md:gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 -mx-6 md:-mx-12 px-6 md:px-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -204,6 +224,7 @@ export default function SeccionNoticias({ noticias }: { noticias: NoticiaCard[] 
               Explora el archivo completo de CENYCA Comunica
             </p>
           </Link>
+        </div>
         </div>
       </div>
     </section>
