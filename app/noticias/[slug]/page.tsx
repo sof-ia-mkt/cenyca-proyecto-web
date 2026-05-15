@@ -18,6 +18,7 @@ const XIcon = () => (
 import { sanityFetch } from '@/sanity/lib/live'
 import { noticiaBySlugQuery, noticiasRelacionadasQuery, configuracionQuery } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
+import NewsletterSuscripcion from '@/app/components/NewsletterSuscripcion'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://cenycauniversidad.mx'
 
@@ -215,6 +216,11 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
                 <PortableText value={noticia.contenido} components={portableComponents} />
               </div>
             )}
+
+            {/* Newsletter inline al terminar de leer */}
+            <div className="mt-14">
+              <NewsletterSuscripcion />
+            </div>
           </main>
 
           {/* ── Sidebar sticky (solo desktop) ───────────────────────────────── */}

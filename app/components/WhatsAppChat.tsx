@@ -48,32 +48,18 @@ export default function WhatsAppChat({ phone }: { phone: string }) {
   const [open, setOpen] = useState(false);
   const [showBubble, setShowBubble] = useState(false);
 
-  // Burbuja preview: lo que ocurra primero — pasar el primer viewport o 4s.
+  // Auto-abrir el chat completo a los 5s (solo una vez por sesión)
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const dismissed = sessionStorage.getItem("waChatBubbleDismissed");
-    if (dismissed) return;
+    if (sessionStorage.getItem("waChatAutoOpened")) return;
 
-    let fired = false;
-    const trigger = () => {
-      if (fired) return;
-      fired = true;
-      setShowBubble(true);
-    };
+    const timer = setTimeout(() => {
+      setOpen(true);
+      sessionStorage.setItem("waChatAutoOpened", "1");
+      sessionStorage.setItem("waChatBubbleDismissed", "1");
+    }, 5000);
 
-    // Fallback por tiempo (lectores que no scrollean)
-    const timer = setTimeout(trigger, 4000);
-
-    // Trigger por scroll — apenas pasen ~80% del primer viewport
-    const onScroll = () => {
-      if (window.scrollY > window.innerHeight * 0.8) trigger();
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener("scroll", onScroll);
-    };
+    return () => clearTimeout(timer);
   }, []);
 
   function dismissBubble() {
