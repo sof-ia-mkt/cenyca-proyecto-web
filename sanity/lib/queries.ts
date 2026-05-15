@@ -33,6 +33,15 @@ export const carreraBySlugQuery = groq`
     campoLaboral,
     color,
     "imagenUrl": imagen.asset->url,
+    "imagenAlt": imagen.alt,
+    "imagenLqip": imagen.asset->metadata.lqip,
+    "galeria": galeria[]{
+      "url": asset->url,
+      "alt": alt,
+      "lqip": asset->metadata.lqip,
+      "width": asset->metadata.dimensions.width,
+      "height": asset->metadata.dimensions.height
+    },
     "seo": {
       "titulo": seo.titulo,
       "descripcion": seo.descripcion,
@@ -87,7 +96,20 @@ export const configuracionQuery = groq`
     "imagenesOferta": {
       "ingenierias": imagenesOferta.ingenierias.asset->url,
       "licenciaturas": imagenesOferta.licenciaturas.asset->url
-    }
+    },
+    stats[]{ valor, prefijo, sufijo, label },
+    "videoTestimonial": select(
+      defined(videoTestimonial.youtubeId) => {
+        "youtubeId": videoTestimonial.youtubeId,
+        "kicker": videoTestimonial.kicker,
+        "titulo": videoTestimonial.titulo,
+        "subtitulo": videoTestimonial.subtitulo,
+        "nombreEgresado": videoTestimonial.nombreEgresado,
+        "descripcionEgresado": videoTestimonial.descripcionEgresado,
+        "thumbnailUrl": videoTestimonial.thumbnailCustom.asset->url
+      },
+      null
+    )
   }
 `
 

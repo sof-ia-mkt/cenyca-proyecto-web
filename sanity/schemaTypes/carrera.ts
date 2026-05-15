@@ -139,6 +139,28 @@ export const carrera = defineType({
       of: [{ type: "string" }],
     }),
     defineField({
+      name: "galeria",
+      title: "Galería del programa",
+      description:
+        "Fotos de laboratorios, talleres, equipos y alumnos en práctica. Recomendado: 6 imágenes (se muestran en grid 3×2). Sube entre 3 y 8.",
+      type: "array",
+      of: [
+        {
+          type: "image",
+          options: { hotspot: true },
+          fields: [
+            defineField({
+              name: "alt",
+              title: "Texto alternativo",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+        },
+      ],
+      validation: (Rule) => Rule.max(8),
+    }),
+    defineField({
       name: "landingUrl",
       title: "URL de la landing page actual",
       description: "Si tienes una landing dedicada, ponla aquí.",
