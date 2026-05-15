@@ -45,25 +45,25 @@ export default function AreaTemplate({
   return (
     <>
       {/* ── Hero oscuro ──────────────────────────────────────────────────── */}
-      <section className="relative bg-[#121B33] pt-32 md:pt-40 pb-20 md:pb-24 px-6 md:px-12 overflow-hidden">
+      <section className="relative bg-[#121B33] pt-24 md:pt-28 pb-16 md:pb-20 px-6 md:px-12 overflow-hidden">
         {/* Foto de fondo opcional */}
         {imagenHero && (
           <>
             <div
               aria-hidden
-              className="absolute inset-0 bg-cover bg-center opacity-[0.18]"
+              className="absolute inset-0 bg-cover bg-center opacity-[0.22]"
               style={{ backgroundImage: `url(${imagenHero})` }}
             />
             <div
               aria-hidden
-              className="absolute inset-0 bg-gradient-to-b from-[#121B33] via-[#121B33]/85 to-[#121B33]"
+              className="absolute inset-0 bg-gradient-to-b from-[#121B33]/95 via-[#121B33]/80 to-[#121B33]"
             />
           </>
         )}
         {/* Glow ambient */}
         <div
           aria-hidden
-          className="absolute -top-32 right-1/4 w-[520px] h-[280px] bg-[#00D4FF]/14 blur-[140px] pointer-events-none"
+          className="absolute -top-20 right-1/4 w-[520px] h-[280px] bg-[#00D4FF]/14 blur-[140px] pointer-events-none"
         />
 
         <div className="relative max-w-screen-2xl mx-auto">
@@ -71,7 +71,7 @@ export default function AreaTemplate({
           <FadeUp>
             <Link
               href="/oferta-academica"
-              className="inline-flex items-center gap-2 text-white/55 hover:text-[#00D4FF] text-xs font-semibold tracking-[0.2em] uppercase mb-8 transition-colors"
+              className="inline-flex items-center gap-2 text-white/55 hover:text-[#00D4FF] text-xs font-semibold tracking-[0.2em] uppercase mb-6 transition-colors"
             >
               <ArrowLeft size={13} strokeWidth={2.5} />
               Oferta académica
@@ -79,7 +79,7 @@ export default function AreaTemplate({
           </FadeUp>
 
           <FadeUp delay={0.05}>
-            <p className="text-[#00D4FF] font-bold text-[11px] tracking-[0.3em] uppercase mb-6">
+            <p className="text-[#00D4FF] font-bold text-[11px] tracking-[0.3em] uppercase mb-5">
               {kicker}
             </p>
           </FadeUp>
