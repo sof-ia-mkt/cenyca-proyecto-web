@@ -99,6 +99,16 @@ export const configuracionQuery = groq`
       "licenciaturas": imagenesOferta.licenciaturas.asset->url
     },
     stats[]{ valor, prefijo, sufijo, label },
+    promocionInscripcion{
+      activa,
+      porcentaje,
+      kicker,
+      titulo,
+      subtitulo,
+      mensajeComprobante,
+      diasExpiracion,
+      whatsappAsesor
+    },
     "videoTestimonial": select(
       defined(videoTestimonial.videoArchivo.asset) || defined(videoTestimonial.youtubeId) => {
         "videoArchivoUrl": videoTestimonial.videoArchivo.asset->url,

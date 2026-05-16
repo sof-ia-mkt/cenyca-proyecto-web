@@ -26,7 +26,7 @@ const publicHeaders = [
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
       "img-src 'self' data: blob: https://cdn.sanity.io https://www.facebook.com",
-      "connect-src 'self' https://*.api.sanity.io https://*.apicdn.sanity.io wss://*.api.sanity.io",
+      "connect-src 'self' https://*.api.sanity.io https://*.apicdn.sanity.io wss://*.api.sanity.io https://emma-sistema.up.railway.app",
       "frame-src 'self' https://www.youtube-nocookie.com https://www.youtube.com",
       "media-src 'self' https://cdn.sanity.io",
       "object-src 'none'",
