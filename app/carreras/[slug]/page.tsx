@@ -11,13 +11,11 @@ import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
 import {
   ArrowLeft,
-  ArrowRight,
   CheckCircle2,
   Clock,
   GraduationCap,
   MessageCircle,
   Briefcase,
-  ChevronRight,
 } from "lucide-react";
 import { client } from "@/sanity/lib/client";
 import { carreraBySlugQuery, configuracionQuery, todasCarrerasQuery } from "@/sanity/lib/queries";
@@ -28,6 +26,7 @@ import LazySelfHostedVideo from "@/components/LazySelfHostedVideo";
 import GaleriaPrograma, { type GaleriaItem } from "@/components/GaleriaPrograma";
 import PromocionFormulario, { type PromocionConfig } from "@/components/PromocionFormulario";
 import BloqueInversion, { type InversionConfig } from "@/components/BloqueInversion";
+import RedesSocialesCTA, { type RedesSociales } from "@/components/RedesSocialesCTA";
 
 // ─── Mapeos UI ────────────────────────────────────────────────────────────────
 
@@ -93,6 +92,7 @@ type VideoTestimonial = {
 type Configuracion = {
   contacto?: { whatsapp?: string };
   sistemas?: { inscripciones?: string };
+  redesSociales?: RedesSociales;
   stats?: Stat[];
   videoTestimonial?: VideoTestimonial | null;
   promocionInscripcion?: PromocionConfig;
@@ -588,52 +588,14 @@ export default async function CarreraPage(
         </section>
       )}
 
-      {/* ── CTA FINAL ─────────────────────────────────────────────────────── */}
-      <section
-        className="py-24 px-4 sm:px-6 lg:px-8"
-        style={{ backgroundColor: accent }}
-      >
-        <div className="max-w-3xl mx-auto text-center">
-          <span className="inline-flex items-center gap-2 font-montserrat text-xs uppercase tracking-[0.2em] text-[#121B33]/60 font-semibold mb-5">
-            <span className="h-px w-8 bg-[#121B33]/30" />
-            Comienza hoy
-            <span className="h-px w-8 bg-[#121B33]/30" />
-          </span>
-          <h2 className="font-bebas text-[#121B33] text-5xl sm:text-6xl lg:text-7xl tracking-wide leading-[1.05] mb-5">
-            Tu lugar en CENYCA te espera
-          </h2>
-          <p className="font-montserrat text-[#121B33]/75 text-base sm:text-lg mb-10 max-w-xl mx-auto">
-            Cupo limitado para el próximo ciclo. Solicita información o inscríbete y un asesor te contacta el mismo día.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href={inscripciones}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-[#121B33] text-white font-montserrat font-bold px-10 py-4 rounded-full hover:bg-[#1E2D4A] transition-colors"
-            >
-              Inscribirme ahora
-              <ArrowRight size={18} />
-            </a>
-            <a
-              href={`https://wa.me/${whatsapp}?text=Hola, me interesa la ${gradoLabel} en ${carrera.nombre}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 border-2 border-[#121B33] text-[#121B33] font-montserrat font-bold px-10 py-4 rounded-full hover:bg-[#121B33] hover:text-white transition-colors"
-            >
-              <MessageCircle size={18} />
-              Hablar por WhatsApp
-            </a>
-          </div>
-          <Link
-            href="/licenciaturas"
-            className="inline-flex items-center gap-2 mt-10 font-montserrat text-sm text-[#121B33]/70 hover:text-[#121B33] transition-colors"
-          >
-            Ver todas las carreras
-            <ChevronRight size={14} />
-          </Link>
-        </div>
-      </section>
+      {/* ── REDES SOCIALES + MINI CTA WHATSAPP ────────────────────────────── */}
+      <RedesSocialesCTA
+        redes={config?.redesSociales}
+        whatsapp={whatsapp}
+        carreraNombre={carrera.nombre}
+        gradoLabel={gradoLabel}
+        accent={accent}
+      />
     </div>
   );
 }
