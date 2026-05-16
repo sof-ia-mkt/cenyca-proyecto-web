@@ -127,7 +127,7 @@ export default function HistoriaTimeline({
           {active.descripcion && (
             <p
               key={`desc-${idx}`}
-              className="text-white/60 text-base leading-relaxed max-w-md"
+              className="text-white/80 text-lg md:text-xl leading-relaxed max-w-xl text-justify"
               style={{
                 animation: "historiaSlideIn 0.55s 0.1s cubic-bezier(0.22, 1, 0.36, 1) backwards",
               }}
@@ -177,8 +177,8 @@ export default function HistoriaTimeline({
                   className="relative flex flex-col items-center gap-3 pb-0 cursor-pointer group"
                 >
                   <span
-                    className={`text-sm md:text-base font-bold tracking-tight transition-colors duration-300 whitespace-nowrap ${
-                      isActive ? "text-white" : "text-white/35 group-hover:text-white/70"
+                    className={`text-base md:text-lg font-bold tracking-tight transition-colors duration-300 whitespace-nowrap ${
+                      isActive ? "text-white" : "text-white/55 group-hover:text-white"
                     }`}
                   >
                     {m.year}
