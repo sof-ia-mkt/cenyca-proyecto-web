@@ -1,3 +1,7 @@
+// Revalida cada 60s — los cambios en Sanity (promoción, galería, descripciones, etc.)
+// se reflejan en producción en menos de 1 min sin necesidad de redeploy.
+export const revalidate = 60;
+
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
