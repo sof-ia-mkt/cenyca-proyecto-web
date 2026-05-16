@@ -22,6 +22,7 @@ import StatsCounter, { type Stat } from "@/components/StatsCounter";
 import LazyYouTubeEmbed from "@/components/LazyYouTubeEmbed";
 import LazySelfHostedVideo from "@/components/LazySelfHostedVideo";
 import GaleriaPrograma, { type GaleriaItem } from "@/components/GaleriaPrograma";
+import PromocionFormulario, { type PromocionConfig } from "@/components/PromocionFormulario";
 
 // ─── Mapeos UI ────────────────────────────────────────────────────────────────
 
@@ -88,6 +89,7 @@ type Configuracion = {
   sistemas?: { inscripciones?: string };
   stats?: Stat[];
   videoTestimonial?: VideoTestimonial | null;
+  promocionInscripcion?: PromocionConfig;
 };
 
 // ─── PortableText renderer ────────────────────────────────────────────────────
@@ -413,6 +415,18 @@ export default async function CarreraPage(
             </div>
           </div>
         </section>
+      )}
+
+      {/* ── PROMOCIÓN / FORMULARIO DE INSCRIPCIÓN ─────────────────────────── */}
+      {config?.promocionInscripcion?.activa && (
+        <PromocionFormulario
+          carreraSlug={carrera.slug}
+          carreraNombre={carrera.nombre}
+          gradoLabel={gradoLabel}
+          promo={config.promocionInscripcion}
+          whatsappFallback={whatsapp}
+          accent={accent}
+        />
       )}
 
       {/* ── GALERÍA DEL PROGRAMA ──────────────────────────────────────────── */}

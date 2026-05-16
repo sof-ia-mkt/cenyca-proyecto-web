@@ -339,6 +339,74 @@ export const configuracion = defineType({
       ],
     }),
 
+    // --- PROMOCIÓN / FORMULARIO DE INSCRIPCIÓN ---
+    defineField({
+      name: "promocionInscripcion",
+      title: "Promoción de inscripción (formulario en páginas de carrera)",
+      description:
+        "Configura el formulario de captura de leads que aparece en cada página de carrera, con la promoción y el mensaje del comprobante para WhatsApp.",
+      type: "object",
+      fields: [
+        defineField({
+          name: "activa",
+          title: "¿Promoción activa?",
+          description: "Apaga para ocultar el formulario de todas las páginas de carrera.",
+          type: "boolean",
+          initialValue: true,
+        }),
+        defineField({
+          name: "porcentaje",
+          title: "Porcentaje de descuento",
+          description: 'Solo el número. Ejemplo: 20 para "20% de descuento".',
+          type: "number",
+          initialValue: 20,
+          validation: (Rule) => Rule.min(1).max(100),
+        }),
+        defineField({
+          name: "kicker",
+          title: "Kicker (texto pequeño arriba del título)",
+          type: "string",
+          initialValue: "Beca de inscripción",
+        }),
+        defineField({
+          name: "titulo",
+          title: "Título de la sección",
+          description: 'Ejemplo: "Reclama tu beca del 20%". Puedes usar {porcentaje} y se reemplaza automáticamente.',
+          type: "string",
+          initialValue: "Reclama tu beca del {porcentaje}%",
+        }),
+        defineField({
+          name: "subtitulo",
+          title: "Subtítulo",
+          type: "text",
+          rows: 2,
+          initialValue: "Solo por tiempo limitado para nuevos alumnos. Deja tus datos y un asesor te contactará por WhatsApp.",
+        }),
+        defineField({
+          name: "mensajeComprobante",
+          title: "Mensaje del comprobante",
+          description: "Texto grande que aparece en la pantalla de confirmación, indicando qué hacer con el comprobante.",
+          type: "string",
+          initialValue: "Envía este comprobante a tu asesor o preséntalo al inscribirte",
+        }),
+        defineField({
+          name: "diasExpiracion",
+          title: "Días de validez del descuento",
+          description: "Número de días que la promoción es válida desde el registro. Aparece en el comprobante como fecha de expiración.",
+          type: "number",
+          initialValue: 30,
+          validation: (Rule) => Rule.min(1).max(365),
+        }),
+        defineField({
+          name: "whatsappAsesor",
+          title: "WhatsApp del asesor (opcional)",
+          description:
+            "Número al que se enviará el comprobante por WhatsApp. Si lo dejas vacío se usa el WhatsApp del contacto general. Formato con código de país, ejemplo: 526632093980.",
+          type: "string",
+        }),
+      ],
+    }),
+
     // --- AVISO DE PRIVACIDAD ---
     defineField({
       name: "avisoPrivacidad",
