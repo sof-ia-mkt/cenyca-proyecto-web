@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import SectionAccentLine from "./SectionAccentLine";
 import {
   GraduationCap,
   Calendar,
@@ -248,9 +249,9 @@ function ModalidadCard({
           {m.descripcion}
         </p>
 
-        {/* CTA */}
-        <Link
-          href="/admisiones"
+        {/* CTA — apunta al CtaContadorClases (#contacto) en home para captura del lead */}
+        <a
+          href="#contacto"
           className={`inline-flex items-center justify-center gap-2 w-full py-3 rounded-xl font-bold text-sm uppercase tracking-wider transition-all
             ${
               featured
@@ -260,7 +261,7 @@ function ModalidadCard({
         >
           Solicitar información
           <ArrowRight className="w-4 h-4" />
-        </Link>
+        </a>
 
         {/* Divider */}
         <div className="my-7 h-px bg-white/10" />
@@ -305,6 +306,8 @@ export default function SeccionModalidades() {
 
   return (
     <section className="py-32 px-6 md:px-12 bg-[#121B33] relative overflow-hidden">
+      <SectionAccentLine accent="#00D4FF" position="top" />
+      <SectionAccentLine accent="#00D4FF" position="bottom" />
       {/* Glow ambient */}
       <div
         aria-hidden

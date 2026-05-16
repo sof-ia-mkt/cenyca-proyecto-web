@@ -130,16 +130,25 @@ export default function HeroAnimado({ slides }: { slides: HeroSlide[] }) {
           }}
         >
           <AnimatedText
-            text="La Ingeniería del Mañana,"
+            text="Donde tu potencial"
             delay={0.2}
-            className="block md:whitespace-nowrap"
+            className="block"
           />
           <AnimatedText
-            text="Diseñada Hoy."
+            text="se vuelve éxito."
             delay={0.9}
-            className="block text-[#F3F3F5] opacity-90"
+            className="block text-[#00D4FF]"
           />
         </h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 1.4, ease: "easeOut" }}
+          className="text-white/75 mb-10 font-montserrat uppercase tracking-[0.18em] text-xs sm:text-sm"
+        >
+          CENYCA Universidad <span className="text-white/30 mx-2">·</span> La universidad líder de la región
+        </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -158,10 +167,10 @@ export default function HeroAnimado({ slides }: { slides: HeroSlide[] }) {
             />
           </Link>
           <Link
-            href="/directorio"
+            href="/#planteles"
             className="px-8 py-4 text-white font-bold border border-white/30 rounded-full hover:bg-white/10 transition-colors"
           >
-            Visitar Campus
+            Agendar recorrido en campus
           </Link>
         </motion.div>
       </div>

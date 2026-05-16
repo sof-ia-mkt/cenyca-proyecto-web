@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { FadeUp } from "./ScrollReveal";
 import HistoriaTimeline from "./HistoriaTimeline";
+import SectionAccentLine from "./SectionAccentLine";
 
 export type HistoriaMomento = {
   year: string;
@@ -25,7 +26,9 @@ export default function SeccionHistoria({ data }: { data: HistoriaData }) {
   const momentos = data.momentos.slice(0, 5);
 
   return (
-    <section className="relative bg-[#121B33] py-24 md:py-32 px-6 md:px-12 overflow-hidden">
+    <section className="relative bg-[#121B33] pt-36 md:pt-44 pb-24 md:pb-32 px-6 md:px-12 overflow-hidden">
+      <SectionAccentLine accent="#00D4FF" position="top" />
+      <SectionAccentLine accent="#00D4FF" position="bottom" />
       {/* Glow ambient sutil arriba */}
       <div
         aria-hidden

@@ -11,6 +11,8 @@ import { urlFor } from "@/sanity/lib/image";
 import HeroAnimado, { type HeroSlide } from "@/app/components/HeroAnimado";
 import SeccionHistoria, { type HistoriaData } from "@/app/components/SeccionHistoria";
 import SeccionModalidades from "@/app/components/SeccionModalidades";
+import CtaContadorClases, { type CicloInicioConfig } from "@/app/components/CtaContadorClases";
+import SectionAccentLine from "@/app/components/SectionAccentLine";
 import SeccionNoticias, { type NoticiaCard } from "@/app/components/SeccionNoticias";
 import CampusCarrusel from "@/app/components/CampusCarrusel";
 import { sanityImg } from "@/sanity/lib/image-url";
@@ -52,6 +54,8 @@ type Configuracion = {
   sistemas?: { inscripciones?: string };
   heroSlides?: HeroSlide[];
   imagenesPrograma?: ImagenesPrograma;
+  cicloInicio?: CicloInicioConfig;
+  promocionInscripcion?: { porcentaje?: number };
 };
 
 type NoticiaRaw = {
@@ -107,7 +111,9 @@ const ingenierias = [
 function SeccionExcelencia({ carreras }: { carreras: Carrera[] }) {
   const imgBySlug = new Map(carreras.map((c) => [c.slug, sanityImg(c.imagenTarjetaUrl ?? c.imagenUrl, 1600)]));
   return (
-    <section className="py-32 px-6 md:px-12 bg-[#F9F9FB]">
+    <section className="relative py-32 px-6 md:px-12 bg-[#F9F9FB]">
+      <SectionAccentLine accent="#00D4FF" position="top" />
+      <SectionAccentLine accent="#00D4FF" position="bottom" />
       <div className="max-w-screen-2xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-10">
           <div className="max-w-3xl">
@@ -219,7 +225,9 @@ function SeccionLicenciaturas({ carreras }: { carreras: Carrera[] }) {
   const imgBySlug = new Map(carreras.map((c) => [c.slug, sanityImg(c.imagenTarjetaUrl ?? c.imagenUrl, 1600)]));
 
   return (
-    <section className="py-32 px-6 md:px-12 bg-white">
+    <section className="relative py-32 px-6 md:px-12 bg-white">
+      <SectionAccentLine accent="#E9C176" position="top" />
+      <SectionAccentLine accent="#E9C176" position="bottom" />
       <div className="max-w-screen-2xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-10">
           <div className="max-w-3xl">
@@ -372,7 +380,12 @@ function SeccionPlanteles({ campus }: { campus: Campus[] }) {
   const otros = campus.filter((c) => c._id !== principal?._id);
 
   return (
-    <section className="bg-[#121B33] py-24 px-6 sm:px-10 lg:px-16 relative overflow-hidden">
+    <section
+      id="planteles"
+      className="bg-[#121B33] py-24 px-6 sm:px-10 lg:px-16 relative overflow-hidden scroll-mt-24"
+    >
+      <SectionAccentLine accent="#00D4FF" position="top" />
+      <SectionAccentLine accent="#00D4FF" position="bottom" />
       <div className="relative z-10 max-w-screen-xl mx-auto">
         {principal && (
           <FadeUp delay={0.05}>
@@ -603,6 +616,11 @@ export default async function HomePage() {
       <SeccionExcelencia carreras={carreras} />
       <SeccionLicenciaturas carreras={carreras} />
       <SeccionModalidades />
+      <CtaContadorClases
+        data={config?.cicloInicio}
+        porcentajeDescuento={config?.promocionInscripcion?.porcentaje ?? 20}
+        whatsappFallback={config?.contacto?.whatsapp}
+      />
       <SeccionPlanteles campus={campus} />
     </>
   );

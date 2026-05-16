@@ -407,6 +407,57 @@ export const configuracion = defineType({
       ],
     }),
 
+    // --- CTA CONTADOR DE INICIO DE CICLO ---
+    defineField({
+      name: "cicloInicio",
+      title: "CTA de inicio de ciclo (banner del home)",
+      description:
+        "Banner con countdown al próximo inicio de clases y formulario de captura, debajo de Modalidades en el home. Configurable porque los ciclos cambian (enero / mayo / septiembre).",
+      type: "object",
+      fields: [
+        defineField({
+          name: "activo",
+          title: "¿Mostrar sección?",
+          type: "boolean",
+          initialValue: true,
+        }),
+        defineField({
+          name: "fecha",
+          title: "Fecha y hora del inicio de clases",
+          description: "Define a qué fecha cuenta hacia atrás el contador.",
+          type: "datetime",
+        }),
+        defineField({
+          name: "kicker",
+          title: "Kicker (texto pequeño arriba)",
+          type: "string",
+          description: 'Ejemplo: "Iniciamos clases en septiembre".',
+          initialValue: "Iniciamos clases en septiembre",
+        }),
+        defineField({
+          name: "slogan",
+          title: "Slogan grande (Bebas)",
+          type: "string",
+          initialValue: "Donde tu potencial se vuelve éxito",
+        }),
+        defineField({
+          name: "mensaje",
+          title: "Mensaje del formulario",
+          description: "Texto debajo del contador antes del formulario.",
+          type: "string",
+          initialValue: "Deja tus datos y obtén un {porcentaje}% de descuento en tu inscripción",
+        }),
+        defineField({
+          name: "mensajeCicloIniciado",
+          title: "Mensaje cuando el ciclo ya inició",
+          description:
+            'Reemplaza al contador cuando la fecha ya pasó. Ejemplo: "Próximo ciclo: pregunta por WhatsApp".',
+          type: "string",
+          initialValue: "El ciclo actual ya inició. Pregunta por el próximo por WhatsApp.",
+        }),
+      ],
+    }),
+
     // --- AVISO DE PRIVACIDAD ---
     defineField({
       name: "avisoPrivacidad",
