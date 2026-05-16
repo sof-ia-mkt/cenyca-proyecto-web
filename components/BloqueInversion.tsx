@@ -306,6 +306,11 @@ function CardInversionUI({
         {esEntreSemana && martesEsp && card.notaEspecial && (
           <div className="font-montserrat text-[12px] text-[#FFB4B4] mt-1">{card.notaEspecial}</div>
         )}
+        {!esEntreSemana && becaPct > 0 && (
+          <div className="font-montserrat text-[12px] text-[#FFB4B4] mt-1">
+            Beca sujeta a venta de {becaPct} boletos
+          </div>
+        )}
       </div>
 
       {/* Toggle (entre semana: boletos | fin de semana: becas) */}
