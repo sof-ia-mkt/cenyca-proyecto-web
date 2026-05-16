@@ -83,8 +83,9 @@ function extractPerfilEgresado(root) {
 }
 
 function extractCampoLaboral(root) {
+  // Recortamos a 6 items para conservar la geometría del grid 3×2.
   const items = root.querySelectorAll(".campo-item h3");
-  return items.map((h) => h.text.trim()).filter(Boolean);
+  return items.map((h) => h.text.trim()).filter(Boolean).slice(0, 6);
 }
 
 // ─── Ejecución ────────────────────────────────────────────────────────────────
