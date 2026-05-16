@@ -226,6 +226,119 @@ export const configuracion = defineType({
       ],
     }),
 
+    // --- STATS / CIFRAS INSTITUCIONALES ---
+    defineField({
+      name: "stats",
+      title: "Cifras institucionales",
+      description: "Aparecen como contadores animados en las páginas de carrera. Recomendado: 3 o 4 cifras.",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          name: "stat",
+          title: "Cifra",
+          fields: [
+            defineField({
+              name: "valor",
+              title: "Valor numérico",
+              type: "number",
+              description: "Solo el número. Ejemplo: 25, 98, 50.",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "prefijo",
+              title: "Prefijo",
+              type: "string",
+              description: 'Opcional. Ejemplo: "+", "$".',
+            }),
+            defineField({
+              name: "sufijo",
+              title: "Sufijo",
+              type: "string",
+              description: 'Opcional. Ejemplo: "%", "k", "+".',
+            }),
+            defineField({
+              name: "label",
+              title: "Etiqueta",
+              type: "string",
+              description: 'Ejemplo: "Años formando profesionistas".',
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+          preview: {
+            select: { valor: "valor", sufijo: "sufijo", label: "label" },
+            prepare({ valor, sufijo, label }) {
+              return { title: `${valor ?? ""}${sufijo ?? ""}`, subtitle: label };
+            },
+          },
+        },
+      ],
+      validation: (Rule) => Rule.max(4),
+    }),
+
+    // --- VIDEO TESTIMONIAL ---
+    defineField({
+      name: "videoTestimonial",
+      title: "Video testimonial",
+      description:
+        "Se muestra en cada página de carrera. Deja vacío para ocultar la sección. Si subes archivo MP4 Y pones YouTube ID, gana el MP4.",
+      type: "object",
+      fields: [
+        defineField({
+          name: "videoArchivo",
+          title: "Archivo de video (MP4)",
+          description:
+            "Súbelo aquí para servirlo desde el CDN de Sanity (sin marca de agua de YouTube). Recomendado: 720p, h.264, máximo 30 MB.",
+          type: "file",
+          options: { accept: "video/mp4,video/webm" },
+        }),
+        defineField({
+          name: "youtubeId",
+          title: "YouTube ID (alternativa)",
+          type: "string",
+          description:
+            'Si no subiste archivo, puedes usar YouTube. Solo el ID, no la URL completa. Ejemplo: "dQw4w9WgXcQ".',
+        }),
+        defineField({
+          name: "kicker",
+          title: "Kicker",
+          type: "string",
+          description: 'Texto pequeño arriba del título. Ejemplo: "Historias CENYCA".',
+          initialValue: "Historias CENYCA",
+        }),
+        defineField({
+          name: "titulo",
+          title: "Título de la sección",
+          type: "string",
+          initialValue: "Conoce a quienes ya viven CENYCA",
+        }),
+        defineField({
+          name: "subtitulo",
+          title: "Subtítulo",
+          type: "text",
+          rows: 2,
+        }),
+        defineField({
+          name: "nombreEgresado",
+          title: "Nombre del egresado",
+          type: "string",
+        }),
+        defineField({
+          name: "descripcionEgresado",
+          title: "Descripción del egresado",
+          type: "string",
+          description: 'Ejemplo: "Ing. Mecatrónico, Generación 2023".',
+        }),
+        defineField({
+          name: "thumbnailCustom",
+          title: "Thumbnail custom (opcional)",
+          description: "Si no la subes, se usa la portada que YouTube genera automáticamente.",
+          type: "image",
+          options: { hotspot: true },
+        }),
+      ],
+    }),
+
     // --- AVISO DE PRIVACIDAD ---
     defineField({
       name: "avisoPrivacidad",
