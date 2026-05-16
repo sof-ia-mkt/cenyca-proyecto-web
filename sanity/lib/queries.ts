@@ -13,7 +13,8 @@ export const todasCarrerasQuery = groq`
     duracion,
     descripcionCorta,
     color,
-    "imagenUrl": imagen.asset->url
+    "imagenUrl": imagen.asset->url,
+    "imagenTarjetaUrl": imagenTarjeta.asset->url
   }
 `
 
@@ -99,7 +100,8 @@ export const configuracionQuery = groq`
     },
     stats[]{ valor, prefijo, sufijo, label },
     "videoTestimonial": select(
-      defined(videoTestimonial.youtubeId) => {
+      defined(videoTestimonial.videoArchivo.asset) || defined(videoTestimonial.youtubeId) => {
+        "videoArchivoUrl": videoTestimonial.videoArchivo.asset->url,
         "youtubeId": videoTestimonial.youtubeId,
         "kicker": videoTestimonial.kicker,
         "titulo": videoTestimonial.titulo,

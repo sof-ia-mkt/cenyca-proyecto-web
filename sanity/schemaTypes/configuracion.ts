@@ -280,14 +280,24 @@ export const configuracion = defineType({
     defineField({
       name: "videoTestimonial",
       title: "Video testimonial",
-      description: "Se muestra en cada página de carrera. Deja vacío para ocultar la sección.",
+      description:
+        "Se muestra en cada página de carrera. Deja vacío para ocultar la sección. Si subes archivo MP4 Y pones YouTube ID, gana el MP4.",
       type: "object",
       fields: [
         defineField({
+          name: "videoArchivo",
+          title: "Archivo de video (MP4)",
+          description:
+            "Súbelo aquí para servirlo desde el CDN de Sanity (sin marca de agua de YouTube). Recomendado: 720p, h.264, máximo 30 MB.",
+          type: "file",
+          options: { accept: "video/mp4,video/webm" },
+        }),
+        defineField({
           name: "youtubeId",
-          title: "YouTube ID",
+          title: "YouTube ID (alternativa)",
           type: "string",
-          description: 'Solo el ID, no la URL completa. Ejemplo: "dQw4w9WgXcQ".',
+          description:
+            'Si no subiste archivo, puedes usar YouTube. Solo el ID, no la URL completa. Ejemplo: "dQw4w9WgXcQ".',
         }),
         defineField({
           name: "kicker",

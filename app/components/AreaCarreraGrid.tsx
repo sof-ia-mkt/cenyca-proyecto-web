@@ -15,6 +15,7 @@ export type CarreraCard = {
   duracion?: string;
   descripcionCorta?: string;
   imagenUrl?: string;
+  imagenTarjetaUrl?: string;
 };
 
 const MODALIDAD_LABEL: Record<string, string> = {
@@ -115,6 +116,7 @@ function FilterChip({
 
 function CarreraCardItem({ carrera: c }: { carrera: CarreraCard }) {
   const grado = GRADO_LABEL[c.grado] ?? c.grado;
+  const fotoCard = c.imagenTarjetaUrl ?? c.imagenUrl;
 
   return (
     <Link
@@ -123,9 +125,9 @@ function CarreraCardItem({ carrera: c }: { carrera: CarreraCard }) {
     >
       {/* Foto */}
       <div className="relative aspect-[16/10] bg-[#121B33] overflow-hidden">
-        {c.imagenUrl ? (
+        {fotoCard ? (
           <Image
-            src={c.imagenUrl}
+            src={fotoCard}
             alt={c.nombre}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"

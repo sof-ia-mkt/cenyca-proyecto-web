@@ -20,6 +20,7 @@ import { carreraBySlugQuery, configuracionQuery, todasCarrerasQuery } from "@/sa
 import BeneficioIcon from "@/components/BeneficioIcon";
 import StatsCounter, { type Stat } from "@/components/StatsCounter";
 import LazyYouTubeEmbed from "@/components/LazyYouTubeEmbed";
+import LazySelfHostedVideo from "@/components/LazySelfHostedVideo";
 import GaleriaPrograma, { type GaleriaItem } from "@/components/GaleriaPrograma";
 
 // ─── Mapeos UI ────────────────────────────────────────────────────────────────
@@ -72,7 +73,8 @@ type Carrera = {
 };
 
 type VideoTestimonial = {
-  youtubeId: string;
+  videoArchivoUrl?: string | null;
+  youtubeId?: string | null;
   kicker?: string;
   titulo?: string;
   subtitulo?: string;
@@ -500,45 +502,54 @@ export default async function CarreraPage(
       )}
 
       {/* ── VIDEO TESTIMONIAL ─────────────────────────────────────────────── */}
-      {config?.videoTestimonial?.youtubeId && (
+      {(config?.videoTestimonial?.videoArchivoUrl || config?.videoTestimonial?.youtubeId) && (
         <section className="bg-[#F5F5F5] py-24 px-4 sm:px-6 lg:px-8">
           <div className="max-w-5xl mx-auto">
             <div className="max-w-2xl mx-auto text-center mb-12">
-              {config.videoTestimonial.kicker && (
+              {config.videoTestimonial!.kicker && (
                 <span className="font-montserrat text-xs uppercase tracking-[0.2em] text-[var(--accent)] font-semibold">
-                  {config.videoTestimonial.kicker}
+                  {config.videoTestimonial!.kicker}
                 </span>
               )}
-              {config.videoTestimonial.titulo && (
+              {config.videoTestimonial!.titulo && (
                 <h2 className="font-bebas text-[#121B33] text-4xl sm:text-5xl lg:text-6xl tracking-wide leading-[1.05] mt-3">
-                  {config.videoTestimonial.titulo}
+                  {config.videoTestimonial!.titulo}
                 </h2>
               )}
-              {config.videoTestimonial.subtitulo && (
+              {config.videoTestimonial!.subtitulo && (
                 <p className="font-montserrat text-[#666] text-base sm:text-lg leading-relaxed mt-5">
-                  {config.videoTestimonial.subtitulo}
+                  {config.videoTestimonial!.subtitulo}
                 </p>
               )}
             </div>
 
-            <LazyYouTubeEmbed
-              youtubeId={config.videoTestimonial.youtubeId}
-              title={config.videoTestimonial.titulo ?? "Testimonio CENYCA"}
-              thumbnailUrl={config.videoTestimonial.thumbnailUrl}
-            />
+            {/* Archivo MP4 self-hosted gana sobre YouTube — sin branding y cero JS externo. */}
+            {config.videoTestimonial!.videoArchivoUrl ? (
+              <LazySelfHostedVideo
+                videoUrl={config.videoTestimonial!.videoArchivoUrl}
+                title={config.videoTestimonial!.titulo ?? "Testimonio CENYCA"}
+                posterUrl={config.videoTestimonial!.thumbnailUrl}
+              />
+            ) : (
+              <LazyYouTubeEmbed
+                youtubeId={config.videoTestimonial!.youtubeId!}
+                title={config.videoTestimonial!.titulo ?? "Testimonio CENYCA"}
+                thumbnailUrl={config.videoTestimonial!.thumbnailUrl}
+              />
+            )}
 
-            {(config.videoTestimonial.nombreEgresado || config.videoTestimonial.descripcionEgresado) && (
+            {(config.videoTestimonial!.nombreEgresado || config.videoTestimonial!.descripcionEgresado) && (
               <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-center gap-1 sm:gap-3 text-center">
-                {config.videoTestimonial.nombreEgresado && (
+                {config.videoTestimonial!.nombreEgresado && (
                   <span className="font-montserrat font-bold text-[#121B33]">
-                    {config.videoTestimonial.nombreEgresado}
+                    {config.videoTestimonial!.nombreEgresado}
                   </span>
                 )}
-                {config.videoTestimonial.descripcionEgresado && (
+                {config.videoTestimonial!.descripcionEgresado && (
                   <>
                     <span className="hidden sm:inline text-[#666]">·</span>
                     <span className="font-montserrat text-[#666] text-sm">
-                      {config.videoTestimonial.descripcionEgresado}
+                      {config.videoTestimonial!.descripcionEgresado}
                     </span>
                   </>
                 )}

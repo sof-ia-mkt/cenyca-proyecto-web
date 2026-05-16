@@ -27,6 +27,7 @@ type Carrera = {
   area: string; grado: string; modalidades: string[];
   descripcionCorta: string; color: string;
   imagenUrl?: string;
+  imagenTarjetaUrl?: string;
 };
 
 type CampusFoto = { url: string; alt?: string };
@@ -104,7 +105,7 @@ const ingenierias = [
 ] as const;
 
 function SeccionExcelencia({ carreras }: { carreras: Carrera[] }) {
-  const imgBySlug = new Map(carreras.map((c) => [c.slug, sanityImg(c.imagenUrl, 1600)]));
+  const imgBySlug = new Map(carreras.map((c) => [c.slug, sanityImg(c.imagenTarjetaUrl ?? c.imagenUrl, 1600)]));
   return (
     <section className="py-32 px-6 md:px-12 bg-[#F9F9FB]">
       <div className="max-w-screen-2xl mx-auto">
@@ -215,7 +216,7 @@ const COMPACT_LICENCIATURAS = [
 ] as const;
 
 function SeccionLicenciaturas({ carreras }: { carreras: Carrera[] }) {
-  const imgBySlug = new Map(carreras.map((c) => [c.slug, sanityImg(c.imagenUrl, 1600)]));
+  const imgBySlug = new Map(carreras.map((c) => [c.slug, sanityImg(c.imagenTarjetaUrl ?? c.imagenUrl, 1600)]));
 
   return (
     <section className="py-32 px-6 md:px-12 bg-white">

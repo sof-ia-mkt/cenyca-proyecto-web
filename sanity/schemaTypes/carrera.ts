@@ -87,7 +87,9 @@ export const carrera = defineType({
     }),
     defineField({
       name: "imagen",
-      title: "Imagen de la carrera",
+      title: "Imagen principal (hero)",
+      description:
+        "Foto épica de la carrera. Se usa como hero de la página individual /carreras/[slug] y, si no defines la imagen de tarjeta abajo, también en los listados.",
       type: "image",
       options: { hotspot: true },
       fields: [
@@ -96,6 +98,21 @@ export const carrera = defineType({
           title: "Texto alternativo",
           type: "string",
           validation: (Rule) => Rule.required(),
+        }),
+      ],
+    }),
+    defineField({
+      name: "imagenTarjeta",
+      title: "Imagen para tarjetas/listados (opcional)",
+      description:
+        "Imagen alternativa para cards en /ingenierias, /licenciaturas, /oferta-academica y home. Útil si la imagen principal es muy abierta/cinematográfica y no queda bien en cards chicas. Si se deja vacía, los listados usan la imagen principal.",
+      type: "image",
+      options: { hotspot: true },
+      fields: [
+        defineField({
+          name: "alt",
+          title: "Texto alternativo",
+          type: "string",
         }),
       ],
     }),
