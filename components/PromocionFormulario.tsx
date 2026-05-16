@@ -242,10 +242,10 @@ export default function PromocionFormulario({
           >
             <Sparkles size={14} /> {kicker}
           </span>
-          <h2 className="font-bebas text-white text-5xl sm:text-6xl lg:text-7xl tracking-wide leading-[0.95] mb-6">
+          <h2 className="font-bebas text-white text-[2.5rem] sm:text-5xl lg:text-[3.25rem] xl:text-6xl tracking-wide leading-[1.05] mb-6 text-balance">
             {titulo}
           </h2>
-          <p className="font-montserrat text-white/70 text-base sm:text-lg leading-relaxed mb-8">
+          <p className="font-montserrat text-white/70 text-base sm:text-lg leading-relaxed mb-8 text-balance">
             {subtitulo}
           </p>
 
