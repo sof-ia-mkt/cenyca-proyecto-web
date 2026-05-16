@@ -1,5 +1,6 @@
 import { client } from "@/sanity/lib/client";
 import { configuracionQuery } from "@/sanity/lib/queries";
+import FooterSocialBar from "@/app/components/FooterSocialBar";
 
 type RedesSociales = {
   facebook?: string;
@@ -61,22 +62,24 @@ export default async function Footer() {
   return (
     <footer className="bg-[#121B33] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Redes sociales — solo aparecen si hay al menos una URL en Sanity */}
+        {/* Redes sociales — se ocultan en /carreras/[slug] para no duplicar la sección dedicada */}
         {socials.length > 0 && (
-          <div className="flex items-center justify-center gap-3 py-6 border-b border-white/[0.06]">
-            {socials.map(({ key, url, label, Icon }) => (
-              <a
-                key={key}
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:bg-[#00D4FF] hover:text-[#121B33] hover:border-[#00D4FF] hover:-translate-y-0.5 transition-all duration-200"
-              >
-                <Icon size={18} />
-              </a>
-            ))}
-          </div>
+          <FooterSocialBar>
+            <div className="flex items-center justify-center gap-3 py-6 border-b border-white/[0.06]">
+              {socials.map(({ key, url, label, Icon }) => (
+                <a
+                  key={key}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:bg-[#00D4FF] hover:text-[#121B33] hover:border-[#00D4FF] hover:-translate-y-0.5 transition-all duration-200"
+                >
+                  <Icon size={18} />
+                </a>
+              ))}
+            </div>
+          </FooterSocialBar>
         )}
 
         {/* Copyright + RVOE */}
