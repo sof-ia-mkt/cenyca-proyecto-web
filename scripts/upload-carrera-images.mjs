@@ -17,6 +17,7 @@
 import { createClient } from "@sanity/client";
 import { readFileSync, existsSync, readdirSync, statSync } from "node:fs";
 import { basename, extname, resolve } from "node:path";
+import { randomBytes } from "node:crypto";
 
 const token = process.env.SANITY_TOKEN;
 if (!token) {
@@ -161,7 +162,10 @@ for (const c of carreras) {
       const asset = await uploadImage(g.path, `${c.slug}-${basename(g.name)}`);
       galeriaUploads.push({
         _type: "image",
-        _key: `g-${asset._id.slice(-8)}`,
+        // _key único por item — no usar slice del asset._id porque distintas
+        // carreras pueden compartir el mismo asset (instalaciones, etc.) y
+        // colisionar dentro del mismo array.
+        _key: `g-${randomBytes(6).toString("hex")}`,
         asset: { _type: "reference", _ref: asset._id },
         alt: `${c.nombre} — ${basename(g.name, extname(g.name))}`,
       });
