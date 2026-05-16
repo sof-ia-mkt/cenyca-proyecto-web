@@ -109,6 +109,13 @@ export const configuracionQuery = groq`
       diasExpiracion,
       whatsappAsesor
     },
+    modalidadesHorarios{
+      activa,
+      kicker,
+      titulo,
+      subtitulo,
+      cards[]{ tag, titulo, valorDestacado, descripcion }
+    },
     "videoTestimonial": select(
       defined(videoTestimonial.videoArchivo.asset) || defined(videoTestimonial.youtubeId) => {
         "videoArchivoUrl": videoTestimonial.videoArchivo.asset->url,
