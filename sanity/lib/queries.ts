@@ -43,6 +43,23 @@ export const carreraBySlugQuery = groq`
       "width": asset->metadata.dimensions.width,
       "height": asset->metadata.dimensions.height
     },
+    inversion{
+      activa,
+      inscripcionBase,
+      paqueteCuatrimestral,
+      paqueteCuatrimestralTecate,
+      mostrarToggleCampus,
+      mensajeAparta,
+      disclaimer,
+      cards[]{
+        tipo, tag, destacada, etiquetaDestacada,
+        diaPrincipal, diaSecundario, horario,
+        horarioCasaBlanca, horarioOtros, ocultarDomingoEnOtay,
+        mensualidadBase, mensualidadEspecial, notaEspecial,
+        labelToggleEspecial, labelToggleRegular,
+        becasOpciones, sinReinscripcion, ctaLabel
+      }
+    },
     "seo": {
       "titulo": seo.titulo,
       "descripcion": seo.descripcion,
@@ -108,13 +125,6 @@ export const configuracionQuery = groq`
       mensajeComprobante,
       diasExpiracion,
       whatsappAsesor
-    },
-    modalidadesHorarios{
-      activa,
-      kicker,
-      titulo,
-      subtitulo,
-      cards[]{ tag, titulo, valorDestacado, descripcion }
     },
     "videoTestimonial": select(
       defined(videoTestimonial.videoArchivo.asset) || defined(videoTestimonial.youtubeId) => {
