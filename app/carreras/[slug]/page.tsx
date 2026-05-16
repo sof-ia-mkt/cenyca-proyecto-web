@@ -398,7 +398,10 @@ export default async function CarreraPage(
                   className="group bg-white p-8 hover:bg-[#FAFAFA] transition-colors duration-300"
                 >
                   <div className="flex items-center justify-between mb-6">
-                    <span className="font-bebas text-[#121B33]/15 text-4xl tracking-wider leading-none">
+                    <span
+                      className="font-bebas text-5xl tracking-wider leading-none"
+                      style={{ color: accent }}
+                    >
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <div
