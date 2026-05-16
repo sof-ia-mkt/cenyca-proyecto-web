@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const navLinks = [
   { label: "Inicio", href: "/" },
@@ -15,22 +15,85 @@ const navLinks = [
 
 export default function Navbar() {
   const [menuAbierto, setMenuAbierto] = useState(false);
+  // `scrolled = true` cuando el usuario baja > 40px. Controla la compresión y el fondo.
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Cuando el menú móvil está abierto, dejamos el navbar opaco aunque estés en el top.
+  const opaque = scrolled || menuAbierto;
 
   return (
-    <header className="bg-[#121B33] shadow-lg fixed top-0 left-0 right-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-[72px]">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300 ${
+        opaque
+          ? "bg-[#121B33]/80 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.35)]"
+          : "bg-[#121B33]/30 backdrop-blur-md"
+      }`}
+    >
+      {/* Línea sutil cian al borde inferior cuando ya scrolleaste — coherente con SectionAccentLine */}
+      <div
+        aria-hidden
+        className={`absolute bottom-0 left-0 right-0 h-px transition-opacity duration-300 ${opaque ? "opacity-100" : "opacity-0"}`}
+        style={{
+          background:
+            "linear-gradient(90deg, transparent 0%, rgba(0,212,255,0.45) 50%, transparent 100%)",
+        }}
+      />
 
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 flex-shrink-0">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          className={`flex items-center justify-between transition-[height] duration-300 ${
+            scrolled ? "h-[64px]" : "h-[96px]"
+          }`}
+        >
+          {/* Logo + Slogan */}
+          <Link href="/" className="flex items-center gap-3 sm:gap-4 flex-shrink-0 group">
             <Image
               src="/logo.avif"
               alt="CENYCA Universidad"
-              width={140}
-              height={45}
-              className="object-contain"
+              width={180}
+              height={58}
               priority
+              className={`object-contain transition-[height,width] duration-300 ${
+                scrolled ? "h-9 w-auto" : "h-12 w-auto"
+              }`}
             />
+            {/* Slogan al lado — se oculta en mobile para ahorrar espacio */}
+            <span
+              aria-hidden
+              className={`hidden md:block h-8 w-px bg-white/15 transition-opacity duration-300 ${
+                scrolled ? "opacity-60" : "opacity-100"
+              }`}
+            />
+            {/* Slogan como texto — más legible que la imagen, escala mejor */}
+            <span
+              className={`hidden md:flex flex-col leading-tight transition-opacity duration-300 ${
+                scrolled ? "opacity-80" : "opacity-95"
+              }`}
+            >
+              <span
+                className={`font-montserrat text-white/95 font-semibold tracking-wide transition-[font-size] duration-300 ${
+                  scrolled ? "text-[11px]" : "text-[13px]"
+                }`}
+                style={{ letterSpacing: "0.04em" }}
+              >
+                Donde tu potencial
+              </span>
+              <span
+                className={`font-montserrat text-[#00D4FF] font-bold tracking-wide transition-[font-size] duration-300 ${
+                  scrolled ? "text-[11px]" : "text-[13px]"
+                }`}
+                style={{ letterSpacing: "0.04em" }}
+              >
+                se vuelve éxito
+              </span>
+            </span>
           </Link>
 
           {/* Nav desktop */}
@@ -39,20 +102,25 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-white text-sm font-medium px-3 py-2 rounded-md hover:bg-white/10 transition-colors duration-200"
+                className="relative text-white text-sm font-semibold px-3.5 py-2 rounded-md hover:text-[#00D4FF] transition-colors duration-200 group"
               >
                 {link.label}
+                {/* Underline animado en hover */}
+                <span
+                  aria-hidden
+                  className="absolute left-3.5 right-3.5 bottom-1 h-px bg-[#00D4FF] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"
+                />
               </Link>
             ))}
           </nav>
 
           {/* CTA + Plataforma Alumnos — desktop */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-2.5 flex-shrink-0">
             <a
               href="https://alumnos.cenyca.edu.mx"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white text-sm font-medium px-3 py-2 rounded-md border border-white/20 hover:bg-white/10 transition-colors duration-200"
+              className="text-white text-[13px] font-semibold px-5 py-2.5 rounded-full border border-white/25 hover:bg-white/10 hover:border-white/60 transition-colors duration-200 whitespace-nowrap inline-flex items-center"
             >
               Plataforma Alumnos
             </a>
@@ -60,7 +128,7 @@ export default function Navbar() {
               href="https://inscripciones.cenyca.edu.mx"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#00D4FF] text-[#121B33] text-sm font-bold px-5 py-2.5 rounded-full hover:bg-[#00B8DB] transition-all duration-300 hover:scale-105 shadow-[0_0_15px_rgba(0,212,255,0.3)]"
+              className="bg-[#00D4FF] text-[#121B33] text-[13px] font-bold px-6 py-2.5 rounded-full hover:bg-white transition-all duration-300 hover:scale-[1.03] shadow-[0_0_20px_rgba(0,212,255,0.45)] whitespace-nowrap inline-flex items-center"
             >
               Inscríbete
             </a>

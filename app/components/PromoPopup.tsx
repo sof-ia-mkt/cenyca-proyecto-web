@@ -158,10 +158,21 @@ export default function PromoPopup({
           {/* CTAs */}
           <div className="flex flex-col gap-3">
             <a
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={dismiss}
+              href="/#contacto"
+              onClick={(e) => {
+                dismiss();
+                // Solo hacemos scroll suave si ya estamos en home; en otras rutas el
+                // navegador navega a /#contacto automáticamente.
+                if (window.location.pathname === "/") {
+                  e.preventDefault();
+                  // Pequeño delay para dar tiempo a que el popup haga unmount antes del scroll.
+                  setTimeout(() => {
+                    document
+                      .getElementById("contacto")
+                      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }, 80);
+                }
+              }}
               className="group inline-flex items-center justify-center gap-2 bg-[#00D4FF] hover:bg-[#33DDFF] text-[#121B33] font-extrabold text-sm md:text-base uppercase tracking-[0.18em] px-7 py-4 rounded-full transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_50px_rgba(0,212,255,0.65)] shadow-[0_10px_32px_rgba(0,212,255,0.4)]"
             >
               Quiero la promoción

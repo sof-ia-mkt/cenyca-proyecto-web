@@ -126,6 +126,14 @@ export const configuracionQuery = groq`
       diasExpiracion,
       whatsappAsesor
     },
+    cicloInicio{
+      activo,
+      fecha,
+      kicker,
+      slogan,
+      mensaje,
+      mensajeCicloIniciado
+    },
     "videoTestimonial": select(
       defined(videoTestimonial.videoArchivo.asset) || defined(videoTestimonial.youtubeId) => {
         "videoArchivoUrl": videoTestimonial.videoArchivo.asset->url,

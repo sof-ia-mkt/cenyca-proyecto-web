@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import SectionAccentLine from "@/app/components/SectionAccentLine";
 
 export type NoticiaCard = {
   _id: string;
@@ -75,6 +76,8 @@ export default function SeccionNoticias({ noticias }: { noticias: NoticiaCard[] 
 
   return (
     <section className="relative bg-white py-20 md:py-24 overflow-hidden">
+      <SectionAccentLine accent="#E9C176" position="top" />
+      <SectionAccentLine accent="#E9C176" position="bottom" />
       <div className="max-w-screen-2xl mx-auto px-6 md:px-12">
         {/* Header */}
         <div
@@ -244,7 +247,7 @@ function NoticiaCardItem({ noticia }: { noticia: NoticiaCard }) {
     <Link
       href={`/noticias/${noticia.slug.current}`}
       data-news-card
-      className="group snap-start shrink-0 w-[280px] sm:w-[320px] md:w-[360px] rounded-2xl overflow-hidden bg-white border border-[#1B2040]/8 shadow-[0_2px_8px_rgba(27,32,64,0.04)] hover:shadow-[0_12px_32px_rgba(27,32,64,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col"
+      className="group snap-start shrink-0 w-[280px] sm:w-[320px] md:w-[360px] rounded-2xl overflow-hidden bg-white border border-[#1B2040]/15 shadow-[0_4px_14px_rgba(27,32,64,0.08)] hover:shadow-[0_18px_40px_rgba(27,32,64,0.18)] hover:-translate-y-1 hover:border-[#00D4FF]/50 transition-all duration-300 flex flex-col"
     >
       <div className="relative aspect-[16/10] bg-[#F2F3F7] overflow-hidden">
         {noticia.imagenUrl ? (
@@ -261,7 +264,7 @@ function NoticiaCardItem({ noticia }: { noticia: NoticiaCard }) {
           </div>
         )}
         {noticia.categoria && (
-          <span className="absolute top-3 left-3 bg-white/95 backdrop-blur-sm text-[10px] font-bold uppercase tracking-[0.2em] text-[#1B2040] px-2.5 py-1 rounded-full">
+          <span className="absolute top-3 left-3 bg-[#00D4FF] text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#1B2040] px-2.5 py-1.5 rounded-full shadow-[0_4px_12px_rgba(0,212,255,0.4)]">
             {noticia.categoria}
           </span>
         )}
@@ -270,9 +273,9 @@ function NoticiaCardItem({ noticia }: { noticia: NoticiaCard }) {
         <h3 className="font-bold text-[#1B2040] text-base leading-snug line-clamp-3 group-hover:text-[#00D4FF] transition-colors">
           {noticia.titulo}
         </h3>
-        <div className="mt-auto pt-4 flex items-center justify-between">
-          <span className="text-xs text-[#1B2040]/45">{fecha ?? ""}</span>
-          <span className="text-[#00D4FF] flex items-center gap-1 text-xs font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="mt-auto pt-4 flex items-center justify-between border-t border-[#1B2040]/10">
+          <span className="text-xs font-semibold text-[#1B2040]/70 pt-3">{fecha ?? ""}</span>
+          <span className="text-[#00D4FF] flex items-center gap-1 text-xs font-extrabold uppercase tracking-wider pt-3 group-hover:gap-2 transition-all">
             Leer <ArrowUpRight className="w-3.5 h-3.5" />
           </span>
         </div>
