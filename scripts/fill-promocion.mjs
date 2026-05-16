@@ -24,17 +24,42 @@ const client = createClient({
 const promo = {
   activa: true,
   porcentaje: 20,
-  kicker: "Beca de inscripción",
-  titulo: "Reclama tu beca del {porcentaje}%",
+  kicker: "Descuento de inscripción",
+  titulo: "Reclama tu descuento del {porcentaje}% en tu inscripción",
   subtitulo:
     "Solo por tiempo limitado para nuevos alumnos. Deja tus datos y un asesor te contactará por WhatsApp.",
   mensajeComprobante: "Envía este comprobante a tu asesor o preséntalo al inscribirte",
   diasExpiracion: 30,
 };
 
+const modalidadesHorarios = {
+  activa: true,
+  kicker: "Modalidades de estudio",
+  titulo: "Tu carrera, a tu ritmo",
+  subtitulo: "Estudia sin pausar tus actividades cotidianas.",
+  cards: [
+    {
+      _key: "card-entre-semana",
+      tag: "Entre semana",
+      titulo: "1 día a la semana",
+      valorDestacado: "Solo 1 día",
+      descripcion:
+        "Asiste un día entre semana y sigue con tu trabajo o actividades el resto de la semana. Flexibilidad real.",
+    },
+    {
+      _key: "card-fin-de-semana",
+      tag: "Ejecutivo",
+      titulo: "Fin de semana",
+      valorDestacado: "Sábado o domingo",
+      descripcion:
+        "Dedica tu sábado o domingo a formarte. Perfecto para quienes tienen compromisos de lunes a viernes.",
+    },
+  ],
+};
+
 const result = await client
   .patch("configuracion-general")
-  .set({ promocionInscripcion: promo })
+  .set({ promocionInscripcion: promo, modalidadesHorarios })
   .commit();
 
 console.log("OK — documento actualizado:", result._id, "rev", result._rev);

@@ -27,6 +27,7 @@ import LazyYouTubeEmbed from "@/components/LazyYouTubeEmbed";
 import LazySelfHostedVideo from "@/components/LazySelfHostedVideo";
 import GaleriaPrograma, { type GaleriaItem } from "@/components/GaleriaPrograma";
 import PromocionFormulario, { type PromocionConfig } from "@/components/PromocionFormulario";
+import ModalidadesHorarios, { type ModalidadesHorariosConfig } from "@/components/ModalidadesHorarios";
 
 // ─── Mapeos UI ────────────────────────────────────────────────────────────────
 
@@ -94,6 +95,7 @@ type Configuracion = {
   stats?: Stat[];
   videoTestimonial?: VideoTestimonial | null;
   promocionInscripcion?: PromocionConfig;
+  modalidadesHorarios?: ModalidadesHorariosConfig;
 };
 
 // ─── PortableText renderer ────────────────────────────────────────────────────
@@ -436,6 +438,11 @@ export default async function CarreraPage(
       {/* ── GALERÍA DEL PROGRAMA ──────────────────────────────────────────── */}
       {carrera.galeria && carrera.galeria.length > 0 && (
         <GaleriaPrograma items={carrera.galeria} carreraNombre={carrera.nombre} accent={accent} />
+      )}
+
+      {/* ── MODALIDADES / HORARIOS ────────────────────────────────────────── */}
+      {config?.modalidadesHorarios?.activa && (
+        <ModalidadesHorarios data={config.modalidadesHorarios} accent={accent} />
       )}
 
       {/* ── STATS GLOBALES ────────────────────────────────────────────────── */}

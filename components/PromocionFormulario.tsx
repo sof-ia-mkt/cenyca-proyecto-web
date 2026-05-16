@@ -113,10 +113,10 @@ export default function PromocionFormulario({
 }: Props) {
   const porcentaje = promo.porcentaje ?? 20;
   const dias = promo.diasExpiracion ?? 30;
-  const tituloRaw = promo.titulo ?? "Reclama tu beca del {porcentaje}%";
+  const tituloRaw = promo.titulo ?? "Reclama tu descuento del {porcentaje}%";
   const titulo = tituloRaw.replace(/\{porcentaje\}/g, String(porcentaje));
   const subtitulo = promo.subtitulo ?? "Solo por tiempo limitado para nuevos alumnos.";
-  const kicker = promo.kicker ?? "Beca de inscripción";
+  const kicker = promo.kicker ?? "Descuento de inscripción";
   const mensajeComprobante =
     promo.mensajeComprobante ?? "Envía este comprobante a tu asesor o preséntalo al inscribirte";
   const whatsappAsesor = promo.whatsappAsesor || whatsappFallback;
@@ -501,7 +501,7 @@ function Comprobante({
     ? carreraNombre
     : `${gradoLabel} en ${carreraNombre}`;
   const waMessage = encodeURIComponent(
-    `Hola, soy ${data.nombre}. Acabo de reclamar mi beca del ${porcentaje}% para ${programa}.\n\nCódigo: ${data.codigo}\nPlantel: ${plantelNice}\nTeléfono: ${data.telefono}\nVálido hasta: ${formatFecha(data.expiraEn)}`
+    `Hola, soy ${data.nombre}. Acabo de reclamar mi descuento del ${porcentaje}% para ${programa}.\n\nCódigo: ${data.codigo}\nPlantel: ${plantelNice}\nTeléfono: ${data.telefono}\nVálido hasta: ${formatFecha(data.expiraEn)}`
   );
   const waLink = `https://wa.me/${whatsappAsesor.replace(/\D/g, "")}?text=${waMessage}`;
 
