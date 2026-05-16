@@ -339,68 +339,6 @@ export const configuracion = defineType({
       ],
     }),
 
-    // --- MODALIDADES / HORARIOS DE ESTUDIO ---
-    defineField({
-      name: "modalidadesHorarios",
-      title: "Modalidades / horarios de estudio (cards en páginas de carrera)",
-      description:
-        "Tarjetas con las opciones de horario disponibles. Se muestran como sección en todas las páginas de carrera. El mismo contenido aplica a todas las carreras.",
-      type: "object",
-      fields: [
-        defineField({
-          name: "activa",
-          title: "¿Mostrar sección?",
-          type: "boolean",
-          initialValue: true,
-        }),
-        defineField({
-          name: "kicker",
-          title: "Kicker",
-          type: "string",
-          initialValue: "Modalidades de estudio",
-        }),
-        defineField({
-          name: "titulo",
-          title: "Título",
-          type: "string",
-          initialValue: "Tu carrera, a tu ritmo",
-        }),
-        defineField({
-          name: "subtitulo",
-          title: "Subtítulo",
-          type: "text",
-          rows: 2,
-          initialValue: "Estudia sin pausar tus actividades cotidianas.",
-        }),
-        defineField({
-          name: "cards",
-          title: "Tarjetas de horarios",
-          description: "Recomendado: 2-3 tarjetas (entre semana / fin de semana / en línea, por ejemplo).",
-          type: "array",
-          of: [
-            {
-              type: "object",
-              fields: [
-                defineField({ name: "tag", title: "Chip (tag pequeño arriba)", type: "string" }),
-                defineField({ name: "titulo", title: "Título (h3)", type: "string" }),
-                defineField({
-                  name: "valorDestacado",
-                  title: "Día destacado (texto grande)",
-                  type: "string",
-                  description: 'Ejemplo: "Solo 1 día", "Sábado o domingo".',
-                }),
-                defineField({ name: "descripcion", title: "Descripción", type: "text", rows: 2 }),
-              ],
-              preview: {
-                select: { title: "titulo", subtitle: "valorDestacado" },
-              },
-            },
-          ],
-          validation: (Rule) => Rule.max(4),
-        }),
-      ],
-    }),
-
     // --- PROMOCIÓN / FORMULARIO DE INSCRIPCIÓN ---
     defineField({
       name: "promocionInscripcion",

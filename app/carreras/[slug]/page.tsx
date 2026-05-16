@@ -27,7 +27,7 @@ import LazyYouTubeEmbed from "@/components/LazyYouTubeEmbed";
 import LazySelfHostedVideo from "@/components/LazySelfHostedVideo";
 import GaleriaPrograma, { type GaleriaItem } from "@/components/GaleriaPrograma";
 import PromocionFormulario, { type PromocionConfig } from "@/components/PromocionFormulario";
-import ModalidadesHorarios, { type ModalidadesHorariosConfig } from "@/components/ModalidadesHorarios";
+import BloqueInversion, { type InversionConfig } from "@/components/BloqueInversion";
 
 // ─── Mapeos UI ────────────────────────────────────────────────────────────────
 
@@ -75,6 +75,7 @@ type Carrera = {
   imagenAlt?: string;
   imagenLqip?: string;
   galeria?: GaleriaItem[];
+  inversion?: InversionConfig;
   seo?: { titulo?: string; descripcion?: string; imagenUrl?: string };
 };
 
@@ -95,7 +96,6 @@ type Configuracion = {
   stats?: Stat[];
   videoTestimonial?: VideoTestimonial | null;
   promocionInscripcion?: PromocionConfig;
-  modalidadesHorarios?: ModalidadesHorariosConfig;
 };
 
 // ─── PortableText renderer ────────────────────────────────────────────────────
@@ -440,9 +440,13 @@ export default async function CarreraPage(
         <GaleriaPrograma items={carrera.galeria} carreraNombre={carrera.nombre} accent={accent} />
       )}
 
-      {/* ── MODALIDADES / HORARIOS ────────────────────────────────────────── */}
-      {config?.modalidadesHorarios?.activa && (
-        <ModalidadesHorarios data={config.modalidadesHorarios} accent={accent} />
+      {/* ── INVERSIÓN / COSTOS POR CARRERA ───────────────────────────────── */}
+      {carrera.inversion?.activa && (
+        <BloqueInversion
+          data={carrera.inversion}
+          promo={config?.promocionInscripcion}
+          accent={accent}
+        />
       )}
 
       {/* ── STATS GLOBALES ────────────────────────────────────────────────── */}
