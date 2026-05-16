@@ -97,18 +97,18 @@ export default function Navbar() {
           </Link>
 
           {/* Nav desktop */}
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="relative text-white text-sm font-semibold px-3.5 py-2 rounded-md hover:text-[#00D4FF] transition-colors duration-200 group"
+                className="relative whitespace-nowrap text-white text-[13px] xl:text-sm font-semibold px-2.5 xl:px-3.5 py-2 rounded-md hover:text-[#00D4FF] transition-colors duration-200 group"
               >
                 {link.label}
                 {/* Underline animado en hover */}
                 <span
                   aria-hidden
-                  className="absolute left-3.5 right-3.5 bottom-1 h-px bg-[#00D4FF] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"
+                  className="absolute left-2.5 right-2.5 xl:left-3.5 xl:right-3.5 bottom-1 h-px bg-[#00D4FF] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"
                 />
               </Link>
             ))}

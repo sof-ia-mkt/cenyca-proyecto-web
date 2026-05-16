@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, type CSSProperties } from "react";
-import { Flame, MapPin, Star, Sparkles, Check, AlertTriangle } from "lucide-react";
+import { MapPin, Star, Sparkles, Check, AlertTriangle } from "lucide-react";
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
 
@@ -92,33 +92,10 @@ export default function BloqueInversion({ data, promo, accent = "#00D4FF" }: Pro
           >
             Inversión
           </span>
-          <h2 className="font-bebas text-white text-4xl sm:text-5xl lg:text-6xl tracking-wide leading-[1.05] mt-3">
-            Conoce el costo de tu carrera
+          <h2 className="font-bebas text-white text-4xl sm:text-5xl lg:text-6xl tracking-wide leading-[1.05] mt-3 text-balance">
+            Conoce el costo de inversión y tus horarios
           </h2>
         </div>
-
-        {/* Banner promo */}
-        {promo?.activa && (
-          <div
-            className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 rounded-2xl px-5 py-4 border"
-            style={{
-              background: `linear-gradient(135deg, ${accent}1F, ${accent}0A)`,
-              borderColor: `${accent}33`,
-            }}
-          >
-            <div className="flex items-start gap-3">
-              <Flame size={22} style={{ color: accent }} className="mt-0.5 flex-shrink-0" />
-              <div className="font-montserrat">
-                <div className="font-bold text-white text-base">
-                  {porcentajePromo}% OFF en tu Inscripción
-                </div>
-                <div className="text-white/65 text-sm">
-                  Regístrate ahora y ahorra {fmt(ahorro)} en tu inscripción
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* Toggle de campus */}
         {data.mostrarToggleCampus && (
@@ -174,8 +151,8 @@ export default function BloqueInversion({ data, promo, accent = "#00D4FF" }: Pro
 
         {/* Disclaimer */}
         {data.disclaimer && (
-          <p className="mt-8 text-center font-montserrat text-[12px] sm:text-sm text-white/45 max-w-xl mx-auto flex items-start justify-center gap-2">
-            <AlertTriangle size={14} className="mt-0.5 flex-shrink-0 text-white/40" />
+          <p className="mt-8 text-center font-montserrat text-[12px] sm:text-[13px] text-white/50 max-w-4xl mx-auto inline-flex items-center justify-center gap-2 flex-wrap">
+            <AlertTriangle size={14} className="flex-shrink-0 text-white/40" />
             <span>{data.disclaimer}</span>
           </p>
         )}
