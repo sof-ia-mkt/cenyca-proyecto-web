@@ -246,3 +246,13 @@ export const todosAvisosQuery = groq`
     fecha
   }
 `
+
+export const avisoBySlugQuery = groq`
+  *[_type == "avisoPrivacidad" && slug.current == $slug][0] {
+    _id,
+    titulo,
+    slug,
+    fecha,
+    contenido
+  }
+`
