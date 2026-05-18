@@ -3,6 +3,11 @@ import { client } from "@/sanity/lib/client";
 import { groq } from "next-sanity";
 import { SITE_URL_FALLBACK } from "@/lib/siteUrl";
 
+// Revalidar el sitemap cada hora. Sin esto, Next cachea el resultado
+// del build y nunca refleja nuevas carreras/noticias publicadas en
+// Sanity hasta el siguiente deploy.
+export const revalidate = 3600;
+
 const carrerasSlugsQuery = groq`*[_type == "carrera" && activa == true]{ "slug": slug.current }`;
 const noticiasSlugsQuery = groq`*[_type == "noticia"]{ "slug": slug.current, "fecha": fecha }`;
 const avisosSlugsQuery = groq`*[_type == "avisoPrivacidad"]{ "slug": slug.current, "fecha": fecha }`;
@@ -18,6 +23,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const now = new Date();
 
+  // Solo incluimos rutas estáticas indexables (sin robots.noindex). Las
+  // páginas placeholder /admisiones, /becas, /intercambios,
+  // /educacion-continua y /posgrados están marcadas como noindex
+  // intencionalmente hasta tener contenido real; agregarlas aquí
+  // generaría warning "submitted URL marked noindex" en Search Console.
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: base, lastModified: now, changeFrequency: "weekly", priority: 1 },
     { url: `${base}/oferta-academica`, lastModified: now, changeFrequency: "monthly", priority: 0.95 },

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
@@ -27,6 +27,21 @@ const DEFAULT_TWITTER_DESC =
 // Brand corto para el template de title — evita que páginas internas queden
 // con títulos de 100+ chars cuando se concatena con el tituloBase largo.
 const BRAND_SHORT = "CENYCA Universidad";
+
+/**
+ * Viewport + theme color. En Next 15+ deben ir en su propio export
+ * `viewport` (separado de `metadata`). El themeColor pinta la barra
+ * superior del browser en móviles y coincide con el manifest.
+ */
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#121B33" },
+    { media: "(prefers-color-scheme: dark)", color: "#121B33" },
+  ],
+  colorScheme: "light",
+};
 
 /**
  * Metadata dinámica para que la OG image global (configuracion.seo.ogImage)
