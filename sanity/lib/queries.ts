@@ -97,6 +97,11 @@ export const configuracionQuery = groq`
     contacto,
     redesSociales,
     sistemas,
+    seo {
+      tituloBase,
+      descripcion,
+      "ogImageUrl": ogImage.asset->url
+    },
     "heroSlides": heroSlides[] {
       titulo,
       subtitulo,
@@ -200,6 +205,7 @@ export const noticiaBySlugQuery = groq`
     slug,
     fecha,
     categoria,
+    extracto,
     imagen,
     "contenido": contenido[]{
       ...,

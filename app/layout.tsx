@@ -26,10 +26,46 @@ export const metadata: Metadata = {
   description:
     "Universidad en Tijuana, Tecate y Ensenada. Licenciaturas, especialidades y maestrías con validez oficial. Titúlate en 3 años con modelo cuatrimestral.",
   metadataBase: new URL(SITE_URL),
+  keywords: [
+    "universidad Tijuana",
+    "universidad Tecate",
+    "universidad Ensenada",
+    "universidad Baja California",
+    "licenciaturas RVOE",
+    "ingenierías RVOE",
+    "CENYCA Universidad",
+    "modelo cuatrimestral",
+    "titularse en 3 años",
+    "becas universidad Tijuana",
+  ],
+  authors: [{ name: "CENYCA Universidad" }],
+  creator: "CENYCA Universidad",
+  publisher: "CENYCA Universidad",
+  alternates: { canonical: "/" },
   openGraph: {
     siteName: "CENYCA Universidad",
     locale: "es_MX",
     type: "website",
+    url: SITE_URL,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "CENYCA Universidad",
+    description:
+      "Universidad en Tijuana, Tecate y Ensenada. RVOE oficial, titúlate en 3 años.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    // google: "AGREGAR_CUANDO_TENGAS_SEARCH_CONSOLE",
   },
 };
 

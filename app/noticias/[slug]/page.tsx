@@ -116,10 +116,10 @@ type Noticia = {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const { data } = await sanityFetch({ query: noticiaBySlugQuery, params: { slug } })
-  const noticia = data as (Noticia & { resumen?: string }) | null
+  const noticia = data as (Noticia & { resumen?: string; extracto?: string }) | null
   if (!noticia) return { title: 'Noticia no encontrada' }
   const titulo = noticia.titulo
-  const descripcion = noticia.resumen ?? `Lee "${titulo}" en CENYCA Comunica.`
+  const descripcion = noticia.extracto ?? noticia.resumen ?? `Lee "${titulo}" en CENYCA Comunica.`
   const ogImage = noticia.imagen ? urlFor(noticia.imagen).width(1200).height(630).fit('crop').url() : undefined
   return {
     title: titulo,
@@ -174,8 +174,36 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
   const xShare = `https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(shareUrl)}`
   const waShare = `https://wa.me/?text=${shareText}%20${encodeURIComponent(shareUrl)}`
 
+  // JSON-LD NewsArticle para que Google entienda las noticias y las muestre
+  // en Google News / Discover / rich results.
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: noticia.titulo,
+    description:
+      (noticia as { extracto?: string }).extracto ??
+      `Lee "${noticia.titulo}" en CENYCA Comunica.`,
+    image: noticia.imagen
+      ? [urlFor(noticia.imagen).width(1200).height(630).fit("crop").url()]
+      : undefined,
+    datePublished: noticia.fecha,
+    dateModified: noticia.fecha,
+    author: { "@type": "Organization", name: "CENYCA Universidad" },
+    publisher: {
+      "@type": "Organization",
+      name: "CENYCA Universidad",
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.png` },
+    },
+    mainEntityOfPage: { "@type": "WebPage", "@id": shareUrl },
+    articleSection: noticia.categoria,
+  }
+
   return (
     <article className="bg-[#121B33] min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <div className="max-w-6xl mx-auto px-4 lg:px-8 py-16">
         <Link
           href="/noticias"

@@ -31,6 +31,14 @@ export const noticia = defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: 'extracto',
+      title: 'Extracto (resumen corto)',
+      type: 'text',
+      rows: 3,
+      description: 'Resumen breve (máx. 160 caracteres). Se usa para SEO meta description y para las tarjetas de listado.',
+      validation: (rule) => rule.max(200),
+    }),
+    defineField({
       name: 'categoria',
       title: 'Categoría',
       type: 'string',
