@@ -7,6 +7,7 @@ import { documento } from "./documento";
 import { avisoPrivacidad } from "./avisoPrivacidad";
 import { pagina } from "./pagina";
 import { historia } from "./historia";
+import { redirect } from "./redirect";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -17,6 +18,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     documento,
     avisoPrivacidad,
     pagina,
+    // Operativos
+    redirect,
     // Singletons
     configuracion,
     historia,

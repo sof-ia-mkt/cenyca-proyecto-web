@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { slugOptions, slugValidation } from '../lib/slugValidation'
 
 export const noticia = defineType({
   name: 'noticia',
@@ -15,8 +16,8 @@ export const noticia = defineType({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      options: { source: 'titulo', maxLength: 96 },
-      validation: (rule) => rule.required(),
+      options: slugOptions('titulo'),
+      validation: slugValidation,
     }),
     defineField({
       name: 'fecha',

@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { slugOptions, slugValidation } from "../lib/slugValidation";
 
 export const carrera = defineType({
   name: "carrera",
@@ -17,8 +18,8 @@ export const carrera = defineType({
       title: "Slug (URL)",
       type: "slug",
       description: "Se genera automáticamente del nombre. Ejemplo: ingenieria-mecatronica",
-      options: { source: "nombre", maxLength: 96 },
-      validation: (Rule) => Rule.required(),
+      options: slugOptions("nombre"),
+      validation: slugValidation,
     }),
     defineField({
       name: "area",
