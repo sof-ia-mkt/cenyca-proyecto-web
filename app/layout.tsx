@@ -5,6 +5,8 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import WhatsAppChat from "./components/WhatsAppChat";
 import PromoPopup from "./components/PromoPopup";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { client } from "@/sanity/lib/client";
 import { configuracionQuery } from "@/sanity/lib/queries";
 import { SITE_URL } from "@/lib/siteUrl";
@@ -108,6 +110,8 @@ export default async function RootLayout({
         <Footer />
         <WhatsAppChat phone={whatsapp} />
         <PromoPopup backgroundUrl={popupBg} />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
