@@ -130,16 +130,17 @@ export default function HeroAnimado({ slides }: { slides: HeroSlide[] }) {
         </motion.div>
       )}
 
-      {/* Scan-line sweep (one-shot on mount) */}
+      {/* Scan-line sweep (one-shot on mount).
+          Anima `y` (transform) en vez de `top` para evitar CLS. */}
       <motion.div
         aria-hidden
-        className="absolute left-0 right-0 h-[4px] z-20 pointer-events-none"
+        className="absolute left-0 right-0 top-0 h-[4px] z-20 pointer-events-none will-change-transform"
         style={{
           background: "linear-gradient(90deg, transparent, #00D4FF, transparent)",
           boxShadow: "0 0 30px #00D4FF, 0 0 60px rgba(0,212,255,0.4)",
         }}
-        initial={{ top: "-2%", opacity: 0 }}
-        animate={{ top: "102%", opacity: [0, 0.7, 0.7, 0] }}
+        initial={{ y: "-200%", opacity: 0 }}
+        animate={{ y: "100vh", opacity: [0, 0.7, 0.7, 0] }}
         transition={{ duration: 2, ease: "easeInOut", delay: 0.4 }}
       />
 
