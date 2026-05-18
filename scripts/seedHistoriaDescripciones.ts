@@ -18,7 +18,7 @@ const DESCRIPCIONES = [
   // Momento 3 — 2019 Universidad
   "En 2019 dimos el salto que cambió todo: nos constituimos formalmente como CENYCA Universidad. Empezamos a ofrecer licenciaturas y posgrados, abriendo el camino para que quienes empezaron con nosotros en bachillerato pudieran completar toda su formación profesional bajo el mismo techo.",
   // Momento 4 — Hoy
-  "Hoy somos 5 campus en Baja California: Tijuana (Casa Blanca, Otay y Palmas), Tecate y Ensenada. Más de 3,200 alumnos activos construyen su carrera con nosotros, en programas que van desde ingenierías de frontera hasta humanidades aplicadas.",
+  "Hoy somos 4 campus en Baja California: Tijuana (Casa Blanca, Otay y Palmas) y Tecate. Más de 3,200 alumnos activos construyen su carrera con nosotros, en programas que van desde ingenierías de frontera hasta humanidades aplicadas.",
 ];
 
 async function patchDoc(client: ReturnType<typeof getCliClient>, docId: string) {

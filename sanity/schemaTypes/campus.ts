@@ -29,7 +29,6 @@ export const campus = defineType({
         list: [
           { title: "Tijuana", value: "tijuana" },
           { title: "Tecate", value: "tecate" },
-          { title: "Ensenada", value: "ensenada" },
         ],
       },
       validation: (Rule) => Rule.required(),
@@ -140,7 +139,6 @@ export const campus = defineType({
       const ciudades: Record<string, string> = {
         tijuana: "Tijuana",
         tecate: "Tecate",
-        ensenada: "Ensenada",
       };
       return {
         title,

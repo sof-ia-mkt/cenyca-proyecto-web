@@ -14,7 +14,7 @@ const MOMENTOS: Momento[] = [
   { idx: 1, year: "2007", caption: "Nace CENYCA en Tijuana" },
   { idx: 2, year: "2010s", caption: "Aval SEP y formación a adultos" },
   { idx: 3, year: "2019", caption: "CENYCA Universidad" },
-  { idx: 4, year: "Hoy", caption: "5 campus en BC · +3,200 alumnos" },
+  { idx: 4, year: "Hoy", caption: "4 campus en BC · +3,200 alumnos" },
 ];
 
 async function patchDoc(client: ReturnType<typeof getCliClient>, docId: string) {

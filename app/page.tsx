@@ -74,7 +74,6 @@ type NoticiaRaw = {
 const CIUDAD_LABEL: Record<string, string> = {
   "tijuana":  "Tijuana",
   "tecate":   "Tecate",
-  "ensenada": "Ensenada",
 };
 
 // ─── Excelencia Académica (Bento de Ingenierías) ──────────────────────────────

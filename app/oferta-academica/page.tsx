@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Oferta Académica | CENYCA Universidad",
     description:
-      "Licenciaturas e ingenierías con RVOE SEP en Tijuana, Tecate y Ensenada.",
+      "Licenciaturas e ingenierías con RVOE SEP en Tijuana y Tecate.",
     type: "website",
   },
   twitter: { card: "summary_large_image", title: "Oferta Académica | CENYCA Universidad" },
@@ -95,7 +95,7 @@ function HeaderOferta({ totalProgramas }: { totalProgramas: number }) {
   const stats: { value: number; suffix?: string; prefix?: string; label: string }[] = [
     { value: 19, label: "Años formando talento" },
     { value: totalProgramas, label: "Programas con RVOE" },
-    { value: 5, label: "Campus en Baja California" },
+    { value: 4, label: "Campus en Baja California" },
     { value: 5000, prefix: "+", label: "Egresados en el noroeste" },
   ];
 

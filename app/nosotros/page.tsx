@@ -52,7 +52,7 @@ const valores = [
 
 const logros = [
   { numero: "18+", label: "Años de trayectoria" },
-  { numero: "5",   label: "Campus en Baja California" },
+  { numero: "4",   label: "Campus en Baja California" },
   { numero: "10",  label: "Programas académicos" },
   { numero: "RVOE", label: "Reconocimiento oficial SEP" },
 ];
@@ -204,7 +204,7 @@ export default function NosotrosPage() {
               {
                 año: "Crecimiento",
                 texto:
-                  "Con los años hemos expandido nuestra presencia a 5 campus en Tijuana, Tecate y Ensenada, acercando la educación superior a más familias de la región.",
+                  "Con los años hemos expandido nuestra presencia a 4 campus en Tijuana y Tecate, acercando la educación superior a más familias de la región.",
               },
               {
                 año: "Reconocimiento",

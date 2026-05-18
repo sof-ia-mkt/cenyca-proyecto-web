@@ -30,7 +30,7 @@ export const historia = defineType({
       type: "text",
       rows: 3,
       initialValue:
-        "Desde 2007 formando talento en Tijuana. Hoy, 5 campus en Baja California y más de 3,200 alumnos construyendo su futuro con nosotros.",
+        "Desde 2007 formando talento en Tijuana. Hoy, 4 campus en Baja California y más de 3,200 alumnos construyendo su futuro con nosotros.",
     }),
     defineField({
       name: "ctaTexto",

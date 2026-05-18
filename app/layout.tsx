@@ -137,7 +137,7 @@ export default async function RootLayout({
     url: SITE_URL,
     logo: `${SITE_URL}/logo.png`,
     description:
-      "Universidad en Tijuana, Tecate y Ensenada con licenciaturas e ingenierías con RVOE SEP. Modelo cuatrimestral, titúlate en 3 años.",
+      "Universidad en Tijuana y Tecate con licenciaturas e ingenierías con RVOE SEP. Modelo cuatrimestral, titúlate en 3 años.",
     address: {
       "@type": "PostalAddress",
       addressLocality: "Tijuana",
