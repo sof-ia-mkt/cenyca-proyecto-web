@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { client } from "@/sanity/lib/client";
 import { configuracionQuery } from "@/sanity/lib/queries";
 import FooterSocialBar from "@/app/components/FooterSocialBar";
@@ -82,14 +83,21 @@ export default async function Footer() {
           </FooterSocialBar>
         )}
 
-        {/* Copyright + RVOE */}
+        {/* Copyright + Legal + RVOE */}
         <div className="py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-white/40 text-xs font-montserrat">
             © {new Date().getFullYear()} CENYCA Universidad. Todos los derechos reservados.
           </p>
-          <p className="text-white/30 text-xs font-montserrat">
-            RVOE · SEP · Baja California
-          </p>
+          <div className="flex items-center gap-4 text-xs font-montserrat">
+            <Link
+              href="/avisos-de-privacidad"
+              className="text-white/50 hover:text-[#00D4FF] transition-colors"
+            >
+              Aviso de privacidad
+            </Link>
+            <span className="text-white/20">·</span>
+            <span className="text-white/30">RVOE · SEP · Baja California</span>
+          </div>
         </div>
       </div>
     </footer>
