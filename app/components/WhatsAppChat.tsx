@@ -214,7 +214,7 @@ export default function WhatsAppChat({ phone }: { phone: string }) {
         )}
       </button>
 
-      <style>{`
+      <style jsx global>{`
         @keyframes waChatIn {
           from { opacity: 0; transform: translateY(12px) scale(0.96); }
           to   { opacity: 1; transform: translateY(0) scale(1); }

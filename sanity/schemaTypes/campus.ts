@@ -67,7 +67,9 @@ export const campus = defineType({
       name: "urlMaps",
       title: "URL de Google Maps",
       type: "url",
-      description: "Link de Google Maps para este plantel",
+      description:
+        "Link de Google Maps para este plantel. Formato sugerido: https://www.google.com/maps/search/?api=1&query=<direccion-url-encoded>",
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "embedMaps",

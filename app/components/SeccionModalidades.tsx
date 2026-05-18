@@ -366,8 +366,8 @@ export default function SeccionModalidades() {
         {/* Dots indicador */}
         <div
           className="flex items-center justify-center gap-3 mt-12"
-          role="tablist"
-          aria-label="Modalidades"
+          role="group"
+          aria-label="Seleccionar modalidad destacada"
         >
           {MODALIDADES.map((m, i) => {
             const isActive = featuredIdx === i;
@@ -375,8 +375,7 @@ export default function SeccionModalidades() {
               <button
                 key={m.tag}
                 type="button"
-                role="tab"
-                aria-selected={isActive}
+                aria-pressed={isActive}
                 aria-label={`Destacar ${m.tag}`}
                 onClick={() => {
                   setActiveIdx(i);

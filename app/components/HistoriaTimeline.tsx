@@ -261,7 +261,7 @@ export default function HistoriaTimeline({
         </div>
       )}
 
-      <style>{`
+      <style jsx global>{`
         @keyframes historiaSlideIn {
           from { opacity: 0; transform: translateY(8px); }
           to   { opacity: 1; transform: translateY(0); }

@@ -192,7 +192,7 @@ export default function PromoPopup({
         </div>
       </div>
 
-      <style>{`
+      <style jsx global>{`
         @keyframes promoPopupBackdropIn {
           from { opacity: 0; }
           to   { opacity: 1; }
