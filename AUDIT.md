@@ -1,5 +1,38 @@
 # Auditoría completa — CENYCA Web
 
+---
+
+## ⚡ Estado actual (post-fixes 2026-05-18)
+
+**Grupo A (sin riesgo) — ✅ completo**
+- SEO: JSON-LD `EducationalOrganization` (layout) y `Course` (carreras/[slug])
+- OG/Twitter dinámico en `noticias/[slug]` con imagen
+- `SITE_URL` unificado en `lib/siteUrl.ts`
+- `noindex` en 5 placeholders (admisiones, becas, posgrados, intercambios, educacion-continua)
+- Sitemap limpio de URLs placeholder
+- Video hero duplicado eliminado; reemplazado por `.mp4` (3.3 MB) + `.webm` (2.9 MB) desde el `.mov` de 9.5 MB
+- `<a>` → `<Link>` en `FormularioLead` y `NewsletterSuscripcion`
+
+**Grupo B (autorizado) — ✅ completo**
+- **C1 resuelto:** Basic Auth en `/studio` ya existía en `proxy.ts` (Next 16 renombró `middleware.ts` → `proxy.ts`). Verificado con `curl` → 401. Envs `STUDIO_USERNAME` / `STUDIO_PASSWORD` confirmadas en producción.
+- **C3 resuelto:** Bump a Next 16.2.6 + parches menores; `npm audit` limpio.
+- **I6:** Vercel Analytics + Speed Insights instalados en `layout.tsx`.
+- **I7:** Video hero comprimido (ver arriba).
+- **M1:** Deps menores actualizadas.
+
+**Optimización LCP (Lighthouse Performance 61 → en mejora)**
+- `HeroAnimado`: ancho sanityImg `2560 → 1920` (~44 % menos bytes).
+- Lazy-mount de slides 2-N a los 2 s post-LCP (solo el primer slide en HTML inicial).
+- Expectativa: LCP ~8 s → ~2 s en móvil.
+
+**Pendientes diferidos por el usuario**
+- 🔴 **C2** — Conectar `FormularioLead` y `NewsletterSuscripcion` a backend (Emma / Resend / CRM).
+- 🟡 **I10** — Completar contenido del aviso de privacidad (PDF subido era parcial).
+- 🟡 **I11** — Banner de cookies (si se requiere; Vercel Analytics es cookie-less).
+- 🟡 **I12** — Proxy `/api/lead` server-side para los formularios cuando se conecten.
+
+---
+
 **Fecha:** 2026-05-18
 **Stack:** Next.js 16.2.2 (App Router, Turbopack) · React 19.2.4 · Sanity 5.x · Tailwind 4
 **Ámbito:** read-only — sin modificar código
