@@ -50,18 +50,21 @@ const CIUDAD_DATA: Record<
 > = {
   tijuana: { localidad: "Tijuana" },
   tecate: { localidad: "Tecate" },
-  ensenada: { localidad: "Ensenada" },
 };
 
 /**
  * CollegeOrUniversity (subtipo de EducationalOrganization + LocalBusiness)
  * por cada campus. Esto le dice a Google que CENYCA tiene varias ubicaciones
  * físicas y habilita aparición en Google Maps cuando alguien busca
- * "universidad cerca de mí" en Tijuana/Tecate/Ensenada.
+ * "universidad cerca de mí" en Tijuana o Tecate.
+ *
+ * Importante: omitimos campos undefined del objeto resultante. JSON-LD con
+ * `image: null` o `telephone: undefined` lo marca el Rich Results test como
+ * inválido y Google ignora el bloque completo.
  */
 export function campusJsonLd(c: CampusForJsonLd) {
   const ciudad = CIUDAD_DATA[c.ciudad]?.localidad ?? c.ciudad;
-  return {
+  const base: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "CollegeOrUniversity",
     name: c.nombre,
@@ -77,9 +80,10 @@ export function campusJsonLd(c: CampusForJsonLd) {
       addressRegion: "BC",
       addressCountry: "MX",
     },
-    telephone: c.telefono,
-    hasMap: c.urlMaps,
-    image: c.imagenUrl,
     url: `${SITE_URL}/#planteles`,
   };
+  if (c.telefono) base.telephone = c.telefono;
+  if (c.urlMaps) base.hasMap = c.urlMaps;
+  if (c.imagenUrl) base.image = c.imagenUrl;
+  return base;
 }
