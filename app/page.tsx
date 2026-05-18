@@ -17,6 +17,7 @@ import SectionAccentLine from "@/app/components/SectionAccentLine";
 import SeccionNoticias, { type NoticiaCard } from "@/app/components/SeccionNoticias";
 import CampusCarrusel from "@/app/components/CampusCarrusel";
 import { sanityImg } from "@/sanity/lib/image-url";
+import { campusJsonLd } from "@/lib/jsonLd";
 import {
   FadeUp, FadeLeft, FadeRight,
   StaggerContainer, StaggerItem,
@@ -619,8 +620,27 @@ export default async function HomePage() {
     ReactDOM.preload(firstHeroSrc, { as: "image", fetchPriority: "high" });
   }
 
+  // JSON-LD CollegeOrUniversity por cada campus → Google Maps + búsquedas
+  // locales tipo "universidad en Tijuana cerca de mí".
+  const campusLd = campus.map((c) => campusJsonLd({
+    nombre: c.nombre,
+    ciudad: c.ciudad,
+    direccion: c.direccion,
+    telefono: c.telefono,
+    horario: c.horario,
+    urlMaps: c.urlMaps,
+    imagenUrl: c.imagenUrl,
+  }));
+
   return (
     <>
+      {campusLd.map((ld, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}
+        />
+      ))}
       <HeroAnimado slides={heroSlides} />
       {historia && <SeccionHistoria data={historia} />}
       {noticias.length > 0 && <SeccionNoticias noticias={noticias} />}

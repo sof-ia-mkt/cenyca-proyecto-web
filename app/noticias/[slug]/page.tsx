@@ -20,6 +20,7 @@ import { noticiaBySlugQuery, noticiasRelacionadasQuery, configuracionQuery } fro
 import { urlFor } from '@/sanity/lib/image'
 import NewsletterSuscripcion from '@/app/components/NewsletterSuscripcion'
 import { SITE_URL } from '@/lib/siteUrl'
+import { breadcrumbJsonLd } from '@/lib/jsonLd'
 
 type ImageBlock = {
   _key: string
@@ -198,11 +199,21 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
     articleSection: noticia.categoria,
   }
 
+  const breadcrumbs = breadcrumbJsonLd([
+    { name: 'Inicio', url: '/' },
+    { name: 'Noticias', url: '/noticias' },
+    { name: noticia.titulo, url: `/noticias/${slug}` },
+  ])
+
   return (
     <article className="bg-[#121B33] min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
       />
       <div className="max-w-6xl mx-auto px-4 lg:px-8 py-16">
         <Link

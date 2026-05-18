@@ -20,6 +20,7 @@ import {
 import { client } from "@/sanity/lib/client";
 import { carreraBySlugQuery, configuracionQuery, todasCarrerasQuery } from "@/sanity/lib/queries";
 import { SITE_URL } from "@/lib/siteUrl";
+import { breadcrumbJsonLd } from "@/lib/jsonLd";
 import BeneficioIcon from "@/components/BeneficioIcon";
 import StatsCounter, { type Stat } from "@/components/StatsCounter";
 import LazyYouTubeEmbed from "@/components/LazyYouTubeEmbed";
@@ -219,11 +220,27 @@ export default async function CarreraPage(
     ...(carrera.imagenUrl ? { image: carrera.imagenUrl } : {}),
   };
 
+  // Breadcrumbs para SERP de Google: Inicio › Carreras › <Nombre>
+  // El segundo crumb apunta a /licenciaturas o /ingenierias según grado.
+  const carrerasIndexUrl =
+    carrera.grado === "ingenieria" ? "/ingenierias" : "/licenciaturas";
+  const carrerasIndexLabel =
+    carrera.grado === "ingenieria" ? "Ingenierías" : "Licenciaturas";
+  const breadcrumbs = breadcrumbJsonLd([
+    { name: "Inicio", url: "/" },
+    { name: carrerasIndexLabel, url: carrerasIndexUrl },
+    { name: carrera.nombre, url: `/carreras/${carrera.slug}` },
+  ]);
+
   return (
     <div style={accentStyle}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(courseJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
       />
       {/* ── HERO SPLIT ─────────────────────────────────────────────────────── */}
       <section className="relative bg-[#121B33] overflow-hidden">
