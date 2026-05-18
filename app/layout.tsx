@@ -21,9 +21,12 @@ const inter = Inter({
 // Defaults SEO (fallback si Sanity no responde o no tiene SEO llenado).
 const DEFAULT_TITLE = "CENYCA Universidad";
 const DEFAULT_DESCRIPTION =
-  "Universidad en Tijuana, Tecate y Ensenada. Licenciaturas, especialidades y maestrías con validez oficial. Titúlate en 3 años con modelo cuatrimestral.";
+  "Universidad en Tijuana y Tecate. Licenciaturas, ingenierías y maestrías con RVOE SEP. Titúlate en 3 años con modelo cuatrimestral.";
 const DEFAULT_TWITTER_DESC =
-  "Universidad en Tijuana, Tecate y Ensenada. RVOE oficial, titúlate en 3 años.";
+  "Universidad en Tijuana y Tecate. RVOE oficial, titúlate en 3 años.";
+// Brand corto para el template de title — evita que páginas internas queden
+// con títulos de 100+ chars cuando se concatena con el tituloBase largo.
+const BRAND_SHORT = "CENYCA Universidad";
 
 /**
  * Metadata dinámica para que la OG image global (configuracion.seo.ogImage)
@@ -46,13 +49,12 @@ export async function generateMetadata(): Promise<Metadata> {
   const ogImage = config?.seo?.ogImageUrl;
 
   return {
-    title: { default: title, template: `%s | ${title}` },
+    title: { default: title, template: `%s | ${BRAND_SHORT}` },
     description,
     metadataBase: new URL(SITE_URL),
     keywords: [
       "universidad Tijuana",
       "universidad Tecate",
-      "universidad Ensenada",
       "universidad Baja California",
       "licenciaturas RVOE",
       "ingenierías RVOE",
