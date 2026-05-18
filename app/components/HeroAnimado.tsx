@@ -102,7 +102,9 @@ export default function HeroAnimado({ slides }: { slides: HeroSlide[] }) {
           animate={{ x: offset.x, y: offset.y }}
           transition={{ type: "spring", stiffness: 40, damping: 18, mass: 0.8 }}
         >
-          {/* Apila todas las imágenes y cruza opacidades — el browser precarga todas */}
+          {/* Apila todas las imágenes y cruza opacidades.
+              El primer slide usa <img fetchPriority="high"> para que el browser
+              lo descubra de inmediato (background-image se descubre tarde, mata LCP). */}
           {visibleImages.map((src, i) => (
             <motion.div
               key={src}
@@ -111,9 +113,16 @@ export default function HeroAnimado({ slides }: { slides: HeroSlide[] }) {
               animate={{ opacity: i === currentIndex ? 1 : 0 }}
               transition={{ duration: 1.2, ease: "easeInOut" }}
             >
-              <div
-                className="w-full h-full bg-cover bg-center scale-110"
-                style={{ backgroundImage: `url(${src})`, opacity: 0.6, mixBlendMode: "luminosity" }}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={src}
+                alt=""
+                aria-hidden
+                fetchPriority={i === 0 ? "high" : "low"}
+                loading={i === 0 ? "eager" : "lazy"}
+                decoding="async"
+                className="w-full h-full object-cover object-center scale-110"
+                style={{ opacity: 0.6, mixBlendMode: "luminosity" }}
               />
             </motion.div>
           ))}

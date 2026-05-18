@@ -1,6 +1,7 @@
 export const revalidate = 0;
 
 import Link from "next/link";
+import ReactDOM from "react-dom";
 import {
   BarChart2, DollarSign, Scale, Search, ChefHat, BookOpen,
   MapPin, ArrowRight,
@@ -608,9 +609,19 @@ export default async function HomePage() {
     imagenUrl: n.imagen ? urlFor(n.imagen).width(720).height(450).fit("crop").url() : undefined,
   }));
 
+  // Preload del primer slide del hero — LCP candidate.
+  // Sin esto el browser lo descubre tarde (background-image / hidratación).
+  const heroSlides = config?.heroSlides ?? [];
+  const firstHeroSrc = heroSlides[0]?.imagenUrl
+    ? sanityImg(heroSlides[0].imagenUrl, 1920)
+    : undefined;
+  if (firstHeroSrc) {
+    ReactDOM.preload(firstHeroSrc, { as: "image", fetchPriority: "high" });
+  }
+
   return (
     <>
-      <HeroAnimado slides={config?.heroSlides ?? []} />
+      <HeroAnimado slides={heroSlides} />
       {historia && <SeccionHistoria data={historia} />}
       {noticias.length > 0 && <SeccionNoticias noticias={noticias} />}
       <SeccionExcelencia carreras={carreras} />
