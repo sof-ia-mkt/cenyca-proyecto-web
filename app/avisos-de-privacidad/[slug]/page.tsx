@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
 import { PortableText, type PortableTextComponents } from '@portabletext/react'
 import { sanityFetch } from '@/sanity/lib/live'
+import { client } from '@/sanity/lib/client'
 import { avisoBySlugQuery, todosAvisosQuery } from '@/sanity/lib/queries'
 
 export const revalidate = 60
@@ -16,10 +17,10 @@ type Aviso = {
 }
 
 export async function generateStaticParams() {
-  const { data } = await sanityFetch({ query: todosAvisosQuery })
-  return (data ?? []).map((a: { slug: { current: string } }) => ({
-    slug: a.slug.current,
-  }))
+  const avisos = await client.fetch<Array<{ slug: { current: string } }>>(
+    todosAvisosQuery,
+  )
+  return (avisos ?? []).map((a) => ({ slug: a.slug.current }))
 }
 
 export async function generateMetadata({
