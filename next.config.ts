@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 import path from "path";
 
+// Para analizar bundle, usar `npm run analyze` (next build --experimental-analyze)
+// Genera UI interactiva en .next/diagnostics/analyze/ — sirve con `npx serve .next/diagnostics/analyze`.
+
 const commonHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },

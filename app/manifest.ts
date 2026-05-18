@@ -22,17 +22,13 @@ export default function manifest(): MetadataRoute.Manifest {
     lang: "es-MX",
     categories: ["education"],
     icons: [
-      {
-        src: "/logo.png",
-        sizes: "2216x584",
-        type: "image/png",
-        purpose: "any",
-      },
-      {
-        src: "/favicon.ico",
-        sizes: "32x32",
-        type: "image/x-icon",
-      },
+      // Iconos generados dinámicamente vía app/icon.tsx y app/apple-icon.tsx
+      // (monograma "C" sobre fondo de marca). Reemplazo temporal hasta tener
+      // un isotipo cuadrado oficial — el logo.png es horizontal y se
+      // distorsiona como icono de PWA.
+      { src: "/icon", sizes: "32x32", type: "image/png", purpose: "any" },
+      { src: "/apple-icon", sizes: "180x180", type: "image/png", purpose: "any" },
+      { src: "/favicon.ico", sizes: "32x32", type: "image/x-icon" },
     ],
   };
 }
