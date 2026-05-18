@@ -2,19 +2,7 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { PortableText, type PortableTextComponents } from '@portabletext/react'
-import { MessageCircle } from 'lucide-react'
-
-const FacebookIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-    <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
-  </svg>
-)
-
-const XIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-  </svg>
-)
+import ShareButtons from '@/app/components/ShareButtons'
 import { sanityFetch } from '@/sanity/lib/live'
 import { noticiaBySlugQuery, noticiasRelacionadasQuery, configuracionQuery } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
@@ -121,7 +109,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!noticia) return { title: 'Noticia no encontrada' }
   const titulo = noticia.titulo
   const descripcion = noticia.extracto ?? noticia.resumen ?? `Lee "${titulo}" en CENYCA Comunica.`
-  const ogImage = noticia.imagen ? urlFor(noticia.imagen).width(1200).height(630).fit('crop').url() : undefined
+  // Forzamos formato JPG y compresión para garantizar <300KB y máxima
+  // compatibilidad con WhatsApp/FB (que rechazan imágenes muy pesadas).
+  const ogImage = noticia.imagen
+    ? urlFor(noticia.imagen)
+        .width(1200)
+        .height(630)
+        .fit('crop')
+        .format('jpg')
+        .quality(80)
+        .url()
+    : undefined
   return {
     title: titulo,
     description: descripcion,
@@ -130,7 +128,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description: descripcion,
       type: 'article',
       url: `${SITE_URL}/noticias/${slug}`,
-      images: ogImage ? [{ url: ogImage, width: 1200, height: 630 }] : undefined,
+      images: ogImage
+        ? [
+            {
+              url: ogImage,
+              secureUrl: ogImage,
+              width: 1200,
+              height: 630,
+              type: 'image/jpeg',
+              alt: titulo,
+            },
+          ]
+        : undefined,
     },
     twitter: {
       card: 'summary_large_image' as const,
@@ -170,10 +179,6 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
     config?.sistemas?.inscripciones ?? 'https://inscripciones.cenyca.edu.mx'
 
   const shareUrl = `${SITE_URL}/noticias/${slug}`
-  const shareText = encodeURIComponent(noticia.titulo)
-  const fbShare = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`
-  const xShare = `https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(shareUrl)}`
-  const waShare = `https://wa.me/?text=${shareText}%20${encodeURIComponent(shareUrl)}`
 
   // JSON-LD NewsArticle para que Google entienda las noticias y las muestre
   // en Google News / Discover / rich results.
@@ -248,31 +253,8 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
             )}
 
             {/* Compartir */}
-            <div className="flex items-center gap-2 mb-10">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-white/40 mr-1">
-                Compartir
-              </span>
-              <a
-                href={fbShare} target="_blank" rel="noopener noreferrer"
-                aria-label="Compartir en Facebook"
-                className="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-[#00D4FF] hover:border-[#00D4FF] transition"
-              >
-                <FacebookIcon />
-              </a>
-              <a
-                href={xShare} target="_blank" rel="noopener noreferrer"
-                aria-label="Compartir en X"
-                className="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-[#00D4FF] hover:border-[#00D4FF] transition"
-              >
-                <XIcon />
-              </a>
-              <a
-                href={waShare} target="_blank" rel="noopener noreferrer"
-                aria-label="Compartir por WhatsApp"
-                className="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-[#00D4FF] hover:border-[#00D4FF] transition"
-              >
-                <MessageCircle size={15} />
-              </a>
+            <div className="mb-10">
+              <ShareButtons url={shareUrl} title={noticia.titulo} />
             </div>
 
             {noticia.imagen ? (
