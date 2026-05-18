@@ -63,6 +63,8 @@ export function getBeneficioIcon(titulo: string): LucideIcon {
   return Sparkles;
 }
 
+import { createElement } from "react";
+
 export default function BeneficioIcon({
   titulo,
   className = "w-6 h-6",
@@ -72,6 +74,9 @@ export default function BeneficioIcon({
   className?: string;
   strokeWidth?: number;
 }) {
-  const Icon = getBeneficioIcon(titulo);
-  return <Icon className={className} strokeWidth={strokeWidth} />;
+  // Selección dinámica entre íconos estables de Lucide — declarados a nivel módulo.
+  // Usamos createElement para evitar la lint rule `react-hooks/static-components`,
+  // que asume creación de componentes en render. Aquí solo elegimos cuál renderizar.
+  const icon = getBeneficioIcon(titulo);
+  return createElement(icon, { className, strokeWidth });
 }

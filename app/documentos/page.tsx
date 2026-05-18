@@ -3,8 +3,17 @@ import { todosDocumentosQuery } from '@/sanity/lib/queries'
 
 export const metadata = { title: 'Documentos — CENYCA' }
 
+type DocumentoItem = {
+  _id: string;
+  titulo: string;
+  categoria?: string;
+  descripcion?: string;
+  archivoUrl?: string;
+};
+
 export default async function DocumentosPage() {
-  const { data: documentos } = await sanityFetch({ query: todosDocumentosQuery })
+  const { data } = await sanityFetch({ query: todosDocumentosQuery })
+  const documentos = (data ?? []) as DocumentoItem[]
 
   return (
     <div className="max-w-4xl mx-auto px-4 lg:px-8 py-16">
@@ -17,13 +26,7 @@ export default async function DocumentosPage() {
         <p className="text-white/40">No hay documentos publicados aún.</p>
       ) : (
         <div className="space-y-3">
-          {documentos.map((doc: {
-            _id: string;
-            titulo: string;
-            categoria?: string;
-            descripcion?: string;
-            archivoUrl?: string;
-          }) => (
+          {documentos.map((doc) => (
             <div
               key={doc._id}
               className="flex items-center gap-5 p-5 rounded-2xl border border-[rgba(0,212,255,0.15)] bg-[#1E2D4A] hover:border-[rgba(0,212,255,0.35)] transition-colors group"

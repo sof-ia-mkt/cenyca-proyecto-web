@@ -12,6 +12,13 @@ export const metadata: Metadata = {
   title: "Licenciaturas",
   description:
     "Licenciaturas en CENYCA Universidad: Derecho, Administración, Contaduría, Criminología, Gastronomía y Educación. RVOE SEP, horarios flexibles.",
+  openGraph: {
+    title: "Licenciaturas | CENYCA Universidad",
+    description:
+      "Licenciaturas con RVOE SEP: Derecho, Administración, Contaduría, Criminología, Gastronomía y Educación.",
+    type: "website",
+  },
+  twitter: { card: "summary_large_image", title: "Licenciaturas | CENYCA Universidad" },
 };
 
 type Configuracion = {

@@ -12,6 +12,13 @@ export const metadata: Metadata = {
   title: "Ingenierías",
   description:
     "Programas de ingeniería en CENYCA Universidad: Mecatrónica, Sistemas, Industrial y Electromecánica. RVOE SEP, modelo cuatrimestral, titúlate en 3 años.",
+  openGraph: {
+    title: "Ingenierías | CENYCA Universidad",
+    description:
+      "Ingenierías con RVOE SEP: Mecatrónica, Sistemas, Industrial y Electromecánica. Titúlate en 3 años.",
+    type: "website",
+  },
+  twitter: { card: "summary_large_image", title: "Ingenierías | CENYCA Universidad" },
 };
 
 type Configuracion = {

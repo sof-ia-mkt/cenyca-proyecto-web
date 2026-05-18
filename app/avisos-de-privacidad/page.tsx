@@ -2,10 +2,28 @@ import Link from 'next/link'
 import { sanityFetch } from '@/sanity/lib/live'
 import { todosAvisosQuery } from '@/sanity/lib/queries'
 
-export const metadata = { title: 'Avisos de Privacidad — CENYCA' }
+export const metadata = {
+  title: 'Avisos de Privacidad — CENYCA',
+  description:
+    'Avisos de privacidad de CENYCA Universidad conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.',
+  openGraph: {
+    title: 'Avisos de Privacidad | CENYCA Universidad',
+    description: 'Avisos de privacidad de CENYCA Universidad.',
+    type: 'website' as const,
+  },
+  twitter: { card: 'summary' as const, title: 'Avisos de Privacidad | CENYCA Universidad' },
+}
+
+type AvisoListItem = {
+  _id: string;
+  titulo: string;
+  slug: { current: string };
+  fecha?: string;
+};
 
 export default async function AvisosPage() {
-  const { data: avisos } = await sanityFetch({ query: todosAvisosQuery })
+  const { data } = await sanityFetch({ query: todosAvisosQuery })
+  const avisos = (data ?? []) as AvisoListItem[]
 
   return (
     <div className="max-w-3xl mx-auto px-4 lg:px-8 py-16">
@@ -18,12 +36,7 @@ export default async function AvisosPage() {
         <p className="text-white/40">No hay avisos de privacidad publicados aún.</p>
       ) : (
         <div className="space-y-3">
-          {avisos.map((aviso: {
-            _id: string;
-            titulo: string;
-            slug: { current: string };
-            fecha?: string;
-          }) => (
+          {avisos.map((aviso) => (
             <div
               key={aviso._id}
               className="flex items-center justify-between gap-4 p-5 rounded-2xl border border-[rgba(0,212,255,0.15)] bg-[#1E2D4A] hover:border-[rgba(0,212,255,0.35)] transition-colors"

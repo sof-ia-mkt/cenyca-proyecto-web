@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { client } from "@/sanity/lib/client";
 import { carreraBySlugQuery, configuracionQuery, todasCarrerasQuery } from "@/sanity/lib/queries";
+import { SITE_URL } from "@/lib/siteUrl";
 import BeneficioIcon from "@/components/BeneficioIcon";
 import StatsCounter, { type Stat } from "@/components/StatsCounter";
 import LazyYouTubeEmbed from "@/components/LazyYouTubeEmbed";
@@ -203,8 +204,27 @@ export default async function CarreraPage(
   const accentStyle = { "--accent": accent } as CSSProperties;
   const hasDescripcionLarga = Array.isArray(carrera.descripcionLarga) && carrera.descripcionLarga.length > 0;
 
+  const courseJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name: carrera.nombre,
+    description: carrera.descripcionCorta,
+    provider: {
+      "@type": "EducationalOrganization",
+      name: "CENYCA Universidad",
+      sameAs: SITE_URL,
+    },
+    educationalCredentialAwarded: gradoLabel,
+    inLanguage: "es-MX",
+    ...(carrera.imagenUrl ? { image: carrera.imagenUrl } : {}),
+  };
+
   return (
     <div style={accentStyle}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseJsonLd) }}
+      />
       {/* ── HERO SPLIT ─────────────────────────────────────────────────────── */}
       <section className="relative bg-[#121B33] overflow-hidden">
         {/* Halo radial detrás del texto */}

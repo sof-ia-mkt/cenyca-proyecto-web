@@ -7,6 +7,7 @@ import WhatsAppChat from "./components/WhatsAppChat";
 import PromoPopup from "./components/PromoPopup";
 import { client } from "@/sanity/lib/client";
 import { configuracionQuery } from "@/sanity/lib/queries";
+import { SITE_URL } from "@/lib/siteUrl";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -22,9 +23,7 @@ export const metadata: Metadata = {
   },
   description:
     "Universidad en Tijuana, Tecate y Ensenada. Licenciaturas, especialidades y maestrías con validez oficial. Titúlate en 3 años con modelo cuatrimestral.",
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
-  ),
+  metadataBase: new URL(SITE_URL),
   openGraph: {
     siteName: "CENYCA Universidad",
     locale: "es_MX",
@@ -61,9 +60,36 @@ export default async function RootLayout({
       .catch(() => null),
   ]);
   const whatsapp = config?.contacto?.whatsapp || "526641300236";
-  const inscripciones = config?.sistemas?.inscripciones;
   // Prioridad: imagen específica del popup → imagen/galeria del campus principal
   const popupBg = popupConfig?.imagenUrl || campusFoto?.imagenUrl;
+
+  const orgJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    name: "CENYCA Universidad",
+    alternateName: "Centro de Estudios y Carreras",
+    url: SITE_URL,
+    logo: `${SITE_URL}/logo.png`,
+    description:
+      "Universidad en Tijuana, Tecate y Ensenada con licenciaturas e ingenierías con RVOE SEP. Modelo cuatrimestral, titúlate en 3 años.",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Tijuana",
+      addressRegion: "BC",
+      addressCountry: "MX",
+    },
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: `+${whatsapp}`,
+      contactType: "admissions",
+      areaServed: "MX",
+      availableLanguage: ["Spanish"],
+    },
+    sameAs: [
+      "https://www.facebook.com/cenycauniversidad",
+      "https://www.instagram.com/cenycauniversidad",
+    ],
+  };
 
   return (
     <html
@@ -71,13 +97,17 @@ export default async function RootLayout({
       className={`${inter.variable} h-full`}
     >
       <body className="min-h-full flex flex-col font-inter antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
         <Navbar />
         <main className="flex-1 pt-[72px]">
           {children}
         </main>
         <Footer />
         <WhatsAppChat phone={whatsapp} />
-        <PromoPopup inscripcionesUrl={inscripciones} backgroundUrl={popupBg} />
+        <PromoPopup backgroundUrl={popupBg} />
       </body>
     </html>
   );

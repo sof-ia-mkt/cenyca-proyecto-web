@@ -1,5 +1,6 @@
 export const revalidate = 0;
 
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { client } from "@/sanity/lib/client";
@@ -9,6 +10,19 @@ import { FadeUp, FadeLeft, FadeRight } from "@/app/components/ScrollReveal";
 import FormularioLead from "@/app/components/FormularioLead";
 import AnimatedCounter from "@/app/components/AnimatedCounter";
 import CampusCarrusel from "@/app/components/CampusCarrusel";
+
+export const metadata: Metadata = {
+  title: "Oferta Académica",
+  description:
+    "Conoce todos los programas de licenciatura e ingeniería de CENYCA Universidad: planes flexibles, modelo cuatrimestral y validez oficial SEP.",
+  openGraph: {
+    title: "Oferta Académica | CENYCA Universidad",
+    description:
+      "Licenciaturas e ingenierías con RVOE SEP en Tijuana, Tecate y Ensenada.",
+    type: "website",
+  },
+  twitter: { card: "summary_large_image", title: "Oferta Académica | CENYCA Universidad" },
+};
 
 type Carrera = { _id: string; nombre: string; area: string };
 

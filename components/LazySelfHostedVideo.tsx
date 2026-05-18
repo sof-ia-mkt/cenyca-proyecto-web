@@ -19,7 +19,6 @@ export default function LazySelfHostedVideo({ videoUrl, title = "Video", posterU
   if (loaded) {
     return (
       <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-black">
-        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
         <video
           src={videoUrl}
           poster={posterUrl ?? undefined}
@@ -49,7 +48,6 @@ export default function LazySelfHostedVideo({ videoUrl, title = "Video", posterU
         />
       ) : (
         // Sin poster, usamos el primer frame nativo del video (preload metadata, ~unos KB).
-        /* eslint-disable-next-line jsx-a11y/media-has-caption */
         <video
           src={`${videoUrl}#t=0.5`}
           preload="metadata"

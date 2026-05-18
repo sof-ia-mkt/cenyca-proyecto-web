@@ -10,6 +10,13 @@ export const metadata: Metadata = {
   title: "Nosotros",
   description:
     "Conoce la historia, misión, visión y valores de CENYCA Universidad — más de 18 años formando profesionistas en Baja California.",
+  openGraph: {
+    title: "Nosotros | CENYCA Universidad",
+    description:
+      "Historia, misión y valores de CENYCA Universidad: más de 18 años formando profesionistas en Baja California.",
+    type: "website",
+  },
+  twitter: { card: "summary_large_image", title: "Nosotros | CENYCA Universidad" },
 };
 
 // ─── Divisor diagonal ─────────────────────────────────────────────────────────

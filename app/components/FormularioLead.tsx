@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { ArrowRight, Check, Sparkles, Clock, HeartHandshake } from "lucide-react";
 import { FadeLeft, FadeRight, FadeUp } from "@/app/components/ScrollReveal";
 
@@ -214,12 +215,12 @@ export default function FormularioLead({
                       <span className="text-xs text-white/60 leading-relaxed">
                         Acepto recibir información de CENYCA Universidad y he
                         leído el{" "}
-                        <a
+                        <Link
                           href="/avisos-de-privacidad"
                           className="text-[#00D4FF] underline-offset-2 hover:underline"
                         >
                           aviso de privacidad
-                        </a>
+                        </Link>
                         .
                       </span>
                     </label>

@@ -8,7 +8,17 @@ import NewsletterSuscripcion from "@/app/components/NewsletterSuscripcion";
 import NoticiasGrid, { type NoticiaItem } from "@/app/components/NoticiasGrid";
 import { FadeUp, FadeLeft, FadeRight } from "@/app/components/ScrollReveal";
 
-export const metadata = { title: "CENYCA Comunica — Noticias" };
+export const metadata = {
+  title: "CENYCA Comunica — Noticias",
+  description:
+    "Noticias, comunicados y novedades académicas de CENYCA Universidad. Mantente al día con la vida universitaria en Baja California.",
+  openGraph: {
+    title: "CENYCA Comunica — Noticias",
+    description: "Noticias y novedades académicas de CENYCA Universidad.",
+    type: "website",
+  },
+  twitter: { card: "summary_large_image" as const, title: "CENYCA Comunica — Noticias" },
+};
 
 function fmtFecha(d?: string) {
   if (!d) return null;

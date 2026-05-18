@@ -2,13 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { X, ArrowRight } from "lucide-react";
 
 export default function PromoPopup({
-  inscripcionesUrl,
   backgroundUrl,
 }: {
-  inscripcionesUrl?: string;
   backgroundUrl?: string;
 }) {
   const pathname = usePathname();
@@ -17,7 +16,6 @@ export default function PromoPopup({
   // (refresh o entrar de nuevo desde fuera). Navegación interna no lo re-dispara
   // porque el componente vive en el layout y no se desmonta.
   const shownRef = useRef(false);
-  const url = inscripcionesUrl || "https://inscripciones.cenyca.edu.mx";
 
   useEffect(() => {
     // Solo en home; en otras rutas no se dispara.
@@ -157,7 +155,7 @@ export default function PromoPopup({
 
           {/* CTAs */}
           <div className="flex flex-col gap-3">
-            <a
+            <Link
               href="/#contacto"
               onClick={(e) => {
                 dismiss();
@@ -181,7 +179,7 @@ export default function PromoPopup({
                 strokeWidth={2.5}
                 className="group-hover:translate-x-1 transition-transform"
               />
-            </a>
+            </Link>
 
             <button
               type="button"

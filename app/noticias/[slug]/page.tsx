@@ -19,8 +19,7 @@ import { sanityFetch } from '@/sanity/lib/live'
 import { noticiaBySlugQuery, noticiasRelacionadasQuery, configuracionQuery } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import NewsletterSuscripcion from '@/app/components/NewsletterSuscripcion'
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://cenycauniversidad.mx'
+import { SITE_URL } from '@/lib/siteUrl'
 
 type ImageBlock = {
   _key: string
@@ -111,21 +110,59 @@ type Noticia = {
   fecha?: string
   categoria?: string
   imagen?: { _type: 'image'; asset: { _ref: string } }
+  resumen?: string
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const { data } = await sanityFetch({ query: noticiaBySlugQuery, params: { slug } })
+  const noticia = data as (Noticia & { resumen?: string }) | null
+  if (!noticia) return { title: 'Noticia no encontrada' }
+  const titulo = noticia.titulo
+  const descripcion = noticia.resumen ?? `Lee "${titulo}" en CENYCA Comunica.`
+  const ogImage = noticia.imagen ? urlFor(noticia.imagen).width(1200).height(630).fit('crop').url() : undefined
+  return {
+    title: titulo,
+    description: descripcion,
+    openGraph: {
+      title: titulo,
+      description: descripcion,
+      type: 'article',
+      url: `${SITE_URL}/noticias/${slug}`,
+      images: ogImage ? [{ url: ogImage, width: 1200, height: 630 }] : undefined,
+    },
+    twitter: {
+      card: 'summary_large_image' as const,
+      title: titulo,
+      description: descripcion,
+      images: ogImage ? [ogImage] : undefined,
+    },
+  }
 }
 
 export default async function NoticiaPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const [{ data: noticia }, { data: config }] = await Promise.all([
+  const [{ data: noticiaRaw }, { data: configRaw }] = await Promise.all([
     sanityFetch({ query: noticiaBySlugQuery, params: { slug } }),
     sanityFetch({ query: configuracionQuery }),
   ])
+  const noticia = noticiaRaw as (Noticia & {
+    contenido?: unknown
+    imagenUrl?: string
+    autor?: { nombre?: string; rol?: string; avatarUrl?: string }
+  }) | null
+  const config = configRaw as {
+    contacto?: { whatsapp?: string }
+    sistemas?: { inscripciones?: string }
+  } | null
 
   if (!noticia) notFound()
 
-  const { data: relacionadas } = await sanityFetch({
+  const { data: relacionadasRaw } = await sanityFetch({
     query: noticiasRelacionadasQuery,
     params: { slug, categoria: noticia.categoria ?? '' },
   })
+  const relacionadas = (relacionadasRaw ?? []) as Noticia[]
 
   const whatsapp: string = config?.contacto?.whatsapp ?? '526641300236'
   const inscripciones: string =
@@ -199,7 +236,7 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
               </a>
             </div>
 
-            {noticia.imagen && (
+            {noticia.imagen ? (
               <div className="relative w-full h-72 sm:h-96 mb-12 rounded-2xl overflow-hidden border border-[rgba(0,212,255,0.15)]">
                 <Image
                   src={urlFor(noticia.imagen).width(1200).height(630).url()}
@@ -209,13 +246,13 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
                   priority
                 />
               </div>
-            )}
+            ) : null}
 
-            {noticia.contenido && (
+            {noticia.contenido ? (
               <div className="text-base">
-                <PortableText value={noticia.contenido} components={portableComponents} />
+                <PortableText value={noticia.contenido as Parameters<typeof PortableText>[0]['value']} components={portableComponents} />
               </div>
-            )}
+            ) : null}
 
             {/* Newsletter inline al terminar de leer */}
             <div className="mt-14">
@@ -265,14 +302,14 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
         </div>
 
         {/* ── Noticias relacionadas ──────────────────────────────────────────── */}
-        {relacionadas && relacionadas.length > 0 && (
+        {relacionadas.length > 0 && (
           <section className="mt-20 pt-12 border-t border-white/10">
             <h2 className="text-2xl sm:text-3xl font-black uppercase text-white mb-2">
               Sigue leyendo
             </h2>
             <p className="text-sm text-white/40 mb-8">Más noticias de CENYCA Comunica</p>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {relacionadas.map((n: Noticia) => (
+              {relacionadas.map((n) => (
                 <Link
                   key={n._id}
                   href={`/noticias/${n.slug.current}`}
