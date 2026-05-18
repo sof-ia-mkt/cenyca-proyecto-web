@@ -1,7 +1,27 @@
+import type { Metadata } from 'next'
 import { sanityFetch } from '@/sanity/lib/live'
 import { todosDocumentosQuery } from '@/sanity/lib/queries'
 
-export const metadata = { title: 'Documentos — CENYCA' }
+const TITLE = 'Documentos institucionales'
+const DESCRIPTION =
+  'Descarga reglamentos, RVOE, planes de estudio y formatos oficiales de CENYCA Universidad.'
+
+export const metadata: Metadata = {
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: { canonical: '/documentos' },
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: '/documentos',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: TITLE,
+    description: DESCRIPTION,
+  },
+}
 
 type DocumentoItem = {
   _id: string;
