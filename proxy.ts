@@ -11,11 +11,9 @@ import { projectId, dataset, apiVersion } from "@/sanity/env";
  *    Útil cuando cambia el slug de una noticia/carrera, para no perder
  *    el SEO ni los links externos compartidos.
  *
- * 2) Protege /studio con Basic Auth en producción.
- *
- * Variables de entorno requeridas en producción para el Studio:
- *   STUDIO_USERNAME=admin
- *   STUDIO_PASSWORD=tu_contrasena_segura
+ * Nota: la protección Basic Auth de /studio fue removida; el acceso al
+ * Studio queda controlado únicamente por el login de Sanity (Google/GitHub
+ * con miembros autorizados del proyecto).
  */
 
 type RedirectRow = { from: string; to: string; permanent: boolean };
@@ -41,51 +39,12 @@ async function fetchRedirects(): Promise<RedirectRow[]> {
 export async function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
 
-  // ── 1) Studio: Basic Auth en producción ─────────────────────────────
+  // /studio queda abierto: el login de Sanity controla el acceso.
   if (pathname.startsWith("/studio")) {
-    if (process.env.NODE_ENV !== "production") {
-      return NextResponse.next();
-    }
-
-    const username = process.env.STUDIO_USERNAME;
-    const password = process.env.STUDIO_PASSWORD;
-
-    if (!username || !password) {
-      return new NextResponse(
-        "Studio no disponible: credenciales no configuradas.",
-        {
-          status: 503,
-          headers: { "Content-Type": "text/plain" },
-        }
-      );
-    }
-
-    const authHeader = request.headers.get("authorization");
-
-    if (authHeader) {
-      const [scheme, encoded] = authHeader.split(" ");
-
-      if (scheme === "Basic" && encoded) {
-        const decoded = Buffer.from(encoded, "base64").toString("utf-8");
-        const [user, pass] = decoded.split(":");
-
-        if (user === username && pass === password) {
-          return NextResponse.next();
-        }
-      }
-    }
-
-    return new NextResponse("Acceso restringido.", {
-      status: 401,
-      headers: {
-        "WWW-Authenticate":
-          'Basic realm="Cenyca Studio - Solo administradores"',
-        "Content-Type": "text/plain",
-      },
-    });
+    return NextResponse.next();
   }
 
-  // ── 2) Redirects desde Sanity ──────────────────────────────────────
+  // ── Redirects desde Sanity ─────────────────────────────────────────
   // No tocar rutas internas, API ni archivos con extensión.
   if (
     pathname.startsWith("/_next") ||
