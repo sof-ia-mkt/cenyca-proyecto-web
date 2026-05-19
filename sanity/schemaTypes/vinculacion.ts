@@ -10,6 +10,7 @@ export const vinculacion = defineType({
   icon: () => "🤝",
   groups: [
     { name: "hero", title: "Hero" },
+    { name: "aliados", title: "Aliados (Marquee)" },
     { name: "rector", title: "Mensaje del Rector" },
     { name: "pilares", title: "Pilares" },
     { name: "galeria", title: "Galería" },
@@ -39,6 +40,103 @@ export const vinculacion = defineType({
       group: "hero",
       initialValue:
         "Construimos puentes sólidos entre la academia y el mundo real, porque creemos que la mejor forma de aprender es junto a quienes ya están transformando la región.",
+    }),
+    defineField({
+      name: "heroVideo",
+      title: "Video de fondo (loop, mute) — opcional",
+      description:
+        "MP4 recomendado, <15MB, 10–15 segundos en loop. Si está vacío, se usa la imagen póster.",
+      type: "file",
+      group: "hero",
+      options: { accept: "video/mp4,video/webm" },
+    }),
+    defineField({
+      name: "heroPoster",
+      title: "Imagen póster (fallback si no hay video)",
+      type: "image",
+      group: "hero",
+      options: { hotspot: true },
+      fields: [defineField({ name: "alt", title: "Texto alternativo", type: "string" })],
+    }),
+    defineField({
+      name: "heroStats",
+      title: "Stats del hero (3 contadores)",
+      description: "Si se deja vacío, se usan números automáticos del listado de aliados.",
+      type: "array",
+      group: "hero",
+      of: [
+        {
+          type: "object",
+          name: "stat",
+          fields: [
+            defineField({
+              name: "valor",
+              title: "Valor numérico",
+              type: "number",
+              validation: (Rule) => Rule.required().min(0),
+            }),
+            defineField({
+              name: "sufijo",
+              title: "Sufijo (ej. '+', '%')",
+              type: "string",
+            }),
+            defineField({
+              name: "label",
+              title: "Etiqueta",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "color",
+              title: "Color del número",
+              type: "string",
+              options: {
+                list: [
+                  { title: "Dorado", value: "gold" },
+                  { title: "Blanco", value: "white" },
+                  { title: "Cian", value: "cyan" },
+                ],
+                layout: "radio",
+              },
+              initialValue: "white",
+            }),
+          ],
+          preview: {
+            select: { title: "valor", subtitle: "label" },
+            prepare: ({ title, subtitle }) => ({
+              title: String(title ?? ""),
+              subtitle,
+            }),
+          },
+        },
+      ],
+      validation: (Rule) => Rule.max(3),
+    }),
+    defineField({
+      name: "scrollHint",
+      title: "Texto del scroll hint",
+      type: "string",
+      group: "hero",
+      initialValue: "Conoce más",
+    }),
+
+    // ── Aliados (Marquee) ────────────────────────────────────────────────────
+    defineField({
+      name: "aliadosKicker",
+      title: "Kicker",
+      type: "string",
+      group: "aliados",
+      initialValue: "Confían en nosotros",
+    }),
+    defineField({
+      name: "aliadosTexto",
+      title: "Texto descriptivo",
+      description:
+        "Usa {n} como placeholder para el número de aliados activos (se reemplaza automático). Ej: '{n}+ convenios activos…'",
+      type: "string",
+      group: "aliados",
+      initialValue:
+        "{n}+ convenios activos con instituciones, industria y sector social",
     }),
 
     // ── Rector ───────────────────────────────────────────────────────────────
