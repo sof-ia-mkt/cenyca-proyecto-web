@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-05-19T22:43:24.727Z",
-  "fuente": "Google Sheets — Convenios Cenyca",
+  "generatedAt": "2026-05-19T23:54:01.101Z",
+  "fuente": "Google Sheets — Convenios CENYCA (export HTML + CSV)",
   "stats": {
     "totalHistorico": 208,
     "activos": 66,
@@ -8,119 +8,211 @@
   },
   "aliados": [
     {
-      "nombre": "Colegio de Estudios Científicos y Tecnológicos de Baja California, CECYTEBC",
-      "sector": "Público",
-      "ciudad": "Tijuana"
-    },
-    {
-      "nombre": "SAFRAN CABIN",
-      "sector": "Privado",
-      "ciudad": "Tijuana"
-    },
-    {
-      "nombre": "SOHNEN de México",
-      "sector": "Privado",
-      "ciudad": "Tijuana"
-    },
-    {
-      "nombre": "CETis 156",
-      "sector": "Público",
-      "ciudad": "Tijuana"
-    },
-    {
-      "nombre": "MPA",
-      "sector": "Privado",
-      "ciudad": "Tijuana"
-    },
-    {
-      "nombre": "Sindicato 1ro. De Mayo De Trabajadores Y Empleados",
-      "sector": "Privado",
-      "ciudad": "Tijuana"
-    },
-    {
-      "nombre": "IMJUVET",
-      "sector": "Público",
-      "ciudad": "Tecate"
+      "nombre": "Alimentos y Salsas",
+      "nombreLegal": "Alimentos y Salsas",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tecate",
+      "logo": "/vinculacion/logos/alimentos-y-salsas.jpg",
+      "destacado": false
     },
     {
       "nombre": "BOSE",
-      "sector": "Privado",
-      "ciudad": "Tijuana"
+      "nombreLegal": "BOSE",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/bose.jpg",
+      "destacado": true
     },
     {
-      "nombre": "Alimentos y Salsas",
-      "sector": "Privado",
-      "ciudad": "Tecate"
+      "nombre": "CARL ZEISS",
+      "nombreLegal": "CARL ZEISS VISION MANUFACTURA",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/carl-zeiss-vision-manufactura.jpg",
+      "destacado": true
     },
     {
-      "nombre": "DIF ESTATAL",
-      "sector": "Público",
-      "ciudad": "Estatal"
+      "nombre": "CECYTE BC",
+      "nombreLegal": "Colegio de Estudios Científicos y Tecnológicos de Baja California, CECYTEBC",
+      "sector": "educacion",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/colegio-de-estudios-cientificos-y-tecnologicos-de-baja-california-cecytebc.jpg",
+      "destacado": true
     },
     {
-      "nombre": "COLEGIO DE BACHILLERES MÉXICO",
-      "sector": "Público",
-      "ciudad": "NACIONAL"
+      "nombre": "CETis 156",
+      "nombreLegal": "CETis 156",
+      "sector": "educacion",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/cetis-156.jpg",
+      "destacado": true
     },
     {
-      "nombre": "SINDICATO DE EMPLEADOS Y TRABAJADORES DE LA INDUSTRIA, EL CAMPO Y EL COMERCIO DEL “ESTADO 29”, C.R.O.M",
-      "sector": "Privado",
-      "ciudad": "Estatal"
+      "nombre": "CLUB DE EMPRESARIOS BC",
+      "nombreLegal": "CLUB DE EMPRESARIOS DE BAJA CALIFORNIA",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/club-de-empresarios-de-baja-california.jpg",
+      "destacado": false
     },
     {
-      "nombre": "INSTITUTO MUNICIPAL CONTRA LAS ADICCIONES",
-      "sector": "Público",
-      "ciudad": "Tijuana"
+      "nombre": "COLEGIO DE BACHILLERES",
+      "nombreLegal": "COLEGIO DE BACHILLERES MÉXICO",
+      "sector": "educacion",
+      "sectorRaw": "Público",
+      "ciudad": "NACIONAL",
+      "logo": "/vinculacion/logos/colegio-de-bachilleres-mexico.jpg",
+      "destacado": true
     },
     {
-      "nombre": "SINDICATO 18 DE SEPTIEMBRE DE TRABAJADORES DE BAJA CALIFORNIA",
-      "sector": "Privado",
-      "ciudad": "Tijuana"
+      "nombre": "DIF BC",
+      "nombreLegal": "DIF ESTATAL",
+      "sector": "social",
+      "sectorRaw": "Público",
+      "ciudad": "Estatal",
+      "logo": "/vinculacion/logos/dif-estatal.jpg",
+      "destacado": true
     },
     {
-      "nombre": "SMK ELECTRONICA",
-      "sector": "Privado",
-      "ciudad": "Tijuana"
+      "nombre": "IMCA",
+      "nombreLegal": "INSTITUTO MUNICIPAL CONTRA LAS ADICCIONES",
+      "sector": "social",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/instituto-municipal-contra-las-adicciones.jpg",
+      "destacado": false
     },
     {
-      "nombre": "CLUB DE EMPRESARIOS DE BAJA CALIFORNIA",
-      "sector": "Privado",
-      "ciudad": "Tijuana"
+      "nombre": "IMJUVET TECATE",
+      "nombreLegal": "IMJUVET",
+      "sector": "social",
+      "sectorRaw": "Público",
+      "ciudad": "Tecate",
+      "logo": "/vinculacion/logos/imjuvet.jpg",
+      "destacado": true
     },
     {
-      "nombre": "oxxo",
-      "sector": "Privado",
-      "ciudad": "Tijuana, Tecate y Ensenada"
+      "nombre": "JABIL",
+      "nombreLegal": "NPA de Mexico JABIL",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/npa-de-mexico-jabil.jpg",
+      "destacado": true
     },
     {
       "nombre": "MACFA AUTOMATIZACION",
-      "sector": "Privado",
-      "ciudad": "Tijuana"
-    },
-    {
-      "nombre": "CARL ZEISS VISION MANUFACTURA",
-      "sector": "Privado",
-      "ciudad": "Tijuana"
+      "nombreLegal": "MACFA AUTOMATIZACION",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/macfa-automatizacion.jpg",
+      "destacado": false
     },
     {
       "nombre": "MAM DE LA FRONTERA",
-      "sector": "Privado",
-      "ciudad": "Tijuana"
-    },
-    {
-      "nombre": "NPA de Mexico JABIL",
-      "sector": "Privado",
-      "ciudad": "Tijuana"
+      "nombreLegal": "MAM DE LA FRONTERA",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": null,
+      "destacado": false
     },
     {
       "nombre": "MARTEK POWER",
-      "sector": "Privado",
-      "ciudad": "Tijuana"
+      "nombreLegal": "MARTEK POWER",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/martek-power.jpg",
+      "destacado": true
+    },
+    {
+      "nombre": "MPA",
+      "nombreLegal": "MPA",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/mpa.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "OXXO",
+      "nombreLegal": "oxxo",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana, Tecate y Ensenada",
+      "logo": "/vinculacion/logos/oxxo.jpg",
+      "destacado": true
+    },
+    {
+      "nombre": "SAFRAN",
+      "nombreLegal": "SAFRAN CABIN",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/safran-cabin.jpg",
+      "destacado": true
+    },
+    {
+      "nombre": "SINDICATO 18 DE SEPT.",
+      "nombreLegal": "SINDICATO 18 DE SEPTIEMBRE DE TRABAJADORES DE BAJA CALIFORNIA",
+      "sector": "social",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/sindicato-18-de-septiembre-de-trabajadores-de-baja-california.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "SINDICATO 1RO. DE MAYO",
+      "nombreLegal": "Sindicato 1ro. De Mayo De Trabajadores Y Empleados",
+      "sector": "social",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/sindicato-1ro-de-mayo-de-trabajadores-y-empleados.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "SINDICATO DE EMPLEADOS Y TRABAJADORES DE LA INDUSTRIA, EL CAMPO Y EL COMERCIO DEL “ESTADO 29”, C.R.O.M",
+      "nombreLegal": "SINDICATO DE EMPLEADOS Y TRABAJADORES DE LA INDUSTRIA, EL CAMPO Y EL COMERCIO DEL “ESTADO 29”, C.R.O.M",
+      "sector": "social",
+      "sectorRaw": "Privado",
+      "ciudad": "Estatal",
+      "logo": "/vinculacion/logos/sindicato-de-empleados-y-trabajadores-de-la-industria-el-campo-y-el-comercio-del.jpg",
+      "destacado": false
     },
     {
       "nombre": "SINIL INDUSTRY",
-      "sector": "Privado",
-      "ciudad": "Tijuana"
+      "nombreLegal": "SINIL INDUSTRY",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/sinil-industry.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "SMK ELECTRONICS",
+      "nombreLegal": "SMK ELECTRONICA",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/smk-electronica.jpg",
+      "destacado": true
+    },
+    {
+      "nombre": "SOHNEN",
+      "nombreLegal": "SOHNEN de México",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/sohnen-de-mexico.jpg",
+      "destacado": true
     }
   ]
 }

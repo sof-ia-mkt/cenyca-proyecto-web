@@ -468,6 +468,27 @@ export default async function VinculacionPage() {
             {pilares.map((pilar, idx) => {
               const Icon = ICONS[pilar.icono || ""] || Factory;
               const isAccent = idx === 1;
+              // Mapeo icono → sector del aliados.json
+              const iconSectorMap: Record<string, string> = {
+                Factory: "industria",
+                Lightbulb: "industria",
+                Trophy: "deporte",
+                Heart: "social",
+                Users: "social",
+                GraduationCap: "educacion",
+                Globe: "servicios",
+              };
+              const pilarSector = iconSectorMap[pilar.icono || ""] || "";
+              const logosDelSector = pilarSector
+                ? aliadosData.aliados
+                    .filter((a) => a.sector === pilarSector && a.logo)
+                    .sort(
+                      (a, b) =>
+                        Number(b.destacado ?? false) -
+                        Number(a.destacado ?? false)
+                    )
+                    .slice(0, 4)
+                : [];
               const accentColor = isAccent ? "#E9C176" : "#00D4FF";
               const accentBg = isAccent ? "bg-[#E9C176]/15" : "bg-[#00D4FF]/15";
               const accentText = isAccent ? "text-[#E9C176]" : "text-[#00D4FF]";
@@ -503,22 +524,47 @@ export default async function VinculacionPage() {
                       <p className="font-montserrat text-white/60 text-sm leading-relaxed mb-6 flex-1">
                         {pilar.descripcion}
                       </p>
-                      {pilar.aliados && pilar.aliados.length > 0 && (
+                      {logosDelSector.length > 0 ? (
                         <div className="border-t border-white/10 pt-5">
-                          <p className={`font-montserrat ${accentText} text-xs uppercase tracking-wider mb-3`}>
-                            Aliados
+                          <p className={`font-montserrat ${accentText} text-xs uppercase tracking-wider mb-4`}>
+                            Aliados destacados
                           </p>
-                          <div className="flex flex-wrap gap-2">
-                            {pilar.aliados.map((a) => (
-                              <span
-                                key={a}
-                                className="font-montserrat text-xs text-white/70 bg-white/5 border border-white/10 px-3 py-1 rounded-full"
+                          <div className="grid grid-cols-2 gap-3">
+                            {logosDelSector.map((a) => (
+                              <div
+                                key={a.nombre}
+                                title={a.nombre}
+                                className="relative h-14 bg-white/90 rounded-lg flex items-center justify-center p-2 hover:bg-white transition-colors"
                               >
-                                {a}
-                              </span>
+                                <Image
+                                  src={a.logo!}
+                                  alt={a.nombre}
+                                  fill
+                                  sizes="120px"
+                                  className="object-contain p-2"
+                                />
+                              </div>
                             ))}
                           </div>
                         </div>
+                      ) : (
+                        pilar.aliados && pilar.aliados.length > 0 && (
+                          <div className="border-t border-white/10 pt-5">
+                            <p className={`font-montserrat ${accentText} text-xs uppercase tracking-wider mb-3`}>
+                              Aliados
+                            </p>
+                            <div className="flex flex-wrap gap-2">
+                              {pilar.aliados.map((a) => (
+                                <span
+                                  key={a}
+                                  className="font-montserrat text-xs text-white/70 bg-white/5 border border-white/10 px-3 py-1 rounded-full"
+                                >
+                                  {a}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )
                       )}
                     </div>
                   </div>
