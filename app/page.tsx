@@ -356,7 +356,7 @@ function SeccionLicenciaturas({ carreras }: { carreras: Carrera[] }) {
                     >
                       {lic.titulo}
                     </h3>
-                    <p className="text-white/70 text-xs leading-relaxed">
+                    <p className="text-white/70 text-[13px] leading-relaxed line-clamp-2">
                       {lic.tagline}
                     </p>
                   </div>
@@ -528,10 +528,11 @@ function CampusHero({ campus: c, otros = [] }: { campus: Campus; otros?: Campus[
             </div>
           </div>
 
-          {/* Derecha — pines de otros planteles (solo lg+ para mantener mobile limpio) */}
+          {/* Derecha — pines de otros planteles. En mobile apila debajo del CTA
+              (en lg+ se ubica como columna derecha del grid). */}
           {otros.length > 0 && (
-            <div className="hidden lg:block">
-              <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/40 mb-5 flex items-center gap-3">
+            <div className="w-full max-w-md mx-auto lg:max-w-none lg:mx-0">
+              <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/40 mb-5 flex items-center justify-center lg:justify-start gap-3">
                 <span aria-hidden className="block w-6 h-px bg-white/30" />
                 También nos encuentras en
               </p>

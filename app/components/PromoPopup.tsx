@@ -114,9 +114,9 @@ export default function PromoPopup({
           type="button"
           onClick={dismiss}
           aria-label="Cerrar"
-          className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all"
+          className="absolute top-4 right-4 z-20 w-11 h-11 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all"
         >
-          <X size={16} />
+          <X size={18} />
         </button>
 
         {/* Contenido */}

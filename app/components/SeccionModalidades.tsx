@@ -179,7 +179,7 @@ function ModalidadCard({
       </motion.div>
 
       <div
-        className={`relative h-full rounded-2xl p-8 md:p-9 flex flex-col transition-all duration-500 ease-out overflow-hidden
+        className={`relative h-full rounded-2xl p-6 sm:p-8 md:p-9 flex flex-col transition-all duration-500 ease-out overflow-hidden
           ${
             featured
               ? "bg-gradient-to-br from-[#1E2A55] via-[#16203F] to-[#0E1530] border-2 border-[#E9C176]/55 shadow-[0_0_40px_rgba(233,193,118,0.18),0_25px_60px_rgba(0,0,0,0.45)] hover:shadow-[0_0_60px_rgba(233,193,118,0.32),0_30px_70px_rgba(0,0,0,0.5)]"

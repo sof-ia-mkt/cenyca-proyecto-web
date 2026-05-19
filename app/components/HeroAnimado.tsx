@@ -169,7 +169,7 @@ export default function HeroAnimado({ slides }: { slides: HeroSlide[] }) {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 1.4, ease: "easeOut" }}
-          className="text-white/75 mb-10 font-montserrat uppercase tracking-[0.18em] text-xs sm:text-sm"
+          className="text-white/75 mb-10 font-montserrat uppercase tracking-[0.18em] text-[13px] sm:text-sm"
         >
           CENYCA Universidad <span className="text-white/30 mx-2">·</span> La universidad líder de la región
         </motion.p>

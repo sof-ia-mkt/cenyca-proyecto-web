@@ -137,7 +137,7 @@ export default function Navbar() {
           {/* Hamburger — mobile */}
           <button
             onClick={() => setMenuAbierto(!menuAbierto)}
-            className="lg:hidden flex flex-col gap-1.5 p-2 rounded-md hover:bg-white/10 transition-colors"
+            className="lg:hidden flex flex-col gap-1.5 p-3 -mr-1 rounded-md hover:bg-white/10 transition-colors min-w-[44px] min-h-[44px] items-center justify-center"
             aria-label="Abrir menú"
           >
             <span className={`block w-6 h-0.5 bg-white transition-transform duration-300 ${menuAbierto ? "rotate-45 translate-y-2" : ""}`} />

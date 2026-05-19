@@ -193,7 +193,7 @@ export default function CtaContadorClases({
 
           {/* Contador */}
           {countdown && !countdown.finished && (
-            <div className="grid grid-cols-4 gap-2 sm:gap-3 max-w-md mb-8">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-3 max-w-md mb-8">
               {[
                 { label: "Días", value: countdown.dias },
                 { label: "Horas", value: countdown.horas },
@@ -202,7 +202,7 @@ export default function CtaContadorClases({
               ].map((u) => (
                 <div
                   key={u.label}
-                  className="bg-white/[0.06] border border-white/10 rounded-2xl px-2 py-3 sm:px-3 sm:py-4 text-center"
+                  className="bg-white/[0.06] border border-white/10 rounded-2xl px-3 py-3.5 sm:px-3 sm:py-4 text-center"
                 >
                   <div className="font-bebas text-white text-3xl sm:text-4xl lg:text-5xl tracking-wider leading-none tabular-nums">
                     {String(u.value).padStart(2, "0")}

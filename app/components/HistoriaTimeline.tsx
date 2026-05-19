@@ -146,17 +146,17 @@ export default function HistoriaTimeline({
             type="button"
             onClick={() => go(-1)}
             aria-label="Hito anterior"
-            className="w-10 h-10 rounded-full text-white/55 hover:text-white hover:bg-white/5 flex items-center justify-center transition-all"
+            className="w-11 h-11 rounded-full text-white/55 hover:text-white hover:bg-white/5 flex items-center justify-center transition-all"
           >
-            <ChevronLeft size={18} />
+            <ChevronLeft size={20} />
           </button>
           <button
             type="button"
             onClick={() => go(1)}
             aria-label="Siguiente hito"
-            className="w-10 h-10 rounded-full text-white/55 hover:text-white hover:bg-white/5 flex items-center justify-center transition-all"
+            className="w-11 h-11 rounded-full text-white/55 hover:text-white hover:bg-white/5 flex items-center justify-center transition-all"
           >
-            <ChevronRight size={18} />
+            <ChevronRight size={20} />
           </button>
         </div>
 

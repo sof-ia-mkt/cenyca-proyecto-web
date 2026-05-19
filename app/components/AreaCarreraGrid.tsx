@@ -103,7 +103,7 @@ function FilterChip({
     <button
       type="button"
       onClick={onClick}
-      className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-[0.15em] transition-all ${
+      className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-[0.15em] whitespace-nowrap transition-all ${
         active
           ? "bg-[#121B33] text-white shadow-[0_6px_18px_rgba(18,27,51,0.25)]"
           : "bg-white text-[#45464D] border border-[#121B33]/10 hover:border-[#121B33]/30 hover:text-[#121B33]"

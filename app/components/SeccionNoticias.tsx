@@ -247,7 +247,7 @@ function NoticiaCardItem({ noticia }: { noticia: NoticiaCard }) {
     <Link
       href={`/noticias/${noticia.slug.current}`}
       data-news-card
-      className="group snap-start shrink-0 w-[280px] sm:w-[320px] md:w-[360px] rounded-2xl overflow-hidden bg-white border border-[#1B2040]/15 shadow-[0_4px_14px_rgba(27,32,64,0.08)] hover:shadow-[0_18px_40px_rgba(27,32,64,0.18)] hover:-translate-y-1 hover:border-[#00D4FF]/50 transition-all duration-300 flex flex-col"
+      className="group snap-start shrink-0 w-[260px] sm:w-[320px] md:w-[360px] rounded-2xl overflow-hidden bg-white border border-[#1B2040]/15 shadow-[0_4px_14px_rgba(27,32,64,0.08)] hover:shadow-[0_18px_40px_rgba(27,32,64,0.18)] hover:-translate-y-1 hover:border-[#00D4FF]/50 transition-all duration-300 flex flex-col"
     >
       <div className="relative aspect-[16/10] bg-[#F2F3F7] overflow-hidden">
         {noticia.imagenUrl ? (
@@ -255,7 +255,7 @@ function NoticiaCardItem({ noticia }: { noticia: NoticiaCard }) {
             src={noticia.imagenUrl}
             alt={noticia.titulo}
             fill
-            sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 360px"
+            sizes="(max-width: 640px) 260px, (max-width: 768px) 320px, 360px"
             className="object-cover group-hover:scale-105 transition-transform duration-500"
           />
         ) : (

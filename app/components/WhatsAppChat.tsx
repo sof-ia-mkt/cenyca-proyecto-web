@@ -111,9 +111,9 @@ export default function WhatsAppChat({ phone }: { phone: string }) {
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Cerrar chat"
-              className="shrink-0 text-white/60 hover:text-white p-1 rounded-md hover:bg-white/10 transition-colors"
+              className="shrink-0 text-white/60 hover:text-white p-2.5 -mr-1.5 rounded-md hover:bg-white/10 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
             >
-              <X size={18} />
+              <X size={20} />
             </button>
           </div>
 
