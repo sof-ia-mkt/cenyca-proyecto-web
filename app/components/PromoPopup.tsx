@@ -39,12 +39,20 @@ export default function PromoPopup({
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  // Bloquea scroll del body
+  // Bloquea scroll del body — iOS Safari-safe (position:fixed trick)
   useEffect(() => {
     if (!open) return;
-    document.body.style.overflow = "hidden";
+    const scrollY = window.scrollY;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
     return () => {
-      document.body.style.removeProperty("overflow");
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      window.scrollTo(0, scrollY);
     };
   }, [open]);
 

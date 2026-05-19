@@ -46,7 +46,6 @@ function WhatsAppIcon({ size = 24 }: { size?: number }) {
 
 export default function WhatsAppChat({ phone }: { phone: string }) {
   const [open, setOpen] = useState(false);
-  const [showBubble, setShowBubble] = useState(false);
 
   // Auto-abrir el chat completo a los 5s (solo una vez por sesión).
   // SOLO en desktop (≥768px) — en mobile causaba taps accidentales mientras
@@ -62,18 +61,10 @@ export default function WhatsAppChat({ phone }: { phone: string }) {
     const timer = setTimeout(() => {
       setOpen(true);
       sessionStorage.setItem("waChatAutoOpened", "1");
-      sessionStorage.setItem("waChatBubbleDismissed", "1");
     }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
-
-  function dismissBubble() {
-    setShowBubble(false);
-    if (typeof window !== "undefined") {
-      sessionStorage.setItem("waChatBubbleDismissed", "1");
-    }
-  }
 
   function openWhatsapp(message: string = DEFAULT_MSG) {
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
@@ -82,7 +73,6 @@ export default function WhatsAppChat({ phone }: { phone: string }) {
 
   function toggle() {
     setOpen((o) => !o);
-    dismissBubble();
   }
 
   return (
@@ -172,35 +162,6 @@ export default function WhatsAppChat({ phone }: { phone: string }) {
         </div>
       )}
 
-      {/* Burbujita preview */}
-      {!open && showBubble && (
-        <div
-          className="fixed bottom-24 right-4 md:right-6 z-[60] max-w-[260px]"
-          style={{ animation: "waChatBubbleIn 0.4s cubic-bezier(0.22, 1, 0.36, 1)" }}
-        >
-          <button
-            type="button"
-            onClick={dismissBubble}
-            aria-label="Ocultar mensaje"
-            className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-[#1B2040] text-white text-xs font-bold flex items-center justify-center shadow-md hover:scale-110 transition-transform z-10"
-          >
-            ×
-          </button>
-          <button
-            type="button"
-            onClick={() => { setOpen(true); dismissBubble(); }}
-            className="block bg-white text-[#1B2040] rounded-2xl rounded-br-sm shadow-[0_8px_28px_rgba(0,0,0,0.18)] px-4 py-3 text-left hover:shadow-[0_12px_36px_rgba(0,0,0,0.25)] transition-shadow"
-          >
-            <p className="text-sm leading-snug">
-              👋 ¡Hola! ¿Tienes dudas sobre carreras o admisiones?
-            </p>
-            <p className="text-[#00D4FF] text-xs font-bold mt-1.5">
-              Pregúntanos por WhatsApp →
-            </p>
-          </button>
-        </div>
-      )}
-
       {/* Botón flotante (FAB) */}
       <button
         type="button"
@@ -225,11 +186,7 @@ export default function WhatsAppChat({ phone }: { phone: string }) {
           from { opacity: 0; transform: translateY(12px) scale(0.96); }
           to   { opacity: 1; transform: translateY(0) scale(1); }
         }
-        @keyframes waChatBubbleIn {
-          from { opacity: 0; transform: translateY(8px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
+`}</style>
     </>
   );
 }
