@@ -173,11 +173,14 @@ export default function HistoriaTimeline({
                   key={i}
                   type="button"
                   onClick={() => setIdx(i)}
+                  aria-label={`Ir a ${m.year}`}
                   aria-current={isActive ? "step" : undefined}
-                  className="relative flex flex-col items-center gap-3 pb-0 cursor-pointer group"
+                  className="relative flex flex-col items-center justify-end gap-3 pb-0 py-2 md:py-0 cursor-pointer group"
                 >
+                  {/* Año visible solo en md+ — en mobile el año ya se muestra
+                      gigante arriba, evita amontonamiento en la timeline. */}
                   <span
-                    className={`text-base md:text-lg font-bold tracking-tight transition-colors duration-300 whitespace-nowrap ${
+                    className={`hidden md:block text-base md:text-lg font-bold tracking-tight transition-colors duration-300 whitespace-nowrap ${
                       isActive ? "text-white" : "text-white/55 group-hover:text-white"
                     }`}
                   >
@@ -226,8 +229,8 @@ export default function HistoriaTimeline({
           </div>
         </div>
 
-        {/* Counter discreto */}
-        <span className="text-white/30 text-xs tracking-tight font-medium tabular-nums w-12 text-right shrink-0">
+        {/* Counter discreto — oculto en mobile (los dots ya comunican posición). */}
+        <span className="hidden md:inline-block text-white/30 text-xs tracking-tight font-medium tabular-nums w-12 text-right shrink-0">
           {String(idx + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
         </span>
       </div>
