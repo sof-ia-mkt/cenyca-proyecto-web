@@ -198,6 +198,48 @@ export const historiaHomeQuery = groq`
   }
 `
 
+// ─── Vinculación (singleton) ─────────────────────────────────────────────────
+
+export const vinculacionPageQuery = groq`
+  *[_type == "vinculacion" && _id == "vinculacion-page"][0] {
+    heroKicker,
+    heroTitulo,
+    heroDescripcion,
+    rector{
+      nombre,
+      cargo,
+      cita,
+      "imagenUrl": imagen.asset->url,
+      "imagenAlt": imagen.alt,
+      "imagenLqip": imagen.asset->metadata.lqip
+    },
+    pilaresKicker,
+    pilaresTitulo,
+    "pilares": pilares[]{
+      icono,
+      titulo,
+      descripcion,
+      aliados,
+      "imagenUrl": imagen.asset->url,
+      "imagenAlt": imagen.alt,
+      "imagenLqip": imagen.asset->metadata.lqip
+    },
+    galeriaTitulo,
+    galeriaDescripcion,
+    "galeria": galeria[]{
+      titulo,
+      empresa,
+      "imagenUrl": imagen.asset->url,
+      "imagenAlt": imagen.alt,
+      "imagenLqip": imagen.asset->metadata.lqip
+    },
+    ctaKicker,
+    ctaTitulo,
+    ctaDescripcion,
+    ctaMensajeWhatsapp
+  }
+`
+
 export const noticiaBySlugQuery = groq`
   *[_type == "noticia" && slug.current == $slug][0] {
     _id,

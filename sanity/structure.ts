@@ -21,9 +21,17 @@ export const structure: StructureResolver = (S) =>
             .schemaType('historia')
             .documentId('historia-home')
         ),
+      // Singleton: Vinculación
+      S.listItem()
+        .title('Vinculación (Página)')
+        .child(
+          S.document()
+            .schemaType('vinculacion')
+            .documentId('vinculacion-page')
+        ),
       S.divider(),
       // Resto de tipos (sin singletons para evitar duplicados en el menú)
       ...S.documentTypeListItems().filter(
-        (item) => !['configuracion', 'historia'].includes(item.getId() ?? '')
+        (item) => !['configuracion', 'historia', 'vinculacion'].includes(item.getId() ?? '')
       ),
     ])

@@ -7,6 +7,7 @@ import { documento } from "./documento";
 import { avisoPrivacidad } from "./avisoPrivacidad";
 import { pagina } from "./pagina";
 import { historia } from "./historia";
+import { vinculacion } from "./vinculacion";
 import { redirect } from "./redirect";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
@@ -23,5 +24,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     // Singletons
     configuracion,
     historia,
+    vinculacion,
   ],
 };
