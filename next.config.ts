@@ -1,5 +1,17 @@
 import type { NextConfig } from "next";
 import path from "path";
+import fs from "fs";
+
+// En worktrees, node_modules vive en el checkout principal (varios niveles arriba).
+// Turbopack necesita conocer ese directorio para resolver paquetes.
+function findTurbopackRoot(start: string): string {
+  let dir = start;
+  while (dir !== path.sep) {
+    if (fs.existsSync(path.join(dir, "node_modules", "next"))) return dir;
+    dir = path.dirname(dir);
+  }
+  return start;
+}
 
 // Para analizar bundle, usar `npm run analyze` (next build --experimental-analyze)
 // Genera UI interactiva en .next/diagnostics/analyze/ — sirve con `npx serve .next/diagnostics/analyze`.
@@ -62,9 +74,8 @@ const studioHeaders = [
 ];
 
 const nextConfig: NextConfig = {
-  // Fija la raíz del workspace para Turbopack (evita que infiera mal por el lockfile del directorio padre)
   turbopack: {
-    root: path.resolve(__dirname),
+    root: findTurbopackRoot(__dirname),
   },
 
   async headers() {
