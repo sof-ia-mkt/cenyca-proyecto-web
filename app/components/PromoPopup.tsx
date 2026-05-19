@@ -120,7 +120,7 @@ export default function PromoPopup({
         </button>
 
         {/* Contenido */}
-        <div className="relative z-10 p-7 md:p-10 pt-12 md:pt-14 min-h-[480px] md:min-h-[540px] flex flex-col justify-end">
+        <div className="relative z-10 p-7 md:p-10 pt-10 md:pt-14 md:min-h-[540px] flex flex-col justify-end">
           {/* Headline */}
           <h2
             className="text-white font-black mb-4 drop-shadow-[0_4px_24px_rgba(0,0,0,0.7)]"
@@ -171,7 +171,7 @@ export default function PromoPopup({
                   }, 80);
                 }
               }}
-              className="group inline-flex items-center justify-center gap-2 bg-[#00D4FF] hover:bg-[#33DDFF] text-[#121B33] font-extrabold text-sm md:text-base uppercase tracking-[0.18em] px-7 py-4 rounded-full transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_50px_rgba(0,212,255,0.65)] shadow-[0_10px_32px_rgba(0,212,255,0.4)]"
+              className="group inline-flex items-center justify-center gap-2 bg-[#00D4FF] hover:bg-[#33DDFF] text-[#121B33] font-extrabold text-sm md:text-base uppercase tracking-[0.18em] px-6 py-3.5 md:px-7 md:py-4 rounded-full transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_50px_rgba(0,212,255,0.65)] shadow-[0_10px_32px_rgba(0,212,255,0.4)]"
             >
               Quiero la promoción
               <ArrowRight
@@ -184,7 +184,7 @@ export default function PromoPopup({
             <button
               type="button"
               onClick={dismiss}
-              className="text-white/55 hover:text-white/85 text-xs uppercase tracking-[0.22em] font-bold py-2 transition-colors"
+              className="text-white/55 hover:text-white/85 text-xs uppercase tracking-[0.22em] font-bold py-3 md:py-2 transition-colors"
             >
               Tal vez después
             </button>
