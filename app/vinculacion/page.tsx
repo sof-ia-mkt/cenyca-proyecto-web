@@ -20,6 +20,10 @@ import {
   StaggerItem,
   ScaleIn,
 } from "@/app/components/ScrollReveal";
+import SectionAccentLine from "@/app/components/SectionAccentLine";
+import AnimatedCounter from "@/app/components/AnimatedCounter";
+import AliadosMarquee from "@/app/components/AliadosMarquee";
+import aliadosData from "@/public/vinculacion/aliados.json";
 import { client } from "@/sanity/lib/client";
 import { configuracionQuery, vinculacionPageQuery } from "@/sanity/lib/queries";
 
@@ -31,10 +35,25 @@ type ImagenSanity = {
   imagenLqip?: string;
 };
 
+type HeroStat = {
+  valor?: number;
+  sufijo?: string;
+  label?: string;
+  color?: "gold" | "white" | "cyan";
+};
+
 type VinculacionData = {
   heroKicker?: string;
   heroTitulo?: string;
   heroDescripcion?: string;
+  heroVideoUrl?: string;
+  heroPosterUrl?: string;
+  heroPosterAlt?: string;
+  heroPosterLqip?: string;
+  heroStats?: HeroStat[];
+  scrollHint?: string;
+  aliadosKicker?: string;
+  aliadosTexto?: string;
   rector?: {
     nombre?: string;
     cargo?: string;
@@ -193,34 +212,6 @@ export const metadata: Metadata = {
   },
 };
 
-function DiagonalDivider({
-  from,
-  to,
-  flip = false,
-}: {
-  from: string;
-  to: string;
-  flip?: boolean;
-}) {
-  return (
-    <div style={{ lineHeight: 0, marginTop: "-1px", marginBottom: "-1px" }}>
-      <svg
-        viewBox="0 0 1440 70"
-        xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="none"
-        style={{ display: "block", width: "100%", height: "70px" }}
-      >
-        <rect width="1440" height="70" fill={to} />
-        {flip ? (
-          <polygon points="0,0 1440,70 0,70" fill={from} />
-        ) : (
-          <polygon points="0,0 1440,0 0,70" fill={from} />
-        )}
-      </svg>
-    </div>
-  );
-}
-
 export default async function VinculacionPage() {
   const [config, data] = await Promise.all([
     client.fetch<Configuracion>(configuracionQuery).catch(() => null),
@@ -232,6 +223,47 @@ export default async function VinculacionPage() {
   const heroKicker = data?.heroKicker || DEFAULTS.heroKicker;
   const heroTitulo = data?.heroTitulo || DEFAULTS.heroTitulo;
   const heroDescripcion = data?.heroDescripcion || DEFAULTS.heroDescripcion;
+  const heroVideoUrl = data?.heroVideoUrl || null;
+  const heroPosterUrl =
+    data?.heroPosterUrl || "/vinculacion/innovate-baja-connect.jpg";
+  const heroPosterAlt = data?.heroPosterAlt || "Eventos de vinculación CENYCA";
+  const scrollHint = data?.scrollHint || "Conoce más";
+  const aliadosKicker = data?.aliadosKicker || "Confían en nosotros";
+  const aliadosTextoTpl =
+    data?.aliadosTexto ||
+    "{n}+ convenios activos con instituciones, industria y sector social";
+  const aliadosTexto = aliadosTextoTpl.replace(
+    /\{n\}/g,
+    String(aliadosData.stats.activos)
+  );
+
+  // Stats: Sanity override > auto del sheet
+  const heroStats: Required<HeroStat>[] =
+    data?.heroStats && data.heroStats.length > 0
+      ? data.heroStats.map((s) => ({
+          valor: s.valor ?? 0,
+          sufijo: s.sufijo ?? "",
+          label: s.label ?? "",
+          color: s.color ?? "white",
+        }))
+      : [
+          {
+            valor: aliadosData.stats.totalHistorico,
+            sufijo: "+",
+            label: "Convenios firmados",
+            color: "gold",
+          },
+          {
+            valor: aliadosData.stats.activos,
+            sufijo: "",
+            label: "Aliados activos",
+            color: "white",
+          },
+          { valor: 3, sufijo: "", label: "Sectores de impacto", color: "cyan" },
+        ];
+
+  const statColor = (c: HeroStat["color"]) =>
+    c === "gold" ? "text-[#E9C176]" : c === "cyan" ? "text-[#00D4FF]" : "text-white";
 
   const rector = {
     nombre: data?.rector?.nombre || DEFAULTS.rector.nombre!,
@@ -265,33 +297,113 @@ export default async function VinculacionPage() {
   return (
     <>
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
-      <section className="relative bg-[#121B33] pt-24 pb-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.04]">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full border-2 border-[#00D4FF] translate-x-1/2 -translate-y-1/2" />
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full border border-[#00D4FF] -translate-x-1/2 translate-y-1/2" />
-        </div>
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#00D4FF]/60 to-transparent" />
+      <section className="relative min-h-[680px] lg:min-h-[780px] flex items-center bg-[#121B33] pt-28 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        {/* Background: si hay video en Sanity lo usa, si no muestra el póster */}
+        {heroVideoUrl ? (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={heroPosterUrl}
+            className="absolute inset-0 w-full h-full object-cover opacity-40"
+          >
+            <source src={heroVideoUrl} />
+          </video>
+        ) : (
+          <Image
+            src={heroPosterUrl}
+            alt={heroPosterAlt}
+            fill
+            priority
+            sizes="100vw"
+            placeholder={data?.heroPosterLqip ? "blur" : "empty"}
+            blurDataURL={data?.heroPosterLqip}
+            className="object-cover opacity-40"
+          />
+        )}
 
-        <div className="relative z-10 max-w-5xl mx-auto text-center">
-          <FadeUp>
-            <span className="font-montserrat text-[#00D4FF] text-sm font-semibold uppercase tracking-[0.2em] mb-4 block">
-              {heroKicker}
-            </span>
-            <h1 className="font-bebas text-white text-6xl sm:text-7xl lg:text-8xl tracking-wide mb-6">
+        {/* Overlay gradiente para legibilidad */}
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-b from-[#121B33]/80 via-[#121B33]/70 to-[#121B33]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_#121B33_85%)]"
+        />
+
+        {/* Halos dorados sutiles */}
+        <div
+          aria-hidden
+          className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-[#E9C176]/20 to-transparent blur-3xl pointer-events-none"
+        />
+        <div
+          aria-hidden
+          className="absolute -bottom-40 -left-40 w-[420px] h-[420px] rounded-full bg-gradient-to-tr from-[#00D4FF]/15 to-transparent blur-3xl pointer-events-none"
+        />
+
+        <SectionAccentLine accent="#E9C176" position="top" opacity={0.6} />
+
+        <div className="relative z-10 max-w-6xl mx-auto w-full">
+          <FadeUp className="text-center">
+            <div className="inline-flex items-center gap-3 mb-6">
+              <span aria-hidden className="block w-8 h-px bg-[#E9C176]" />
+              <span className="font-montserrat text-[#E9C176] text-xs font-bold uppercase tracking-[0.3em]">
+                {heroKicker}
+              </span>
+              <span aria-hidden className="block w-8 h-px bg-[#E9C176]" />
+            </div>
+            <h1 className="font-bebas text-white text-7xl sm:text-8xl lg:text-9xl tracking-wide mb-6 leading-none">
               {heroTitulo}
             </h1>
-            <div className="w-20 h-1 bg-[#00D4FF] rounded mx-auto mb-6" />
-            <p className="font-montserrat text-white/60 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
+            <p className="font-montserrat text-white/75 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-14">
               {heroDescripcion}
             </p>
           </FadeUp>
+
+          {/* Stats: Sanity override → fallback automático del sheet */}
+          <FadeUp delay={0.25}>
+            <div className="grid grid-cols-3 gap-4 sm:gap-10 max-w-3xl mx-auto pt-10 border-t border-white/10">
+              {heroStats.map((s, i) => (
+                <div
+                  key={`${s.label}-${i}`}
+                  className={`text-center ${i === 1 ? "border-x border-white/10" : ""}`}
+                >
+                  <div
+                    className={`font-bebas ${statColor(s.color)} text-5xl sm:text-6xl lg:text-7xl tracking-wide leading-none`}
+                  >
+                    <AnimatedCounter value={s.valor} suffix={s.sufijo} />
+                  </div>
+                  <p className="font-montserrat text-white/60 text-[10px] sm:text-xs uppercase tracking-[0.2em] mt-3">
+                    {s.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </FadeUp>
+        </div>
+
+        {/* Scroll hint */}
+        <div
+          aria-hidden
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40"
+        >
+          <span className="font-montserrat text-[10px] uppercase tracking-[0.3em]">{scrollHint}</span>
+          <span className="block w-px h-10 bg-gradient-to-b from-[#E9C176]/60 to-transparent" />
         </div>
       </section>
 
-      <DiagonalDivider from="#121B33" to="#ffffff" flip />
+      <AliadosMarquee
+        aliados={aliadosData.aliados}
+        kicker={aliadosKicker}
+        texto={aliadosTexto}
+      />
 
       {/* ── Mensaje del Rector ────────────────────────────────────────────── */}
-      <section className="bg-white py-24 px-4 sm:px-6 lg:px-8">
+      <section className="relative bg-white py-24 px-4 sm:px-6 lg:px-8">
+        <SectionAccentLine accent="#E9C176" position="top" />
+        <SectionAccentLine accent="#E9C176" position="bottom" />
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
             <FadeLeft className="lg:col-span-2 flex flex-col items-center">
@@ -317,12 +429,16 @@ export default async function VinculacionPage() {
             </FadeLeft>
 
             <FadeRight className="lg:col-span-3">
-              <div className="bg-[#F5F7FF] border border-[#121B33]/10 rounded-3xl p-8 sm:p-10">
+              <div className="relative bg-[#F9F9FB] border border-[#121B33]/10 rounded-3xl p-8 sm:p-10 overflow-hidden">
+                <span
+                  aria-hidden
+                  className="absolute top-0 left-0 h-full w-[3px] bg-gradient-to-b from-[#E9C176] via-[#E9C176] to-transparent"
+                />
                 <blockquote className="font-montserrat text-[#333] text-lg sm:text-xl leading-relaxed italic whitespace-pre-line">
                   {rector.cita}
                 </blockquote>
                 <div className="flex items-center gap-4 mt-8">
-                  <div className="w-12 h-1 bg-[#00D4FF] rounded" />
+                  <div className="w-12 h-1 bg-[#E9C176] rounded" />
                   <p className="font-montserrat font-bold text-[#121B33] text-sm">
                     {rector.nombre}
                   </p>
@@ -333,10 +449,10 @@ export default async function VinculacionPage() {
         </div>
       </section>
 
-      <DiagonalDivider from="#ffffff" to="#121B33" />
-
       {/* ── Pilares ───────────────────────────────────────────────────────── */}
-      <section className="bg-[#121B33] py-24 px-4 sm:px-6 lg:px-8">
+      <section className="relative bg-[#121B33] py-24 px-4 sm:px-6 lg:px-8">
+        <SectionAccentLine accent="#00D4FF" position="top" />
+        <SectionAccentLine accent="#00D4FF" position="bottom" />
         <div className="max-w-7xl mx-auto">
           <FadeUp className="text-center mb-16">
             <span className="font-montserrat text-[#00D4FF] text-sm font-semibold uppercase tracking-[0.2em] mb-3 block">
@@ -349,11 +465,20 @@ export default async function VinculacionPage() {
           </FadeUp>
 
           <StaggerContainer className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {pilares.map((pilar) => {
+            {pilares.map((pilar, idx) => {
               const Icon = ICONS[pilar.icono || ""] || Factory;
+              const isAccent = idx === 1;
+              const accentColor = isAccent ? "#E9C176" : "#00D4FF";
+              const accentBg = isAccent ? "bg-[#E9C176]/15" : "bg-[#00D4FF]/15";
+              const accentText = isAccent ? "text-[#E9C176]" : "text-[#00D4FF]";
+              const accentHoverBorder = isAccent
+                ? "hover:border-[#E9C176]/30"
+                : "hover:border-[#00D4FF]/30";
               return (
                 <StaggerItem key={pilar.titulo}>
-                  <div className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden hover:border-[#00D4FF]/30 transition-all duration-300 h-full flex flex-col">
+                  <div
+                    className={`bg-white/5 border border-white/10 rounded-3xl overflow-hidden ${accentHoverBorder} transition-all duration-300 h-full flex flex-col`}
+                  >
                     {pilar.imagenUrl && (
                       <div className="aspect-video w-full overflow-hidden">
                         <Image
@@ -369,8 +494,8 @@ export default async function VinculacionPage() {
                     )}
 
                     <div className="p-8 flex flex-col flex-1">
-                      <div className="w-12 h-12 bg-[#00D4FF]/15 rounded-xl flex items-center justify-center mb-5">
-                        <Icon size={24} className="text-[#00D4FF]" strokeWidth={1.5} />
+                      <div className={`w-12 h-12 ${accentBg} rounded-xl flex items-center justify-center mb-5`}>
+                        <Icon size={24} className={accentText} strokeWidth={1.5} style={{ color: accentColor }} />
                       </div>
                       <h3 className="font-montserrat font-bold text-white text-xl mb-3">
                         {pilar.titulo}
@@ -380,7 +505,7 @@ export default async function VinculacionPage() {
                       </p>
                       {pilar.aliados && pilar.aliados.length > 0 && (
                         <div className="border-t border-white/10 pt-5">
-                          <p className="font-montserrat text-[#00D4FF] text-xs uppercase tracking-wider mb-3">
+                          <p className={`font-montserrat ${accentText} text-xs uppercase tracking-wider mb-3`}>
                             Aliados
                           </p>
                           <div className="flex flex-wrap gap-2">
@@ -404,32 +529,40 @@ export default async function VinculacionPage() {
         </div>
       </section>
 
-      <DiagonalDivider from="#121B33" to="#ffffff" flip />
-
       {/* ── Galería ───────────────────────────────────────────────────────── */}
-      <section className="bg-white py-24 px-4 sm:px-6 lg:px-8">
+      <section className="relative bg-[#F9F9FB] py-24 px-4 sm:px-6 lg:px-8">
+        <SectionAccentLine accent="#E9C176" position="top" />
+        <SectionAccentLine accent="#E9C176" position="bottom" />
         <div className="max-w-7xl mx-auto">
           <FadeUp className="text-center mb-14">
-            <span className="font-montserrat text-[#121B33]/50 text-sm font-semibold uppercase tracking-[0.2em] mb-3 block">
-              Galería
-            </span>
+            <div className="inline-flex items-center gap-3 mb-4">
+              <span aria-hidden className="block w-[2px] h-5 bg-[#E9C176]" />
+              <span className="font-montserrat text-[#E9C176] text-xs font-bold uppercase tracking-[0.2em]">
+                Galería
+              </span>
+              <span aria-hidden className="block w-[2px] h-5 bg-[#E9C176]" />
+            </div>
             <h2 className="font-bebas text-[#121B33] text-5xl sm:text-6xl tracking-wide mb-3">
               {galeriaTitulo}
             </h2>
-            <div className="w-16 h-1 bg-[#00D4FF] rounded mx-auto mb-4" />
+            <div className="w-16 h-1 bg-[#E9C176] rounded mx-auto mb-4" />
             <p className="font-montserrat text-[#666] max-w-xl mx-auto text-sm">
               {galeriaDescripcion}
             </p>
           </FadeUp>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-fr">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:auto-rows-fr">
             {galeria.map((item, i) => (
               <FadeUp
                 key={`${item.titulo}-${i}`}
                 delay={i * 0.08}
-                className={i === 0 ? "lg:col-span-2" : ""}
+                className={i === 0 ? "lg:row-span-2 lg:h-full" : ""}
               >
-                <div className="group relative rounded-2xl overflow-hidden aspect-video cursor-default">
+                <div
+                  className={`group relative rounded-2xl overflow-hidden cursor-default ${
+                    i === 0 ? "aspect-[4/5] lg:aspect-auto lg:h-full" : "aspect-video lg:h-full"
+                  }`}
+                >
                   {item.imagenUrl && (
                     <Image
                       src={item.imagenUrl}
@@ -448,7 +581,7 @@ export default async function VinculacionPage() {
                         {item.titulo}
                       </p>
                       {item.empresa && (
-                        <p className="font-montserrat text-[#00D4FF] text-xs mt-1">
+                        <p className="font-montserrat text-[#E9C176] text-xs mt-1">
                           {item.empresa}
                         </p>
                       )}
@@ -461,16 +594,34 @@ export default async function VinculacionPage() {
         </div>
       </section>
 
-      <DiagonalDivider from="#ffffff" to="#00D4FF" />
-
       {/* ── CTA ───────────────────────────────────────────────────────────── */}
-      <section className="bg-[#00D4FF] py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center">
+      <section className="relative bg-[#121B33] py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <SectionAccentLine accent="#E9C176" position="top" opacity={0.7} />
+        <SectionAccentLine accent="#E9C176" position="bottom" opacity={0.7} />
+
+        <div
+          aria-hidden
+          className="absolute -top-32 -right-32 w-[480px] h-[480px] rounded-full bg-gradient-to-br from-[#E9C176]/25 to-transparent blur-3xl pointer-events-none"
+        />
+        <div
+          aria-hidden
+          className="absolute -bottom-40 -left-40 w-[420px] h-[420px] rounded-full bg-gradient-to-tr from-[#8B6A2E]/20 to-transparent blur-3xl pointer-events-none"
+        />
+
+        <div className="relative z-10 max-w-3xl mx-auto text-center">
           <ScaleIn>
-            <h2 className="font-bebas text-[#121B33] text-5xl sm:text-6xl tracking-wide mb-4">
+            <div className="inline-flex items-center gap-3 mb-5">
+              <span aria-hidden className="block w-[2px] h-5 bg-[#E9C176]" />
+              <span className="font-montserrat text-[#E9C176] text-xs font-bold uppercase tracking-[0.2em]">
+                ¿Quieres ser parte?
+              </span>
+              <span aria-hidden className="block w-[2px] h-5 bg-[#E9C176]" />
+            </div>
+            <h2 className="font-bebas text-white text-5xl sm:text-6xl tracking-wide mb-5">
               {ctaTitulo}
             </h2>
-            <p className="font-montserrat text-[#121B33]/70 text-lg mb-10 max-w-xl mx-auto">
+            <div className="w-20 h-[3px] bg-gradient-to-r from-[#E9C176] to-[#8B6A2E] rounded mx-auto mb-6" />
+            <p className="font-montserrat text-white/70 text-lg mb-10 max-w-xl mx-auto">
               {ctaDescripcion}
             </p>
           </ScaleIn>
@@ -480,13 +631,13 @@ export default async function VinculacionPage() {
                 href={`https://wa.me/${whatsapp}?text=${waMensaje}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#121B33] text-white font-montserrat font-bold px-10 py-4 rounded-full hover:bg-[#1E2D4A] transition-all duration-300 hover:scale-105"
+                className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#E9C176] to-[#c19a4a] text-[#121B33] font-montserrat font-bold px-10 py-4 rounded-full hover:from-[#f0cd87] hover:to-[#d4ab5a] transition-all duration-300 hover:scale-105 shadow-lg shadow-[#E9C176]/20"
               >
-                Contactar por WhatsApp <ArrowRight size={18} />
+                Contactar por WhatsApp <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </a>
               <Link
                 href="/nosotros"
-                className="w-full sm:w-auto border-2 border-[#121B33] text-[#121B33] font-montserrat font-bold px-10 py-4 rounded-full hover:bg-[#121B33] hover:text-white transition-all duration-300 text-center"
+                className="w-full sm:w-auto border-2 border-white/30 text-white font-montserrat font-bold px-10 py-4 rounded-full hover:border-[#E9C176] hover:text-[#E9C176] transition-all duration-300 text-center"
               >
                 Conocer CENYCA
               </Link>
