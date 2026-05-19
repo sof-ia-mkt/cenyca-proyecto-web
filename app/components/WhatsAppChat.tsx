@@ -48,10 +48,16 @@ export default function WhatsAppChat({ phone }: { phone: string }) {
   const [open, setOpen] = useState(false);
   const [showBubble, setShowBubble] = useState(false);
 
-  // Auto-abrir el chat completo a los 5s (solo una vez por sesión)
+  // Auto-abrir el chat completo a los 5s (solo una vez por sesión).
+  // SOLO en desktop (≥768px) — en mobile causaba taps accidentales mientras
+  // el usuario scrolleaba, sacándolo de la página hacia WhatsApp sin querer.
+  // El FAB sigue visible y animado en mobile; el usuario lo abre cuando quiera.
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (sessionStorage.getItem("waChatAutoOpened")) return;
+
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    if (isMobile) return;
 
     const timer = setTimeout(() => {
       setOpen(true);
