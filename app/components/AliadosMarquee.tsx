@@ -1,6 +1,13 @@
 "use client";
 
-type Aliado = { nombre: string; sector?: string };
+import Image from "next/image";
+
+type Aliado = {
+  nombre: string;
+  sector?: string;
+  logo?: string | null;
+  destacado?: boolean;
+};
 
 export default function AliadosMarquee({
   aliados,
@@ -11,8 +18,12 @@ export default function AliadosMarquee({
   kicker: string;
   texto: string;
 }) {
+  // Prioriza destacados al frente para que se vean primero
+  const sorted = [...aliados].sort(
+    (a, b) => Number(b.destacado ?? false) - Number(a.destacado ?? false)
+  );
   // Duplicamos para loop continuo sin saltos
-  const loop = [...aliados, ...aliados];
+  const loop = [...sorted, ...sorted];
 
   return (
     <section
@@ -61,25 +72,40 @@ export default function AliadosMarquee({
           }}
         />
 
-        <div className="marquee-track flex gap-12 whitespace-nowrap will-change-transform">
+        <div className="marquee-track flex items-center gap-14 whitespace-nowrap will-change-transform">
           {loop.map((a, i) => (
-            <span
+            <div
               key={`${a.nombre}-${i}`}
-              className="font-montserrat font-bold text-[#121B33] text-xl sm:text-2xl uppercase tracking-wider opacity-80 hover:opacity-100 transition-opacity flex items-center gap-12"
+              className="flex items-center gap-14 shrink-0"
+              title={a.nombre}
             >
-              {a.nombre}
+              {a.logo ? (
+                <span className="relative inline-flex h-16 w-32 sm:h-20 sm:w-40 items-center justify-center">
+                  <Image
+                    src={a.logo}
+                    alt={a.nombre}
+                    fill
+                    sizes="160px"
+                    className="object-contain opacity-80 hover:opacity-100 transition-opacity grayscale hover:grayscale-0"
+                  />
+                </span>
+              ) : (
+                <span className="font-montserrat font-bold text-[#121B33] text-xl sm:text-2xl uppercase tracking-wider opacity-80 hover:opacity-100 transition-opacity">
+                  {a.nombre}
+                </span>
+              )}
               <span
                 aria-hidden
-                className="inline-block w-1.5 h-1.5 rounded-full bg-[#E9C176]"
+                className="inline-block w-1.5 h-1.5 rounded-full bg-[#E9C176] shrink-0"
               />
-            </span>
+            </div>
           ))}
         </div>
       </div>
 
       <style jsx>{`
         .marquee-track {
-          animation: marquee 60s linear infinite;
+          animation: marquee 70s linear infinite;
         }
         .marquee-track:hover {
           animation-play-state: paused;
