@@ -155,7 +155,7 @@ export default function PromoPopup({
           </h2>
 
           {/* Body */}
-          <p className="text-white/85 text-base md:text-lg leading-relaxed mb-8 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)] max-w-md">
+          <p className="text-white/85 text-base md:text-lg leading-relaxed mb-8 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)] max-w-md text-pretty">
             Sé de los <span className="text-white font-bold">primeros 50 en inscribirte</span> y
             recibe un <span className="text-[#E9C176] font-bold">descuento exclusivo</span> en tu
             inscripción.

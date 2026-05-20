@@ -145,7 +145,7 @@ function SeccionExcelencia({ carreras }: { carreras: Carrera[] }) {
           </div>
           <div className="flex flex-col items-start md:items-end gap-5 md:max-w-md">
             <FadeRight delay={0.5}>
-              <p className="text-[#45464D] text-xl leading-relaxed">
+              <p className="text-[#45464D] text-xl leading-relaxed text-pretty">
                 La universidad de mayor crecimiento en el noroeste de México.
                 Formamos a los ingenieros que están construyendo la nueva
                 industria de Baja California — desde el aula al piso de planta.
@@ -259,7 +259,7 @@ function SeccionLicenciaturas({ carreras }: { carreras: Carrera[] }) {
           </div>
           <div className="flex flex-col items-start md:items-end gap-5 md:max-w-md">
             <FadeRight delay={0.5}>
-              <p className="text-[#45464D] text-xl leading-relaxed">
+              <p className="text-[#45464D] text-xl leading-relaxed text-pretty">
                 Detrás de cada industria hay decisiones legales, estrategias de negocio
                 y seres humanos que cuidar. Formamos a quienes equilibran el pulso
                 humano del crecimiento económico de Baja California.
@@ -307,7 +307,7 @@ function SeccionLicenciaturas({ carreras }: { carreras: Carrera[] }) {
                     >
                       {lic.titulo}
                     </h3>
-                    <p className="text-white/80 text-sm md:text-base leading-relaxed max-w-xl">
+                    <p className="text-white/80 text-sm md:text-base leading-relaxed max-w-xl text-pretty">
                       {lic.tagline}
                     </p>
                   </div>
@@ -495,7 +495,7 @@ function CampusHero({ campus: c, otros = [] }: { campus: Campus; otros?: Campus[
               </span>
             </h4>
 
-            <p className="text-white/65 text-base md:text-lg mb-8 max-w-xl mx-auto lg:mx-0">
+            <p className="text-white/65 text-base md:text-lg mb-8 max-w-xl mx-auto lg:mx-0 text-pretty">
               Conoce el campus en persona antes de inscribirte. Sin costo, sin compromiso.
             </p>
 

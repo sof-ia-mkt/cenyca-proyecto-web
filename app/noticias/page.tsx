@@ -60,7 +60,7 @@ export default async function NoticiasPage() {
               </h1>
             </FadeLeft>
             <FadeRight className="lg:col-span-5 lg:pb-4">
-              <p className="text-[#45464D] text-base md:text-lg leading-relaxed max-w-md">
+              <p className="text-[#45464D] text-base md:text-lg leading-relaxed max-w-md text-pretty">
                 Lo que está pasando en CENYCA Universidad — eventos, logros,
                 convocatorias y la vida académica del campus.
               </p>
@@ -108,7 +108,7 @@ export default async function NoticiasPage() {
                     </p>
                   )}
                   <h2
-                    className="text-[#121B33] font-extrabold mb-6 group-hover:text-[#1E2D4A] transition-colors"
+                    className="text-[#121B33] font-extrabold mb-6 group-hover:text-[#1E2D4A] transition-colors text-balance"
                     style={{
                       fontSize: "clamp(1.8rem, 3.4vw, 2.8rem)",
                       letterSpacing: "-0.025em",

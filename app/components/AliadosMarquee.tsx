@@ -52,7 +52,9 @@ export default function AliadosMarquee({
         <span className="font-montserrat text-[#E9C176] text-xs font-bold uppercase tracking-[0.25em]">
           {kicker}
         </span>
-        <p className="font-montserrat text-[#121B33]/60 text-sm mt-2">{texto}</p>
+        <p className="font-montserrat text-[#121B33]/60 text-sm mt-2 max-w-xl mx-auto text-pretty">
+          {texto}
+        </p>
       </div>
 
       {/* máscaras laterales para fade */}

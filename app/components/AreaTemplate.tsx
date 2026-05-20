@@ -87,7 +87,7 @@ export default function AreaTemplate({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-end mb-14 md:mb-20">
             <FadeLeft className="lg:col-span-7">
               <h1
-                className="font-extrabold text-white"
+                className="font-extrabold text-white text-balance"
                 style={{
                   fontSize: "clamp(2.8rem, 6vw, 5.2rem)",
                   letterSpacing: "-0.035em",
@@ -98,7 +98,7 @@ export default function AreaTemplate({
               </h1>
             </FadeLeft>
             <FadeRight className="lg:col-span-5 lg:pb-4">
-              <p className="text-white/70 text-base md:text-lg leading-relaxed max-w-md">
+              <p className="text-white/70 text-base md:text-lg leading-relaxed max-w-md text-pretty">
                 {descripcion}
               </p>
             </FadeRight>
@@ -147,7 +147,7 @@ export default function AreaTemplate({
               <span className="h-px flex-1 bg-[#121B33]/10 max-w-[200px]" />
             </div>
             <h2
-              className="text-[#121B33] font-extrabold mb-14 md:mb-16 max-w-3xl"
+              className="text-[#121B33] font-extrabold mb-14 md:mb-16 max-w-3xl text-balance"
               style={{
                 fontSize: "clamp(1.9rem, 3.6vw, 2.9rem)",
                 letterSpacing: "-0.025em",
@@ -174,7 +174,7 @@ export default function AreaTemplate({
               <span className="h-px flex-1 bg-[#121B33]/10 max-w-[200px]" />
             </div>
             <h2
-              className="text-[#121B33] font-extrabold mb-14 md:mb-16 max-w-3xl"
+              className="text-[#121B33] font-extrabold mb-14 md:mb-16 max-w-3xl text-balance"
               style={{
                 fontSize: "clamp(1.9rem, 3.6vw, 2.9rem)",
                 letterSpacing: "-0.025em",
@@ -193,12 +193,12 @@ export default function AreaTemplate({
                     <v.Icon size={22} className="text-[#0099CC]" strokeWidth={2} />
                   </div>
                   <h3
-                    className="text-[#121B33] font-extrabold mb-3"
+                    className="text-[#121B33] font-extrabold mb-3 text-balance"
                     style={{ fontSize: "1.2rem", letterSpacing: "-0.02em" }}
                   >
                     {v.titulo}
                   </h3>
-                  <p className="text-[#45464D] text-sm leading-relaxed">
+                  <p className="text-[#45464D] text-sm leading-relaxed text-pretty">
                     {v.desc}
                   </p>
                 </div>
@@ -207,7 +207,7 @@ export default function AreaTemplate({
           </div>
 
           <FadeUp delay={0.3}>
-            <p className="text-center text-[#76777E] text-sm mt-10 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-center text-[#76777E] text-sm mt-10 max-w-2xl mx-auto leading-relaxed text-pretty">
               {cierreDescripcion}
             </p>
           </FadeUp>

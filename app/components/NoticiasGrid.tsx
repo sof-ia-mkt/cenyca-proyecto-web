@@ -114,7 +114,7 @@ export default function NoticiasGrid({
                   </span>
                 )}
                 <h3
-                  className="text-[#121B33] font-extrabold mb-4 line-clamp-3 group-hover:text-[#1E2D4A] transition-colors"
+                  className="text-[#121B33] font-extrabold mb-4 line-clamp-3 group-hover:text-[#1E2D4A] transition-colors text-pretty"
                   style={{
                     fontSize: "1.15rem",
                     letterSpacing: "-0.015em",
