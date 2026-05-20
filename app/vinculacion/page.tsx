@@ -430,11 +430,11 @@ export default async function VinculacionPage() {
                   className={`text-center ${i === 1 ? "border-x border-white/10" : ""}`}
                 >
                   <div
-                    className={`font-bebas ${statColor(s.color)} text-5xl sm:text-6xl lg:text-7xl tracking-wide leading-none`}
+                    className={`font-bebas ${statColor(s.color)} text-4xl sm:text-6xl lg:text-7xl tracking-wide leading-none`}
                   >
                     <AnimatedCounter value={s.valor} suffix={s.sufijo} />
                   </div>
-                  <p className="font-montserrat text-white/60 text-[10px] sm:text-xs uppercase tracking-[0.2em] mt-3">
+                  <p className="font-montserrat text-white/60 text-[10px] sm:text-xs uppercase tracking-[0.12em] sm:tracking-[0.2em] mt-2 sm:mt-3">
                     {s.label}
                   </p>
                 </div>
