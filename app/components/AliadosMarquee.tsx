@@ -48,11 +48,11 @@ export default function AliadosMarquee({
         }}
       />
 
-      <div className="text-center mb-8 px-4">
-        <span className="font-montserrat text-[#E9C176] text-xs font-bold uppercase tracking-[0.25em]">
+      <div className="text-center mb-10 px-4">
+        <span className="font-montserrat text-[#E9C176] text-xs sm:text-sm font-bold uppercase tracking-[0.25em]">
           {kicker}
         </span>
-        <p className="font-montserrat text-[#121B33]/60 text-sm mt-2 max-w-xl mx-auto text-pretty">
+        <p className="font-montserrat text-[#121B33] text-lg sm:text-2xl font-semibold leading-snug mt-3 max-w-2xl mx-auto text-balance">
           {texto}
         </p>
       </div>
