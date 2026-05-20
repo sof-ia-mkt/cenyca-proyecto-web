@@ -82,8 +82,8 @@ export const carrera = defineType({
       title: "Duración",
       type: "string",
       group: "info",
-      description: "Ejemplo: 3 años (12 cuatrimestres)",
-      initialValue: "3 años (12 cuatrimestres)",
+      description: "Ejemplo: 3 años (9 cuatrimestres)",
+      initialValue: "3 años (9 cuatrimestres)",
     }),
     defineField({
       name: "descripcionCorta",
