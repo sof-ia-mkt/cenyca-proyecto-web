@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-05-19T23:54:01.101Z",
+  "generatedAt": "2026-05-20T00:01:30.880Z",
   "fuente": "Google Sheets — Convenios CENYCA (export HTML + CSV)",
   "stats": {
-    "totalHistorico": 208,
-    "activos": 66,
-    "publicosDestacados": 23
+    "totalHistorico": 259,
+    "activos": 131,
+    "publicosDestacados": 38
   },
   "aliados": [
     {
@@ -14,6 +14,15 @@
       "sectorRaw": "Privado",
       "ciudad": "Tecate",
       "logo": "/vinculacion/logos/alimentos-y-salsas.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "Amphenol Thermometrics México",
+      "nombreLegal": "Amphenol Thermometrics México",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/amphenol-thermometrics-mexico.jpg",
       "destacado": false
     },
     {
@@ -35,24 +44,6 @@
       "destacado": true
     },
     {
-      "nombre": "CECYTE BC",
-      "nombreLegal": "Colegio de Estudios Científicos y Tecnológicos de Baja California, CECYTEBC",
-      "sector": "educacion",
-      "sectorRaw": "Público",
-      "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/colegio-de-estudios-cientificos-y-tecnologicos-de-baja-california-cecytebc.jpg",
-      "destacado": true
-    },
-    {
-      "nombre": "CETis 156",
-      "nombreLegal": "CETis 156",
-      "sector": "educacion",
-      "sectorRaw": "Público",
-      "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/cetis-156.jpg",
-      "destacado": true
-    },
-    {
       "nombre": "CLUB DE EMPRESARIOS BC",
       "nombreLegal": "CLUB DE EMPRESARIOS DE BAJA CALIFORNIA",
       "sector": "servicios",
@@ -71,6 +62,42 @@
       "destacado": true
     },
     {
+      "nombre": "Conalep BC",
+      "nombreLegal": "Conalep BC",
+      "sector": "educacion",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/conalep-bc.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CORPORATIVO DE ENERGÍA, SERVICIOS Y DESARROLLO DE NEGOCIOS",
+      "nombreLegal": "CORPORATIVO DE ENERGÍA, SERVICIOS Y DESARROLLO DE NEGOCIOS",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/corporativo-de-energia-servicios-y-desarrollo-de-negocios.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CORRUGADOS DE BAJA CALIFORNIA",
+      "nombreLegal": "CORRUGADOS DE BAJA CALIFORNIA",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/corrugados-de-baja-california.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CRUGA SOLUTIONS",
+      "nombreLegal": "CRUGA SOLUTIONS",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/cruga-solutions.jpg",
+      "destacado": false
+    },
+    {
       "nombre": "DIF BC",
       "nombreLegal": "DIF ESTATAL",
       "sector": "social",
@@ -78,6 +105,33 @@
       "ciudad": "Estatal",
       "logo": "/vinculacion/logos/dif-estatal.jpg",
       "destacado": true
+    },
+    {
+      "nombre": "Global Hitss",
+      "nombreLegal": "Global Hitss",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/global-hitss.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "Harman",
+      "nombreLegal": "Harman",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/harman.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "iGO & SEE",
+      "nombreLegal": "iGO & SEE",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/igo-see.jpg",
+      "destacado": false
     },
     {
       "nombre": "IMCA",
@@ -98,13 +152,31 @@
       "destacado": true
     },
     {
-      "nombre": "JABIL",
-      "nombreLegal": "NPA de Mexico JABIL",
+      "nombre": "IMMUJER Tecate",
+      "nombreLegal": "IMMUJER Tecate",
+      "sector": "social",
+      "sectorRaw": "Público",
+      "ciudad": "Tecate",
+      "logo": "/vinculacion/logos/immujer-tecate.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "IPIUM",
+      "nombreLegal": "IPIUM",
       "sector": "industria",
       "sectorRaw": "Privado",
       "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/npa-de-mexico-jabil.jpg",
-      "destacado": true
+      "logo": "/vinculacion/logos/ipium.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "IPS",
+      "nombreLegal": "IPS",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/ips.jpg",
+      "destacado": false
     },
     {
       "nombre": "MACFA AUTOMATIZACION",
@@ -134,31 +206,76 @@
       "destacado": true
     },
     {
-      "nombre": "MPA",
-      "nombreLegal": "MPA",
-      "sector": "industria",
-      "sectorRaw": "Privado",
+      "nombre": "Nación Verde",
+      "nombreLegal": "Nación Verde",
+      "sector": "educacion",
+      "sectorRaw": "Público",
       "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/mpa.jpg",
+      "logo": "/vinculacion/logos/nacion-verde.jpg",
       "destacado": false
     },
     {
-      "nombre": "OXXO",
-      "nombreLegal": "oxxo",
-      "sector": "servicios",
-      "sectorRaw": "Privado",
-      "ciudad": "Tijuana, Tecate y Ensenada",
-      "logo": "/vinculacion/logos/oxxo.jpg",
-      "destacado": true
-    },
-    {
-      "nombre": "SAFRAN",
-      "nombreLegal": "SAFRAN CABIN",
+      "nombre": "Oxígenos Y Equipos",
+      "nombreLegal": "Oxígenos Y Equipos",
       "sector": "industria",
       "sectorRaw": "Privado",
       "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/safran-cabin.jpg",
-      "destacado": true
+      "logo": "/vinculacion/logos/oxigenos-y-equipos.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "POLY",
+      "nombreLegal": "POLY",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/poly.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "PRANORTE",
+      "nombreLegal": "PRANORTE",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/pranorte.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "PROSER",
+      "nombreLegal": "PROSER",
+      "sector": "social",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/proser.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "Qubo Baja",
+      "nombreLegal": "Qubo Baja",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/qubo-baja.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "San Diego Ace en México",
+      "nombreLegal": "San Diego Ace en México",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tecate",
+      "logo": "/vinculacion/logos/san-diego-ace-en-mexico.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "San Nicolas Hotel and Casino",
+      "nombreLegal": "San Nicolas Hotel and Casino",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Ensenada",
+      "logo": "/vinculacion/logos/san-nicolas-hotel-and-casino.jpg",
+      "destacado": false
     },
     {
       "nombre": "SINDICATO 18 DE SEPT.",
@@ -188,6 +305,15 @@
       "destacado": false
     },
     {
+      "nombre": "Sindicato SUTSPEMIDBC",
+      "nombreLegal": "Sindicato SUTSPEMIDBC",
+      "sector": "social",
+      "sectorRaw": "Privado",
+      "ciudad": "Tecate",
+      "logo": "/vinculacion/logos/sindicato-sutspemidbc.jpg",
+      "destacado": false
+    },
+    {
       "nombre": "SINIL INDUSTRY",
       "nombreLegal": "SINIL INDUSTRY",
       "sector": "industria",
@@ -206,13 +332,22 @@
       "destacado": true
     },
     {
-      "nombre": "SOHNEN",
-      "nombreLegal": "SOHNEN de México",
-      "sector": "industria",
+      "nombre": "URBAN GYM",
+      "nombreLegal": "URBAN GYM",
+      "sector": "deporte",
       "sectorRaw": "Privado",
       "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/sohnen-de-mexico.jpg",
-      "destacado": true
+      "logo": "/vinculacion/logos/urban-gym.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "XXIV Ayuntamiento de Tijuana, Estado de Baja California",
+      "nombreLegal": "XXIV Ayuntamiento de Tijuana, Estado de Baja California",
+      "sector": "social",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": null,
+      "destacado": false
     }
   ]
 }
