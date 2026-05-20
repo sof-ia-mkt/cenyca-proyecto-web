@@ -61,7 +61,7 @@ const portableComponents: PortableTextComponents = {
       <h3 className="text-lg font-bold text-white mt-8 mb-3">{children}</h3>
     ),
     normal: ({ children }) => (
-      <p className="text-white/75 leading-relaxed mb-5 text-[15px] text-left">
+      <p className="text-white/75 leading-relaxed mb-5 text-[15px] text-justify">
         {children}
       </p>
     ),
@@ -116,7 +116,8 @@ export default async function AvisoPage({
   if (!aviso) notFound()
 
   return (
-    <div className="max-w-3xl mx-auto px-4 lg:px-8 py-16">
+    <div className="bg-[#121B33] min-h-screen">
+      <div className="max-w-3xl mx-auto px-4 lg:px-8 py-16">
       <Link
         href="/avisos-de-privacidad"
         className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[#00D4FF] hover:text-white transition-colors mb-10"
@@ -152,6 +153,7 @@ export default async function AvisoPage({
           />
         )}
       </article>
+      </div>
     </div>
   )
 }

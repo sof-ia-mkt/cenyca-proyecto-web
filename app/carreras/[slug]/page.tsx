@@ -105,7 +105,7 @@ type Configuracion = {
 const descripcionLargaComponents: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
-      <p className="font-montserrat text-[#444] text-base sm:text-lg leading-[1.8] mb-5 text-left">{children}</p>
+      <p className="font-montserrat text-[#444] text-base sm:text-lg leading-[1.8] mb-5 text-justify">{children}</p>
     ),
     h2: ({ children }) => (
       <h3 className="font-bebas text-[#121B33] text-3xl sm:text-4xl tracking-wide mt-10 mb-4">{children}</h3>
@@ -508,7 +508,7 @@ export default async function CarreraPage(
                 <h2 className="font-bebas text-[#121B33] text-4xl sm:text-5xl lg:text-6xl tracking-wide leading-[1.05] mt-3 mb-5 text-balance">
                   Al egresar, serás capaz de…
                 </h2>
-                <p className="font-montserrat text-[#666] leading-relaxed text-balance">
+                <p className="font-montserrat text-[#666] leading-relaxed text-pretty">
                   Competencias y habilidades que desarrollarás en {carrera.nombre}.
                 </p>
               </div>

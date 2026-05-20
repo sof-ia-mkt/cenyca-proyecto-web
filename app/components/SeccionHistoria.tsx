@@ -57,7 +57,7 @@ export default function SeccionHistoria({ data }: { data: HistoriaData }) {
             </h2>
           )}
           {data.parrafo && (
-            <p className="text-white/80 text-lg md:text-xl leading-relaxed text-left">
+            <p className="text-white/80 text-lg md:text-xl leading-relaxed text-justify">
               {data.parrafo}
             </p>
           )}

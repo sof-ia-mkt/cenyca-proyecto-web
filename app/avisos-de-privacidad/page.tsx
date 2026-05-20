@@ -26,7 +26,8 @@ export default async function AvisosPage() {
   const avisos = (data ?? []) as AvisoListItem[]
 
   return (
-    <div className="max-w-3xl mx-auto px-4 lg:px-8 py-16">
+    <div className="bg-[#121B33] min-h-screen">
+      <div className="max-w-3xl mx-auto px-4 lg:px-8 py-16">
       <div className="mb-12">
         <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#00D4FF] mb-2">Legal</p>
         <h1 className="text-4xl sm:text-5xl font-black uppercase text-white text-balance">Avisos de Privacidad</h1>
@@ -61,6 +62,7 @@ export default async function AvisosPage() {
           ))}
         </div>
       )}
+      </div>
     </div>
   )
 }

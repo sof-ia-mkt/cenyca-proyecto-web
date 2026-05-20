@@ -498,7 +498,7 @@ export default async function VinculacionPage() {
                   aria-hidden
                   className="absolute top-0 left-0 h-full w-[3px] bg-gradient-to-b from-[#E9C176] via-[#E9C176] to-transparent"
                 />
-                <blockquote className="font-montserrat text-[#333] text-lg sm:text-xl leading-relaxed italic whitespace-pre-line text-left">
+                <blockquote className="font-montserrat text-[#333] text-lg sm:text-xl leading-relaxed italic whitespace-pre-line text-justify">
                   {rector.cita}
                 </blockquote>
                 <div className="flex items-center gap-4 mt-8">
@@ -576,7 +576,7 @@ export default async function VinculacionPage() {
                       <h3 className="font-montserrat font-bold text-white text-xl mb-3 text-balance">
                         {pilar.titulo}
                       </h3>
-                      <p className="font-montserrat text-white/60 text-sm leading-relaxed mb-6 flex-1 text-left">
+                      <p className="font-montserrat text-white/60 text-sm leading-relaxed mb-6 flex-1 text-justify">
                         {pilar.descripcion}
                       </p>
                       {tiposColab.length > 0 && (

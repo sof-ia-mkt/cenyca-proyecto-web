@@ -60,15 +60,19 @@ function trackLead() {
 }
 
 function useCountdown(targetISO?: string) {
-  const [now, setNow] = useState<number>(() => Date.now());
+  // Arranca en null: el servidor y el primer render del cliente no pintan el
+  // contador, evitando un mismatch de hidratación (el segundo avanza entre
+  // SSR e hidratación). Se llena al montar.
+  const [now, setNow] = useState<number | null>(null);
 
   useEffect(() => {
     if (!targetISO) return;
+    setNow(Date.now());
     const id = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(id);
   }, [targetISO]);
 
-  if (!targetISO) return null;
+  if (!targetISO || now === null) return null;
   const target = new Date(targetISO).getTime();
   if (Number.isNaN(target)) return null;
   const diff = target - now;

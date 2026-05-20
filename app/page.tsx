@@ -44,18 +44,10 @@ type Campus = {
   galeria?: CampusFoto[];
 };
 
-type ImagenesPrograma = {
-  bachillerato?: string;
-  licenciaturas?: string;
-  posgrados?: string;
-  especialidades?: string;
-};
-
 type Configuracion = {
   contacto?: { whatsapp?: string };
   sistemas?: { inscripciones?: string };
   heroSlides?: HeroSlide[];
-  imagenesPrograma?: ImagenesPrograma;
   cicloInicio?: CicloInicioConfig;
   promocionInscripcion?: { porcentaje?: number };
 };
@@ -145,7 +137,7 @@ function SeccionExcelencia({ carreras }: { carreras: Carrera[] }) {
           </div>
           <div className="flex flex-col items-start md:items-end gap-5 md:max-w-md">
             <FadeRight delay={0.5}>
-              <p className="text-[#45464D] text-xl leading-relaxed text-pretty">
+              <p className="text-[#45464D] text-xl leading-relaxed text-justify">
                 La universidad de mayor crecimiento en el noroeste de México.
                 Formamos a los ingenieros que están construyendo la nueva
                 industria de Baja California — desde el aula al piso de planta.
@@ -259,7 +251,7 @@ function SeccionLicenciaturas({ carreras }: { carreras: Carrera[] }) {
           </div>
           <div className="flex flex-col items-start md:items-end gap-5 md:max-w-md">
             <FadeRight delay={0.5}>
-              <p className="text-[#45464D] text-xl leading-relaxed text-pretty">
+              <p className="text-[#45464D] text-xl leading-relaxed text-justify">
                 Detrás de cada industria hay decisiones legales, estrategias de negocio
                 y seres humanos que cuidar. Formamos a quienes equilibran el pulso
                 humano del crecimiento económico de Baja California.
