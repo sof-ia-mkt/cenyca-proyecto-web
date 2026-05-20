@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 type Aliado = {
   nombre: string;
@@ -8,6 +9,9 @@ type Aliado = {
   logo?: string | null;
   destacado?: boolean;
 };
+
+const SPEED_DESKTOP = 60; // px/s
+const SPEED_MOBILE = 110;
 
 export default function AliadosMarquee({
   aliados,
@@ -18,19 +22,119 @@ export default function AliadosMarquee({
   kicker: string;
   texto: string;
 }) {
-  // Prioriza destacados al frente para que se vean primero
   const sorted = [...aliados].sort(
     (a, b) => Number(b.destacado ?? false) - Number(a.destacado ?? false)
   );
-  // Duplicamos para loop continuo sin saltos
   const loop = [...sorted, ...sorted];
+
+  const trackRef = useRef<HTMLDivElement>(null);
+  const offsetRef = useRef(0);
+  const halfWidthRef = useRef(0);
+  const isDraggingRef = useRef(false);
+  const isHoverRef = useRef(false);
+  const dragStartXRef = useRef(0);
+  const dragStartOffsetRef = useRef(0);
+  const lastDragXRef = useRef(0);
+  const lastDragTRef = useRef(0);
+  const velocityRef = useRef(0); // px/s, used when releasing for inertia
+  const reduceMotionRef = useRef(false);
+  const [isDragging, setIsDragging] = useState(false);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    reduceMotionRef.current = mql.matches;
+    const onMql = () => {
+      reduceMotionRef.current = mql.matches;
+    };
+    mql.addEventListener?.("change", onMql);
+
+    const measure = () => {
+      // El track contiene el array duplicado: la mitad es un loop completo.
+      halfWidthRef.current = track.scrollWidth / 2;
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(track);
+
+    let raf = 0;
+    let last = performance.now();
+
+    const step = (now: number) => {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+
+      const half = halfWidthRef.current || 1;
+      const isMobile = window.matchMedia("(max-width: 767px)").matches;
+      const autoSpeed = isMobile ? SPEED_MOBILE : SPEED_DESKTOP;
+
+      if (isDraggingRef.current) {
+        // mientras arrastra, el offset lo controla el pointer
+      } else if (Math.abs(velocityRef.current) > 5) {
+        // inercia tras soltar
+        offsetRef.current += velocityRef.current * dt;
+        // fricción exponencial
+        velocityRef.current *= Math.pow(0.001, dt);
+      } else if (!isHoverRef.current && !reduceMotionRef.current) {
+        offsetRef.current -= autoSpeed * dt;
+      }
+
+      // normalizar dentro de [-half, 0)
+      if (offsetRef.current <= -half) offsetRef.current += half;
+      if (offsetRef.current > 0) offsetRef.current -= half;
+
+      track.style.transform = `translate3d(${offsetRef.current}px, 0, 0)`;
+      raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      mql.removeEventListener?.("change", onMql);
+    };
+  }, []);
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    const el = e.currentTarget;
+    el.setPointerCapture(e.pointerId);
+    isDraggingRef.current = true;
+    setIsDragging(true);
+    dragStartXRef.current = e.clientX;
+    dragStartOffsetRef.current = offsetRef.current;
+    lastDragXRef.current = e.clientX;
+    lastDragTRef.current = performance.now();
+    velocityRef.current = 0;
+  };
+
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDraggingRef.current) return;
+    const dx = e.clientX - dragStartXRef.current;
+    offsetRef.current = dragStartOffsetRef.current + dx;
+
+    const now = performance.now();
+    const dt = Math.max(0.001, (now - lastDragTRef.current) / 1000);
+    velocityRef.current = (e.clientX - lastDragXRef.current) / dt;
+    lastDragXRef.current = e.clientX;
+    lastDragTRef.current = now;
+  };
+
+  const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDraggingRef.current) return;
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    } catch {}
+    isDraggingRef.current = false;
+    setIsDragging(false);
+  };
 
   return (
     <section
       aria-label="Aliados de CENYCA"
       className="relative bg-white py-14 overflow-hidden"
     >
-      {/* línea dorada arriba/abajo, convención del sitio */}
       <span
         aria-hidden
         className="absolute top-0 left-0 right-0 h-px"
@@ -57,7 +161,6 @@ export default function AliadosMarquee({
         </p>
       </div>
 
-      {/* máscaras laterales para fade */}
       <div className="relative">
         <div
           aria-hidden
@@ -74,66 +177,59 @@ export default function AliadosMarquee({
           }}
         />
 
-        <div className="marquee-track flex items-center gap-14 whitespace-nowrap will-change-transform">
-          {loop.map((a, i) => (
-            <div
-              key={`${a.nombre}-${i}`}
-              className="flex items-center gap-14 shrink-0"
-              title={a.nombre}
-            >
-              {a.logo ? (
-                <span className="relative inline-flex h-16 w-32 sm:h-20 sm:w-40 items-center justify-center">
-                  <Image
-                    src={a.logo}
-                    alt={a.nombre}
-                    fill
-                    sizes="160px"
-                    className="object-contain opacity-80 hover:opacity-100 transition-opacity grayscale hover:grayscale-0"
-                  />
-                </span>
-              ) : (
-                <span className="font-montserrat font-bold text-[#121B33] text-xl sm:text-2xl uppercase tracking-wider opacity-80 hover:opacity-100 transition-opacity">
-                  {a.nombre}
-                </span>
-              )}
-              <span
-                aria-hidden
-                className="inline-block w-1.5 h-1.5 rounded-full bg-[#E9C176] shrink-0"
-              />
-            </div>
-          ))}
+        <div
+          className="select-none"
+          style={{
+            cursor: isDragging ? "grabbing" : "grab",
+            touchAction: "pan-y",
+          }}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={endDrag}
+          onPointerCancel={endDrag}
+          onPointerLeave={(e) => {
+            isHoverRef.current = false;
+            endDrag(e);
+          }}
+          onPointerEnter={() => {
+            isHoverRef.current = true;
+          }}
+        >
+          <div
+            ref={trackRef}
+            className="flex items-center gap-14 whitespace-nowrap will-change-transform"
+          >
+            {loop.map((a, i) => (
+              <div
+                key={`${a.nombre}-${i}`}
+                className="flex items-center gap-14 shrink-0"
+                title={a.nombre}
+              >
+                {a.logo ? (
+                  <span className="relative inline-flex h-16 w-32 sm:h-20 sm:w-40 items-center justify-center">
+                    <Image
+                      src={a.logo}
+                      alt={a.nombre}
+                      fill
+                      sizes="160px"
+                      draggable={false}
+                      className="object-contain opacity-80 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 pointer-events-none"
+                    />
+                  </span>
+                ) : (
+                  <span className="font-montserrat font-bold text-[#121B33] text-xl sm:text-2xl uppercase tracking-wider opacity-80 hover:opacity-100 transition-opacity">
+                    {a.nombre}
+                  </span>
+                )}
+                <span
+                  aria-hidden
+                  className="inline-block w-1.5 h-1.5 rounded-full bg-[#E9C176] shrink-0"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-
-      <style jsx>{`
-        .marquee-track {
-          animation: marquee 35s linear infinite;
-        }
-        .marquee-track:hover {
-          animation-play-state: paused;
-        }
-        @keyframes marquee {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-        @media (max-width: 767px) {
-          .marquee-track {
-            animation-duration: 18s;
-          }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .marquee-track {
-            animation: none;
-            flex-wrap: wrap;
-            justify-content: center;
-            white-space: normal;
-          }
-        }
-      `}</style>
     </section>
   );
 }
