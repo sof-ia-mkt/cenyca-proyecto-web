@@ -120,6 +120,11 @@ export default function AliadosMarquee({
             transform: translateX(-50%);
           }
         }
+        @media (max-width: 767px) {
+          .marquee-track {
+            animation-duration: 18s;
+          }
+        }
         @media (prefers-reduced-motion: reduce) {
           .marquee-track {
             animation: none;
