@@ -725,14 +725,14 @@ export default async function VinculacionPage() {
 
           {/* Tarjeta de contacto: persona responsable de vinculación */}
           <FadeUp delay={0.35}>
-            <div className="mt-10 max-w-md mx-auto bg-white/5 border border-white/10 rounded-2xl px-6 py-5 backdrop-blur-sm">
-              <p className="font-montserrat text-[#E9C176] text-[10px] font-bold uppercase tracking-[0.25em] text-center mb-3">
+            <div className="mt-10 max-w-md mx-auto bg-white/5 border border-white/10 rounded-2xl px-6 py-6 backdrop-blur-sm">
+              <p className="font-montserrat text-[#E9C176] text-[10px] font-bold uppercase tracking-[0.25em] text-center mb-4">
                 Atiende personalmente
               </p>
-              <div className="flex items-center gap-4">
+              <div className="flex flex-col items-center text-center">
                 <div
                   aria-hidden
-                  className="shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-[#E9C176] to-[#8B6A2E] flex items-center justify-center font-bebas text-[#121B33] text-xl"
+                  className="w-14 h-14 rounded-full bg-gradient-to-br from-[#E9C176] to-[#8B6A2E] flex items-center justify-center font-bebas text-[#121B33] text-xl mb-3"
                 >
                   {contacto.nombre
                     .replace(/^(Mtra?\.|Ing\.|Lic\.|Dr\.|Mtr\.)\s*/i, "")
@@ -741,21 +741,19 @@ export default async function VinculacionPage() {
                     .slice(0, 2)
                     .join("")}
                 </div>
-                <div className="flex-1 min-w-0 text-left">
-                  <p className="font-montserrat font-bold text-white text-sm leading-tight">
-                    {contacto.nombre}
-                  </p>
-                  <p className="font-montserrat text-white/60 text-xs mt-0.5">
-                    {contacto.cargo}
-                  </p>
-                  <a
-                    href={`mailto:${contacto.email}`}
-                    className="font-montserrat text-[#E9C176] text-xs mt-1 inline-flex items-center gap-1.5 hover:underline break-all"
-                  >
-                    <Mail size={12} className="shrink-0" />
-                    {contacto.email}
-                  </a>
-                </div>
+                <p className="font-montserrat font-bold text-white text-sm leading-tight">
+                  {contacto.nombre}
+                </p>
+                <p className="font-montserrat text-white/60 text-xs mt-0.5">
+                  {contacto.cargo}
+                </p>
+                <a
+                  href={`mailto:${contacto.email}`}
+                  className="font-montserrat text-[#E9C176] text-xs mt-3 inline-flex items-center gap-1.5 hover:underline break-all"
+                >
+                  <Mail size={12} className="shrink-0" />
+                  {contacto.email}
+                </a>
               </div>
             </div>
           </FadeUp>
