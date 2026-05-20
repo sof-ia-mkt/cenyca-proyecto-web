@@ -97,6 +97,7 @@ export const configuracionQuery = groq`
     contacto,
     redesSociales,
     sistemas,
+    navegacion,
     seo {
       tituloBase,
       descripcion,

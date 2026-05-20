@@ -8,6 +8,7 @@ export const configuracion = defineType({
   // Solo debe existir un documento de configuración (singleton)
   groups: [
     { name: "identidad", title: "Identidad y contacto", default: true },
+    { name: "navegacion", title: "Navegación" },
     { name: "seo", title: "SEO" },
     { name: "home", title: "Home" },
     { name: "carrera", title: "Páginas de carrera" },
@@ -22,6 +23,25 @@ export const configuracion = defineType({
       group: "identidad",
       initialValue: "CENYCA Universidad",
       validation: (Rule) => Rule.required(),
+    }),
+
+    // --- NAVEGACIÓN ---
+    defineField({
+      name: "navegacion",
+      title: "Visibilidad del menú",
+      description:
+        "Controla qué secciones aparecen en el menú principal. Apaga las que aún no están listas; vuelve a prenderlas cuando publiques el contenido.",
+      type: "object",
+      group: "navegacion",
+      fields: [
+        defineField({
+          name: "mostrarVidaEstudiantil",
+          title: "Mostrar 'Vida Estudiantil' en el menú",
+          type: "boolean",
+          initialValue: false,
+          description: "Apaga si la página aún no está lista para publicarse.",
+        }),
+      ],
     }),
 
     // --- CONTACTO GENERAL ---

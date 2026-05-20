@@ -123,6 +123,7 @@ export default async function RootLayout({
       .fetch<{
         contacto?: { whatsapp?: string };
         sistemas?: { inscripciones?: string };
+        navegacion?: { mostrarVidaEstudiantil?: boolean };
       }>(configuracionQuery)
       .catch(() => null),
     client
@@ -141,6 +142,7 @@ export default async function RootLayout({
       .catch(() => null),
   ]);
   const whatsapp = config?.contacto?.whatsapp || "526641300236";
+  const mostrarVidaEstudiantil = config?.navegacion?.mostrarVidaEstudiantil ?? false;
   // Prioridad: imagen específica del popup → imagen/galeria del campus principal
   const popupBg = popupConfig?.imagenUrl || campusFoto?.imagenUrl;
 
@@ -182,7 +184,7 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
-        <Navbar />
+        <Navbar mostrarVidaEstudiantil={mostrarVidaEstudiantil} />
         <main className="flex-1 pt-[72px]">
           {children}
         </main>

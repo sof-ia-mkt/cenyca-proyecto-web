@@ -4,16 +4,23 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-const navLinks = [
+const navLinksBase = [
   { label: "Inicio", href: "/" },
   { label: "Nosotros", href: "/nosotros" },
   { label: "Oferta Académica", href: "/oferta-academica" },
-  { label: "Vida Estudiantil", href: "/vida-estudiantil" },
+  { label: "Vida Estudiantil", href: "/vida-estudiantil", flag: "vidaEstudiantil" as const },
   { label: "Vinculación", href: "/vinculacion" },
   { label: "Noticias", href: "/noticias" },
 ];
 
-export default function Navbar() {
+type NavbarProps = {
+  mostrarVidaEstudiantil?: boolean;
+};
+
+export default function Navbar({ mostrarVidaEstudiantil = false }: NavbarProps) {
+  const navLinks = navLinksBase.filter(
+    (l) => l.flag !== "vidaEstudiantil" || mostrarVidaEstudiantil,
+  );
   const [menuAbierto, setMenuAbierto] = useState(false);
   // `scrolled = true` cuando el usuario baja > 40px. Controla la compresión y el fondo.
   const [scrolled, setScrolled] = useState(false);
