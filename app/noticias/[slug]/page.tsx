@@ -50,7 +50,7 @@ const portableComponents: PortableTextComponents = {
   },
   block: {
     normal: ({ children }) => (
-      <p className="mb-5 text-white/85 leading-relaxed text-left md:text-justify hyphens-auto">{children}</p>
+      <p className="mb-5 text-white/85 leading-relaxed text-left">{children}</p>
     ),
     h2: ({ children }) => (
       <h2 className="mt-12 mb-4 text-2xl sm:text-3xl font-black uppercase text-white">

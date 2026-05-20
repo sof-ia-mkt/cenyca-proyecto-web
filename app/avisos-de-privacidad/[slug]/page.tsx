@@ -61,7 +61,7 @@ const portableComponents: PortableTextComponents = {
       <h3 className="text-lg font-bold text-white mt-8 mb-3">{children}</h3>
     ),
     normal: ({ children }) => (
-      <p className="text-white/75 leading-relaxed mb-5 text-[15px] text-left md:text-justify hyphens-auto">
+      <p className="text-white/75 leading-relaxed mb-5 text-[15px] text-left">
         {children}
       </p>
     ),

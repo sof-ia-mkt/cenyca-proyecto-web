@@ -137,7 +137,7 @@ export default function HistoriaTimeline({
           {active.descripcion && (
             <p
               key={`desc-${idx}`}
-              className="text-white/80 text-lg md:text-xl leading-relaxed max-w-xl text-left md:text-justify hyphens-auto"
+              className="text-white/80 text-lg md:text-xl leading-relaxed max-w-xl text-left"
               style={{
                 animation: "historiaSlideIn 0.55s 0.1s cubic-bezier(0.22, 1, 0.36, 1) backwards",
               }}
