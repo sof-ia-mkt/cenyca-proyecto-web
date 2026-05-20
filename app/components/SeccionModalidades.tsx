@@ -244,7 +244,7 @@ function ModalidadCard({
         </p>
 
         {/* Descripción */}
-        <p className="text-white/65 text-sm leading-relaxed mb-7 text-pretty">
+        <p className="text-white/65 text-sm leading-relaxed mb-7 text-balance">
           {m.descripcion}
         </p>
 
@@ -341,7 +341,7 @@ export default function SeccionModalidades() {
               />
             </h2>
 
-            <p className="text-white/65 text-lg leading-relaxed max-w-2xl text-pretty">
+            <p className="text-white/65 text-lg leading-relaxed max-w-2xl text-balance">
               Tres modalidades pensadas para etapas de vida distintas. Elige la
               que se acopla a tu trabajo, tu familia y tu energía — sin sacrificar
               calidad académica ni validez SEP.

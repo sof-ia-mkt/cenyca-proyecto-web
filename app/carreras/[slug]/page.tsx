@@ -508,8 +508,8 @@ export default async function CarreraPage(
                 <h2 className="font-bebas text-[#121B33] text-4xl sm:text-5xl lg:text-6xl tracking-wide leading-[1.05] mt-3 mb-5 text-balance">
                   Al egresar, serás capaz de…
                 </h2>
-                <p className="font-montserrat text-[#666] leading-relaxed text-pretty">
-                  Competencias y habilidades que formarás durante tu {gradoLabel.toLowerCase()} en {carrera.nombre}.
+                <p className="font-montserrat text-[#666] leading-relaxed text-balance">
+                  Competencias y habilidades que desarrollarás en {carrera.nombre}.
                 </p>
               </div>
               <ul className="lg:col-span-7 space-y-4">

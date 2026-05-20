@@ -80,7 +80,7 @@ export default function NosotrosPage() {
               Sobre CENYCA
             </h1>
             <div className="w-20 h-1 bg-[#00D4FF] rounded mx-auto mb-6" />
-            <p className="font-montserrat text-white/60 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed text-pretty">
+            <p className="font-montserrat text-white/60 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed text-balance">
               Más de 18 años formando ingenieros, administradores y profesionistas comprometidos
               con el desarrollo de Baja California y el noroeste de México.
             </p>
@@ -226,7 +226,7 @@ export default function NosotrosPage() {
                     <div className="w-3 h-3 rounded-full bg-[#00D4FF] mt-1" />
                     {i < 3 && <div className="w-px flex-1 bg-[#00D4FF]/20 mt-2 min-h-[40px]" />}
                   </div>
-                  <p className="font-montserrat text-white/70 leading-relaxed pt-0.5 text-left md:text-justify hyphens-auto">{item.texto}</p>
+                  <p className="font-montserrat text-white/70 leading-relaxed pt-0.5 text-left md:text-justify hyphens-auto text-balance">{item.texto}</p>
                 </div>
               </FadeUp>
             ))}
