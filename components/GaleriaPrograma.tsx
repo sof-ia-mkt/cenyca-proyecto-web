@@ -31,7 +31,7 @@ export default function GaleriaPrograma({ items, carreraNombre, accent = "#00D4F
           >
             Instalaciones y vida del programa
           </span>
-          <h2 className="font-bebas text-[#121B33] text-4xl sm:text-5xl lg:text-6xl tracking-wide leading-[1.05] mt-3">
+          <h2 className="font-bebas text-[#121B33] text-4xl sm:text-5xl lg:text-6xl tracking-wide leading-[1.05] mt-3 text-balance">
             Así se vive {carreraNombre}
           </h2>
         </div>

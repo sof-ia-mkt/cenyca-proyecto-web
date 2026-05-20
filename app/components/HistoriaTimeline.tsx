@@ -124,7 +124,7 @@ export default function HistoriaTimeline({
           </span>
           <h3
             key={`title-${idx}`}
-            className="text-white font-bold mb-5"
+            className="text-white font-bold mb-5 text-balance"
             style={{
               fontSize: "clamp(1.4rem, 2.4vw, 2rem)",
               letterSpacing: "-0.025em",
@@ -137,7 +137,7 @@ export default function HistoriaTimeline({
           {active.descripcion && (
             <p
               key={`desc-${idx}`}
-              className="text-white/80 text-lg md:text-xl leading-relaxed max-w-xl text-justify"
+              className="text-white/80 text-lg md:text-xl leading-relaxed max-w-xl text-justify hyphens-auto"
               style={{
                 animation: "historiaSlideIn 0.55s 0.1s cubic-bezier(0.22, 1, 0.36, 1) backwards",
               }}

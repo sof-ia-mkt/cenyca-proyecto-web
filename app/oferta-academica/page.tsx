@@ -121,7 +121,7 @@ function HeaderOferta({ totalProgramas }: { totalProgramas: number }) {
             </h1>
           </FadeLeft>
           <FadeRight className="lg:col-span-5 lg:pb-4">
-            <p className="text-[#45464D] text-base md:text-lg leading-relaxed max-w-md">
+            <p className="text-[#45464D] text-base md:text-lg leading-relaxed max-w-md text-pretty">
               Programas con validez oficial SEP, diseñados para responder a las
               necesidades del mercado laboral del noroeste de México.
             </p>
@@ -178,7 +178,7 @@ function ReelCampus({ photos }: { photos: { url: string; alt?: string }[] }) {
             <span className="h-px flex-1 bg-white/10 max-w-[200px]" />
           </div>
           <h2
-            className="text-white font-extrabold mb-12 md:mb-14 max-w-3xl"
+            className="text-white font-extrabold mb-12 md:mb-14 max-w-3xl text-balance"
             style={{
               fontSize: "clamp(1.9rem, 3.6vw, 2.9rem)",
               letterSpacing: "-0.025em",
@@ -314,7 +314,7 @@ function BloqueOferta({
           <p className="text-white/75 text-[13px] md:text-sm uppercase tracking-[0.18em] mb-5 font-medium">
             {tagline}
           </p>
-          <p className="text-white/65 text-base leading-relaxed max-w-md mb-8">
+          <p className="text-white/65 text-base leading-relaxed max-w-md mb-8 text-pretty">
             {descripcion}
           </p>
           <span className="inline-flex items-center gap-2 text-[#00D4FF] font-bold text-sm uppercase tracking-[0.18em] group-hover:gap-4 transition-all duration-300">
@@ -347,7 +347,7 @@ function FranjaProximamente() {
             <span className="h-px flex-1 bg-[#121B33]/10 max-w-[200px]" />
           </div>
           <h2
-            className="text-[#121B33] font-extrabold mb-14 max-w-3xl"
+            className="text-[#121B33] font-extrabold mb-14 max-w-3xl text-balance"
             style={{
               fontSize: "clamp(1.9rem, 3.6vw, 2.9rem)",
               letterSpacing: "-0.025em",
@@ -374,7 +374,7 @@ function FranjaProximamente() {
                 >
                   {f.label}
                 </h3>
-                <p className="text-[#45464D] text-sm leading-relaxed">
+                <p className="text-[#45464D] text-sm leading-relaxed text-pretty">
                   {f.nota}
                 </p>
               </div>

@@ -105,7 +105,7 @@ type Configuracion = {
 const descripcionLargaComponents: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
-      <p className="font-montserrat text-[#444] text-base sm:text-lg leading-[1.8] mb-5">{children}</p>
+      <p className="font-montserrat text-[#444] text-base sm:text-lg leading-[1.8] mb-5 text-justify hyphens-auto">{children}</p>
     ),
     h2: ({ children }) => (
       <h3 className="font-bebas text-[#121B33] text-3xl sm:text-4xl tracking-wide mt-10 mb-4">{children}</h3>
@@ -277,11 +277,11 @@ export default async function CarreraPage(
                 )}
               </div>
 
-              <h1 className="font-bebas text-white text-5xl sm:text-6xl lg:text-7xl xl:text-8xl tracking-wide leading-[0.95] mb-6">
+              <h1 className="font-bebas text-white text-5xl sm:text-6xl lg:text-7xl xl:text-8xl tracking-wide leading-[0.95] mb-6 text-balance">
                 {carrera.nombre}
               </h1>
 
-              <p className="font-montserrat text-white/70 text-lg max-w-2xl leading-relaxed">
+              <p className="font-montserrat text-white/70 text-lg max-w-2xl leading-relaxed text-pretty">
                 {carrera.descripcionCorta}
               </p>
 
@@ -415,7 +415,7 @@ export default async function CarreraPage(
               <span className="font-montserrat text-xs uppercase tracking-[0.2em] text-[var(--accent)] font-semibold">
                 Por qué CENYCA
               </span>
-              <h2 className="font-bebas text-[#121B33] text-4xl sm:text-5xl lg:text-6xl tracking-wide leading-[1.05] mt-3">
+              <h2 className="font-bebas text-[#121B33] text-4xl sm:text-5xl lg:text-6xl tracking-wide leading-[1.05] mt-3 text-balance">
                 Lo que distingue a esta {gradoLabel.toLowerCase()}
               </h2>
             </div>
@@ -448,11 +448,11 @@ export default async function CarreraPage(
                       <BeneficioIcon titulo={b.titulo} className="w-5 h-5" strokeWidth={1.75} />
                     </div>
                   </div>
-                  <h3 className="font-montserrat font-bold text-[#121B33] text-lg leading-snug mb-2">
+                  <h3 className="font-montserrat font-bold text-[#121B33] text-lg leading-snug mb-2 text-balance">
                     {b.titulo}
                   </h3>
                   {b.descripcion && (
-                    <p className="font-montserrat text-[#666] text-sm leading-relaxed">
+                    <p className="font-montserrat text-[#666] text-sm leading-relaxed text-pretty">
                       {b.descripcion}
                     </p>
                   )}
@@ -505,10 +505,10 @@ export default async function CarreraPage(
                 <span className="font-montserrat text-xs uppercase tracking-[0.2em] text-[var(--accent)] font-semibold">
                   Perfil de egresado
                 </span>
-                <h2 className="font-bebas text-[#121B33] text-4xl sm:text-5xl lg:text-6xl tracking-wide leading-[1.05] mt-3 mb-5">
+                <h2 className="font-bebas text-[#121B33] text-4xl sm:text-5xl lg:text-6xl tracking-wide leading-[1.05] mt-3 mb-5 text-balance">
                   Al egresar, serás capaz de…
                 </h2>
-                <p className="font-montserrat text-[#666] leading-relaxed">
+                <p className="font-montserrat text-[#666] leading-relaxed text-pretty">
                   Competencias y habilidades que formarás durante tu {gradoLabel.toLowerCase()} en {carrera.nombre}.
                 </p>
               </div>
@@ -546,7 +546,7 @@ export default async function CarreraPage(
               <span className="font-montserrat text-xs uppercase tracking-[0.2em] font-semibold" style={{ color: accent }}>
                 Tu futuro profesional
               </span>
-              <h2 className="font-bebas text-white text-4xl sm:text-5xl lg:text-6xl tracking-wide leading-[1.05] mt-3">
+              <h2 className="font-bebas text-white text-4xl sm:text-5xl lg:text-6xl tracking-wide leading-[1.05] mt-3 text-balance">
                 Dónde podrás trabajar
               </h2>
             </div>
@@ -581,12 +581,12 @@ export default async function CarreraPage(
                 </span>
               )}
               {config.videoTestimonial!.titulo && (
-                <h2 className="font-bebas text-[#121B33] text-4xl sm:text-5xl lg:text-6xl tracking-wide leading-[1.05] mt-3">
+                <h2 className="font-bebas text-[#121B33] text-4xl sm:text-5xl lg:text-6xl tracking-wide leading-[1.05] mt-3 text-balance">
                   {config.videoTestimonial!.titulo}
                 </h2>
               )}
               {config.videoTestimonial!.subtitulo && (
-                <p className="font-montserrat text-[#666] text-base sm:text-lg leading-relaxed mt-5">
+                <p className="font-montserrat text-[#666] text-base sm:text-lg leading-relaxed mt-5 text-pretty">
                   {config.videoTestimonial!.subtitulo}
                 </p>
               )}

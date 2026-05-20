@@ -148,7 +148,7 @@ function CarreraCardItem({ carrera: c }: { carrera: CarreraCard }) {
       {/* Contenido */}
       <div className="flex flex-col flex-1 p-6 md:p-7">
         <h3
-          className="text-[#121B33] font-extrabold mb-3 group-hover:text-[#0099CC] transition-colors leading-snug"
+          className="text-[#121B33] font-extrabold mb-3 group-hover:text-[#0099CC] transition-colors leading-snug text-balance"
           style={{
             fontSize: "1.3rem",
             letterSpacing: "-0.02em",
@@ -157,7 +157,7 @@ function CarreraCardItem({ carrera: c }: { carrera: CarreraCard }) {
           {c.nombre}
         </h3>
         {c.descripcionCorta && (
-          <p className="text-[#45464D] text-sm leading-relaxed line-clamp-3 mb-5">
+          <p className="text-[#45464D] text-sm leading-relaxed line-clamp-3 mb-5 text-pretty">
             {c.descripcionCorta}
           </p>
         )}

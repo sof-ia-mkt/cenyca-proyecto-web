@@ -138,14 +138,6 @@ const TIPOS_POR_SECTOR: Record<
   ],
 };
 
-// Etiqueta legible del sector para el CTA inferior
-const SECTOR_LABEL: Record<string, string> = {
-  industria: "del sector industrial",
-  deporte: "del deporte y la cultura",
-  social: "del sector social",
-  educacion: "del sector educativo",
-  servicios: "del sector servicios",
-};
 
 // ── Fallbacks (cuando Sanity aún no tiene contenido) ──────────────────────────
 const DEFAULTS: Required<Pick<
@@ -422,10 +414,10 @@ export default async function VinculacionPage() {
               </span>
               <span aria-hidden className="block w-8 h-px bg-[#E9C176]" />
             </div>
-            <h1 className="font-bebas text-white text-7xl sm:text-8xl lg:text-9xl tracking-wide mb-6 leading-none">
+            <h1 className="font-bebas text-white text-7xl sm:text-8xl lg:text-9xl tracking-wide mb-6 leading-none text-balance">
               {heroTitulo}
             </h1>
-            <p className="font-montserrat text-white/75 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-14">
+            <p className="font-montserrat text-white/75 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-14 text-pretty">
               {heroDescripcion}
             </p>
           </FadeUp>
@@ -504,7 +496,7 @@ export default async function VinculacionPage() {
                   aria-hidden
                   className="absolute top-0 left-0 h-full w-[3px] bg-gradient-to-b from-[#E9C176] via-[#E9C176] to-transparent"
                 />
-                <blockquote className="font-montserrat text-[#333] text-lg sm:text-xl leading-relaxed italic whitespace-pre-line">
+                <blockquote className="font-montserrat text-[#333] text-lg sm:text-xl leading-relaxed italic whitespace-pre-line text-justify hyphens-auto">
                   {rector.cita}
                 </blockquote>
                 <div className="flex items-center gap-4 mt-8">
@@ -528,7 +520,7 @@ export default async function VinculacionPage() {
             <span className="font-montserrat text-[#00D4FF] text-sm font-semibold uppercase tracking-[0.2em] mb-3 block">
               {pilaresKicker}
             </span>
-            <h2 className="font-bebas text-white text-5xl sm:text-6xl tracking-wide mb-3">
+            <h2 className="font-bebas text-white text-5xl sm:text-6xl tracking-wide mb-3 text-balance">
               {pilaresTitulo}
             </h2>
             <div className="w-16 h-1 bg-[#00D4FF] rounded mx-auto" />
@@ -550,11 +542,6 @@ export default async function VinculacionPage() {
               };
               const pilarSector = iconSectorMap[pilar.icono || ""] || "";
               const tiposColab = TIPOS_POR_SECTOR[pilarSector] ?? [];
-              const aliadosCount = pilarSector
-                ? aliadosData.aliados.filter((a) => a.sector === pilarSector)
-                    .length
-                : 0;
-              const sectorLabel = SECTOR_LABEL[pilarSector] ?? "del sector";
               const accentColor = isAccent ? "#E9C176" : "#00D4FF";
               const accentBg = isAccent ? "bg-[#E9C176]/15" : "bg-[#00D4FF]/15";
               const accentText = isAccent ? "text-[#E9C176]" : "text-[#00D4FF]";
@@ -584,10 +571,10 @@ export default async function VinculacionPage() {
                       <div className={`w-12 h-12 ${accentBg} rounded-xl flex items-center justify-center mb-5`}>
                         <Icon size={24} className={accentText} strokeWidth={1.5} style={{ color: accentColor }} />
                       </div>
-                      <h3 className="font-montserrat font-bold text-white text-xl mb-3">
+                      <h3 className="font-montserrat font-bold text-white text-xl mb-3 text-balance">
                         {pilar.titulo}
                       </h3>
-                      <p className="font-montserrat text-white/60 text-sm leading-relaxed mb-6 flex-1">
+                      <p className="font-montserrat text-white/60 text-sm leading-relaxed mb-6 flex-1 text-justify hyphens-auto">
                         {pilar.descripcion}
                       </p>
                       {tiposColab.length > 0 && (
@@ -597,7 +584,7 @@ export default async function VinculacionPage() {
                           >
                             Formas de colaboración
                           </p>
-                          <div className="grid grid-cols-2 gap-3 mb-5">
+                          <div className="grid grid-cols-2 gap-3">
                             {tiposColab.map(({ icon: TipoIcon, label }) => (
                               <div
                                 key={label}
@@ -615,20 +602,6 @@ export default async function VinculacionPage() {
                               </div>
                             ))}
                           </div>
-                          {aliadosCount > 0 && (
-                            <a
-                              href="#aliados"
-                              className={`group inline-flex items-center gap-2 font-montserrat ${accentText} text-xs font-semibold hover:opacity-80 transition-opacity`}
-                            >
-                              <span>
-                                {aliadosCount} aliados {sectorLabel}
-                              </span>
-                              <ArrowRight
-                                size={14}
-                                className="group-hover:translate-x-1 transition-transform"
-                              />
-                            </a>
-                          )}
                         </div>
                       )}
                     </div>
@@ -653,11 +626,11 @@ export default async function VinculacionPage() {
               </span>
               <span aria-hidden className="block w-[2px] h-5 bg-[#E9C176]" />
             </div>
-            <h2 className="font-bebas text-[#121B33] text-5xl sm:text-6xl tracking-wide mb-3">
+            <h2 className="font-bebas text-[#121B33] text-5xl sm:text-6xl tracking-wide mb-3 text-balance">
               {galeriaTitulo}
             </h2>
             <div className="w-16 h-1 bg-[#E9C176] rounded mx-auto mb-4" />
-            <p className="font-montserrat text-[#666] max-w-xl mx-auto text-sm">
+            <p className="font-montserrat text-[#666] max-w-xl mx-auto text-sm text-pretty">
               {galeriaDescripcion}
             </p>
           </FadeUp>
@@ -728,11 +701,11 @@ export default async function VinculacionPage() {
               </span>
               <span aria-hidden className="block w-[2px] h-5 bg-[#E9C176]" />
             </div>
-            <h2 className="font-bebas text-white text-5xl sm:text-6xl tracking-wide mb-5">
+            <h2 className="font-bebas text-white text-5xl sm:text-6xl tracking-wide mb-5 text-balance">
               {ctaTitulo}
             </h2>
             <div className="w-20 h-[3px] bg-gradient-to-r from-[#E9C176] to-[#8B6A2E] rounded mx-auto mb-6" />
-            <p className="font-montserrat text-white/70 text-lg mb-10 max-w-xl mx-auto">
+            <p className="font-montserrat text-white/70 text-lg mb-10 max-w-xl mx-auto text-pretty">
               {ctaDescripcion}
             </p>
           </ScaleIn>

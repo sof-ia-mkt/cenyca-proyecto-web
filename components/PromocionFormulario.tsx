@@ -527,7 +527,7 @@ function Comprobante({
           >
             <CheckCircle2 size={14} /> Registro exitoso
           </span>
-          <h2 className="font-bebas text-white text-4xl sm:text-5xl tracking-wide leading-[1.05] mt-3">
+          <h2 className="font-bebas text-white text-4xl sm:text-5xl tracking-wide leading-[1.05] mt-3 text-balance">
             Tu comprobante está listo
           </h2>
         </div>

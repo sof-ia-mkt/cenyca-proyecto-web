@@ -50,7 +50,7 @@ const portableComponents: PortableTextComponents = {
   },
   block: {
     normal: ({ children }) => (
-      <p className="mb-5 text-white/85 leading-relaxed">{children}</p>
+      <p className="mb-5 text-white/85 leading-relaxed text-justify hyphens-auto">{children}</p>
     ),
     h2: ({ children }) => (
       <h2 className="mt-12 mb-4 text-2xl sm:text-3xl font-black uppercase text-white">
@@ -240,7 +240,7 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
               </span>
             )}
 
-            <h1 className="text-3xl sm:text-4xl font-black uppercase leading-tight text-white mb-4">
+            <h1 className="text-3xl sm:text-4xl font-black uppercase leading-tight text-white mb-4 text-balance">
               {noticia.titulo}
             </h1>
 
@@ -287,10 +287,10 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
               <span className="text-[10px] font-bold uppercase tracking-widest text-[#00D4FF] block mb-2">
                 CENYCA Universidad
               </span>
-              <h3 className="text-xl font-black uppercase text-white leading-tight mb-3">
+              <h3 className="text-xl font-black uppercase text-white leading-tight mb-3 text-balance">
                 ¿Te interesa estudiar aquí?
               </h3>
-              <p className="text-sm text-white/60 mb-5 leading-relaxed">
+              <p className="text-sm text-white/60 mb-5 leading-relaxed text-pretty">
                 Licenciaturas e ingenierías con RVOE oficial. Titúlate en 3 años.
               </p>
               <a
@@ -352,7 +352,7 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
                         {n.categoria}
                       </span>
                     )}
-                    <h3 className="text-white font-bold leading-tight line-clamp-2 mb-2 group-hover:text-[#00D4FF] transition-colors">
+                    <h3 className="text-white font-bold leading-tight line-clamp-2 mb-2 group-hover:text-[#00D4FF] transition-colors text-pretty">
                       {n.titulo}
                     </h3>
                     {n.fecha && (

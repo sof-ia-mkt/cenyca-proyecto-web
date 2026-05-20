@@ -46,7 +46,7 @@ export default function SeccionHistoria({ data }: { data: HistoriaData }) {
           )}
           {data.headline && (
             <h2
-              className="text-white font-black mb-5"
+              className="text-white font-black mb-5 text-balance"
               style={{
                 fontSize: "clamp(2.2rem, 4.5vw, 3.6rem)",
                 letterSpacing: "-0.03em",
@@ -57,7 +57,7 @@ export default function SeccionHistoria({ data }: { data: HistoriaData }) {
             </h2>
           )}
           {data.parrafo && (
-            <p className="text-white/80 text-lg md:text-xl leading-relaxed text-justify">
+            <p className="text-white/80 text-lg md:text-xl leading-relaxed text-justify hyphens-auto">
               {data.parrafo}
             </p>
           )}

@@ -150,7 +150,7 @@ export default function BloqueInversion({ data, promo, accent = "#00D4FF" }: Pro
 
         {/* Disclaimer */}
         {data.disclaimer && (
-          <p className="mt-8 text-center font-montserrat text-[12px] sm:text-[13px] text-white/50 max-w-4xl mx-auto inline-flex items-center justify-center gap-2 flex-wrap">
+          <p className="mt-8 text-center font-montserrat text-[12px] sm:text-[13px] text-white/50 max-w-4xl mx-auto inline-flex items-center justify-center gap-2 flex-wrap text-pretty">
             <AlertTriangle size={14} className="flex-shrink-0 text-white/40" />
             <span>{data.disclaimer}</span>
           </p>

@@ -61,7 +61,7 @@ const portableComponents: PortableTextComponents = {
       <h3 className="text-lg font-bold text-white mt-8 mb-3">{children}</h3>
     ),
     normal: ({ children }) => (
-      <p className="text-white/75 leading-relaxed mb-5 text-[15px]">
+      <p className="text-white/75 leading-relaxed mb-5 text-[15px] text-justify hyphens-auto">
         {children}
       </p>
     ),
@@ -129,7 +129,7 @@ export default async function AvisoPage({
         <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#00D4FF] mb-3">
           Legal
         </p>
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase text-white leading-tight tracking-tight">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase text-white leading-tight tracking-tight text-balance">
           {aviso.titulo}
         </h1>
         {aviso.fecha && (

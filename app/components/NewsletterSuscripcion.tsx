@@ -41,7 +41,7 @@ export default function NewsletterSuscripcion() {
               </span>
             </div>
             <h2
-              className="text-white font-extrabold mb-4"
+              className="text-white font-extrabold mb-4 text-balance"
               style={{
                 fontSize: "clamp(1.7rem, 3.2vw, 2.6rem)",
                 letterSpacing: "-0.025em",
@@ -51,7 +51,7 @@ export default function NewsletterSuscripcion() {
               Suscríbete al newsletter de{" "}
               <span className="text-[#00D4FF]">CENYCA</span>.
             </h2>
-            <p className="text-white/65 text-base leading-relaxed max-w-md">
+            <p className="text-white/65 text-base leading-relaxed max-w-md text-pretty">
               Recibe noticias, eventos y oportunidades académicas directamente
               en tu correo. Sin spam, solo lo importante.
             </p>
@@ -68,7 +68,7 @@ export default function NewsletterSuscripcion() {
                   <p className="text-white font-bold text-sm mb-0.5">
                     ¡Suscripción confirmada!
                   </p>
-                  <p className="text-white/55 text-xs">
+                  <p className="text-white/55 text-xs text-pretty">
                     Te enviaremos noticias importantes de CENYCA Universidad.
                   </p>
                 </div>

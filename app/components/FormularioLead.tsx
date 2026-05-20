@@ -55,7 +55,7 @@ export default function FormularioLead({
               ¿Aún no decides?
             </p>
             <h2
-              className="font-extrabold text-[#121B33] mb-6"
+              className="font-extrabold text-[#121B33] mb-6 text-balance"
               style={{
                 fontSize: "clamp(2.2rem, 4.6vw, 3.8rem)",
                 letterSpacing: "-0.03em",
@@ -65,7 +65,7 @@ export default function FormularioLead({
               No te pierdas nada de{" "}
               <span className="text-[#00D4FF]">CENYCA Universidad</span>.
             </h2>
-            <p className="text-[#45464D] text-base md:text-lg leading-relaxed max-w-xl mb-10">
+            <p className="text-[#45464D] text-base md:text-lg leading-relaxed max-w-xl mb-10 text-pretty">
               Déjanos tus datos y un asesor se comunicará contigo para
               orientarte sin compromiso y ayudarte a tomar la mejor decisión.
             </p>
@@ -106,7 +106,7 @@ export default function FormularioLead({
                   >
                     ¡Recibimos tus datos!
                   </h3>
-                  <p className="text-white/65 text-sm leading-relaxed max-w-sm mx-auto">
+                  <p className="text-white/65 text-sm leading-relaxed max-w-sm mx-auto text-pretty">
                     Un asesor de CENYCA Universidad se pondrá en contacto contigo
                     muy pronto. Mientras tanto, explora nuestros programas.
                   </p>

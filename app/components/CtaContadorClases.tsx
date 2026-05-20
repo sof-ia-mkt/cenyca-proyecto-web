@@ -249,7 +249,7 @@ export default function CtaContadorClases({
                 <CheckCircle2 size={28} className="text-white" strokeWidth={2.5} />
               </div>
               <h3 className="font-bebas text-white text-3xl tracking-wide mb-2">¡Listo!</h3>
-              <p className="font-montserrat text-white/65 text-sm leading-relaxed mb-6">
+              <p className="font-montserrat text-white/65 text-sm leading-relaxed mb-6 text-pretty">
                 Un asesor educativo te contactará por WhatsApp en menos de 24 hrs para confirmar tu{" "}
                 {porcentajeDescuento}% de descuento.
               </p>

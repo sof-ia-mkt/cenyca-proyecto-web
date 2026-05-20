@@ -29,7 +29,7 @@ export default async function AvisosPage() {
     <div className="max-w-3xl mx-auto px-4 lg:px-8 py-16">
       <div className="mb-12">
         <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#00D4FF] mb-2">Legal</p>
-        <h1 className="text-4xl sm:text-5xl font-black uppercase text-white">Avisos de Privacidad</h1>
+        <h1 className="text-4xl sm:text-5xl font-black uppercase text-white text-balance">Avisos de Privacidad</h1>
       </div>
 
       {avisos.length === 0 ? (

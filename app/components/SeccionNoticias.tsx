@@ -270,7 +270,7 @@ function NoticiaCardItem({ noticia }: { noticia: NoticiaCard }) {
         )}
       </div>
       <div className="p-5 flex flex-col flex-1">
-        <h3 className="font-bold text-[#1B2040] text-base leading-snug line-clamp-3 group-hover:text-[#00D4FF] transition-colors">
+        <h3 className="font-bold text-[#1B2040] text-base leading-snug line-clamp-3 group-hover:text-[#00D4FF] transition-colors text-pretty">
           {noticia.titulo}
         </h3>
         <div className="mt-auto pt-4 flex items-center justify-between border-t border-[#1B2040]/10">

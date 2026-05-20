@@ -80,7 +80,7 @@ export default function NosotrosPage() {
               Sobre CENYCA
             </h1>
             <div className="w-20 h-1 bg-[#00D4FF] rounded mx-auto mb-6" />
-            <p className="font-montserrat text-white/60 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
+            <p className="font-montserrat text-white/60 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed text-pretty">
               Más de 18 años formando ingenieros, administradores y profesionistas comprometidos
               con el desarrollo de Baja California y el noroeste de México.
             </p>
@@ -100,7 +100,7 @@ export default function NosotrosPage() {
                   <GraduationCap size={28} className="text-[#00D4FF]" strokeWidth={1.5} />
                 </div>
                 <h2 className="font-bebas text-white text-4xl tracking-wide mb-4">Misión</h2>
-                <p className="font-montserrat text-white/70 leading-relaxed flex-1">
+                <p className="font-montserrat text-white/70 leading-relaxed flex-1 text-justify hyphens-auto">
                   Formar profesionistas de excelencia con sólidos conocimientos técnicos,
                   valores éticos y visión empresarial, capaces de impulsar el desarrollo
                   socioeconómico de Baja California y de México, a través de una educación
@@ -115,7 +115,7 @@ export default function NosotrosPage() {
                   <Award size={28} className="text-[#121B33]" strokeWidth={1.5} />
                 </div>
                 <h2 className="font-bebas text-[#121B33] text-4xl tracking-wide mb-4">Visión</h2>
-                <p className="font-montserrat text-[#444] leading-relaxed flex-1">
+                <p className="font-montserrat text-[#444] leading-relaxed flex-1 text-justify hyphens-auto">
                   Ser la universidad privada líder en el noroeste de México, reconocida por
                   la calidad de sus egresados, la pertinencia de sus programas y su estrecha
                   vinculación con el sector productivo e industrial de la región.
@@ -154,11 +154,11 @@ export default function NosotrosPage() {
       <section className="bg-white py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <FadeUp className="text-center mb-14">
-            <h2 className="font-bebas text-[#121B33] text-5xl sm:text-6xl tracking-wide mb-3">
+            <h2 className="font-bebas text-[#121B33] text-5xl sm:text-6xl tracking-wide mb-3 text-balance">
               Nuestros Valores
             </h2>
             <div className="w-16 h-1 bg-[#00D4FF] rounded mx-auto mb-4" />
-            <p className="font-montserrat text-[#666] max-w-xl mx-auto">
+            <p className="font-montserrat text-[#666] max-w-xl mx-auto text-pretty">
               Los principios que guían nuestra labor educativa día a día.
             </p>
           </FadeUp>
@@ -171,7 +171,7 @@ export default function NosotrosPage() {
                     <v.Icon size={22} color="#00D4FF" strokeWidth={1.5} />
                   </div>
                   <h3 className="font-montserrat font-bold text-[#121B33] text-base mb-2">{v.titulo}</h3>
-                  <p className="font-montserrat text-[#666] text-sm leading-relaxed">{v.desc}</p>
+                  <p className="font-montserrat text-[#666] text-sm leading-relaxed text-pretty">{v.desc}</p>
                 </div>
               </StaggerItem>
             ))}
@@ -188,7 +188,7 @@ export default function NosotrosPage() {
         </div>
         <div className="relative z-10 max-w-4xl mx-auto">
           <FadeUp className="text-center mb-14">
-            <h2 className="font-bebas text-white text-5xl sm:text-6xl tracking-wide mb-3">
+            <h2 className="font-bebas text-white text-5xl sm:text-6xl tracking-wide mb-3 text-balance">
               Nuestra Historia
             </h2>
             <div className="w-16 h-1 bg-[#00D4FF] rounded mx-auto" />
@@ -226,7 +226,7 @@ export default function NosotrosPage() {
                     <div className="w-3 h-3 rounded-full bg-[#00D4FF] mt-1" />
                     {i < 3 && <div className="w-px flex-1 bg-[#00D4FF]/20 mt-2 min-h-[40px]" />}
                   </div>
-                  <p className="font-montserrat text-white/70 leading-relaxed pt-0.5">{item.texto}</p>
+                  <p className="font-montserrat text-white/70 leading-relaxed pt-0.5 text-justify hyphens-auto">{item.texto}</p>
                 </div>
               </FadeUp>
             ))}
@@ -243,7 +243,7 @@ export default function NosotrosPage() {
             <h2 className="font-bebas text-[#121B33] text-5xl sm:text-6xl tracking-wide mb-4">
               Sé parte de CENYCA
             </h2>
-            <p className="font-montserrat text-[#121B33]/70 text-lg mb-10 max-w-xl mx-auto">
+            <p className="font-montserrat text-[#121B33]/70 text-lg mb-10 max-w-xl mx-auto text-pretty">
               Únete a nuestra comunidad universitaria y construye el futuro que mereces.
             </p>
           </ScaleIn>
