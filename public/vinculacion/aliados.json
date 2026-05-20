@@ -1,15 +1,24 @@
 {
-  "generatedAt": "2026-05-20T00:01:30.880Z",
-  "fuente": "Google Sheets — Convenios CENYCA (export HTML + CSV)",
+  "generatedAt": "2026-05-20T00:10:42.323Z",
+  "fuente": "Google Sheets — Convenios CENYCA (export HTML, fuente única)",
   "stats": {
     "totalHistorico": 259,
     "activos": 131,
-    "publicosDestacados": 38
+    "publicosDestacados": 126
   },
   "aliados": [
     {
-      "nombre": "Alimentos y Salsas",
-      "nombreLegal": "Alimentos y Salsas",
+      "nombre": "ACE AERO GROUP SAPI DCV",
+      "nombreLegal": "ACE AERO GROUP SAPI DCV",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/ace-aero-group-sapi-dcv.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "ALIMENTOS Y SALSAS",
+      "nombreLegal": "ALIMENTOS Y SALSAS",
       "sector": "industria",
       "sectorRaw": "Privado",
       "ciudad": "Tecate",
@@ -17,12 +26,48 @@
       "destacado": false
     },
     {
-      "nombre": "Amphenol Thermometrics México",
-      "nombreLegal": "Amphenol Thermometrics México",
-      "sector": "industria",
+      "nombre": "ARTESANIAS BAJA",
+      "nombreLegal": "ARTESANIAS BAJA",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Estatal",
+      "logo": "/vinculacion/logos/artesanias-baja.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "ASOCIACIÓN DE PROFESIONISTAS DE COMPLIANCE",
+      "nombreLegal": "ASOCIACIÓN DE PROFESIONISTAS DE COMPLIANCE",
+      "sector": "social",
+      "sectorRaw": "AC",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/asociacion-de-profesionistas-de-compliance.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "BANATI",
+      "nombreLegal": "BANATI",
+      "sector": "social",
+      "sectorRaw": "AC",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/banati.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "BHR ZAVALA Y ASOCIADOS SC.",
+      "nombreLegal": "BHR ZAVALA Y ASOCIADOS SC.",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tecate",
+      "logo": "/vinculacion/logos/bhr-zavala-y-asociados-sc.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "BLUE LUNA",
+      "nombreLegal": "BLUE LUNA",
+      "sector": "servicios",
       "sectorRaw": "Privado",
       "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/amphenol-thermometrics-mexico.jpg",
+      "logo": "/vinculacion/logos/blue-luna.jpg",
       "destacado": false
     },
     {
@@ -35,6 +80,69 @@
       "destacado": true
     },
     {
+      "nombre": "CAFE DE LA FLOR",
+      "nombreLegal": "CAFE DE LA FLOR",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/cafe-de-la-flor.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CALMIL",
+      "nombreLegal": "CALMIL",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/calmil.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CANACINTRA TECATE",
+      "nombreLegal": "CANACINTRA TECATE",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tecate",
+      "logo": "/vinculacion/logos/canacintra-tecate.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CANACINTRA TIJUANA",
+      "nombreLegal": "CANACINTRA TIJUANA",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/canacintra-tijuana.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CANACO",
+      "nombreLegal": "CANACO",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/canaco.jpg",
+      "destacado": true
+    },
+    {
+      "nombre": "CANIETI",
+      "nombreLegal": "CANIETI",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/canieti.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CANIRAC ROSARITO",
+      "nombreLegal": "CANIRAC ROSARITO",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Rosarito",
+      "logo": "/vinculacion/logos/canirac-rosarito.jpg",
+      "destacado": false
+    },
+    {
       "nombre": "CARL ZEISS",
       "nombreLegal": "CARL ZEISS VISION MANUFACTURA",
       "sector": "industria",
@@ -44,57 +152,246 @@
       "destacado": true
     },
     {
-      "nombre": "CLUB DE EMPRESARIOS BC",
-      "nombreLegal": "CLUB DE EMPRESARIOS DE BAJA CALIFORNIA",
-      "sector": "servicios",
-      "sectorRaw": "Privado",
-      "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/club-de-empresarios-de-baja-california.jpg",
-      "destacado": false
-    },
-    {
-      "nombre": "COLEGIO DE BACHILLERES",
-      "nombreLegal": "COLEGIO DE BACHILLERES MÉXICO",
-      "sector": "educacion",
-      "sectorRaw": "Público",
-      "ciudad": "NACIONAL",
-      "logo": "/vinculacion/logos/colegio-de-bachilleres-mexico.jpg",
-      "destacado": true
-    },
-    {
-      "nombre": "Conalep BC",
-      "nombreLegal": "Conalep BC",
+      "nombre": "CBTIS 116",
+      "nombreLegal": "CBTIS 116",
       "sector": "educacion",
       "sectorRaw": "Público",
       "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/conalep-bc.jpg",
+      "logo": "/vinculacion/logos/cbtis-116.jpg",
       "destacado": false
     },
     {
-      "nombre": "CORPORATIVO DE ENERGÍA, SERVICIOS Y DESARROLLO DE NEGOCIOS",
-      "nombreLegal": "CORPORATIVO DE ENERGÍA, SERVICIOS Y DESARROLLO DE NEGOCIOS",
-      "sector": "servicios",
+      "nombre": "CBTIS 146",
+      "nombreLegal": "CBTIS 146",
+      "sector": "educacion",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/cbtis-146.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CBTIS 155",
+      "nombreLegal": "CBTIS 155",
+      "sector": "educacion",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/cbtis-155.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CBTIS 237",
+      "nombreLegal": "CBTIS 237",
+      "sector": "educacion",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/cbtis-237.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CBTIS 277",
+      "nombreLegal": "CBTIS 277",
+      "sector": "educacion",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/cbtis-277.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CBTIS 278",
+      "nombreLegal": "CBTIS 278",
+      "sector": "educacion",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/cbtis-278.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CBTIS 41",
+      "nombreLegal": "CBTIS 41",
+      "sector": "educacion",
+      "sectorRaw": "Público",
+      "ciudad": "Ensenada",
+      "logo": "/vinculacion/logos/cbtis-41.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CECYTEBC",
+      "nombreLegal": "CECYTEBC",
+      "sector": "educacion",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/cecytebc.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CEJUM",
+      "nombreLegal": "CEJUM",
+      "sector": "social",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/cejum.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CENTRO DE CONCILIACIÓN LABORAL DEL ESTADO DE BAJA CALIFORNIA",
+      "nombreLegal": "CENTRO DE CONCILIACIÓN LABORAL DEL ESTADO DE BAJA CALIFORNIA",
+      "sector": "social",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/centro-de-conciliacion-laboral-del-estado-de-baja-california.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CESISPE",
+      "nombreLegal": "CESISPE",
+      "sector": "social",
+      "sectorRaw": "Público",
+      "ciudad": "Mexicali",
+      "logo": "/vinculacion/logos/cesispe.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CETIS 25",
+      "nombreLegal": "CETIS 25",
+      "sector": "educacion",
+      "sectorRaw": "Público",
+      "ciudad": "Tecate",
+      "logo": "/vinculacion/logos/cetis-25.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CETIS 58",
+      "nombreLegal": "CETIS 58",
+      "sector": "educacion",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/cetis-58.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CETIS 74",
+      "nombreLegal": "CETIS 74",
+      "sector": "educacion",
+      "sectorRaw": "Público",
+      "ciudad": "Ensenada",
+      "logo": "/vinculacion/logos/cetis-74.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CETIS156",
+      "nombreLegal": "CETIS156",
+      "sector": "educacion",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/cetis156.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CETYS TIJUANA",
+      "nombreLegal": "CETYS TIJUANA",
+      "sector": "educacion",
       "sectorRaw": "Privado",
       "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/corporativo-de-energia-servicios-y-desarrollo-de-negocios.jpg",
+      "logo": "/vinculacion/logos/cetys-tijuana.jpg",
       "destacado": false
     },
     {
-      "nombre": "CORRUGADOS DE BAJA CALIFORNIA",
-      "nombreLegal": "CORRUGADOS DE BAJA CALIFORNIA",
+      "nombre": "CLUB DE NIÑOS Y NIÑAS DE TIJUANA",
+      "nombreLegal": "CLUB DE NIÑOS Y NIÑAS DE TIJUANA",
+      "sector": "educacion",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/club-de-ninos-y-ninas-de-tijuana.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CLUSTER AEROESPACIAL DE BC",
+      "nombreLegal": "CLUSTER AEROESPACIAL DE BC",
       "sector": "industria",
       "sectorRaw": "Privado",
       "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/corrugados-de-baja-california.jpg",
+      "logo": "/vinculacion/logos/cluster-aeroespacial-de-bc.jpg",
       "destacado": false
     },
     {
-      "nombre": "CRUGA SOLUTIONS",
-      "nombreLegal": "CRUGA SOLUTIONS",
+      "nombre": "CLUSTER DE DISPOSITIVOS MEDICOS",
+      "nombreLegal": "CLUSTER DE DISPOSITIVOS MEDICOS",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/cluster-de-dispositivos-medicos.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "COMISIÓN ESTATAL DE BÚSQUEDA DE PERSONAS",
+      "nombreLegal": "COMISIÓN ESTATAL DE BÚSQUEDA DE PERSONAS",
+      "sector": "social",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/comision-estatal-de-busqueda-de-personas.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "COMISIÓN ESTATAL DE DERECHOS HUMANOS DEL ESTADO DE BAJA CALIFORNIA",
+      "nombreLegal": "COMISIÓN ESTATAL DE DERECHOS HUMANOS DEL ESTADO DE BAJA CALIFORNIA",
+      "sector": "educacion",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/comision-estatal-de-derechos-humanos-del-estado-de-baja-california.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "COMUNIDAD DE NIÑOS THEMIS",
+      "nombreLegal": "COMUNIDAD DE NIÑOS THEMIS",
+      "sector": "social",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/comunidad-de-ninos-themis.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CONLATE",
+      "nombreLegal": "CONLATE",
+      "sector": "educacion",
+      "sectorRaw": "Privado",
+      "ciudad": "Tecate",
+      "logo": "/vinculacion/logos/conlate.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CONSULTORIO SANTA LUISA",
+      "nombreLegal": "CONSULTORIO SANTA LUISA",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/consultorio-santa-luisa.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "COPARMEX",
+      "nombreLegal": "COPARMEX",
+      "sector": "social",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/coparmex.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CORPORATIVO DE CONSULTORES PROFESIONALES",
+      "nombreLegal": "CORPORATIVO DE CONSULTORES PROFESIONALES",
       "sector": "servicios",
       "sectorRaw": "Privado",
       "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/cruga-solutions.jpg",
+      "logo": "/vinculacion/logos/corporativo-de-consultores-profesionales.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "CORPORATIVO TORRES Y ASOCIADOS",
+      "nombreLegal": "CORPORATIVO TORRES Y ASOCIADOS",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/corporativo-torres-y-asociados.jpg",
       "destacado": false
     },
     {
@@ -107,75 +404,363 @@
       "destacado": true
     },
     {
-      "nombre": "Global Hitss",
-      "nombreLegal": "Global Hitss",
-      "sector": "servicios",
-      "sectorRaw": "Privado",
-      "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/global-hitss.jpg",
+      "nombre": "DIF TECATE",
+      "nombreLegal": "DIF TECATE",
+      "sector": "social",
+      "sectorRaw": "Público",
+      "ciudad": "Tecate",
+      "logo": "/vinculacion/logos/dif-tecate.jpg",
       "destacado": false
     },
     {
-      "nombre": "Harman",
-      "nombreLegal": "Harman",
-      "sector": "industria",
-      "sectorRaw": "Privado",
-      "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/harman.jpg",
-      "destacado": false
-    },
-    {
-      "nombre": "iGO & SEE",
-      "nombreLegal": "iGO & SEE",
-      "sector": "servicios",
-      "sectorRaw": "Privado",
-      "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/igo-see.jpg",
-      "destacado": false
-    },
-    {
-      "nombre": "IMCA",
-      "nombreLegal": "INSTITUTO MUNICIPAL CONTRA LAS ADICCIONES",
+      "nombre": "DIPUTADO ELIGIO VALENCIA LÓPEZ",
+      "nombreLegal": "DIPUTADO ELIGIO VALENCIA LÓPEZ",
       "sector": "social",
       "sectorRaw": "Público",
       "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/instituto-municipal-contra-las-adicciones.jpg",
+      "logo": "/vinculacion/logos/diputado-eligio-valencia-lopez.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "DIRECCIÓN DE BOMBEROS DEL H.XXV AYUNTAMIENTO DE TIJUANA",
+      "nombreLegal": "DIRECCIÓN DE BOMBEROS DEL H.XXV AYUNTAMIENTO DE TIJUANA",
+      "sector": "social",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/direccion-de-bomberos-del-h-xxv-ayuntamiento-de-tijuana.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "EDUPROMEX",
+      "nombreLegal": "EDUPROMEX",
+      "sector": "educacion",
+      "sectorRaw": "AC",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/edupromex.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "EL PODER EJECUTIVO DEL GOBIERNO DEL ESTADO DE BAJA CALIFORNIA",
+      "nombreLegal": "EL PODER EJECUTIVO DEL GOBIERNO DEL ESTADO DE BAJA CALIFORNIA",
+      "sector": "social",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/el-poder-ejecutivo-del-gobierno-del-estado-de-baja-california.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "ELE DENTAL CARE",
+      "nombreLegal": "ELE DENTAL CARE",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/ele-dental-care.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "EMITEC SOLUTIONS",
+      "nombreLegal": "EMITEC SOLUTIONS",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/emitec-solutions.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "ENTERACLOUD MX",
+      "nombreLegal": "ENTERACLOUD MX",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/enteracloud-mx.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "EVOBUILD SOLUTIONS CONSTRUCTURA",
+      "nombreLegal": "EVOBUILD SOLUTIONS CONSTRUCTURA",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/evobuild-solutions-constructura.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "FABRICACIÓN Y MANUFACTURAS DE MÉXICO",
+      "nombreLegal": "FABRICACIÓN Y MANUFACTURAS DE MÉXICO",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/fabricacion-y-manufacturas-de-mexico.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "FISHER AND PAYKEL HEALTHCARE",
+      "nombreLegal": "FISHER AND PAYKEL HEALTHCARE",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/fisher-and-paykel-healthcare.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "FOXCONN",
+      "nombreLegal": "FOXCONN",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/foxconn.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "FUNDACIÓN CASTRO LIMÓN",
+      "nombreLegal": "FUNDACIÓN CASTRO LIMÓN",
+      "sector": "social",
+      "sectorRaw": "AC",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/fundacion-castro-limon.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "FUNDACIÓN LAZOS",
+      "nombreLegal": "FUNDACIÓN LAZOS",
+      "sector": "educacion",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/fundacion-lazos.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "FUNDACIÓN QUE TRANSFORMA",
+      "nombreLegal": "FUNDACIÓN QUE TRANSFORMA",
+      "sector": "social",
+      "sectorRaw": "AC",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/fundacion-que-transforma.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "FUNDACION TIJUANA SIN HAMBRE",
+      "nombreLegal": "FUNDACION TIJUANA SIN HAMBRE",
+      "sector": "social",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/fundacion-tijuana-sin-hambre.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "GONG CHA BEBIDAS",
+      "nombreLegal": "GONG CHA BEBIDAS",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/gong-cha-bebidas.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "GRUPO MÉDICO ZAMIN",
+      "nombreLegal": "GRUPO MÉDICO ZAMIN",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/grupo-medico-zamin.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "GRUPO OPTIMA DE BC",
+      "nombreLegal": "GRUPO OPTIMA DE BC",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/grupo-optima-de-bc.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "GUGA MERCANTIL",
+      "nombreLegal": "GUGA MERCANTIL",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/guga-mercantil.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "HTP DE MÉXICO",
+      "nombreLegal": "HTP DE MÉXICO",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/htp-de-mexico.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "HUDSON RESPIRATORY CARE TECATE",
+      "nombreLegal": "HUDSON RESPIRATORY CARE TECATE",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tecate",
+      "logo": "/vinculacion/logos/hudson-respiratory-care-tecate.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "ICU MEDICAL",
+      "nombreLegal": "ICU MEDICAL",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/icu-medical.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "IDIGITAL",
+      "nombreLegal": "IDIGITAL",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/idigital.jpg",
       "destacado": false
     },
     {
       "nombre": "IMJUVET TECATE",
-      "nombreLegal": "IMJUVET",
+      "nombreLegal": "IMJUVET TECATE",
       "sector": "social",
       "sectorRaw": "Público",
       "ciudad": "Tecate",
-      "logo": "/vinculacion/logos/imjuvet.jpg",
+      "logo": "/vinculacion/logos/imjuvet-tecate.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "IMPLAN",
+      "nombreLegal": "IMPLAN",
+      "sector": "social",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/implan.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "IMSAMA",
+      "nombreLegal": "IMSAMA",
+      "sector": "educacion",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/imsama.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "INDEX",
+      "nombreLegal": "INDEX",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/index.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "INMOBILIARIA RANCHO TECATE",
+      "nombreLegal": "INMOBILIARIA RANCHO TECATE",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tecate",
+      "logo": "/vinculacion/logos/inmobiliaria-rancho-tecate.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "INSTITUTO DE LA JUVENTUD BAJA CALIFORNIA",
+      "nombreLegal": "INSTITUTO DE LA JUVENTUD BAJA CALIFORNIA",
+      "sector": "educacion",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/instituto-de-la-juventud-baja-california.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "INSTITUTO GALARDONES SIN FRONTERAS",
+      "nombreLegal": "INSTITUTO GALARDONES SIN FRONTERAS",
+      "sector": "educacion",
+      "sectorRaw": "AC",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/instituto-galardones-sin-fronteras.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "INSTITUTO TECNOLÓGICO DE TIJUANA",
+      "nombreLegal": "INSTITUTO TECNOLÓGICO DE TIJUANA",
+      "sector": "educacion",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/instituto-tecnologico-de-tijuana.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "ITJ",
+      "nombreLegal": "ITJ",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/itj.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "JABIL",
+      "nombreLegal": "NPA DE MEXICO JABIL",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/npa-de-mexico-jabil.jpg",
       "destacado": true
     },
     {
-      "nombre": "IMMUJER Tecate",
-      "nombreLegal": "IMMUJER Tecate",
-      "sector": "social",
-      "sectorRaw": "Público",
-      "ciudad": "Tecate",
-      "logo": "/vinculacion/logos/immujer-tecate.jpg",
+      "nombre": "KLINGSPOR ABRASIVOS",
+      "nombreLegal": "KLINGSPOR ABRASIVOS",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/klingspor-abrasivos.jpg",
       "destacado": false
     },
     {
-      "nombre": "IPIUM",
-      "nombreLegal": "IPIUM",
+      "nombre": "LABOMEX MBP",
+      "nombreLegal": "LABOMEX MBP",
       "sector": "industria",
       "sectorRaw": "Privado",
       "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/ipium.jpg",
+      "logo": "/vinculacion/logos/labomex-mbp.jpg",
       "destacado": false
     },
     {
-      "nombre": "IPS",
-      "nombreLegal": "IPS",
-      "sector": "industria",
+      "nombre": "LABORATORIO DELIA BARRAZA",
+      "nombreLegal": "LABORATORIO DELIA BARRAZA",
+      "sector": "servicios",
       "sectorRaw": "Privado",
       "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/ips.jpg",
+      "logo": "/vinculacion/logos/laboratorio-delia-barraza.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "LABORATORIOS GAMBOA",
+      "nombreLegal": "LABORATORIOS GAMBOA",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/laboratorios-gamboa.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "LINGUATEC",
+      "nombreLegal": "LINGUATEC",
+      "sector": "educacion",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/linguatec.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "LITTLE CAESARS",
+      "nombreLegal": "LITTLE CAESARS",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/little-caesars.jpg",
       "destacado": false
     },
     {
@@ -193,7 +778,7 @@
       "sector": "servicios",
       "sectorRaw": "Privado",
       "ciudad": "Tijuana",
-      "logo": null,
+      "logo": "/vinculacion/logos/mam-de-la-frontera.jpg",
       "destacado": false
     },
     {
@@ -206,89 +791,197 @@
       "destacado": true
     },
     {
-      "nombre": "Nación Verde",
-      "nombreLegal": "Nación Verde",
-      "sector": "educacion",
-      "sectorRaw": "Público",
-      "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/nacion-verde.jpg",
-      "destacado": false
-    },
-    {
-      "nombre": "Oxígenos Y Equipos",
-      "nombreLegal": "Oxígenos Y Equipos",
-      "sector": "industria",
-      "sectorRaw": "Privado",
-      "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/oxigenos-y-equipos.jpg",
-      "destacado": false
-    },
-    {
-      "nombre": "POLY",
-      "nombreLegal": "POLY",
-      "sector": "servicios",
-      "sectorRaw": "Privado",
-      "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/poly.jpg",
-      "destacado": false
-    },
-    {
-      "nombre": "PRANORTE",
-      "nombreLegal": "PRANORTE",
-      "sector": "servicios",
-      "sectorRaw": "Privado",
-      "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/pranorte.jpg",
-      "destacado": false
-    },
-    {
-      "nombre": "PROSER",
-      "nombreLegal": "PROSER",
+      "nombre": "MEDICA DE LA CIUDAD DE TIJUANA",
+      "nombreLegal": "MEDICA DE LA CIUDAD DE TIJUANA",
       "sector": "social",
       "sectorRaw": "Privado",
       "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/proser.jpg",
+      "logo": "/vinculacion/logos/medica-de-la-ciudad-de-tijuana.jpg",
       "destacado": false
     },
     {
-      "nombre": "Qubo Baja",
-      "nombreLegal": "Qubo Baja",
+      "nombre": "METRO FITNESS",
+      "nombreLegal": "METRO FITNESS GROUP",
+      "sector": "deporte",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/metro-fitness-group.jpg",
+      "destacado": true
+    },
+    {
+      "nombre": "MORZAN CORPORATION-EMPLEO NUEVO",
+      "nombreLegal": "MORZAN CORPORATION-EMPLEO NUEVO",
       "sector": "servicios",
       "sectorRaw": "Privado",
       "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/qubo-baja.jpg",
+      "logo": "/vinculacion/logos/morzan-corporation-empleo-nuevo.jpg",
       "destacado": false
     },
     {
-      "nombre": "San Diego Ace en México",
-      "nombreLegal": "San Diego Ace en México",
+      "nombre": "MPA",
+      "nombreLegal": "MPA",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/mpa.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "MUSEO INTERACTIVO DE TIJUANA AC, EL TROMPO",
+      "nombreLegal": "MUSEO INTERACTIVO DE TIJUANA AC, EL TROMPO",
+      "sector": "social",
+      "sectorRaw": "AC",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/museo-interactivo-de-tijuana-ac-el-trompo.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "NESS PRECISION",
+      "nombreLegal": "NESS PRECISION",
       "sector": "industria",
       "sectorRaw": "Privado",
       "ciudad": "Tecate",
-      "logo": "/vinculacion/logos/san-diego-ace-en-mexico.jpg",
+      "logo": "/vinculacion/logos/ness-precision.jpg",
       "destacado": false
     },
     {
-      "nombre": "San Nicolas Hotel and Casino",
-      "nombreLegal": "San Nicolas Hotel and Casino",
-      "sector": "servicios",
-      "sectorRaw": "Privado",
-      "ciudad": "Ensenada",
-      "logo": "/vinculacion/logos/san-nicolas-hotel-and-casino.jpg",
-      "destacado": false
-    },
-    {
-      "nombre": "SINDICATO 18 DE SEPT.",
-      "nombreLegal": "SINDICATO 18 DE SEPTIEMBRE DE TRABAJADORES DE BAJA CALIFORNIA",
-      "sector": "social",
+      "nombre": "OPERADOR ALCOMESA",
+      "nombreLegal": "OPERADOR ALCOMESA",
+      "sector": "industria",
       "sectorRaw": "Privado",
       "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/sindicato-18-de-septiembre-de-trabajadores-de-baja-california.jpg",
+      "logo": "/vinculacion/logos/operador-alcomesa.jpg",
       "destacado": false
     },
     {
-      "nombre": "SINDICATO 1RO. DE MAYO",
-      "nombreLegal": "Sindicato 1ro. De Mayo De Trabajadores Y Empleados",
+      "nombre": "PASITOS CENTRO PEDAGÓGICO",
+      "nombreLegal": "PASITOS CENTRO PEDAGÓGICO",
+      "sector": "servicios",
+      "sectorRaw": "AC",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/pasitos-centro-pedagogico.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "PRINTPACK MEDICAL",
+      "nombreLegal": "PRINTPACK MEDICAL",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/printpack-medical.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "PRO MERITUM, FUNDACIÓN PRO UNIVERSITARIA",
+      "nombreLegal": "PRO MERITUM, FUNDACIÓN PRO UNIVERSITARIA",
+      "sector": "social",
+      "sectorRaw": "AC",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/pro-meritum-fundacion-pro-universitaria.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "PROCCER",
+      "nombreLegal": "PROCCER",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/proccer.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "PRODUCTOS LÁCTEOS DIMARL",
+      "nombreLegal": "PRODUCTOS LÁCTEOS DIMARL",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tecate",
+      "logo": "/vinculacion/logos/productos-lacteos-dimarl.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "PROYECTO Y MANTENIMIENTO ELÉCTRICO INDUSTRIAL",
+      "nombreLegal": "PROYECTO Y MANTENIMIENTO ELÉCTRICO INDUSTRIAL",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/proyecto-y-mantenimiento-electrico-industrial.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "RUFO IBARRA, DE LA CRUZ Y MIER 2025",
+      "nombreLegal": "RUFO IBARRA, DE LA CRUZ Y MIER 2025",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/rufo-ibarra-de-la-cruz-y-mier-2025.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "SAFRAN",
+      "nombreLegal": "SAFRAN CABIN",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/safran-cabin.jpg",
+      "destacado": true
+    },
+    {
+      "nombre": "SALMEN",
+      "nombreLegal": "SALMEN",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/salmen.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "SANKO",
+      "nombreLegal": "SANKO",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/sanko.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "SCHLAGE",
+      "nombreLegal": "SCHLAGE",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tecate",
+      "logo": "/vinculacion/logos/schlage.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "SECRETARÍA DE SEGURIDAD CIUDADANA DEL ESTADO DE BAJA CALIFORNIA",
+      "nombreLegal": "SECRETARÍA DE SEGURIDAD CIUDADANA DEL ESTADO DE BAJA CALIFORNIA",
+      "sector": "social",
+      "sectorRaw": "Público",
+      "ciudad": "Mexicali",
+      "logo": "/vinculacion/logos/secretaria-de-seguridad-ciudadana-del-estado-de-baja-california.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "SERVICIO DE ADMINISTRACION TRIBUTARIA, SAT",
+      "nombreLegal": "SERVICIO DE ADMINISTRACION TRIBUTARIA, SAT",
+      "sector": "social",
+      "sectorRaw": "Público",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/servicio-de-administracion-tributaria-sat.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "SERVICIO EL OCTANO",
+      "nombreLegal": "SERVICIO EL OCTANO",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/servicio-el-octano.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "SINDICATO 1RO DE MAYO DE TRABAJADORES Y EMPLEADOS",
+      "nombreLegal": "SINDICATO 1RO DE MAYO DE TRABAJADORES Y EMPLEADOS",
       "sector": "social",
       "sectorRaw": "Privado",
       "ciudad": "Tijuana",
@@ -296,21 +989,12 @@
       "destacado": false
     },
     {
-      "nombre": "SINDICATO DE EMPLEADOS Y TRABAJADORES DE LA INDUSTRIA, EL CAMPO Y EL COMERCIO DEL “ESTADO 29”, C.R.O.M",
-      "nombreLegal": "SINDICATO DE EMPLEADOS Y TRABAJADORES DE LA INDUSTRIA, EL CAMPO Y EL COMERCIO DEL “ESTADO 29”, C.R.O.M",
+      "nombre": "SINDICATO SUTSPEMIDBC TIJUANA",
+      "nombreLegal": "SINDICATO SUTSPEMIDBC TIJUANA",
       "sector": "social",
       "sectorRaw": "Privado",
-      "ciudad": "Estatal",
-      "logo": "/vinculacion/logos/sindicato-de-empleados-y-trabajadores-de-la-industria-el-campo-y-el-comercio-del.jpg",
-      "destacado": false
-    },
-    {
-      "nombre": "Sindicato SUTSPEMIDBC",
-      "nombreLegal": "Sindicato SUTSPEMIDBC",
-      "sector": "social",
-      "sectorRaw": "Privado",
-      "ciudad": "Tecate",
-      "logo": "/vinculacion/logos/sindicato-sutspemidbc.jpg",
+      "ciudad": "Tijuana",
+      "logo": null,
       "destacado": false
     },
     {
@@ -323,30 +1007,138 @@
       "destacado": false
     },
     {
-      "nombre": "SMK ELECTRONICS",
-      "nombreLegal": "SMK ELECTRONICA",
+      "nombre": "SMITHS INTERCONNECT MEXICO",
+      "nombreLegal": "SMITHS INTERCONNECT MEXICO",
       "sector": "industria",
       "sectorRaw": "Privado",
       "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/smk-electronica.jpg",
-      "destacado": true
-    },
-    {
-      "nombre": "URBAN GYM",
-      "nombreLegal": "URBAN GYM",
-      "sector": "deporte",
-      "sectorRaw": "Privado",
-      "ciudad": "Tijuana",
-      "logo": "/vinculacion/logos/urban-gym.jpg",
+      "logo": "/vinculacion/logos/smiths-interconnect-mexico.jpg",
       "destacado": false
     },
     {
-      "nombre": "XXIV Ayuntamiento de Tijuana, Estado de Baja California",
-      "nombreLegal": "XXIV Ayuntamiento de Tijuana, Estado de Baja California",
+      "nombre": "SOCFOR",
+      "nombreLegal": "SOCFOR",
+      "sector": "servicios",
+      "sectorRaw": "AC",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/socfor.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "SOCIEDAD NACIONAL PROMOTORA DE BECARIOS, S.C",
+      "nombreLegal": "SOCIEDAD NACIONAL PROMOTORA DE BECARIOS, S.C",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/sociedad-nacional-promotora-de-becarios-s-c.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "SOCIFOBC",
+      "nombreLegal": "SOCIFOBC",
+      "sector": "social",
+      "sectorRaw": "AC",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/socifobc.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "SUCOMM - FUNDACIÓN MERIDO DUARTE",
+      "nombreLegal": "SUCOMM - FUNDACIÓN MERIDO DUARTE",
+      "sector": "social",
+      "sectorRaw": "AC",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/sucomm-fundacion-merido-duarte.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "SURGICAL SPECIALTIES MÉXICO",
+      "nombreLegal": "SURGICAL SPECIALTIES MÉXICO",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/surgical-specialties-mexico.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "TAPICERIAS PACIFICO",
+      "nombreLegal": "TAPICERIAS PACIFICO",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/tapicerias-pacifico.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "TEBSA TRANSPORTACIÓN EMPRESARIAL Y TURÍSTICA",
+      "nombreLegal": "TEBSA TRANSPORTACIÓN EMPRESARIAL Y TURÍSTICA",
+      "sector": "social",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/tebsa-transportacion-empresarial-y-turistica.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "TOROS DE TIJUANA",
+      "nombreLegal": "ESTADIO DE BEISBOL TOROS DE TIJUANA",
+      "sector": "deporte",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/estadio-de-beisbol-toros-de-tijuana.jpg",
+      "destacado": true
+    },
+    {
+      "nombre": "TRYCER INGENIERÍA EN COMPUTACIÓN",
+      "nombreLegal": "TRYCER INGENIERÍA EN COMPUTACIÓN",
+      "sector": "servicios",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/trycer-ingenieria-en-computacion.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "TURBOTECNOLOGÍA DE REPARACIONES",
+      "nombreLegal": "TURBOTECNOLOGÍA DE REPARACIONES",
+      "sector": "industria",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/turbotecnologia-de-reparaciones.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "UNIDAD DE DIAGNÓSTICO RIEDEL",
+      "nombreLegal": "UNIDAD DE DIAGNÓSTICO RIEDEL",
+      "sector": "social",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/unidad-de-diagnostico-riedel.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "WORLD COMPLIANCE ASSOCIATION",
+      "nombreLegal": "WORLD COMPLIANCE ASSOCIATION",
+      "sector": "servicios",
+      "sectorRaw": "AC",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/world-compliance-association.jpg",
+      "destacado": false
+    },
+    {
+      "nombre": "XOLOS DE TIJUANA",
+      "nombreLegal": "XOLOS DE TIJUANA",
+      "sector": "deporte",
+      "sectorRaw": "Privado",
+      "ciudad": "Tijuana",
+      "logo": "/vinculacion/logos/xolos-de-tijuana.jpg",
+      "destacado": true
+    },
+    {
+      "nombre": "XXV AYUNTAMIENTO DE TIJUANA",
+      "nombreLegal": "XXV AYUNTAMIENTO DE TIJUANA",
       "sector": "social",
       "sectorRaw": "Público",
       "ciudad": "Tijuana",
-      "logo": null,
+      "logo": "/vinculacion/logos/xxv-ayuntamiento-de-tijuana.jpg",
       "destacado": false
     }
   ]
