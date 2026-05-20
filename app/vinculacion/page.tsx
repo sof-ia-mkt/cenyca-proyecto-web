@@ -10,6 +10,11 @@ import {
   Users,
   Lightbulb,
   Globe,
+  Briefcase,
+  HeartHandshake,
+  MapPin,
+  Calendar,
+  Sprout,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -23,6 +28,7 @@ import {
 import SectionAccentLine from "@/app/components/SectionAccentLine";
 import AnimatedCounter from "@/app/components/AnimatedCounter";
 import AliadosMarquee from "@/app/components/AliadosMarquee";
+import HeroVideo from "@/app/components/HeroVideo";
 import aliadosData from "@/public/vinculacion/aliados.json";
 import { client } from "@/sanity/lib/client";
 import { configuracionQuery, vinculacionPageQuery } from "@/sanity/lib/queries";
@@ -87,6 +93,53 @@ const ICONS: Record<string, LucideIcon> = {
   Users,
   Lightbulb,
   Globe,
+};
+
+// Tipos de colaboración por sector (lo que un estudiante/aliado obtiene
+// concretamente en ese pilar). Se muestran como 2x2 de íconos + label.
+const TIPOS_POR_SECTOR: Record<
+  string,
+  { icon: LucideIcon; label: string }[]
+> = {
+  industria: [
+    { icon: Briefcase, label: "Prácticas profesionales" },
+    { icon: Lightbulb, label: "Proyectos integradores" },
+    { icon: MapPin, label: "Visitas industriales" },
+    { icon: GraduationCap, label: "Bolsa de trabajo" },
+  ],
+  deporte: [
+    { icon: Trophy, label: "Becas deportivas" },
+    { icon: Calendar, label: "Eventos y ligas" },
+    { icon: Users, label: "Promoción institucional" },
+    { icon: GraduationCap, label: "Talento dual" },
+  ],
+  social: [
+    { icon: HeartHandshake, label: "Servicio social" },
+    { icon: Sprout, label: "Proyectos comunitarios" },
+    { icon: Users, label: "Voluntariado" },
+    { icon: Calendar, label: "Jornadas y eventos" },
+  ],
+  educacion: [
+    { icon: GraduationCap, label: "Continuidad académica" },
+    { icon: Users, label: "Intercambios" },
+    { icon: Lightbulb, label: "Proyectos conjuntos" },
+    { icon: Calendar, label: "Eventos académicos" },
+  ],
+  servicios: [
+    { icon: Briefcase, label: "Prácticas profesionales" },
+    { icon: GraduationCap, label: "Bolsa de trabajo" },
+    { icon: Users, label: "Convenios institucionales" },
+    { icon: Calendar, label: "Eventos sectoriales" },
+  ],
+};
+
+// Etiqueta legible del sector para el CTA inferior
+const SECTOR_LABEL: Record<string, string> = {
+  industria: "del sector industrial",
+  deporte: "del deporte y la cultura",
+  social: "del sector social",
+  educacion: "del sector educativo",
+  servicios: "del sector servicios",
 };
 
 // ── Fallbacks (cuando Sanity aún no tiene contenido) ──────────────────────────
@@ -300,16 +353,11 @@ export default async function VinculacionPage() {
       <section className="relative min-h-[680px] lg:min-h-[780px] flex items-center bg-[#121B33] pt-28 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
         {/* Background: si hay video en Sanity lo usa, si no muestra el póster */}
         {heroVideoUrl ? (
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
+          <HeroVideo
+            src={heroVideoUrl}
             poster={heroPosterUrl}
             className="absolute inset-0 w-full h-full object-cover opacity-40"
-          >
-            <source src={heroVideoUrl} />
-          </video>
+          />
         ) : (
           <Image
             src={heroPosterUrl}
@@ -394,11 +442,13 @@ export default async function VinculacionPage() {
         </div>
       </section>
 
-      <AliadosMarquee
-        aliados={aliadosData.aliados}
-        kicker={aliadosKicker}
-        texto={aliadosTexto}
-      />
+      <div id="aliados" className="scroll-mt-24">
+        <AliadosMarquee
+          aliados={aliadosData.aliados}
+          kicker={aliadosKicker}
+          texto={aliadosTexto}
+        />
+      </div>
 
       {/* ── Mensaje del Rector ────────────────────────────────────────────── */}
       <section className="relative bg-white py-24 px-4 sm:px-6 lg:px-8">
@@ -479,16 +529,12 @@ export default async function VinculacionPage() {
                 Globe: "servicios",
               };
               const pilarSector = iconSectorMap[pilar.icono || ""] || "";
-              const logosDelSector = pilarSector
-                ? aliadosData.aliados
-                    .filter((a) => a.sector === pilarSector && a.logo)
-                    .sort(
-                      (a, b) =>
-                        Number(b.destacado ?? false) -
-                        Number(a.destacado ?? false)
-                    )
-                    .slice(0, 4)
-                : [];
+              const tiposColab = TIPOS_POR_SECTOR[pilarSector] ?? [];
+              const aliadosCount = pilarSector
+                ? aliadosData.aliados.filter((a) => a.sector === pilarSector)
+                    .length
+                : 0;
+              const sectorLabel = SECTOR_LABEL[pilarSector] ?? "del sector";
               const accentColor = isAccent ? "#E9C176" : "#00D4FF";
               const accentBg = isAccent ? "bg-[#E9C176]/15" : "bg-[#00D4FF]/15";
               const accentText = isAccent ? "text-[#E9C176]" : "text-[#00D4FF]";
@@ -524,47 +570,46 @@ export default async function VinculacionPage() {
                       <p className="font-montserrat text-white/60 text-sm leading-relaxed mb-6 flex-1">
                         {pilar.descripcion}
                       </p>
-                      {logosDelSector.length > 0 ? (
+                      {tiposColab.length > 0 && (
                         <div className="border-t border-white/10 pt-5">
-                          <p className={`font-montserrat ${accentText} text-xs uppercase tracking-wider mb-4`}>
-                            Aliados destacados
+                          <p
+                            className={`font-montserrat ${accentText} text-xs uppercase tracking-wider mb-4`}
+                          >
+                            Formas de colaboración
                           </p>
-                          <div className="grid grid-cols-2 gap-3">
-                            {logosDelSector.map((a) => (
+                          <div className="grid grid-cols-2 gap-3 mb-5">
+                            {tiposColab.map(({ icon: TipoIcon, label }) => (
                               <div
-                                key={a.nombre}
-                                title={a.nombre}
-                                className="relative h-14 bg-white/90 rounded-lg flex items-center justify-center p-2 hover:bg-white transition-colors"
+                                key={label}
+                                className="flex items-center gap-2.5 bg-white/5 border border-white/10 rounded-lg px-3 py-2.5"
                               >
-                                <Image
-                                  src={a.logo!}
-                                  alt={a.nombre}
-                                  fill
-                                  sizes="120px"
-                                  className="object-contain p-2"
+                                <TipoIcon
+                                  size={16}
+                                  strokeWidth={1.75}
+                                  style={{ color: accentColor }}
+                                  className="shrink-0"
                                 />
+                                <span className="font-montserrat text-white/85 text-[11px] leading-tight">
+                                  {label}
+                                </span>
                               </div>
                             ))}
                           </div>
+                          {aliadosCount > 0 && (
+                            <a
+                              href="#aliados"
+                              className={`group inline-flex items-center gap-2 font-montserrat ${accentText} text-xs font-semibold hover:opacity-80 transition-opacity`}
+                            >
+                              <span>
+                                {aliadosCount} aliados {sectorLabel}
+                              </span>
+                              <ArrowRight
+                                size={14}
+                                className="group-hover:translate-x-1 transition-transform"
+                              />
+                            </a>
+                          )}
                         </div>
-                      ) : (
-                        pilar.aliados && pilar.aliados.length > 0 && (
-                          <div className="border-t border-white/10 pt-5">
-                            <p className={`font-montserrat ${accentText} text-xs uppercase tracking-wider mb-3`}>
-                              Aliados
-                            </p>
-                            <div className="flex flex-wrap gap-2">
-                              {pilar.aliados.map((a) => (
-                                <span
-                                  key={a}
-                                  className="font-montserrat text-xs text-white/70 bg-white/5 border border-white/10 px-3 py-1 rounded-full"
-                                >
-                                  {a}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        )
                       )}
                     </div>
                   </div>
