@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
+  Mail,
   Factory,
   Trophy,
   Heart,
@@ -31,9 +32,7 @@ import AliadosMarquee from "@/app/components/AliadosMarquee";
 import HeroVideo from "@/app/components/HeroVideo";
 import aliadosData from "@/public/vinculacion/aliados.json";
 import { client } from "@/sanity/lib/client";
-import { configuracionQuery, vinculacionPageQuery } from "@/sanity/lib/queries";
-
-type Configuracion = { contacto?: { whatsapp?: string } };
+import { vinculacionPageQuery } from "@/sanity/lib/queries";
 
 type ImagenSanity = {
   imagenUrl?: string;
@@ -82,7 +81,13 @@ type VinculacionData = {
   ctaKicker?: string;
   ctaTitulo?: string;
   ctaDescripcion?: string;
-  ctaMensajeWhatsapp?: string;
+  ctaEmailAsunto?: string;
+  ctaEmailCuerpo?: string;
+  contacto?: {
+    nombre?: string;
+    cargo?: string;
+    email?: string;
+  };
 };
 
 const ICONS: Record<string, LucideIcon> = {
@@ -155,8 +160,10 @@ const DEFAULTS: Required<Pick<
   | "ctaKicker"
   | "ctaTitulo"
   | "ctaDescripcion"
-  | "ctaMensajeWhatsapp"
+  | "ctaEmailAsunto"
+  | "ctaEmailCuerpo"
 >> & {
+  contacto: Required<NonNullable<VinculacionData["contacto"]>>;
   rector: NonNullable<VinculacionData["rector"]>;
   pilares: NonNullable<VinculacionData["pilares"]>;
   galeria: NonNullable<VinculacionData["galeria"]>;
@@ -243,8 +250,14 @@ const DEFAULTS: Required<Pick<
   ctaTitulo: "Vincula tu empresa con CENYCA",
   ctaDescripcion:
     "Accede a talento formado para la industria, desarrolla proyectos colaborativos y forma parte de una red de aliados que está transformando Baja California.",
-  ctaMensajeWhatsapp:
-    "Hola, mi empresa está interesada en establecer un convenio de vinculación con CENYCA Universidad.",
+  ctaEmailAsunto: "Interés en convenio de vinculación con CENYCA",
+  ctaEmailCuerpo:
+    "Buen día, Mtra. Alejandra:\n\nMi empresa está interesada en establecer un convenio de vinculación con CENYCA Universidad. Quedo atento/a a sus comentarios.\n\nSaludos cordiales,",
+  contacto: {
+    nombre: "Mtra. Alejandra Chan Gálvez",
+    cargo: "Dirección de Vinculación",
+    email: "direccion.vinculacion@cenyca.edu.mx",
+  },
 };
 
 export const revalidate = 60;
@@ -266,12 +279,9 @@ export const metadata: Metadata = {
 };
 
 export default async function VinculacionPage() {
-  const [config, data] = await Promise.all([
-    client.fetch<Configuracion>(configuracionQuery).catch(() => null),
-    client.fetch<VinculacionData | null>(vinculacionPageQuery).catch(() => null),
-  ]);
-
-  const whatsapp = config?.contacto?.whatsapp ?? "526641300236";
+  const data = await client
+    .fetch<VinculacionData | null>(vinculacionPageQuery)
+    .catch(() => null);
 
   const heroKicker = data?.heroKicker || DEFAULTS.heroKicker;
   const heroTitulo = data?.heroTitulo || DEFAULTS.heroTitulo;
@@ -343,9 +353,19 @@ export default async function VinculacionPage() {
 
   const ctaTitulo = data?.ctaTitulo || DEFAULTS.ctaTitulo;
   const ctaDescripcion = data?.ctaDescripcion || DEFAULTS.ctaDescripcion;
-  const waMensaje = encodeURIComponent(
-    data?.ctaMensajeWhatsapp || DEFAULTS.ctaMensajeWhatsapp
+
+  const contacto = {
+    nombre: data?.contacto?.nombre || DEFAULTS.contacto.nombre,
+    cargo: data?.contacto?.cargo || DEFAULTS.contacto.cargo,
+    email: data?.contacto?.email || DEFAULTS.contacto.email,
+  };
+  const mailAsunto = encodeURIComponent(
+    data?.ctaEmailAsunto || DEFAULTS.ctaEmailAsunto
   );
+  const mailCuerpo = encodeURIComponent(
+    data?.ctaEmailCuerpo || DEFAULTS.ctaEmailCuerpo
+  );
+  const mailtoHref = `mailto:${contacto.email}?subject=${mailAsunto}&body=${mailCuerpo}`;
 
   return (
     <>
@@ -719,12 +739,14 @@ export default async function VinculacionPage() {
           <FadeUp delay={0.2}>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
-                href={`https://wa.me/${whatsapp}?text=${waMensaje}`}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={mailtoHref}
                 className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#E9C176] to-[#c19a4a] text-[#121B33] font-montserrat font-bold px-10 py-4 rounded-full hover:from-[#f0cd87] hover:to-[#d4ab5a] transition-all duration-300 hover:scale-105 shadow-lg shadow-[#E9C176]/20"
               >
-                Contactar por WhatsApp <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                <Mail size={18} /> Escribir a Vinculación
+                <ArrowRight
+                  size={18}
+                  className="group-hover:translate-x-1 transition-transform"
+                />
               </a>
               <Link
                 href="/nosotros"
@@ -732,6 +754,43 @@ export default async function VinculacionPage() {
               >
                 Conocer CENYCA
               </Link>
+            </div>
+          </FadeUp>
+
+          {/* Tarjeta de contacto: persona responsable de vinculación */}
+          <FadeUp delay={0.35}>
+            <div className="mt-10 max-w-md mx-auto bg-white/5 border border-white/10 rounded-2xl px-6 py-5 backdrop-blur-sm">
+              <p className="font-montserrat text-[#E9C176] text-[10px] font-bold uppercase tracking-[0.25em] text-center mb-3">
+                Atiende personalmente
+              </p>
+              <div className="flex items-center gap-4">
+                <div
+                  aria-hidden
+                  className="shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-[#E9C176] to-[#8B6A2E] flex items-center justify-center font-bebas text-[#121B33] text-xl"
+                >
+                  {contacto.nombre
+                    .replace(/^(Mtra?\.|Ing\.|Lic\.|Dr\.|Mtr\.)\s*/i, "")
+                    .split(" ")
+                    .map((w) => w[0])
+                    .slice(0, 2)
+                    .join("")}
+                </div>
+                <div className="flex-1 min-w-0 text-left">
+                  <p className="font-montserrat font-bold text-white text-sm leading-tight">
+                    {contacto.nombre}
+                  </p>
+                  <p className="font-montserrat text-white/60 text-xs mt-0.5">
+                    {contacto.cargo}
+                  </p>
+                  <a
+                    href={`mailto:${contacto.email}`}
+                    className="font-montserrat text-[#E9C176] text-xs mt-1 inline-flex items-center gap-1.5 hover:underline break-all"
+                  >
+                    <Mail size={12} className="shrink-0" />
+                    {contacto.email}
+                  </a>
+                </div>
+              </div>
             </div>
           </FadeUp>
         </div>

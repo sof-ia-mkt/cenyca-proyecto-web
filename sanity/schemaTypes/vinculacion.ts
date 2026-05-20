@@ -338,13 +338,63 @@ export const vinculacion = defineType({
         "Accede a talento formado para la industria, desarrolla proyectos colaborativos y forma parte de una red de aliados que está transformando Baja California.",
     }),
     defineField({
+      name: "ctaEmailAsunto",
+      title: "Asunto del correo (pre-rellenado)",
+      type: "string",
+      group: "cta",
+      initialValue: "Interés en convenio de vinculación con CENYCA",
+    }),
+    defineField({
+      name: "ctaEmailCuerpo",
+      title: "Cuerpo del correo (pre-rellenado)",
+      type: "text",
+      rows: 3,
+      group: "cta",
+      initialValue:
+        "Buen día, Mtra. Alejandra:\n\nMi empresa está interesada en establecer un convenio de vinculación con CENYCA Universidad. Quedo atento/a a sus comentarios.\n\nSaludos cordiales,",
+    }),
+    defineField({
+      name: "contacto",
+      title: "Persona de contacto (Vinculación)",
+      type: "object",
+      group: "cta",
+      description:
+        "Datos visibles bajo el botón del CTA. Si cambia la persona responsable, edítalo aquí.",
+      fields: [
+        defineField({
+          name: "nombre",
+          title: "Nombre",
+          type: "string",
+          initialValue: "Mtra. Alejandra Chan Gálvez",
+        }),
+        defineField({
+          name: "cargo",
+          title: "Cargo",
+          type: "string",
+          initialValue: "Dirección de Vinculación",
+        }),
+        defineField({
+          name: "email",
+          title: "Correo electrónico",
+          type: "string",
+          initialValue: "direccion.vinculacion@cenyca.edu.mx",
+          validation: (Rule) =>
+            Rule.regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, {
+              name: "email",
+              invert: false,
+            }).error("Correo inválido"),
+        }),
+      ],
+    }),
+    // Legacy — ya no se usa en el CTA pero se conserva para no romper
+    // documentos publicados con este campo todavía.
+    defineField({
       name: "ctaMensajeWhatsapp",
-      title: "Mensaje WhatsApp (pre-rellenado)",
+      title: "Mensaje WhatsApp (legacy, no usado)",
       type: "text",
       rows: 2,
       group: "cta",
-      initialValue:
-        "Hola, mi empresa está interesada en establecer un convenio de vinculación con CENYCA Universidad.",
+      hidden: true,
     }),
   ],
   preview: {
