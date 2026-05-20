@@ -190,7 +190,7 @@ export default function CtaContadorClases({
             </div>
           )}
 
-          <p className="font-montserrat text-white/85 text-base sm:text-2xl leading-relaxed max-w-xl text-balance">
+          <p className="hidden sm:block font-montserrat text-white/85 text-base sm:text-2xl leading-relaxed max-w-md sm:max-w-xl">
             {mensajePartes.length === 2 ? (
               <>
                 {mensajePartes[0]}
@@ -238,7 +238,7 @@ export default function CtaContadorClases({
                 Reclama tu {porcentajeDescuento}%
               </h3>
               <p className="font-montserrat text-white/55 text-sm mb-5">
-                Tres datos. Un asesor te contacta hoy mismo.
+                Tres datos rápidos y listo. Un asesor educativo te contacta hoy mismo por WhatsApp para apartar tu lugar.
               </p>
 
               <div className="space-y-3">

@@ -36,7 +36,7 @@ export type EmmaResult =
   | { ok: true }
   | {
       ok: false;
-      reason: "invalid_phone" | "rate_limited" | "auth" | "server" | "network";
+      reason: "invalid_phone" | "invalid_name" | "rate_limited" | "auth" | "server" | "network";
       message: string;
     };
 
@@ -44,12 +44,28 @@ export function normalizarTelefono(input: string): string {
   return input.replace(/\D/g, "").slice(-10);
 }
 
+// Validación de teléfono MX: 10 dígitos, no todos iguales, primer dígito 2-9.
+// Bloquea "0000000000", "1111111111", "5555555555", etc.
+export function esTelefonoValido(tel: string): boolean {
+  if (tel.length !== 10) return false;
+  if (/^(\d)\1{9}$/.test(tel)) return false;
+  if (!/^[2-9]/.test(tel)) return false;
+  return true;
+}
+
 export async function enviarLeadAEmma(payload: EmmaPayload): Promise<EmmaResult> {
-  if (payload.telefono.length !== 10) {
+  if (!esTelefonoValido(payload.telefono)) {
     return {
       ok: false,
       reason: "invalid_phone",
-      message: "Verifica tu teléfono (debe tener 10 dígitos).",
+      message: "Verifica tu teléfono. Debe ser un número mexicano válido de 10 dígitos.",
+    };
+  }
+  if (!payload.nombre.trim()) {
+    return {
+      ok: false,
+      reason: "invalid_name",
+      message: "Por favor escribe tu nombre completo.",
     };
   }
 

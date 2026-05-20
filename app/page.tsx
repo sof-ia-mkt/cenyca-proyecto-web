@@ -501,7 +501,7 @@ function CampusHero({ campus: c, otros = [] }: { campus: Campus; otros?: Campus[
             {/* Ubicación Casa Blanca + link Google Maps */}
             <div className="mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-x-2 gap-y-1 text-white/60 text-sm">
               <MapPin size={14} className="text-[#00D4FF]" strokeWidth={2} />
-              <span>{c.direccion}</span>
+              <span className="inline-block text-balance">{c.direccion}</span>
               {c.urlMaps && (
                 <>
                   <span aria-hidden className="text-white/25">·</span>
