@@ -105,7 +105,7 @@ type Configuracion = {
 const descripcionLargaComponents: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
-      <p className="font-montserrat text-[#444] text-base sm:text-lg leading-[1.8] mb-5 text-justify hyphens-auto">{children}</p>
+      <p className="font-montserrat text-[#444] text-base sm:text-lg leading-[1.8] mb-5 text-left md:text-justify hyphens-auto">{children}</p>
     ),
     h2: ({ children }) => (
       <h3 className="font-bebas text-[#121B33] text-3xl sm:text-4xl tracking-wide mt-10 mb-4">{children}</h3>

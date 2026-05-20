@@ -84,7 +84,7 @@ const ingenierias = [
     tagline: "Optimización y Sistemas de Valor",
     slug: "ingenieria-industrial",
     span: "md:col-span-8 md:h-[600px]",
-    aspect: "aspect-[16/9] md:aspect-auto",
+    aspect: "aspect-[4/3] md:aspect-auto",
   },
   {
     titulo: "Sistemas",
@@ -105,7 +105,7 @@ const ingenierias = [
     tagline: "Energía e Innovación Motriz",
     slug: "ingenieria-electromecanica",
     span: "md:col-span-8 md:h-[500px]",
-    aspect: "aspect-[16/9] md:aspect-auto",
+    aspect: "aspect-[4/3] md:aspect-auto",
   },
 ] as const;
 
@@ -177,8 +177,8 @@ function SeccionExcelencia({ carreras }: { carreras: Carrera[] }) {
                     <div className="w-full h-full bg-gradient-to-br from-[#1E2D4A] to-[#121B33]" />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
-                  <div className="absolute bottom-12 left-12 right-12">
-                    <h3 className="text-white text-3xl font-bold mb-2" style={{ letterSpacing: "-0.01em" }}>
+                  <div className="absolute bottom-6 left-6 right-6 md:bottom-12 md:left-12 md:right-12">
+                    <h3 className="text-white text-2xl md:text-3xl font-bold mb-2" style={{ letterSpacing: "-0.01em" }}>
                       {ing.titulo}
                     </h3>
                     <p className="text-white/70 font-medium tracking-wide uppercase text-xs">
