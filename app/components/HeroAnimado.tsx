@@ -194,7 +194,7 @@ export default function HeroAnimado({ slides }: { slides: HeroSlide[] }) {
             href="/#planteles"
             className="group relative px-8 py-4 bg-white text-[#121B33] font-bold rounded-full transition-all hover:pr-12 inline-flex items-center"
           >
-            Agendar recorrido en campus
+            Agendar Recorrido en Campus
             <ArrowRight
               size={18}
               className="absolute right-4 opacity-0 group-hover:opacity-100 transition-all"
