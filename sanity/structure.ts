@@ -29,9 +29,17 @@ export const structure: StructureResolver = (S) =>
             .schemaType('vinculacion')
             .documentId('vinculacion-page')
         ),
+      // Singleton: Nosotros
+      S.listItem()
+        .title('Nosotros (Página)')
+        .child(
+          S.document()
+            .schemaType('nosotros')
+            .documentId('nosotros-page')
+        ),
       S.divider(),
       // Resto de tipos (sin singletons para evitar duplicados en el menú)
       ...S.documentTypeListItems().filter(
-        (item) => !['configuracion', 'historia', 'vinculacion'].includes(item.getId() ?? '')
+        (item) => !['configuracion', 'historia', 'vinculacion', 'nosotros'].includes(item.getId() ?? '')
       ),
     ])

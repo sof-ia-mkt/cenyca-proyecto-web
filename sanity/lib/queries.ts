@@ -308,3 +308,51 @@ export const avisoBySlugQuery = groq`
     contenido
   }
 `
+
+// ─── Nosotros (singleton) ────────────────────────────────────────────────────
+
+export const nosotrosPageQuery = groq`
+  *[_type == "nosotros" && _id == "nosotros-page"][0] {
+    heroKicker,
+    heroTitulo,
+    heroFrase,
+    "heroImagenUrl": heroImagen.asset->url,
+    "heroImagenAlt": heroImagen.alt,
+    historiaKicker,
+    historiaTitulo,
+    historiaLead,
+    historiaParrafos,
+    historiaCierre,
+    "directorImagenUrl": directorImagen.asset->url,
+    "directorImagenAlt": directorImagen.alt,
+    directorCita,
+    directorNombre,
+    directorCargo,
+    cbKicker,
+    cbTitulo,
+    cbDescripcion,
+    "cbVideo1Url": cbVideo1.asset->url,
+    cbVideo1Label,
+    "cbVideo2Url": cbVideo2.asset->url,
+    cbVideo2Label,
+    "cbGaleria": cbGaleria[]{
+      "imagenUrl": imagen.asset->url,
+      "imagenAlt": imagen.alt,
+      titulo
+    },
+    campusKicker,
+    campusTitulo,
+    campusDescripcion,
+    "campusLista": campusLista[]{ nombre, ciudad, direccion, principal },
+    mision,
+    vision,
+    valoresTitulo,
+    "valores": valores[]{ icono, titulo, descripcion },
+    ctaTitulo,
+    ctaDescripcion,
+    ctaBoton1Texto,
+    ctaBoton1Url,
+    ctaBoton2Texto,
+    ctaBoton2Url
+  }
+`

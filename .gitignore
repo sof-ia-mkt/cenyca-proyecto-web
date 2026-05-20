@@ -39,6 +39,9 @@ yarn-error.log*
 # videos originales pesados (solo subir versiones optimizadas)
 public/videos/*.mov
 
+# videos de nosotros — viven en el CDN de Sanity, no en el repo
+public/nosotros/*.mp4
+
 # vercel
 .vercel
 
