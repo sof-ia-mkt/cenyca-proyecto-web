@@ -10,7 +10,7 @@ const navLinks = [
   { label: "Oferta Académica", href: "/oferta-academica" },
   { label: "Vida Estudiantil", href: "/vida-estudiantil" },
   { label: "Vinculación", href: "/vinculacion" },
-  { label: "Directorio", href: "/directorio" },
+  { label: "Noticias", href: "/noticias" },
 ];
 
 export default function Navbar() {
@@ -52,7 +52,7 @@ export default function Navbar() {
             scrolled ? "h-[64px]" : "h-[96px]"
           }`}
         >
-          {/* Logo + Slogan */}
+          {/* Logo */}
           <Link href="/" className="flex items-center gap-3 sm:gap-4 flex-shrink-0 group">
             <Image
               src="/logo.avif"
@@ -64,36 +64,6 @@ export default function Navbar() {
                 scrolled ? "h-9 w-auto" : "h-12 w-auto"
               }`}
             />
-            {/* Slogan al lado — se oculta en mobile para ahorrar espacio */}
-            <span
-              aria-hidden
-              className={`hidden md:block h-8 w-px bg-white/15 transition-opacity duration-300 ${
-                scrolled ? "opacity-60" : "opacity-100"
-              }`}
-            />
-            {/* Slogan como texto — más legible que la imagen, escala mejor */}
-            <span
-              className={`hidden md:flex flex-col leading-tight transition-opacity duration-300 ${
-                scrolled ? "opacity-80" : "opacity-95"
-              }`}
-            >
-              <span
-                className={`font-montserrat text-white/95 font-semibold tracking-wide transition-[font-size] duration-300 ${
-                  scrolled ? "text-[11px]" : "text-[13px]"
-                }`}
-                style={{ letterSpacing: "0.04em" }}
-              >
-                Donde tu potencial
-              </span>
-              <span
-                className={`font-montserrat text-[#00D4FF] font-bold tracking-wide transition-[font-size] duration-300 ${
-                  scrolled ? "text-[11px]" : "text-[13px]"
-                }`}
-                style={{ letterSpacing: "0.04em" }}
-              >
-                se vuelve éxito
-              </span>
-            </span>
           </Link>
 
           {/* Nav desktop */}
