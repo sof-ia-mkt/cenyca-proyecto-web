@@ -6,5 +6,5 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: false, // Siempre leer datos frescos desde Sanity API
+  useCdn: true, // CDN de Sanity: lecturas rápidas; ISR/revalidate maneja frescura
 })

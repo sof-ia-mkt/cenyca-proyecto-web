@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /studio/
 
-Sitemap: https://cenyca-proyecto-web.vercel.app/sitemap.xml
+Sitemap: https://oficial.cenyca.edu.mx/sitemap.xml
