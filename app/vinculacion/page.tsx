@@ -413,7 +413,10 @@ export default async function VinculacionPage() {
               </span>
               <span aria-hidden className="block w-8 h-px bg-[#E9C176]" />
             </div>
-            <h1 className="font-bebas text-white text-7xl sm:text-8xl lg:text-9xl tracking-wide mb-6 leading-none text-balance">
+            <h1
+              className="font-bebas text-white tracking-wide mb-6 leading-none text-balance"
+              style={{ fontSize: "clamp(2.75rem, 11vw, 8rem)" }}
+            >
               {heroTitulo}
             </h1>
             <p className="font-montserrat text-white/75 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-14 text-pretty">
