@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import {
   ArrowRight,
   Mail,
@@ -710,10 +709,10 @@ export default async function VinculacionPage() {
             </p>
           </ScaleIn>
           <FadeUp delay={0.2}>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex justify-center">
               <a
                 href={mailtoHref}
-                className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#E9C176] to-[#c19a4a] text-[#121B33] font-montserrat font-bold px-10 py-4 rounded-full hover:from-[#f0cd87] hover:to-[#d4ab5a] transition-all duration-300 hover:scale-105 shadow-lg shadow-[#E9C176]/20"
+                className="btn-shine group w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#E9C176] to-[#c19a4a] text-[#121B33] font-montserrat font-bold px-10 py-4 rounded-full hover:from-[#f0cd87] hover:to-[#d4ab5a] transition-all duration-300 hover:scale-105 shadow-xl shadow-[#E9C176]/40"
               >
                 <Mail size={18} /> Escribir a Vinculación
                 <ArrowRight
@@ -721,12 +720,6 @@ export default async function VinculacionPage() {
                   className="group-hover:translate-x-1 transition-transform"
                 />
               </a>
-              <Link
-                href="/nosotros"
-                className="w-full sm:w-auto border-2 border-white/30 text-white font-montserrat font-bold px-10 py-4 rounded-full hover:border-[#E9C176] hover:text-[#E9C176] transition-all duration-300 text-center"
-              >
-                Conocer CENYCA
-              </Link>
             </div>
           </FadeUp>
 
