@@ -234,7 +234,7 @@ export default function AliadosMarquee({
               <div
                 key={`${a.nombre}-${i}`}
                 data-logo
-                className="logo-item flex items-center gap-14 shrink-0"
+                className="logo-item group/logo flex items-center gap-14 shrink-0"
                 title={a.nombre}
               >
                 {a.logo ? (
@@ -245,11 +245,11 @@ export default function AliadosMarquee({
                       fill
                       sizes="160px"
                       draggable={false}
-                      className="object-contain opacity-80 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 pointer-events-none"
+                      className="object-contain opacity-80 group-hover/logo:opacity-100 transition-opacity grayscale group-hover/logo:grayscale-0 pointer-events-none"
                     />
                   </span>
                 ) : (
-                  <span className="font-montserrat font-bold text-[#121B33] text-xl sm:text-2xl uppercase tracking-wider opacity-80 hover:opacity-100 transition-opacity">
+                  <span className="font-montserrat font-bold text-[#121B33] text-xl sm:text-2xl uppercase tracking-wider opacity-80 group-hover/logo:opacity-100 transition-opacity">
                     {a.nombre}
                   </span>
                 )}
