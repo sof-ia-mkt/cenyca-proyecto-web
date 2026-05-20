@@ -485,7 +485,7 @@ export default async function VinculacionPage() {
                   <p className="font-montserrat font-bold text-[#121B33] text-base">
                     {rector.nombre}
                   </p>
-                  <p className="font-montserrat text-[#666] text-xs mt-1 uppercase tracking-wider">
+                  <p className="font-montserrat text-[#45464D] text-xs mt-1 uppercase tracking-wider">
                     {rector.cargo}
                   </p>
                 </div>
@@ -498,7 +498,7 @@ export default async function VinculacionPage() {
                   aria-hidden
                   className="absolute top-0 left-0 h-full w-[3px] bg-gradient-to-b from-[#E9C176] via-[#E9C176] to-transparent"
                 />
-                <blockquote className="font-montserrat text-[#333] text-lg sm:text-xl leading-relaxed italic whitespace-pre-line text-justify">
+                <blockquote className="font-montserrat text-[#1E2D4A] text-lg sm:text-xl leading-relaxed italic whitespace-pre-line text-justify">
                   {rector.cita}
                 </blockquote>
                 <div className="flex items-center gap-4 mt-8">
@@ -632,7 +632,7 @@ export default async function VinculacionPage() {
               {galeriaTitulo}
             </h2>
             <div className="w-16 h-1 bg-[#E9C176] rounded mx-auto mb-4" />
-            <p className="font-montserrat text-[#666] max-w-xl mx-auto text-sm text-pretty">
+            <p className="font-montserrat text-[#45464D] max-w-xl mx-auto text-sm text-pretty">
               {galeriaDescripcion}
             </p>
           </FadeUp>
@@ -715,7 +715,7 @@ export default async function VinculacionPage() {
             <div className="flex justify-center">
               <a
                 href={mailtoHref}
-                className="btn-shine group w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#E9C176] to-[#c19a4a] text-[#121B33] font-montserrat font-bold px-10 py-4 rounded-full hover:from-[#f0cd87] hover:to-[#d4ab5a] transition-all duration-300 hover:scale-105 shadow-xl shadow-[#E9C176]/40"
+                className="btn-shine group w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#E9C176] to-[#c19a4a] text-[#121B33] font-montserrat font-bold px-10 py-4 rounded-full hover:from-[#c19a4a] hover:to-[#E9C176] transition-all duration-300 hover:scale-105 shadow-xl shadow-[#E9C176]/40"
               >
                 <Mail size={18} /> Escribir a Vinculación
                 <ArrowRight
