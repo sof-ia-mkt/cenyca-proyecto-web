@@ -151,12 +151,15 @@ async function main() {
   }
 
   // Parse HTML rows: <tr ...> ... </tr>
+  // El HTML es la fuente de verdad para conteos y estado (la CSV pública
+  // suele estar cacheada y desfasada). La CSV solo se usa para la columna
+  // mkt (oculta en el HTML).
   const trRe = /<tr[^>]*>([\s\S]*?)<\/tr>/g;
   const htmlRows = [];
   let m;
   while ((m = trRe.exec(html))) htmlRows.push(m[1]);
 
-  // Extract per-row: No., image idx (from cellImage_..._{idx}.jpg)
+  // Extract per-row: No., estado, image idx (from cellImage_..._{idx}.jpg)
   const htmlByNo = new Map();
   for (const r of htmlRows) {
     const tdRe = /<td[^>]*>([\s\S]*?)<\/td>/g;
@@ -166,24 +169,29 @@ async function main() {
     if (!cells.length) continue;
     const noText = cells[0].replace(/<[^>]+>/g, "").trim();
     if (!/^\d+$/.test(noText)) continue;
+    const estado = (cells[1] || "").replace(/<[^>]+>/g, "").trim().toLowerCase();
     const imgM = r.match(/cellImage_1287013149_(\d+)\.jpg/);
-    htmlByNo.set(noText, { imgIdx: imgM ? imgM[1] : null });
+    htmlByNo.set(noText, { imgIdx: imgM ? imgM[1] : null, estado });
   }
   console.log(`  ${htmlByNo.size} filas con No. en HTML`);
 
-  // Combinar y filtrar
-  let totalHistorico = csvData.length;
-  let totalVigentes = 0;
+  // Stats reales del HTML (CSV está desfasada)
+  let totalHistorico = htmlByNo.size;
+  let totalVigentes = [...htmlByNo.values()].filter((v) =>
+    v.estado.includes("vigente")
+  ).length;
   let totalMktSi = 0;
 
   const seen = new Set();
   const aliados = [];
 
   for (const [no, csvRow] of csvByNo) {
-    const estado = (csvRow[1] || "").toLowerCase();
+    // Estado lo tomamos del HTML (CSV está desfasada). Si el HTML no
+    // tiene esta fila, saltamos.
+    const htmlInfo = htmlByNo.get(no);
+    if (!htmlInfo) continue;
+    const isVigente = htmlInfo.estado.includes("vigente");
     const mkt = (csvRow[7] || "").trim().toLowerCase();
-    const isVigente = estado.includes("vigente");
-    if (isVigente) totalVigentes++;
     const isMkt = mkt.startsWith("si") || mkt.startsWith("sí");
     if (isVigente && isMkt) totalMktSi++;
     if (!isVigente || !isMkt) continue;
@@ -206,7 +214,6 @@ async function main() {
 
     // Logo: del HTML, image idx = No - 1 (verificado)
     const slug = slugify(nombre);
-    const htmlInfo = htmlByNo.get(no);
     let logoRel = null;
     if (htmlInfo?.imgIdx != null) {
       const srcPath = path.join(RES_DIR, `cellImage_1287013149_${htmlInfo.imgIdx}.jpg`);

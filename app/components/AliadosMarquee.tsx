@@ -105,7 +105,7 @@ export default function AliadosMarquee({
 
       <style jsx>{`
         .marquee-track {
-          animation: marquee 70s linear infinite;
+          animation: marquee 35s linear infinite;
         }
         .marquee-track:hover {
           animation-play-state: paused;
