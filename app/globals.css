@@ -120,6 +120,17 @@ h3, h4, h5, h6 {
   .btn-shine::after { animation: none; }
 }
 
+/* Shimmer "de tu ambición" — glow más sutil en mobile para no degradar legibilidad. */
+.ambition-shimmer {
+  filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.28));
+}
+@media (min-width: 768px) {
+  .ambition-shimmer {
+    filter: drop-shadow(0 0 22px rgba(0, 212, 255, 0.45))
+      drop-shadow(0 0 8px rgba(0, 212, 255, 0.4));
+  }
+}
+
 /* Justificación de body text en mobile.
    Usa :where() para baja especificidad: cualquier utilidad Tailwind explícita
    (text-center, text-left, text-right) gana sobre esta regla.

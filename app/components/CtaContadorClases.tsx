@@ -155,7 +155,7 @@ export default function CtaContadorClases({
             {kicker}
           </span>
 
-          <h2 className="font-bebas text-white text-[2.75rem] sm:text-6xl lg:text-7xl tracking-wide leading-[1.02] mb-8 text-balance uppercase">
+          <h2 className="font-bebas text-white text-[2.25rem] sm:text-6xl lg:text-7xl tracking-tight sm:tracking-wide leading-[1.05] sm:leading-[1.02] mb-8 text-balance uppercase">
             {slogan}
           </h2>
 
@@ -190,13 +190,13 @@ export default function CtaContadorClases({
             </div>
           )}
 
-          <p className="font-montserrat text-white/85 text-xl sm:text-2xl leading-snug max-w-xl text-balance">
+          <p className="font-montserrat text-white/85 text-lg sm:text-2xl leading-snug max-w-xl text-balance">
             {mensajePartes.length === 2 ? (
               <>
                 {mensajePartes[0]}
                 <span
-                  className="inline-flex items-baseline font-bebas text-[#00D4FF] tracking-wider"
-                  style={{ fontSize: "1.6em", lineHeight: 0.9 }}
+                  className="inline-flex items-baseline font-bebas text-[#00D4FF] tracking-wider align-baseline"
+                  style={{ fontSize: "1.35em", lineHeight: 1 }}
                 >
                   {porcentajeDescuento}%
                 </span>

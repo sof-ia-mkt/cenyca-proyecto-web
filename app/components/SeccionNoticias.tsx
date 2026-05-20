@@ -100,7 +100,7 @@ export default function SeccionNoticias({ noticias }: { noticias: NoticiaCard[] 
                 En vivo
               </span>
               <span className="text-[#1B2040]/30">·</span>
-              <span className="text-[#1B2040]/55 font-mono text-[11px] tracking-[0.2em]">
+              <span className="text-[#1B2040]/55 font-mono text-[11px] tracking-[0.1em] sm:tracking-[0.2em]">
                 {hoy || " "}
               </span>
             </div>

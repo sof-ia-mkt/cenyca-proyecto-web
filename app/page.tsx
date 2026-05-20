@@ -420,21 +420,19 @@ function CampusHero({ campus: c, otros = [] }: { campus: Campus; otros?: Campus[
           <h3
             className="text-white font-black"
             style={{
-              fontSize: "clamp(2.6rem, 6vw, 5.5rem)",
-              letterSpacing: "-0.04em",
-              lineHeight: 0.98,
+              fontSize: "clamp(2.2rem, 6vw, 5.5rem)",
+              letterSpacing: "-0.035em",
+              lineHeight: 1.02,
             }}
           >
             <span className="block">Diseñado a la altura</span>
             <span
-              className="block bg-clip-text text-transparent inline-block"
+              className="block bg-clip-text text-transparent ambition-shimmer"
               style={{
                 backgroundImage:
                   "linear-gradient(110deg, #00D4FF 0%, #00D4FF 35%, #B3F0FF 48%, #FFFFFF 50%, #B3F0FF 52%, #00D4FF 65%, #00D4FF 100%)",
                 backgroundSize: "250% 100%",
                 animation: "textShimmer 5s ease-in-out infinite",
-                filter:
-                  "drop-shadow(0 0 22px rgba(0,212,255,0.45)) drop-shadow(0 0 8px rgba(0,212,255,0.4))",
               }}
             >
               de tu ambición.

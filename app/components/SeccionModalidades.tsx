@@ -319,7 +319,7 @@ export default function SeccionModalidades() {
           <div className="flex flex-col items-center text-center mb-16 md:mb-20 gap-5 max-w-3xl mx-auto">
             <div className="flex items-center gap-3">
               <span aria-hidden className="block w-6 h-px bg-[#00D4FF]" />
-              <p className="text-[#00D4FF] font-bold tracking-[0.3em] uppercase text-[11px]">
+              <p className="text-[#00D4FF] font-bold tracking-[0.18em] sm:tracking-[0.3em] uppercase text-[11px] whitespace-nowrap">
                 Modalidades · Tu vida marca el ritmo
               </p>
               <span aria-hidden className="block w-6 h-px bg-[#00D4FF]" />
