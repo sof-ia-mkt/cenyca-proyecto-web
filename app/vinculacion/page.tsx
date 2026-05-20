@@ -700,7 +700,7 @@ export default async function VinculacionPage() {
               </span>
               <span aria-hidden className="block w-[2px] h-5 bg-[#E9C176]" />
             </div>
-            <h2 className="font-bebas text-white text-5xl sm:text-6xl tracking-wide mb-5 text-balance">
+            <h2 className="font-bebas text-white text-4xl sm:text-6xl tracking-wide mb-5 text-balance">
               {ctaTitulo}
             </h2>
             <div className="w-20 h-[3px] bg-gradient-to-r from-[#E9C176] to-[#8B6A2E] rounded mx-auto mb-6" />
