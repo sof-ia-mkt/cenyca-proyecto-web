@@ -244,7 +244,9 @@ export const vinculacionPageQuery = groq`
     ctaKicker,
     ctaTitulo,
     ctaDescripcion,
-    ctaMensajeWhatsapp
+    ctaEmailAsunto,
+    ctaEmailCuerpo,
+    contacto{ nombre, cargo, email }
   }
 `
 
