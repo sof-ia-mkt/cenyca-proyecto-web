@@ -4,12 +4,20 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Check, Sparkles, Clock, HeartHandshake } from "lucide-react";
 import { FadeLeft, FadeRight, FadeUp } from "@/app/components/ScrollReveal";
+import {
+  PLANTEL_LABEL,
+  CIUDAD_POR_PLANTEL,
+  enviarLeadAEmma,
+  normalizarTelefono,
+  trackLead,
+} from "@/lib/emma";
 
 type FormState = {
   nombre: string;
   telefono: string;
   email: string;
   carrera: string;
+  plantel: string;
   acepta: boolean;
 };
 
@@ -18,6 +26,7 @@ const INITIAL: FormState = {
   telefono: "",
   email: "",
   carrera: "",
+  plantel: "",
   acepta: false,
 };
 
@@ -29,16 +38,33 @@ export default function FormularioLead({
   const [form, setForm] = useState<FormState>(INITIAL);
   const [enviado, setEnviado] = useState(false);
   const [enviando, setEnviando] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!form.acepta) return;
+    if (!form.acepta || enviando) return;
+    setErrorMsg(null);
     setEnviando(true);
-    // TODO: conectar backend (Resend / Sanity / CRM)
-    setTimeout(() => {
-      setEnviando(false);
+
+    const telefonoNorm = normalizarTelefono(form.telefono);
+
+    const resultado = await enviarLeadAEmma({
+      telefono: telefonoNorm,
+      nombre: form.nombre.trim(),
+      email: form.email.trim(),
+      carrera: form.carrera || "Aún no decide",
+      plantel: PLANTEL_LABEL[form.plantel] || form.plantel,
+      ciudad: CIUDAD_POR_PLANTEL[form.plantel] || "",
+      source: "oferta-academica-web",
+    });
+
+    setEnviando(false);
+    if (resultado.ok) {
+      trackLead();
       setEnviado(true);
-    }, 600);
+      return;
+    }
+    setErrorMsg(resultado.message);
   }
 
   return (
@@ -190,6 +216,53 @@ export default function FormularioLead({
                         </span>
                       </div>
                     </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold tracking-[0.18em] uppercase text-white/70 mb-2">
+                        Plantel de interés
+                      </label>
+                      <div className="relative">
+                        <select
+                          required
+                          value={form.plantel}
+                          onChange={(e) =>
+                            setForm({ ...form, plantel: e.target.value })
+                          }
+                          className="w-full px-4 py-3.5 rounded-xl text-sm text-white outline-none appearance-none bg-white/[0.06] border border-white/15 focus:border-[#00D4FF] focus:bg-white/[0.09] transition-all pr-10"
+                          style={{
+                            color: form.plantel ? "white" : "rgba(255,255,255,0.4)",
+                          }}
+                        >
+                          <option value="" disabled style={{ background: "#121B33" }}>
+                            Selecciona un plantel
+                          </option>
+                          <option value="casablanca" style={{ background: "#121B33", color: "white" }}>
+                            CENYCA Casa Blanca (Tijuana)
+                          </option>
+                          <option value="palmas" style={{ background: "#121B33", color: "white" }}>
+                            CENYCA Palmas (Tijuana)
+                          </option>
+                          <option value="otay" style={{ background: "#121B33", color: "white" }}>
+                            CENYCA Otay (Tijuana)
+                          </option>
+                          <option value="tecate" style={{ background: "#121B33", color: "white" }}>
+                            CENYCA Tecate
+                          </option>
+                        </select>
+                        <span
+                          aria-hidden
+                          className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-white/50 text-xs"
+                        >
+                          ▼
+                        </span>
+                      </div>
+                    </div>
+
+                    {errorMsg && (
+                      <div className="text-[#FFB4B4] bg-[#FFB4B4]/10 border border-[#FFB4B4]/30 rounded-lg px-4 py-3 text-xs leading-relaxed">
+                        {errorMsg}
+                      </div>
+                    )}
 
                     <label className="flex items-start gap-3 cursor-pointer group select-none">
                       <span className="relative mt-0.5 shrink-0">

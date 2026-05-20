@@ -11,24 +11,13 @@ import {
   Sparkles,
   MessageCircle,
 } from "lucide-react";
-
-// Endpoint Emma (Novai). Misma key que el resto del sitio — ya pública.
-const API_URL = "https://emma-sistema.up.railway.app/api/landing/prospect";
-const API_KEY = "sofia-cenyca-2026-xK9mP4";
-
-const PLANTEL_LABEL: Record<string, string> = {
-  casablanca: "Casa Blanca",
-  palmas: "Palmas",
-  otay: "Otay",
-  tecate: "Tecate",
-};
-
-const CIUDAD_POR_PLANTEL: Record<string, string> = {
-  casablanca: "Tijuana",
-  palmas: "Tijuana",
-  otay: "Tijuana",
-  tecate: "Tecate",
-};
+import {
+  PLANTEL_LABEL,
+  CIUDAD_POR_PLANTEL,
+  enviarLeadAEmma,
+  normalizarTelefono,
+  trackLead,
+} from "@/lib/emma";
 
 export type CicloInicioConfig = {
   activo?: boolean;
@@ -51,13 +40,6 @@ type Status =
   | { kind: "submitting" }
   | { kind: "error"; message: string }
   | { kind: "success" };
-
-function trackLead() {
-  if (typeof window !== "undefined") {
-    const w = window as unknown as { fbq?: (a: string, e: string) => void };
-    w.fbq?.("track", "Lead");
-  }
-}
 
 function useCountdown(targetISO?: string) {
   // Arranca en null: el servidor y el primer render del cliente no pintan el
@@ -108,42 +90,24 @@ export default function CtaContadorClases({
     if (status.kind === "submitting") return;
     setStatus({ kind: "submitting" });
 
-    const telefonoNorm = form.telefono.replace(/\D/g, "").slice(-10);
-    if (telefonoNorm.length !== 10) {
-      setStatus({ kind: "error", message: "Verifica tu teléfono (10 dígitos)." });
+    const telefonoNorm = normalizarTelefono(form.telefono);
+
+    const resultado = await enviarLeadAEmma({
+      telefono: telefonoNorm,
+      nombre: form.nombre.trim(),
+      email: "",
+      carrera: "Sin especificar",
+      plantel: PLANTEL_LABEL[form.plantel] || form.plantel,
+      ciudad: CIUDAD_POR_PLANTEL[form.plantel] || "Tijuana",
+      source: "home-cta-contador",
+    });
+
+    if (resultado.ok) {
+      trackLead();
+      setStatus({ kind: "success" });
       return;
     }
-
-    try {
-      const res = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "X-API-Key": API_KEY },
-        body: JSON.stringify({
-          telefono: telefonoNorm,
-          nombre: form.nombre.trim(),
-          email: "",
-          carrera: "Sin especificar",
-          plantel: PLANTEL_LABEL[form.plantel] || form.plantel,
-          ciudad: CIUDAD_POR_PLANTEL[form.plantel] || "Tijuana",
-          source: "home-cta-contador",
-        }),
-      });
-
-      if (res.ok) {
-        trackLead();
-        setStatus({ kind: "success" });
-        return;
-      }
-      if (res.status === 422) {
-        setStatus({ kind: "error", message: "Verifica tu teléfono. Debe ser válido." });
-      } else if (res.status === 429) {
-        setStatus({ kind: "error", message: "Demasiados intentos. Espera un momento." });
-      } else {
-        setStatus({ kind: "error", message: "Hubo un error. Intenta de nuevo." });
-      }
-    } catch {
-      setStatus({ kind: "error", message: "Sin conexión. Intenta de nuevo." });
-    }
+    setStatus({ kind: "error", message: resultado.message });
   }
 
   return (

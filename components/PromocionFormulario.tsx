@@ -18,25 +18,13 @@ import {
   Smartphone,
 } from "lucide-react";
 import { getCarreraIdentificadores } from "@/lib/carreraIdentificadores";
-
-// Endpoint Emma (Novai). Misma key que las landings dedicadas — ya es pública
-// porque vive en HTML estático de landing-pages-cenyca/*/index.html.
-const API_URL = "https://emma-sistema.up.railway.app/api/landing/prospect";
-const API_KEY = "sofia-cenyca-2026-xK9mP4";
-
-const PLANTEL_LABEL: Record<string, string> = {
-  casablanca: "Casa Blanca",
-  palmas: "Palmas",
-  otay: "Otay",
-  tecate: "Tecate",
-};
-
-const CIUDAD_POR_PLANTEL: Record<string, string> = {
-  casablanca: "Tijuana",
-  palmas: "Tijuana",
-  otay: "Tijuana",
-  tecate: "Tecate",
-};
+import {
+  PLANTEL_LABEL,
+  CIUDAD_POR_PLANTEL,
+  enviarLeadAEmma,
+  normalizarTelefono,
+  trackLead,
+} from "@/lib/emma";
 
 export type PromocionConfig = {
   activa?: boolean;
@@ -95,14 +83,6 @@ function formatFecha(d: Date): string {
   return d.toLocaleDateString("es-MX", { day: "2-digit", month: "long", year: "numeric" });
 }
 
-// Telemetría Meta — si fbq está cargado, dispara Lead (igual que en las landings).
-function trackLead() {
-  if (typeof window !== "undefined") {
-    const w = window as unknown as { fbq?: (action: string, event: string) => void };
-    w.fbq?.("track", "Lead");
-  }
-}
-
 export default function PromocionFormulario({
   carreraSlug,
   carreraNombre,
@@ -143,15 +123,10 @@ export default function PromocionFormulario({
 
     setStatus({ kind: "submitting" });
 
-    const telefonoNorm = form.telefono.replace(/\D/g, "").slice(-10);
-    if (telefonoNorm.length !== 10) {
-      setStatus({ kind: "error", message: "Verifica tu teléfono (debe tener 10 dígitos)." });
-      return;
-    }
-
+    const telefonoNorm = normalizarTelefono(form.telefono);
     const { carrera, source } = getCarreraIdentificadores(carreraSlug, carreraNombre);
 
-    const body = {
+    const resultado = await enviarLeadAEmma({
       telefono: telefonoNorm,
       nombre: form.nombre.trim(),
       email: form.email.trim(),
@@ -161,39 +136,20 @@ export default function PromocionFormulario({
       turno: form.turno || undefined,
       mensaje: form.mensaje.trim() || undefined,
       source,
-    };
+    });
 
-    try {
-      const res = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "X-API-Key": API_KEY },
-        body: JSON.stringify(body),
+    if (resultado.ok) {
+      const emitidoEn = new Date();
+      const expiraEn = new Date(emitidoEn);
+      expiraEn.setDate(expiraEn.getDate() + dias);
+      trackLead();
+      setStatus({
+        kind: "success",
+        data: { ...form, telefono: telefonoNorm, codigo: generarCodigo(), emitidoEn, expiraEn },
       });
-
-      if (res.ok) {
-        const emitidoEn = new Date();
-        const expiraEn = new Date(emitidoEn);
-        expiraEn.setDate(expiraEn.getDate() + dias);
-        trackLead();
-        setStatus({
-          kind: "success",
-          data: { ...form, telefono: telefonoNorm, codigo: generarCodigo(), emitidoEn, expiraEn },
-        });
-        return;
-      }
-
-      if (res.status === 422) {
-        setStatus({ kind: "error", message: "Verifica tu teléfono. Debe ser un número válido." });
-      } else if (res.status === 429) {
-        setStatus({ kind: "error", message: "Demasiados intentos. Espera un momento e intenta de nuevo." });
-      } else if (res.status === 401) {
-        setStatus({ kind: "error", message: "Problema de configuración. Contáctanos por WhatsApp." });
-      } else {
-        setStatus({ kind: "error", message: "Hubo un error. Intenta de nuevo en un momento." });
-      }
-    } catch {
-      setStatus({ kind: "error", message: "Sin conexión. Verifica tu internet e intenta de nuevo." });
+      return;
     }
+    setStatus({ kind: "error", message: resultado.message });
   }
 
   if (status.kind === "success") {

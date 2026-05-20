@@ -32,7 +32,6 @@ const isDev = process.env.NODE_ENV !== "production";
 const publicHeaders = [
   ...commonHeaders,
   { key: "X-Frame-Options", value: "DENY" },
-  { key: "Access-Control-Allow-Origin", value: "https://cenyca-proyecto-web.vercel.app" },
   {
     key: "Content-Security-Policy",
     value: [
