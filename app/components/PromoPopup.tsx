@@ -179,7 +179,7 @@ export default function PromoPopup({
                   }, 80);
                 }
               }}
-              className="group inline-flex items-center justify-center gap-2 bg-[#00D4FF] hover:bg-[#33DDFF] text-[#121B33] font-extrabold text-sm md:text-base uppercase tracking-[0.18em] px-6 py-3.5 md:px-7 md:py-4 rounded-full transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_50px_rgba(0,212,255,0.65)] shadow-[0_10px_32px_rgba(0,212,255,0.4)]"
+              className="group inline-flex items-center justify-center gap-2 whitespace-nowrap bg-[#00D4FF] hover:bg-[#33DDFF] text-[#121B33] font-extrabold text-[13px] md:text-base uppercase tracking-[0.08em] md:tracking-[0.18em] px-5 py-3.5 md:px-7 md:py-4 rounded-full transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_50px_rgba(0,212,255,0.65)] shadow-[0_10px_32px_rgba(0,212,255,0.4)]"
             >
               Quiero la promoción
               <ArrowRight

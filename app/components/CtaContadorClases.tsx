@@ -190,17 +190,13 @@ export default function CtaContadorClases({
             </div>
           )}
 
-          <p className="font-montserrat text-white/85 text-lg sm:text-2xl leading-snug max-w-xl text-balance">
+          <p className="font-montserrat text-white/85 text-base sm:text-2xl leading-relaxed max-w-xl text-balance">
             {mensajePartes.length === 2 ? (
               <>
                 {mensajePartes[0]}
-                <span
-                  className="inline-flex items-baseline font-bebas text-[#00D4FF] tracking-wider align-baseline"
-                  style={{ fontSize: "1.35em", lineHeight: 1 }}
-                >
+                <span className="font-bold text-[#00D4FF] whitespace-nowrap">
                   {porcentajeDescuento}%
                 </span>
-                <span className="inline-block w-0.5" />
                 {mensajePartes[1]}
               </>
             ) : (
