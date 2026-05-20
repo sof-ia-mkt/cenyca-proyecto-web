@@ -38,6 +38,9 @@ export default function AliadosMarquee({
   const lastDragTRef = useRef(0);
   const velocityRef = useRef(0); // px/s, used when releasing for inertia
   const reduceMotionRef = useRef(false);
+  const noHoverRef = useRef(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const activeLogoRef = useRef<HTMLElement | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
@@ -50,6 +53,17 @@ export default function AliadosMarquee({
       reduceMotionRef.current = mql.matches;
     };
     mql.addEventListener?.("change", onMql);
+
+    const mqlHover = window.matchMedia("(hover: none), (max-width: 767px)");
+    noHoverRef.current = mqlHover.matches;
+    const onMqlHover = () => {
+      noHoverRef.current = mqlHover.matches;
+      if (!mqlHover.matches && activeLogoRef.current) {
+        activeLogoRef.current.removeAttribute("data-active");
+        activeLogoRef.current = null;
+      }
+    };
+    mqlHover.addEventListener?.("change", onMqlHover);
 
     const measure = () => {
       // El track contiene el array duplicado: la mitad es un loop completo.
@@ -86,6 +100,21 @@ export default function AliadosMarquee({
       if (offsetRef.current > 0) offsetRef.current -= half;
 
       track.style.transform = `translate3d(${offsetRef.current}px, 0, 0)`;
+
+      // En dispositivos sin hover, iluminar el logo más cercano al centro horizontal
+      if (noHoverRef.current) {
+        const trackRect = track.getBoundingClientRect();
+        const cx = window.innerWidth / 2;
+        const cy = trackRect.top + trackRect.height / 2;
+        const hit = document.elementFromPoint(cx, cy) as HTMLElement | null;
+        const logoEl = hit?.closest("[data-logo]") as HTMLElement | null;
+        if (logoEl !== activeLogoRef.current) {
+          activeLogoRef.current?.removeAttribute("data-active");
+          if (logoEl) logoEl.setAttribute("data-active", "true");
+          activeLogoRef.current = logoEl;
+        }
+      }
+
       raf = requestAnimationFrame(step);
     };
     raf = requestAnimationFrame(step);
@@ -94,6 +123,7 @@ export default function AliadosMarquee({
       cancelAnimationFrame(raf);
       ro.disconnect();
       mql.removeEventListener?.("change", onMql);
+      mqlHover.removeEventListener?.("change", onMqlHover);
     };
   }, []);
 
@@ -132,6 +162,7 @@ export default function AliadosMarquee({
 
   return (
     <section
+      ref={sectionRef}
       aria-label="Aliados de CENYCA"
       className="relative bg-white py-14 overflow-hidden"
     >
@@ -202,7 +233,8 @@ export default function AliadosMarquee({
             {loop.map((a, i) => (
               <div
                 key={`${a.nombre}-${i}`}
-                className="flex items-center gap-14 shrink-0"
+                data-logo
+                className="logo-item flex items-center gap-14 shrink-0"
                 title={a.nombre}
               >
                 {a.logo ? (
@@ -230,6 +262,16 @@ export default function AliadosMarquee({
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        :global(.logo-item[data-active="true"] img) {
+          filter: none !important;
+          opacity: 1 !important;
+        }
+        :global(.logo-item[data-active="true"] span.font-montserrat) {
+          opacity: 1 !important;
+        }
+      `}</style>
     </section>
   );
 }
