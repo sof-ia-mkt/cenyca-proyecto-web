@@ -6,17 +6,26 @@ export const carrera = defineType({
   title: "Carreras",
   type: "document",
   icon: () => "🎓",
+  groups: [
+    { name: "info", title: "Información", default: true },
+    { name: "contenido", title: "Contenido" },
+    { name: "imagenes", title: "Imágenes" },
+    { name: "inversion", title: "Inversión / Costos" },
+    { name: "seo", title: "SEO" },
+  ],
   fields: [
     defineField({
       name: "nombre",
       title: "Nombre de la carrera",
       type: "string",
+      group: "info",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "slug",
       title: "Slug (URL)",
       type: "slug",
+      group: "info",
       description: "Se genera automáticamente del nombre. Ejemplo: ingenieria-mecatronica",
       options: slugOptions("nombre"),
       validation: slugValidation,
@@ -25,6 +34,7 @@ export const carrera = defineType({
       name: "area",
       title: "Área académica",
       type: "string",
+      group: "info",
       options: {
         list: [
           { title: "Ingeniería", value: "ingenieria" },
@@ -41,6 +51,7 @@ export const carrera = defineType({
       name: "grado",
       title: "Grado académico",
       type: "string",
+      group: "info",
       options: {
         list: [
           { title: "Licenciatura", value: "licenciatura" },
@@ -55,6 +66,7 @@ export const carrera = defineType({
       name: "modalidades",
       title: "Modalidades disponibles",
       type: "array",
+      group: "info",
       of: [{ type: "string" }],
       options: {
         list: [
@@ -69,6 +81,7 @@ export const carrera = defineType({
       name: "duracion",
       title: "Duración",
       type: "string",
+      group: "info",
       description: "Ejemplo: 3 años (12 cuatrimestres)",
       initialValue: "3 años (12 cuatrimestres)",
     }),
@@ -77,6 +90,7 @@ export const carrera = defineType({
       title: "Descripción corta",
       description: "Aparece en tarjetas y listados. Máximo 160 caracteres.",
       type: "text",
+      group: "contenido",
       rows: 3,
       validation: (Rule) => Rule.required().max(160),
     }),
@@ -84,6 +98,7 @@ export const carrera = defineType({
       name: "descripcionLarga",
       title: "Descripción completa",
       type: "array",
+      group: "contenido",
       of: [{ type: "block" }],
     }),
     defineField({
@@ -92,6 +107,7 @@ export const carrera = defineType({
       description:
         "Foto épica de la carrera. Se usa como hero de la página individual /carreras/[slug] y, si no defines la imagen de tarjeta abajo, también en los listados.",
       type: "image",
+      group: "imagenes",
       options: { hotspot: true },
       fields: [
         defineField({
@@ -108,6 +124,7 @@ export const carrera = defineType({
       description:
         "Imagen alternativa para cards en /ingenierias, /licenciaturas, /oferta-academica y home. Útil si la imagen principal es muy abierta/cinematográfica y no queda bien en cards chicas. Si se deja vacía, los listados usan la imagen principal.",
       type: "image",
+      group: "imagenes",
       options: { hotspot: true },
       fields: [
         defineField({
@@ -122,12 +139,14 @@ export const carrera = defineType({
       title: "Color acento (para la tarjeta)",
       description: "Hex del color de esta carrera. Ejemplo: #00D4FF",
       type: "string",
+      group: "info",
       initialValue: "#00D4FF",
     }),
     defineField({
       name: "beneficios",
       title: "Beneficios del programa",
       type: "array",
+      group: "contenido",
       of: [
         {
           type: "object",
@@ -147,6 +166,7 @@ export const carrera = defineType({
       title: "Perfil de egresado",
       description: "Lista de competencias y habilidades del egresado",
       type: "array",
+      group: "contenido",
       of: [{ type: "string" }],
     }),
     defineField({
@@ -154,6 +174,7 @@ export const carrera = defineType({
       title: "Campo laboral",
       description: "Áreas o empresas donde puede trabajar el egresado",
       type: "array",
+      group: "contenido",
       of: [{ type: "string" }],
     }),
     defineField({
@@ -162,6 +183,7 @@ export const carrera = defineType({
       description:
         "Tarjetas con los horarios y costos del programa. Se muestran como sección dedicada en la página de la carrera. Soporta 1 o 2 cards (entre semana, fin de semana) y diferentes precios por campus.",
       type: "object",
+      group: "inversion",
       fields: [
         defineField({
           name: "activa",
@@ -332,6 +354,7 @@ export const carrera = defineType({
       description:
         "Fotos de laboratorios, talleres, equipos y alumnos en práctica. Recomendado: 6 imágenes (se muestran en grid 3×2). Sube entre 3 y 8.",
       type: "array",
+      group: "imagenes",
       of: [
         {
           type: "image",
@@ -349,21 +372,17 @@ export const carrera = defineType({
       validation: (Rule) => Rule.max(8),
     }),
     defineField({
-      name: "landingUrl",
-      title: "URL de la landing page actual",
-      description: "Si tienes una landing dedicada, ponla aquí.",
-      type: "url",
-    }),
-    defineField({
       name: "orden",
       title: "Orden de aparición",
       type: "number",
+      group: "info",
       description: "Número para ordenar las carreras en el listado. Menor número = aparece primero.",
     }),
     defineField({
       name: "activa",
       title: "¿Carrera activa?",
       type: "boolean",
+      group: "info",
       description: "Desactiva para ocultar temporalmente sin eliminar.",
       initialValue: true,
     }),
@@ -371,6 +390,7 @@ export const carrera = defineType({
       name: "seo",
       title: "SEO",
       type: "object",
+      group: "seo",
       fields: [
         defineField({ name: "titulo", title: "Título SEO", type: "string", validation: (Rule) => Rule.max(60) }),
         defineField({ name: "descripcion", title: "Meta descripción", type: "text", rows: 2, validation: (Rule) => Rule.max(160) }),

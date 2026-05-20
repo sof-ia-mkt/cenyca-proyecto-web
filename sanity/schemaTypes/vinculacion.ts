@@ -386,16 +386,6 @@ export const vinculacion = defineType({
         }),
       ],
     }),
-    // Legacy — ya no se usa en el CTA pero se conserva para no romper
-    // documentos publicados con este campo todavía.
-    defineField({
-      name: "ctaMensajeWhatsapp",
-      title: "Mensaje WhatsApp (legacy, no usado)",
-      type: "text",
-      rows: 2,
-      group: "cta",
-      hidden: true,
-    }),
   ],
   preview: {
     prepare: () => ({ title: "Vinculación (Página)" }),

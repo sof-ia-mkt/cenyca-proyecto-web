@@ -6,39 +6,22 @@ export const configuracion = defineType({
   type: "document",
   icon: () => "⚙️",
   // Solo debe existir un documento de configuración (singleton)
+  groups: [
+    { name: "identidad", title: "Identidad y contacto", default: true },
+    { name: "seo", title: "SEO" },
+    { name: "home", title: "Home" },
+    { name: "carrera", title: "Páginas de carrera" },
+    { name: "imagenes", title: "Imágenes de secciones" },
+  ],
   fields: [
     // --- IDENTIDAD ---
     defineField({
       name: "nombreUniversidad",
       title: "Nombre de la universidad",
       type: "string",
+      group: "identidad",
       initialValue: "CENYCA Universidad",
       validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "slogan",
-      title: "Slogan",
-      type: "string",
-    }),
-    defineField({
-      name: "logo",
-      title: "Logo principal",
-      type: "image",
-      options: { hotspot: false },
-      fields: [
-        defineField({ name: "alt", title: "Texto alternativo", type: "string" }),
-      ],
-    }),
-    defineField({
-      name: "logoBlanco",
-      title: "Logo blanco (para fondos oscuros)",
-      type: "image",
-      options: { hotspot: false },
-    }),
-    defineField({
-      name: "favicon",
-      title: "Favicon",
-      type: "image",
     }),
 
     // --- CONTACTO GENERAL ---
@@ -46,6 +29,7 @@ export const configuracion = defineType({
       name: "contacto",
       title: "Contacto general",
       type: "object",
+      group: "identidad",
       fields: [
         defineField({ name: "telefono", title: "Teléfono principal", type: "string" }),
         defineField({ name: "whatsapp", title: "WhatsApp (con código de país)", type: "string", description: "Ejemplo: 526641234567" }),
@@ -59,6 +43,7 @@ export const configuracion = defineType({
       name: "redesSociales",
       title: "Redes sociales",
       type: "object",
+      group: "identidad",
       fields: [
         defineField({ name: "facebook", title: "Facebook URL", type: "url" }),
         defineField({ name: "instagram", title: "Instagram URL", type: "url" }),
@@ -74,6 +59,7 @@ export const configuracion = defineType({
       name: "sistemas",
       title: "Links a sistemas internos",
       type: "object",
+      group: "identidad",
       fields: [
         defineField({ name: "plataformaAlumnos", title: "Plataforma Alumnos URL", type: "url", initialValue: "https://alumnos.cenyca.edu.mx" }),
         defineField({ name: "inscripciones", title: "Portal de Inscripciones URL", type: "url", initialValue: "https://inscripciones.cenyca.edu.mx" }),
@@ -88,6 +74,7 @@ export const configuracion = defineType({
       description:
         "Imagen de fondo que aparece en el popup de promoción del home (al scrollear).",
       type: "object",
+      group: "home",
       fields: [
         defineField({
           name: "imagen",
@@ -107,6 +94,7 @@ export const configuracion = defineType({
       name: "seo",
       title: "SEO Global",
       type: "object",
+      group: "seo",
       fields: [
         defineField({ name: "tituloBase", title: "Título base del sitio", type: "string", initialValue: "CENYCA Universidad" }),
         defineField({ name: "descripcion", title: "Meta descripción global", type: "text", rows: 2, validation: (Rule) => Rule.max(160) }),
@@ -120,6 +108,7 @@ export const configuracion = defineType({
       title: "Hero / Carrusel",
       description: "Imágenes y texto que aparecen en el carrusel principal de la página de inicio.",
       type: "array",
+      group: "home",
       of: [
         {
           type: "object",
@@ -164,50 +153,13 @@ export const configuracion = defineType({
       ],
     }),
 
-    // --- IMÁGENES SECCIÓN "ELIGE TU PROGRAMA" ---
-    defineField({
-      name: "imagenesPrograma",
-      title: "Imágenes — Elige tu Programa",
-      description: "Fotos de fondo para cada tarjeta de programa en la página de inicio.",
-      type: "object",
-      fields: [
-        defineField({
-          name: "bachillerato",
-          title: "Bachillerato CENYCA",
-          type: "image",
-          options: { hotspot: true },
-          description: "Tamaño recomendado: 800 × 520 px",
-        }),
-        defineField({
-          name: "licenciaturas",
-          title: "Licenciaturas Ejecutivas",
-          type: "image",
-          options: { hotspot: true },
-          description: "Tamaño recomendado: 800 × 520 px",
-        }),
-        defineField({
-          name: "posgrados",
-          title: "Posgrados",
-          type: "image",
-          options: { hotspot: true },
-          description: "Tamaño recomendado: 800 × 360 px",
-        }),
-        defineField({
-          name: "especialidades",
-          title: "Especialidades / Educación Continua",
-          type: "image",
-          options: { hotspot: true },
-          description: "Tamaño recomendado: 800 × 360 px",
-        }),
-      ],
-    }),
-
     // --- IMÁGENES OFERTA ACADÉMICA ---
     defineField({
       name: "imagenesOferta",
       title: "Imágenes — Oferta Académica",
       description: "Fotos de fondo para los bloques grandes de la página /oferta-academica.",
       type: "object",
+      group: "imagenes",
       fields: [
         defineField({
           name: "ingenierias",
@@ -232,6 +184,7 @@ export const configuracion = defineType({
       title: "Cifras institucionales",
       description: "Aparecen como contadores animados en las páginas de carrera. Recomendado: 3 o 4 cifras.",
       type: "array",
+      group: "carrera",
       of: [
         {
           type: "object",
@@ -283,6 +236,7 @@ export const configuracion = defineType({
       description:
         "Se muestra en cada página de carrera. Deja vacío para ocultar la sección. Si subes archivo MP4 Y pones YouTube ID, gana el MP4.",
       type: "object",
+      group: "carrera",
       fields: [
         defineField({
           name: "videoArchivo",
@@ -346,6 +300,7 @@ export const configuracion = defineType({
       description:
         "Configura el formulario de captura de leads que aparece en cada página de carrera, con la promoción y el mensaje del comprobante para WhatsApp.",
       type: "object",
+      group: "carrera",
       fields: [
         defineField({
           name: "activa",
@@ -414,6 +369,7 @@ export const configuracion = defineType({
       description:
         "Banner con countdown al próximo inicio de clases y formulario de captura, debajo de Modalidades en el home. Configurable porque los ciclos cambian (enero / mayo / septiembre).",
       type: "object",
+      group: "home",
       fields: [
         defineField({
           name: "activo",
@@ -457,18 +413,10 @@ export const configuracion = defineType({
         }),
       ],
     }),
-
-    // --- AVISO DE PRIVACIDAD ---
-    defineField({
-      name: "avisoPrivacidad",
-      title: "URL Aviso de Privacidad",
-      type: "url",
-    }),
   ],
   preview: {
     select: {
       title: "nombreUniversidad",
-      media: "logo",
     },
   },
 });

@@ -110,12 +110,6 @@ export const configuracionQuery = groq`
       "imagenUrl": imagen.asset->url,
       "imagenLqip": imagen.asset->metadata.lqip
     },
-    "imagenesPrograma": {
-      "bachillerato": imagenesPrograma.bachillerato.asset->url,
-      "licenciaturas": imagenesPrograma.licenciaturas.asset->url,
-      "posgrados": imagenesPrograma.posgrados.asset->url,
-      "especialidades": imagenesPrograma.especialidades.asset->url
-    },
     "imagenesOferta": {
       "ingenierias": imagenesOferta.ingenierias.asset->url,
       "licenciaturas": imagenesOferta.licenciaturas.asset->url

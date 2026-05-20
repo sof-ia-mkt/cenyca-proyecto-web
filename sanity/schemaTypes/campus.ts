@@ -1,5 +1,4 @@
 import { defineField, defineType } from "sanity";
-import { slugOptions, slugValidation } from "../lib/slugValidation";
 
 export const campus = defineType({
   name: "campus",
@@ -13,13 +12,6 @@ export const campus = defineType({
       type: "string",
       description: "Ejemplo: Campus Tijuana Este",
       validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "slug",
-      title: "Slug (URL)",
-      type: "slug",
-      options: slugOptions("nombre"),
-      validation: slugValidation,
     }),
     defineField({
       name: "ciudad",
@@ -52,11 +44,6 @@ export const campus = defineType({
       type: "string",
     }),
     defineField({
-      name: "email",
-      title: "Correo electrónico",
-      type: "string",
-    }),
-    defineField({
       name: "horario",
       title: "Horario de atención",
       type: "string",
@@ -69,13 +56,6 @@ export const campus = defineType({
       description:
         "Link de Google Maps para este plantel. Formato sugerido: https://www.google.com/maps/search/?api=1&query=<direccion-url-encoded>",
       validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "embedMaps",
-      title: "Embed de Google Maps",
-      type: "text",
-      rows: 3,
-      description: "Código src del iframe de Google Maps (solo el src, sin el tag iframe)",
     }),
     defineField({
       name: "imagen",
