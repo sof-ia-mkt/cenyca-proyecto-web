@@ -25,6 +25,7 @@ import HeroVideo from "@/app/components/HeroVideo";
 import GaleriaPrograma, { type GaleriaItem } from "@/components/GaleriaPrograma";
 import CampoLaboralGrid, { type CampoLaboralItem } from "@/app/components/CampoLaboralGrid";
 import CarreraHeroCard from "@/app/components/CarreraHeroCard";
+import ModalidadesTabla from "@/app/components/ModalidadesTabla";
 import PromocionFormulario, { type PromocionConfig } from "@/components/PromocionFormulario";
 import BloqueInversion, { type InversionConfig } from "@/components/BloqueInversion";
 import RedesSocialesCTA, { type RedesSociales } from "@/components/RedesSocialesCTA";
@@ -393,6 +394,9 @@ export default async function CarreraPage(
           </div>
         </section>
       )}
+
+      {/* ── MODALIDADES (tabla comparativa) ───────────────────────────────── */}
+      <ModalidadesTabla accent={accent} />
 
       {/* ── PROMOCIÓN / FORMULARIO DE INSCRIPCIÓN ─────────────────────────── */}
       {config?.promocionInscripcion?.activa && (

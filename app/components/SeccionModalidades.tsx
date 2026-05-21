@@ -37,17 +37,17 @@ type Modalidad = {
 const MODALIDADES: Modalidad[] = [
   {
     tag: "Escolarizada",
-    big: "5 días",
+    big: "4 días",
     bigUnit: "/sem",
-    horario: "Lunes a viernes · Matutino",
+    horario: "Lunes a jueves · Matutino",
     descripcion:
       "La experiencia universitaria completa. Convive en campus y construye tu red profesional desde el primer cuatrimestre.",
     features: [
-      "Clases presenciales L-V",
-      "Vida universitaria activa",
-      "Tutorías y asesorías presenciales",
-      "Eventos académicos y culturales",
-      "Networking con compañeros",
+      "Vida universitaria activa todos los días",
+      "Aprendizaje continuo con seguimiento diario",
+      "Red de compañeros sólida desde el primer cuatrimestre",
+      "RVOE con validez oficial",
+      "Mismo plan de estudios",
     ],
     icon: GraduationCap,
     pill: "Experiencia completa",
@@ -60,11 +60,11 @@ const MODALIDADES: Modalidad[] = [
     descripcion:
       "Combina tu carrera con tu trabajo, familia o emprendimiento. Solo un día y sigues con tu vida.",
     features: [
-      "Solo un día presencial",
-      "Plataforma online 24/7",
-      "Material y clases grabadas",
-      "Asesorías personalizadas",
-      "Validez SEP plena",
+      "Sigues trabajando los otros días sin afectar tu ingreso",
+      "Concentras tu energía académica en una sola jornada",
+      "Aplicas lo aprendido en tu empleo desde el día siguiente",
+      "RVOE con validez oficial",
+      "Mismo plan de estudios",
     ],
     icon: Calendar,
     pill: "Precio preferencial",
@@ -77,11 +77,11 @@ const MODALIDADES: Modalidad[] = [
     descripcion:
       "Para profesionistas con compromisos de lunes a viernes. Dedica el fin de semana a tu próximo nivel.",
     features: [
-      "Sábado o domingo",
-      "Pensado para profesionistas",
-      "Plataforma online 24/7",
-      "Casos prácticos aplicados",
-      "Validez SEP plena",
+      "Mantienes tu empleo de tiempo completo",
+      "Convives con otros profesionistas — red de pares de alto nivel",
+      "Casos prácticos pensados para quien ya está en la industria",
+      "RVOE con validez oficial",
+      "Mismo plan de estudios",
     ],
     icon: Clock,
     pill: "Para profesionistas",
