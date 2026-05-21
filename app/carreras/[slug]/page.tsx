@@ -12,9 +12,6 @@ import type { PortableTextBlock } from "@portabletext/types";
 import {
   ArrowLeft,
   CheckCircle2,
-  Clock,
-  GraduationCap,
-  MessageCircle,
 } from "lucide-react";
 import { client } from "@/sanity/lib/client";
 import { carreraBySlugQuery, configuracionQuery, todasCarrerasQuery } from "@/sanity/lib/queries";
@@ -27,6 +24,7 @@ import LazySelfHostedVideo from "@/components/LazySelfHostedVideo";
 import HeroVideo from "@/app/components/HeroVideo";
 import GaleriaPrograma, { type GaleriaItem } from "@/components/GaleriaPrograma";
 import CampoLaboralGrid, { type CampoLaboralItem } from "@/app/components/CampoLaboralGrid";
+import CarreraHeroCard from "@/app/components/CarreraHeroCard";
 import PromocionFormulario, { type PromocionConfig } from "@/components/PromocionFormulario";
 import BloqueInversion, { type InversionConfig } from "@/components/BloqueInversion";
 import RedesSocialesCTA, { type RedesSociales } from "@/components/RedesSocialesCTA";
@@ -49,12 +47,6 @@ const GRADO_LABEL: Record<string, string> = {
   "maestria":     "Maestría",
 };
 
-
-const MODALIDAD_LABEL: Record<string, string> = {
-  "escolarizado": "Escolarizado",
-  "ejecutivo":    "Ejecutivo (Horario Flexible)",
-  "en-linea":     "En Línea",
-};
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
 
@@ -294,89 +286,44 @@ export default async function CarreraPage(
             <ArrowLeft size={14} /> Todas las carreras
           </Link>
 
-          <div className="max-w-3xl">
-            <div className="flex flex-wrap gap-2 mb-5">
-              <span
-                className="font-montserrat text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider"
-                style={{ backgroundColor: `${accent}26`, color: accent }}
-              >
-                {areaLabel}
-              </span>
-              {gradoLabel.toLowerCase() !== areaLabel.toLowerCase() && (
-                <span className="bg-white/10 text-white/80 font-montserrat text-xs px-3 py-1 rounded-full">
-                  {gradoLabel}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+            <div className="lg:col-span-7">
+              <div className="flex flex-wrap gap-2 mb-5">
+                <span
+                  className="font-montserrat text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider"
+                  style={{ backgroundColor: `${accent}26`, color: accent }}
+                >
+                  {areaLabel}
                 </span>
-              )}
+                {gradoLabel.toLowerCase() !== areaLabel.toLowerCase() && (
+                  <span className="bg-white/10 text-white/80 font-montserrat text-xs px-3 py-1 rounded-full">
+                    {gradoLabel}
+                  </span>
+                )}
+              </div>
+
+              <h1 className="font-bebas text-white text-5xl sm:text-6xl lg:text-7xl xl:text-8xl tracking-wide leading-[0.95] mb-6 text-balance">
+                {carrera.nombre}
+              </h1>
+
+              <p className="font-montserrat text-white/80 text-lg max-w-2xl leading-relaxed text-pretty">
+                {carrera.descripcionCorta}
+              </p>
             </div>
 
-            <h1 className="font-bebas text-white text-5xl sm:text-6xl lg:text-7xl xl:text-8xl tracking-wide leading-[0.95] mb-6 text-balance">
-              {carrera.nombre}
-            </h1>
-
-            <p className="font-montserrat text-white/80 text-lg max-w-2xl leading-relaxed text-pretty">
-              {carrera.descripcionCorta}
-            </p>
-
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-10">
-              <a
-                href={
-                  config?.promocionInscripcion?.activa
-                    ? "#promocion"
-                    : `https://wa.me/${whatsapp}?text=Hola, me interesa la ${gradoLabel} en ${carrera.nombre}`
-                }
-                {...(config?.promocionInscripcion?.activa
-                  ? {}
-                  : { target: "_blank", rel: "noopener noreferrer" })}
-                className="inline-flex items-center justify-center gap-2 font-montserrat font-bold px-7 py-3.5 rounded-full transition-colors duration-300"
-                style={{ backgroundColor: accent, color: "#121B33" }}
-              >
-                <MessageCircle size={18} />
-                Solicitar más información
-              </a>
-              {carrera.inversion?.activa && (
-                <a
-                  href="#inversion"
-                  className="inline-flex items-center justify-center gap-2 border border-white/30 text-white font-montserrat font-semibold px-7 py-3.5 rounded-full hover:bg-white/10 transition-colors duration-300"
-                >
-                  <GraduationCap size={18} />
-                  Inversión y horarios
-                </a>
-              )}
+            <div className="lg:col-span-5">
+              <CarreraHeroCard
+                accent={accent}
+                whatsapp={whatsapp}
+                carreraNombre={carrera.nombre}
+                gradoLabel={gradoLabel}
+                duracion={carrera.duracion}
+                promoActiva={config?.promocionInscripcion?.activa}
+              />
             </div>
           </div>
         </div>
       </section>
-
-      {/* ── Meta band: Duración / Modalidades ────────────────────────────── */}
-      {(carrera.duracion || (carrera.modalidades && carrera.modalidades.length > 0)) && (
-        <section className="bg-white border-b border-[#E8E8E8]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-wrap items-center gap-x-10 gap-y-3">
-            {carrera.duracion && (
-              <div className="flex items-center gap-2.5">
-                <Clock size={16} className="text-[var(--accent)]" strokeWidth={2} />
-                <span className="font-montserrat text-[11px] uppercase tracking-wider text-[#888]">
-                  Duración
-                </span>
-                <span className="font-montserrat text-sm font-semibold text-[#121B33]">
-                  {carrera.duracion}
-                </span>
-              </div>
-            )}
-            {carrera.modalidades && carrera.modalidades.length > 0 && (
-              <div className="flex items-center gap-2.5">
-                <GraduationCap size={16} className="text-[var(--accent)]" strokeWidth={2} />
-                <span className="font-montserrat text-[11px] uppercase tracking-wider text-[#888]">
-                  Modalidades
-                </span>
-                <span className="font-montserrat text-sm font-semibold text-[#121B33]">
-                  {carrera.modalidades.map((m) => MODALIDAD_LABEL[m] ?? m).join(" · ")}
-                </span>
-              </div>
-            )}
-          </div>
-        </section>
-      )}
 
       {/* ── DESCRIPCIÓN LARGA ─────────────────────────────────────────────── */}
       {hasDescripcionLarga && (
