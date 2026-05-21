@@ -74,7 +74,6 @@ export default async function LicenciaturasPage() {
       carreras={carreras}
       imagenHero={imagenHero}
       cierreTitulo="Una licenciatura compatible con tu vida real."
-      cierreDescripcion="Modelo cuatrimestral, profesores que ejercen y un campus diseñado para que crezcas profesionalmente sin sacrificar lo que ya construiste."
     />
   );
 }

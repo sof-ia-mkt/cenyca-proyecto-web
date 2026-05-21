@@ -38,7 +38,7 @@ export default function AreaTemplate({
   carreras: CarreraCard[];
   imagenHero?: string;
   cierreTitulo: string;
-  cierreDescripcion: string;
+  cierreDescripcion?: string;
 }) {
   const nombresCarreras = carreras.map((c) => c.nombre);
 
@@ -206,11 +206,13 @@ export default function AreaTemplate({
             ))}
           </div>
 
-          <FadeUp delay={0.3}>
-            <p className="text-center text-[#76777E] text-sm mt-10 max-w-2xl mx-auto leading-relaxed text-pretty">
-              {cierreDescripcion}
-            </p>
-          </FadeUp>
+          {cierreDescripcion && (
+            <FadeUp delay={0.3}>
+              <p className="text-center text-[#76777E] text-sm mt-10 max-w-2xl mx-auto leading-relaxed text-pretty">
+                {cierreDescripcion}
+              </p>
+            </FadeUp>
+          )}
         </div>
       </section>
 

@@ -74,7 +74,6 @@ export default async function IngenieriasPage() {
       carreras={carreras}
       imagenHero={imagenHero}
       cierreTitulo="Una ingeniería pensada para el mercado de Baja California."
-      cierreDescripcion="Más de 19 años formando ingenieros que hoy lideran proyectos en manufactura, software, energía y robótica en empresas locales y multinacionales del noroeste."
     />
   );
 }
