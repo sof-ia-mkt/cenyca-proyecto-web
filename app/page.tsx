@@ -502,19 +502,15 @@ function CampusHero({ campus: c, otros = [] }: { campus: Campus; otros?: Campus[
             <div className="mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-x-2 gap-y-1 text-white/60 text-sm">
               <MapPin size={14} className="text-[#00D4FF]" strokeWidth={2} />
               <span className="inline-block text-balance">{c.direccion}</span>
-              {c.urlMaps && (
-                <>
-                  <span aria-hidden className="text-white/25">·</span>
-                  <a
-                    href={c.urlMaps}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-[#00D4FF] font-bold uppercase tracking-[0.18em] text-xs hover:gap-2 transition-all"
-                  >
-                    Ver en Google Maps <ArrowRight size={12} />
-                  </a>
-                </>
-              )}
+              <span aria-hidden className="text-white/25">·</span>
+              <a
+                href={googleMapsHref(c.direccion, c.urlMaps)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-[#00D4FF] font-bold uppercase tracking-[0.18em] text-xs hover:gap-2 transition-all"
+              >
+                Ver en Google Maps <ArrowRight size={12} />
+              </a>
             </div>
           </div>
 
@@ -542,11 +538,22 @@ function CampusHero({ campus: c, otros = [] }: { campus: Campus; otros?: Campus[
 }
 
 
+// Construye URL directa a Google Maps. Si urlMaps ya es una URL canónica de
+// Maps la usa tal cual; si es un share.google/... (que abre el buscador con
+// interstitial), arma una búsqueda directa contra Maps usando la dirección.
+function googleMapsHref(direccion: string, urlMaps?: string): string {
+  if (urlMaps && /^https?:\/\/(www\.)?(google\.[a-z.]+\/maps|maps\.google\.)/i.test(urlMaps)) {
+    return urlMaps;
+  }
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(direccion)}`;
+}
+
 function CampusPin({ campus: c }: { campus: Campus }) {
   const ciudad = CIUDAD_LABEL[c.ciudad] ?? c.ciudad;
-  const Wrapper = (c.urlMaps ? "a" : "div") as React.ElementType;
-  const wrapperProps = c.urlMaps
-    ? { href: c.urlMaps, target: "_blank", rel: "noopener noreferrer" }
+  const href = googleMapsHref(c.direccion, c.urlMaps);
+  const Wrapper = (href ? "a" : "div") as React.ElementType;
+  const wrapperProps = href
+    ? { href, target: "_blank", rel: "noopener noreferrer" }
     : {};
   return (
     <Wrapper
@@ -570,12 +577,10 @@ function CampusPin({ campus: c }: { campus: Campus }) {
         </div>
         <p className="text-white/55 text-xs leading-relaxed">{c.direccion}</p>
       </div>
-      {c.urlMaps && (
-        <ArrowRight
-          size={14}
-          className="shrink-0 text-white/30 group-hover:text-[#00D4FF] group-hover:translate-x-0.5 transition-all mt-2"
-        />
-      )}
+      <ArrowRight
+        size={14}
+        className="shrink-0 text-white/30 group-hover:text-[#00D4FF] group-hover:translate-x-0.5 transition-all mt-2"
+      />
     </Wrapper>
   );
 }
