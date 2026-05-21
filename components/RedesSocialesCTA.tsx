@@ -177,7 +177,7 @@ export default function RedesSocialesCTA({
 
         {/* Link sutil a todas las carreras */}
         <Link
-          href="/licenciaturas"
+          href="/oferta-academica"
           className="mt-12 inline-flex items-center gap-2 font-montserrat text-xs text-white/35 hover:text-white/70 transition-colors"
         >
           Ver todas las carreras
