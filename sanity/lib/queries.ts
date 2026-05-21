@@ -36,6 +36,7 @@ export const carreraBySlugQuery = groq`
     "imagenUrl": imagen.asset->url,
     "imagenAlt": imagen.alt,
     "imagenLqip": imagen.asset->metadata.lqip,
+    "heroVideoUrl": heroVideo.asset->url,
     "galeria": galeria[]{
       "url": asset->url,
       "alt": alt,

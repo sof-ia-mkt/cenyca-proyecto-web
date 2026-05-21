@@ -119,6 +119,25 @@ export const carrera = defineType({
       ],
     }),
     defineField({
+      name: "heroVideo",
+      title: "Video de hero (fondo del hero)",
+      description:
+        "Video que aparece como fondo del hero en /carreras/[slug]. Si no subes video, el hero usa la imagen principal como fondo.\n\n" +
+        "Recomendaciones:\n" +
+        "• Formato: MP4 (H.264) o WebM\n" +
+        "• Resolución: 1920×1080 (Full HD) o 1280×720\n" +
+        "• Peso ideal: menos de 5 MB (máximo 8 MB). Comprime con Handbrake o ffmpeg antes de subir.\n" +
+        "• Duración: 6 a 15 segundos pensados para loop\n" +
+        "• Sin audio (se reproduce muted)\n" +
+        "• Sin texto quemado dentro del video — el título y los CTAs van encima en el sitio\n" +
+        "• Encuadre horizontal con la acción al centro (los lados pueden recortarse en distintos tamaños de pantalla)",
+      type: "file",
+      group: "imagenes",
+      options: {
+        accept: "video/mp4,video/webm",
+      },
+    }),
+    defineField({
       name: "imagenTarjeta",
       title: "Imagen para tarjetas/listados (opcional)",
       description:
