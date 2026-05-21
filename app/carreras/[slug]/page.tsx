@@ -506,7 +506,7 @@ export default async function CarreraPage(
                   Perfil de egresado
                 </span>
                 <h2 className="font-bebas text-[#121B33] text-4xl sm:text-5xl lg:text-6xl tracking-wide leading-[1.05] mt-3 mb-5 text-balance">
-                  Al egresar, serás capaz de…
+                  Perfil de egreso
                 </h2>
                 <p className="font-montserrat text-[#666] leading-relaxed text-pretty">
                   Competencias y habilidades que desarrollarás en {carrera.nombre}.
@@ -547,7 +547,7 @@ export default async function CarreraPage(
                 Tu futuro profesional
               </span>
               <h2 className="font-bebas text-white text-4xl sm:text-5xl lg:text-6xl tracking-wide leading-[1.05] mt-3 text-balance">
-                Dónde podrás trabajar
+                Campo laboral
               </h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
