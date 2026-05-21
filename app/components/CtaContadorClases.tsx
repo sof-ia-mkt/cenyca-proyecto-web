@@ -70,7 +70,7 @@ function useCountdown(targetISO?: string) {
 export default function CtaContadorClases({
   data,
   porcentajeDescuento = 20,
-  whatsappFallback = "526632093980",
+  whatsappFallback = "526631300236",
 }: Props) {
   const countdown = useCountdown(data?.fecha);
   const [form, setForm] = useState<FormState>({ nombre: "", telefono: "", plantel: "" });

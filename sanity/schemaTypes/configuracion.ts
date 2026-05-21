@@ -376,7 +376,7 @@ export const configuracion = defineType({
           name: "whatsappAsesor",
           title: "WhatsApp del asesor (opcional)",
           description:
-            "Número al que se enviará el comprobante por WhatsApp. Si lo dejas vacío se usa el WhatsApp del contacto general. Formato con código de país, ejemplo: 526632093980.",
+            "Número al que se enviará el comprobante por WhatsApp. Si lo dejas vacío se usa el WhatsApp del contacto general. Formato con código de país, ejemplo: 526631300236.",
           type: "string",
         }),
       ],
