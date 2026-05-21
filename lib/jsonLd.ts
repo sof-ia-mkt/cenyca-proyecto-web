@@ -44,6 +44,95 @@ export type CampusForJsonLd = {
   imagenUrl?: string;
 };
 
+/**
+ * Convierte el horario textual de Sanity en `OpeningHoursSpecification`
+ * estructurado para schema.org. Acepta el formato libre que usamos:
+ *
+ *   "Lunes a Viernes: 7:00 AM - 9:00 PM | Sábado: 8:00 AM - 6:00 PM | Domingo: 7:00 AM - 1:00 PM"
+ *
+ * Devuelve [] si no logra parsear — el JSON-LD se queda sin openingHours
+ * en vez de inyectar datos inválidos que Google rechace.
+ */
+const DIA_MAP: Record<string, string> = {
+  lunes: "Monday",
+  martes: "Tuesday",
+  miercoles: "Wednesday",
+  miércoles: "Wednesday",
+  jueves: "Thursday",
+  viernes: "Friday",
+  sabado: "Saturday",
+  sábado: "Saturday",
+  domingo: "Sunday",
+};
+const DIA_ORDEN = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+function normalizaDia(s: string): string | null {
+  return DIA_MAP[s.trim().toLowerCase()] ?? null;
+}
+
+function parseHora12h(s: string): string | null {
+  // Acepta "7:00 AM", "9:00 PM", "07:00", "21:00"
+  const m = s.trim().match(/^(\d{1,2})(?::(\d{2}))?\s*(AM|PM|am|pm)?$/);
+  if (!m) return null;
+  let h = parseInt(m[1], 10);
+  const min = m[2] ?? "00";
+  const ampm = m[3]?.toUpperCase();
+  if (ampm === "PM" && h < 12) h += 12;
+  if (ampm === "AM" && h === 12) h = 0;
+  if (h < 0 || h > 23) return null;
+  return `${String(h).padStart(2, "0")}:${min}`;
+}
+
+export function parseHorarioToSpecs(horario: string): Array<{
+  "@type": "OpeningHoursSpecification";
+  dayOfWeek: string[];
+  opens: string;
+  closes: string;
+}> {
+  const bloques = horario.split("|").map((b) => b.trim()).filter(Boolean);
+  const specs: Array<{
+    "@type": "OpeningHoursSpecification";
+    dayOfWeek: string[];
+    opens: string;
+    closes: string;
+  }> = [];
+
+  for (const bloque of bloques) {
+    const [diasRaw, horasRaw] = bloque.split(":").length > 2
+      ? [bloque.slice(0, bloque.indexOf(":")), bloque.slice(bloque.indexOf(":") + 1)]
+      : bloque.split(/:(.+)/);
+    if (!diasRaw || !horasRaw) continue;
+
+    // Días: "Lunes a Viernes" o "Sábado" o "Lunes, Miércoles"
+    let dayOfWeek: string[] = [];
+    const aMatch = diasRaw.match(/^(.+?)\s+a\s+(.+)$/i);
+    if (aMatch) {
+      const d1 = normalizaDia(aMatch[1]);
+      const d2 = normalizaDia(aMatch[2]);
+      if (!d1 || !d2) continue;
+      const i1 = DIA_ORDEN.indexOf(d1);
+      const i2 = DIA_ORDEN.indexOf(d2);
+      if (i1 < 0 || i2 < 0 || i2 < i1) continue;
+      dayOfWeek = DIA_ORDEN.slice(i1, i2 + 1);
+    } else {
+      const dias = diasRaw.split(/[,/]/).map(normalizaDia).filter((d): d is string => Boolean(d));
+      if (dias.length === 0) continue;
+      dayOfWeek = dias;
+    }
+
+    // Horas: "7:00 AM - 9:00 PM"
+    const horaMatch = horasRaw.match(/^\s*(.+?)\s*-\s*(.+?)\s*$/);
+    if (!horaMatch) continue;
+    const opens = parseHora12h(horaMatch[1]);
+    const closes = parseHora12h(horaMatch[2]);
+    if (!opens || !closes) continue;
+
+    specs.push({ "@type": "OpeningHoursSpecification", dayOfWeek, opens, closes });
+  }
+
+  return specs;
+}
+
 const CIUDAD_DATA: Record<
   string,
   { localidad: string; cp?: string }
@@ -82,8 +171,12 @@ export function campusJsonLd(c: CampusForJsonLd) {
     },
     url: `${SITE_URL}/#planteles`,
   };
-  if (c.telefono) base.telephone = c.telefono;
+  if (c.telefono) base.telephone = c.telefono.replace(/\s+/g, "");
   if (c.urlMaps) base.hasMap = c.urlMaps;
   if (c.imagenUrl) base.image = c.imagenUrl;
+  if (c.horario) {
+    const specs = parseHorarioToSpecs(c.horario);
+    if (specs.length > 0) base.openingHoursSpecification = specs;
+  }
   return base;
 }
