@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /studio/
-
-Sitemap: https://oficial.cenyca.edu.mx/sitemap.xml

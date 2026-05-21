@@ -179,6 +179,40 @@ export default async function RootLayout({
     ],
   };
 
+  // WebSite — ayuda a Google a entender la marca y formatear el resultado
+  // principal con el nombre correcto. No incluimos SearchAction porque no
+  // existe una página de resultados de búsqueda con URL pública (el
+  // SearchModal del Navbar es solo cliente); incluirlo sin endpoint real
+  // hace que Google lo ignore o lo marque como inválido.
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "CENYCA Universidad",
+    alternateName: "CENYCA",
+    url: SITE_URL,
+    inLanguage: "es-MX",
+    publisher: { "@type": "EducationalOrganization", name: "CENYCA Universidad" },
+  };
+
+  // SiteNavigationElement — señal explícita a Google sobre las páginas
+  // principales del sitio. Ayuda a que los sitelinks que Google muestre
+  // bajo el resultado de marca sean los que nosotros consideramos
+  // importantes, no rutas aleatorias indexadas.
+  const siteNavJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Navegación principal",
+    itemListElement: [
+      { "@type": "SiteNavigationElement", position: 1, name: "Inicio", url: SITE_URL },
+      { "@type": "SiteNavigationElement", position: 2, name: "Nosotros", url: `${SITE_URL}/nosotros` },
+      { "@type": "SiteNavigationElement", position: 3, name: "Oferta Académica", url: `${SITE_URL}/oferta-academica` },
+      { "@type": "SiteNavigationElement", position: 4, name: "Licenciaturas", url: `${SITE_URL}/licenciaturas` },
+      { "@type": "SiteNavigationElement", position: 5, name: "Ingenierías", url: `${SITE_URL}/ingenierias` },
+      { "@type": "SiteNavigationElement", position: 6, name: "Vinculación", url: `${SITE_URL}/vinculacion` },
+      { "@type": "SiteNavigationElement", position: 7, name: "Noticias", url: `${SITE_URL}/noticias` },
+    ],
+  };
+
   return (
     <html
       lang="es"
@@ -188,6 +222,14 @@ export default async function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteNavJsonLd) }}
         />
         <Navbar mostrarVidaEstudiantil={mostrarVidaEstudiantil} />
         <main className="flex-1 pt-[72px]">
