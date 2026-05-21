@@ -152,7 +152,12 @@ export default async function RootLayout({
     name: "CENYCA Universidad",
     alternateName: "Centro de Estudios y Carreras",
     url: SITE_URL,
-    logo: `${SITE_URL}/logo.png`,
+    logo: {
+      "@type": "ImageObject",
+      url: `${SITE_URL}/logo-square.png`,
+      width: 3750,
+      height: 3750,
+    },
     description:
       "Universidad en Tijuana y Tecate con licenciaturas e ingenierías con RVOE SEP. Modelo cuatrimestral, titúlate en 3 años.",
     address: {
