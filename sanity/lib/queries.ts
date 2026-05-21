@@ -31,7 +31,10 @@ export const carreraBySlugQuery = groq`
     descripcionLarga,
     beneficios,
     perfilEgresado,
-    campoLaboral,
+    "campoLaboral": campoLaboral[]{
+      titulo,
+      descripcion
+    },
     color,
     "imagenUrl": imagen.asset->url,
     "imagenAlt": imagen.alt,

@@ -191,10 +191,38 @@ export const carrera = defineType({
     defineField({
       name: "campoLaboral",
       title: "Campo laboral",
-      description: "Áreas o empresas donde puede trabajar el egresado",
+      description:
+        "Áreas o sectores donde puede trabajar el egresado. Cada tarjeta tiene un título corto y, opcionalmente, una descripción más larga. " +
+        "Si llenas la descripción, la tarjeta se vuelve clickeable en el sitio y abre un modal con el detalle. Si solo pones el título, se muestra como tarjeta estática.",
       type: "array",
       group: "contenido",
-      of: [{ type: "string" }],
+      of: [
+        {
+          type: "object",
+          name: "campoLaboralItem",
+          title: "Campo laboral",
+          fields: [
+            defineField({
+              name: "titulo",
+              title: "Título corto",
+              description: "Nombre breve del área o sector (ej: Manufactura automotriz)",
+              type: "string",
+              validation: (r) => r.required(),
+            }),
+            defineField({
+              name: "descripcion",
+              title: "Descripción (opcional)",
+              description:
+                "Explicación más larga del campo laboral: qué hace el egresado ahí, tipo de empresas, retos, oportunidades. Recomendado 2-4 oraciones. Si la dejas vacía la tarjeta no será clickeable.",
+              type: "text",
+              rows: 4,
+            }),
+          ],
+          preview: {
+            select: { title: "titulo", subtitle: "descripcion" },
+          },
+        },
+      ],
     }),
     defineField({
       name: "inversion",

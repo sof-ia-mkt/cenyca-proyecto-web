@@ -117,7 +117,10 @@ const carrerasQuery = groq`*[_type == "carrera" && activa == true]{
   grado,
   descripcionCorta,
   perfilEgresado,
-  campoLaboral
+  "campoLaboral": campoLaboral[]{
+    titulo,
+    descripcion
+  }
 }`;
 
 const noticiasQuery = groq`*[_type == "noticia"] | order(fecha desc){
@@ -146,7 +149,7 @@ export async function GET() {
           grado?: string;
           descripcionCorta?: string;
           perfilEgresado?: string[];
-          campoLaboral?: string[];
+          campoLaboral?: Array<{ titulo?: string; descripcion?: string }>;
         }>
       >(carrerasQuery)
       .catch(() => []),
@@ -176,7 +179,7 @@ export async function GET() {
         c.area ? AREA_LABEL[c.area] ?? c.area : "",
         c.grado ?? "",
         ...(c.perfilEgresado ?? []),
-        ...(c.campoLaboral ?? []),
+        ...(c.campoLaboral ?? []).flatMap((cl) => [cl.titulo ?? "", cl.descripcion ?? ""]),
       ]
         .filter(Boolean)
         .join(" "),

@@ -15,7 +15,6 @@ import {
   Clock,
   GraduationCap,
   MessageCircle,
-  Briefcase,
 } from "lucide-react";
 import { client } from "@/sanity/lib/client";
 import { carreraBySlugQuery, configuracionQuery, todasCarrerasQuery } from "@/sanity/lib/queries";
@@ -27,6 +26,7 @@ import LazyYouTubeEmbed from "@/components/LazyYouTubeEmbed";
 import LazySelfHostedVideo from "@/components/LazySelfHostedVideo";
 import HeroVideo from "@/app/components/HeroVideo";
 import GaleriaPrograma, { type GaleriaItem } from "@/components/GaleriaPrograma";
+import CampoLaboralGrid, { type CampoLaboralItem } from "@/app/components/CampoLaboralGrid";
 import PromocionFormulario, { type PromocionConfig } from "@/components/PromocionFormulario";
 import BloqueInversion, { type InversionConfig } from "@/components/BloqueInversion";
 import RedesSocialesCTA, { type RedesSociales } from "@/components/RedesSocialesCTA";
@@ -72,7 +72,7 @@ type Carrera = {
   descripcionLarga?: PortableTextBlock[];
   beneficios?: Beneficio[];
   perfilEgresado?: string[];
-  campoLaboral?: string[];
+  campoLaboral?: CampoLaboralItem[];
   color?: string;
   imagenUrl?: string;
   imagenAlt?: string;
@@ -543,22 +543,7 @@ export default async function CarreraPage(
                 Campo laboral
               </h2>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {carrera.campoLaboral.map((campo, i) => (
-                <div
-                  key={i}
-                  className="group flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl px-5 py-4 hover:bg-white/[0.08] hover:border-white/20 transition-all"
-                >
-                  <Briefcase
-                    size={18}
-                    className="mt-0.5 flex-shrink-0 transition-colors"
-                    style={{ color: accent }}
-                    strokeWidth={1.75}
-                  />
-                  <span className="font-montserrat text-white/85 text-sm leading-snug">{campo}</span>
-                </div>
-              ))}
-            </div>
+            <CampoLaboralGrid items={carrera.campoLaboral} accent={accent} />
           </div>
         </section>
       )}
