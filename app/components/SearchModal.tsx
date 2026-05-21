@@ -100,10 +100,17 @@ export default function SearchModal({ open, onClose }: Props) {
     if (!mini) return [];
     const q = query.trim();
     if (!q) {
-      // Empty state — carreras destacadas como entrada por defecto
-      return items
-        .filter((i) => i.category === "Carreras")
-        .slice(0, 5)
+      // Empty state — carreras destacadas curadas (orden importa).
+      const destacadas = [
+        "ingenieria-industrial",
+        "ingenieria-mecatronica",
+        "ingenieria-electromecanica",
+        "gastronomia",
+        "criminologia-y-criminalistica",
+      ];
+      return destacadas
+        .map((slug) => items.find((i) => i.href === `/carreras/${slug}`))
+        .filter((i): i is SearchItem => Boolean(i))
         .map((i) => ({
           id: i.id,
           title: i.title,
