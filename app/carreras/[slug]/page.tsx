@@ -511,6 +511,15 @@ export default async function CarreraPage(
                 <p className="font-montserrat text-[#666] leading-relaxed text-pretty">
                   Competencias y habilidades que desarrollarás en {carrera.nombre}.
                 </p>
+                <div className="mt-8 relative aspect-[4/3] rounded-2xl overflow-hidden shadow-[0_20px_60px_-20px_rgba(18,27,51,0.25)]">
+                  <Image
+                    src={`/carreras/perfil/${slug}.webp`}
+                    alt={`Egresados de ${carrera.nombre} — CENYCA Universidad`}
+                    fill
+                    sizes="(min-width: 1024px) 40vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
               </div>
               <ul className="lg:col-span-7 space-y-4">
                 {carrera.perfilEgresado.map((item, i) => (
