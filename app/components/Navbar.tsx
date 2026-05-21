@@ -3,6 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { Search } from "lucide-react";
+import SearchModal from "./SearchModal";
 
 const navLinksBase = [
   { label: "Inicio", href: "/" },
@@ -22,6 +24,7 @@ export default function Navbar({ mostrarVidaEstudiantil = false }: NavbarProps) 
     (l) => l.flag !== "vidaEstudiantil" || mostrarVidaEstudiantil,
   );
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   // `scrolled = true` cuando el usuario baja > 40px. Controla la compresión y el fondo.
   const [scrolled, setScrolled] = useState(false);
 
@@ -30,6 +33,18 @@ export default function Navbar({ mostrarVidaEstudiantil = false }: NavbarProps) 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Atajo ⌘K / Ctrl+K abre el buscador. Convención industry-standard.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setSearchOpen((v) => !v);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, []);
 
   // Cuando el menú móvil está abierto, dejamos el navbar opaco aunque estés en el top.
@@ -93,6 +108,14 @@ export default function Navbar({ mostrarVidaEstudiantil = false }: NavbarProps) 
 
           {/* CTA + Plataforma Alumnos — desktop */}
           <div className="hidden lg:flex items-center gap-2.5 flex-shrink-0">
+            <button
+              type="button"
+              onClick={() => setSearchOpen(true)}
+              aria-label="Buscar en el sitio"
+              className="text-white p-2.5 rounded-full hover:bg-white/10 hover:text-[#00D4FF] transition-colors inline-flex items-center justify-center"
+            >
+              <Search size={18} strokeWidth={2.2} />
+            </button>
             <a
               href="https://alumnos.cenyca.edu.mx"
               target="_blank"
@@ -111,16 +134,26 @@ export default function Navbar({ mostrarVidaEstudiantil = false }: NavbarProps) 
             </a>
           </div>
 
-          {/* Hamburger — mobile */}
+          {/* Buscador + Hamburger — mobile */}
+          <div className="lg:hidden flex items-center gap-1">
+            <button
+              type="button"
+              onClick={() => setSearchOpen(true)}
+              aria-label="Buscar en el sitio"
+              className="text-white p-3 rounded-md hover:bg-white/10 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+            >
+              <Search size={20} strokeWidth={2.2} />
+            </button>
           <button
             onClick={() => setMenuAbierto(!menuAbierto)}
-            className="lg:hidden flex flex-col gap-1.5 p-3 -mr-1 rounded-md hover:bg-white/10 transition-colors min-w-[44px] min-h-[44px] items-center justify-center"
+            className="flex flex-col gap-1.5 p-3 -mr-1 rounded-md hover:bg-white/10 transition-colors min-w-[44px] min-h-[44px] items-center justify-center"
             aria-label="Abrir menú"
           >
             <span className={`block w-6 h-0.5 bg-white transition-transform duration-300 ${menuAbierto ? "rotate-45 translate-y-2" : ""}`} />
             <span className={`block w-6 h-0.5 bg-white transition-opacity duration-300 ${menuAbierto ? "opacity-0" : ""}`} />
             <span className={`block w-6 h-0.5 bg-white transition-transform duration-300 ${menuAbierto ? "-rotate-45 -translate-y-2" : ""}`} />
           </button>
+          </div>
         </div>
       </div>
 
@@ -157,6 +190,8 @@ export default function Navbar({ mostrarVidaEstudiantil = false }: NavbarProps) 
           </div>
         </div>
       </div>
+
+      <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>
   );
 }
