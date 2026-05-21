@@ -303,7 +303,7 @@ export default async function CarreraPage(
                 )}
               </div>
 
-              <h1 className="font-bebas text-white text-5xl sm:text-6xl lg:text-7xl xl:text-8xl tracking-wide leading-[0.95] mb-6 text-balance">
+              <h1 className="font-bebas text-white text-5xl sm:text-6xl lg:text-6xl xl:text-7xl tracking-wide leading-[0.98] mb-6 text-balance break-words hyphens-auto">
                 {carrera.nombre}
               </h1>
 
