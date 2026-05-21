@@ -175,7 +175,7 @@ export default function PromocionFormulario({
   return (
     <section
       id="promocion"
-      className="relative py-24 px-4 sm:px-6 lg:px-8 bg-[#0E1628] overflow-hidden"
+      className="relative py-24 px-4 sm:px-6 lg:px-8 bg-[#0E1628] overflow-hidden scroll-mt-24"
       style={accentStyle}
     >
       <div
@@ -464,7 +464,7 @@ function Comprobante({
   return (
     <section
       id="promocion"
-      className="relative py-24 px-4 sm:px-6 lg:px-8 bg-[#0E1628] overflow-hidden"
+      className="relative py-24 px-4 sm:px-6 lg:px-8 bg-[#0E1628] overflow-hidden scroll-mt-24"
       style={accentStyle}
     >
       <div

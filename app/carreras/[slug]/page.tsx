@@ -320,24 +320,29 @@ export default async function CarreraPage(
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-10">
               <a
-                href={inscripciones}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={
+                  config?.promocionInscripcion?.activa
+                    ? "#promocion"
+                    : `https://wa.me/${whatsapp}?text=Hola, me interesa la ${gradoLabel} en ${carrera.nombre}`
+                }
+                {...(config?.promocionInscripcion?.activa
+                  ? {}
+                  : { target: "_blank", rel: "noopener noreferrer" })}
                 className="inline-flex items-center justify-center gap-2 font-montserrat font-bold px-7 py-3.5 rounded-full transition-colors duration-300"
                 style={{ backgroundColor: accent, color: "#121B33" }}
               >
-                <GraduationCap size={18} />
-                Inscribirme ahora
-              </a>
-              <a
-                href={`https://wa.me/${whatsapp}?text=Hola, me interesa la ${gradoLabel} en ${carrera.nombre}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 border border-white/30 text-white font-montserrat font-semibold px-7 py-3.5 rounded-full hover:bg-white/10 transition-colors duration-300"
-              >
                 <MessageCircle size={18} />
-                Solicitar información
+                Solicitar más información
               </a>
+              {carrera.inversion?.activa && (
+                <a
+                  href="#inversion"
+                  className="inline-flex items-center justify-center gap-2 border border-white/30 text-white font-montserrat font-semibold px-7 py-3.5 rounded-full hover:bg-white/10 transition-colors duration-300"
+                >
+                  <GraduationCap size={18} />
+                  Inversión y horarios
+                </a>
+              )}
             </div>
           </div>
         </div>

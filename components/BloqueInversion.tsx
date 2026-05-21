@@ -75,7 +75,7 @@ export default function BloqueInversion({ data, promo, accent = "#00D4FF" }: Pro
       : data.paqueteCuatrimestral ?? 950;
 
   return (
-    <section className="relative bg-[#0E1628] py-24 px-4 sm:px-6 lg:px-8 overflow-hidden" style={accentStyle}>
+    <section id="inversion" className="relative bg-[#0E1628] py-24 px-4 sm:px-6 lg:px-8 overflow-hidden scroll-mt-24" style={accentStyle}>
       <div
         aria-hidden
         className="pointer-events-none absolute -top-32 left-1/3 h-[480px] w-[480px] rounded-full opacity-15 blur-3xl"
