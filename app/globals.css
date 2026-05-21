@@ -131,14 +131,4 @@ h3, h4, h5, h6 {
   }
 }
 
-/* Justificación de body text en mobile.
-   Usa :where() para baja especificidad: cualquier utilidad Tailwind explícita
-   (text-center, text-left, text-right) gana sobre esta regla.
-   Párrafos cortos (1 línea) no se justifican visiblemente por spec de CSS. */
-@media (max-width: 767px) {
-  :where(p):not(.uppercase) {
-    text-align: justify;
-    text-justify: inter-word;
-  }
-}
 

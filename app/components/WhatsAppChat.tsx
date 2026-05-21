@@ -46,6 +46,7 @@ function WhatsAppIcon({ size = 24 }: { size?: number }) {
 
 export default function WhatsAppChat({ phone }: { phone: string }) {
   const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
   // Auto-abrir el chat completo a los 5s (solo una vez por sesión).
   // SOLO en desktop (≥768px) — en mobile causaba taps accidentales mientras
@@ -64,6 +65,20 @@ export default function WhatsAppChat({ phone }: { phone: string }) {
     }, 5000);
 
     return () => clearTimeout(timer);
+  }, []);
+
+  // Oculta el FAB cuando el footer entra en viewport — evita que tape
+  // los enlaces y CTAs del fondo de cada página.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const footer = document.querySelector("footer");
+    if (!footer) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setHidden(entry.isIntersecting),
+      { rootMargin: "0px 0px -40px 0px" },
+    );
+    io.observe(footer);
+    return () => io.disconnect();
   }, []);
 
   function openWhatsapp(message: string = DEFAULT_MSG) {
@@ -168,7 +183,7 @@ export default function WhatsAppChat({ phone }: { phone: string }) {
         onClick={toggle}
         aria-label={open ? "Cerrar chat de WhatsApp" : "Abrir chat de WhatsApp"}
         aria-expanded={open}
-        className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[60] w-14 h-14 rounded-full bg-[#25D366] text-white shadow-[0_8px_28px_rgba(37,211,102,0.5)] flex items-center justify-center hover:scale-105 hover:shadow-[0_12px_36px_rgba(37,211,102,0.7)] transition-all"
+        className={`fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[60] w-14 h-14 rounded-full bg-[#25D366] text-white shadow-[0_8px_28px_rgba(37,211,102,0.5)] flex items-center justify-center hover:scale-105 hover:shadow-[0_12px_36px_rgba(37,211,102,0.7)] transition-all ${hidden && !open ? "opacity-0 translate-y-4 pointer-events-none" : "opacity-100 translate-y-0"}`}
       >
         {open ? <X size={24} strokeWidth={2.5} /> : <WhatsAppIcon size={26} />}
         {/* Pulso suave cuando está cerrado */}

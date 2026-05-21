@@ -39,11 +39,11 @@ export default async function DocumentosPage() {
     <div className="max-w-4xl mx-auto px-4 lg:px-8 py-16">
       <div className="mb-12">
         <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#00D4FF] mb-2">Institución</p>
-        <h1 className="text-4xl sm:text-5xl font-black uppercase text-white">Documentos</h1>
+        <h1 className="text-4xl sm:text-5xl font-black uppercase text-[#121B33]">Documentos</h1>
       </div>
 
       {documentos.length === 0 ? (
-        <p className="text-white/40">No hay documentos publicados aún.</p>
+        <p className="text-[#76777E]">No hay documentos publicados aún.</p>
       ) : (
         <div className="space-y-3">
           {documentos.map((doc) => (

@@ -127,9 +127,9 @@ export default function CampusCarrusel({
         ))}
       </div>
 
-      {/* Dots indicador de scroll */}
+      {/* Dots indicador de scroll — wrapper de 44x44 para tap target accesible */}
       {photos.length > 1 && (
-        <div className="flex items-center justify-center gap-2 mt-6">
+        <div className="flex items-center justify-center gap-1 mt-4">
           {photos.map((_, i) => {
             const isActive = i === activeIdx;
             return (
@@ -138,18 +138,23 @@ export default function CampusCarrusel({
                 type="button"
                 aria-label={`Ir a foto ${i + 1}`}
                 onClick={() => scrollToIdx(i)}
-                className="rounded-full transition-all duration-300"
-                style={{
-                  width: isActive ? 14 : 10,
-                  height: isActive ? 14 : 10,
-                  background: isActive
-                    ? "#00D4FF"
-                    : "rgba(0,212,255,0.25)",
-                  boxShadow: isActive
-                    ? "0 0 12px rgba(0,212,255,0.6)"
-                    : "none",
-                }}
-              />
+                className="inline-flex items-center justify-center w-11 h-11 rounded-full group"
+              >
+                <span
+                  aria-hidden
+                  className="rounded-full transition-all duration-300 group-hover:scale-110"
+                  style={{
+                    width: isActive ? 14 : 10,
+                    height: isActive ? 14 : 10,
+                    background: isActive
+                      ? "#00D4FF"
+                      : "rgba(0,212,255,0.25)",
+                    boxShadow: isActive
+                      ? "0 0 12px rgba(0,212,255,0.6)"
+                      : "none",
+                  }}
+                />
+              </button>
             );
           })}
         </div>
