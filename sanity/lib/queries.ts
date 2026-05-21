@@ -361,3 +361,27 @@ export const nosotrosPageQuery = groq`
     ctaBoton2Url
   }
 `
+
+// ─── FAQ ──────────────────────────────────────────────────────────────────────
+
+export const faqsQuery = groq`
+  {
+    "categorias": *[_type == "categoriaFaq"] | order(orden asc){
+      _id,
+      nombre,
+      "slug": slug.current,
+      icono,
+      descripcion,
+      orden
+    },
+    "faqs": *[_type == "faq" && activa == true] | order(orden asc){
+      _id,
+      pregunta,
+      respuesta,
+      destacada,
+      orden,
+      "categoriaId": categoria._ref,
+      "categoriaSlug": categoria->slug.current
+    }
+  }
+`

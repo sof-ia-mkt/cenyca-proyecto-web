@@ -83,6 +83,14 @@ const PAGINAS_ESTATICAS: SearchItem[] = [
     href: "/avisos-de-privacidad",
   },
   {
+    id: "page-faq",
+    title: "Preguntas frecuentes",
+    description: "RVOE, becas, horarios, inscripción, titulación y más.",
+    body: "faq preguntas frecuentes dudas rvoe becas horarios inscripcion titulacion modalidad cuatrimestre revalidacion convenios",
+    category: "Páginas",
+    href: "/preguntas-frecuentes",
+  },
+  {
     id: "page-contacto",
     title: "Contacto",
     description: "Inscríbete o solicita información.",

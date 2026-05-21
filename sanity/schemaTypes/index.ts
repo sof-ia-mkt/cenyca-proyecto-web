@@ -9,6 +9,8 @@ import { historia } from "./historia";
 import { vinculacion } from "./vinculacion";
 import { nosotros } from "./nosotros";
 import { redirect } from "./redirect";
+import { faq } from "./faq";
+import { categoriaFaq } from "./categoriaFaq";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -18,6 +20,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     noticia,
     documento,
     avisoPrivacidad,
+    faq,
+    categoriaFaq,
     // Operativos
     redirect,
     // Singletons

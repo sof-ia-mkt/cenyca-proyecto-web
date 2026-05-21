@@ -180,3 +180,30 @@ export function campusJsonLd(c: CampusForJsonLd) {
   }
   return base;
 }
+
+/**
+ * FAQPage — habilita rich results de preguntas/respuestas en Google.
+ * Cada FAQ se incluye con su pregunta y respuesta en texto plano.
+ *
+ * Uso:
+ *   faqPageJsonLd([
+ *     { question: "¿Tienen RVOE?", answer: "Sí, todas..." },
+ *     ...
+ *   ])
+ */
+export function faqPageJsonLd(
+  items: Array<{ question: string; answer: string }>,
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((it) => ({
+      "@type": "Question",
+      name: it.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: it.answer,
+      },
+    })),
+  };
+}
