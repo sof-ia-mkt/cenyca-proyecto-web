@@ -34,6 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/licenciaturas`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${base}/ingenierias`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${base}/nosotros`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${base}/vinculacion`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/noticias`, lastModified: now, changeFrequency: "weekly", priority: 0.6 },
     { url: `${base}/documentos`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: `${base}/avisos-de-privacidad`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
