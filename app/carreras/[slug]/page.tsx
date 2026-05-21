@@ -264,11 +264,11 @@ export default async function CarreraPage(
         {/* Overlays para legibilidad */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-b from-[#121B33]/85 via-[#121B33]/70 to-[#121B33]"
+          className="absolute inset-0 bg-gradient-to-b from-[#121B33]/70 via-[#121B33]/55 to-[#121B33]"
         />
         <div
           aria-hidden
-          className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_#121B33_85%)]"
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_#121B33_95%)]"
         />
         {/* Halo accent */}
         <div
