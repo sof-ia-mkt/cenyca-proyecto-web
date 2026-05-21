@@ -84,6 +84,47 @@ const nextConfig: NextConfig = {
     ];
   },
 
+  // Redirects 308 (permanentes) para typos comunes y alias singulares.
+  // Captura el tráfico cuando el usuario escribe la URL "casi bien" en
+  // vez de mandarlo a 404. Sólo cosas obvias y deterministas — el resto
+  // se resuelve con sugerencias en la página 404 inteligente.
+  async redirects() {
+    return [
+      // Plurales / singulares de secciones
+      { source: "/oferta", destination: "/oferta-academica", permanent: true },
+      { source: "/licenciatura", destination: "/licenciaturas", permanent: true },
+      { source: "/ingenieria", destination: "/ingenierias", permanent: true },
+      { source: "/admision", destination: "/admisiones", permanent: true },
+      { source: "/beca", destination: "/becas", permanent: true },
+      { source: "/posgrado", destination: "/posgrados", permanent: true },
+      { source: "/intercambio", destination: "/intercambios", permanent: true },
+      { source: "/documento", destination: "/documentos", permanent: true },
+      { source: "/aviso-de-privacidad", destination: "/avisos-de-privacidad", permanent: true },
+
+      // Slugs dinámicos en singular → plural
+      { source: "/carrera/:slug", destination: "/carreras/:slug", permanent: true },
+      { source: "/noticia/:slug", destination: "/noticias/:slug", permanent: true },
+      { source: "/aviso/:slug", destination: "/avisos-de-privacidad/:slug", permanent: true },
+      { source: "/aviso-de-privacidad/:slug", destination: "/avisos-de-privacidad/:slug", permanent: true },
+
+      // Intenciones de contacto / inscripción
+      { source: "/contacto", destination: "/#contacto", permanent: true },
+      { source: "/inscripcion", destination: "/#contacto", permanent: true },
+      { source: "/inscripciones", destination: "/#contacto", permanent: true },
+
+      // Alias EN/típicos
+      { source: "/about", destination: "/nosotros", permanent: true },
+      { source: "/acerca", destination: "/nosotros", permanent: true },
+      { source: "/acerca-de", destination: "/nosotros", permanent: true },
+      { source: "/quienes-somos", destination: "/nosotros", permanent: true },
+      { source: "/news", destination: "/noticias", permanent: true },
+      { source: "/blog", destination: "/noticias", permanent: true },
+      { source: "/careers", destination: "/oferta-academica", permanent: true },
+      { source: "/planteles", destination: "/#planteles", permanent: true },
+      { source: "/campus", destination: "/#planteles", permanent: true },
+    ];
+  },
+
   // Optimización de imágenes: permite el CDN de Sanity
   images: {
     remotePatterns: [
