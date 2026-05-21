@@ -1,10 +1,17 @@
-// Cliente único hacia Emma (CRM de Novai) para todos los formularios del sitio.
-// La key vive en NEXT_PUBLIC_EMMA_API_KEY — es la misma key pública que usan
-// las landings dedicadas (sof-ia-mkt/landing-pages.cenyca), por lo que está
-// diseñada para vivir en el bundle del cliente. Cambiar de key = actualizar
-// el env var en Vercel y redeploy.
-
-const API_URL = "https://emma-sistema.up.railway.app/api/landing/prospect";
+// Cliente único para enviar leads desde los formularios del sitio.
+//
+// HISTORIA: antes este archivo llamaba directamente al CRM Emma desde
+// el navegador del cliente, exponiendo la API key en el bundle público
+// (NEXT_PUBLIC_EMMA_API_KEY). Ahora se llama a /api/leads — un endpoint
+// server-side que:
+//   1) Respalda el lead en nuestra propia DB (Neon) — cero pérdida si
+//      Emma se cae o la key expira.
+//   2) Llama a Emma con la key server-only (EMMA_API_KEY).
+//   3) Marca el estado de cada lead (sent | failed | invalid) en DB.
+//
+// La interfaz pública (enviarLeadAEmma, esTelefonoValido, etc.) se
+// mantiene idéntica para que los componentes de formularios no se
+// modifiquen.
 
 export const PLANTEL_LABEL: Record<string, string> = {
   casablanca: "Casa Blanca",
@@ -53,7 +60,33 @@ export function esTelefonoValido(tel: string): boolean {
   return true;
 }
 
+type EmmaErrorReason = Extract<EmmaResult, { ok: false }>["reason"];
+
+type ApiErrorBody = {
+  ok?: boolean;
+  reason?: string;
+  message?: string;
+};
+
+const VALID_REASONS: ReadonlySet<EmmaErrorReason> = new Set([
+  "invalid_phone",
+  "invalid_name",
+  "rate_limited",
+  "auth",
+  "server",
+  "network",
+]);
+
+function reasonFromApi(reason: string | undefined): EmmaErrorReason {
+  if (reason && VALID_REASONS.has(reason as EmmaErrorReason)) {
+    return reason as EmmaErrorReason;
+  }
+  return "server";
+}
+
 export async function enviarLeadAEmma(payload: EmmaPayload): Promise<EmmaResult> {
+  // Validación local (mismo contrato que antes) — devuelve feedback
+  // inmediato sin necesidad de roundtrip al server.
   if (!esTelefonoValido(payload.telefono)) {
     return {
       ok: false,
@@ -69,32 +102,47 @@ export async function enviarLeadAEmma(payload: EmmaPayload): Promise<EmmaResult>
     };
   }
 
-  const apiKey = process.env.NEXT_PUBLIC_EMMA_API_KEY;
-  if (!apiKey) {
-    return {
-      ok: false,
-      reason: "auth",
-      message: "Problema de configuración. Contáctanos por WhatsApp.",
-    };
-  }
-
   try {
-    const res = await fetch(API_URL, {
+    const res = await fetch("/api/leads", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "X-API-Key": apiKey },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
 
     if (res.ok) return { ok: true };
-    if (res.status === 422)
-      return { ok: false, reason: "invalid_phone", message: "Verifica tu teléfono. Debe ser un número válido." };
-    if (res.status === 429)
-      return { ok: false, reason: "rate_limited", message: "Demasiados intentos. Espera un momento e intenta de nuevo." };
-    if (res.status === 401)
-      return { ok: false, reason: "auth", message: "Problema de configuración. Contáctanos por WhatsApp." };
-    return { ok: false, reason: "server", message: "Hubo un error. Intenta de nuevo en un momento." };
+
+    let data: ApiErrorBody = {};
+    try {
+      data = (await res.json()) as ApiErrorBody;
+    } catch {
+      /* respuesta sin JSON, usamos defaults */
+    }
+
+    if (res.status === 422) {
+      return {
+        ok: false,
+        reason: reasonFromApi(data.reason),
+        message: data.message || "Verifica tus datos.",
+      };
+    }
+    if (res.status === 429) {
+      return {
+        ok: false,
+        reason: "rate_limited",
+        message: data.message || "Demasiados intentos. Espera un momento e intenta de nuevo.",
+      };
+    }
+    return {
+      ok: false,
+      reason: "server",
+      message: data.message || "Hubo un error. Intenta de nuevo en un momento.",
+    };
   } catch {
-    return { ok: false, reason: "network", message: "Sin conexión. Verifica tu internet e intenta de nuevo." };
+    return {
+      ok: false,
+      reason: "network",
+      message: "Sin conexión. Verifica tu internet e intenta de nuevo.",
+    };
   }
 }
 
