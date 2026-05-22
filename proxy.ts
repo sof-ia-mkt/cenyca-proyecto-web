@@ -57,22 +57,49 @@ function timingSafeEqual(a: string, b: string): boolean {
 function checkAdminAuth(request: NextRequest): boolean {
   const expectedUser = process.env.STUDIO_USERNAME;
   const expectedPass = process.env.STUDIO_PASSWORD;
-  if (!expectedUser || !expectedPass) return false; // fail-closed
+
+  // TEMP DEBUG — remover después de diagnosticar 401
+  // eslint-disable-next-line no-console
+  console.log("[proxy.checkAdminAuth] envUserLen:", expectedUser?.length ?? "missing",
+              "envPassLen:", expectedPass?.length ?? "missing");
+
+  if (!expectedUser || !expectedPass) {
+    // eslint-disable-next-line no-console
+    console.log("[proxy.checkAdminAuth] FAIL: env vars missing");
+    return false;
+  }
 
   const auth = request.headers.get("authorization");
-  if (!auth || !auth.startsWith("Basic ")) return false;
+  if (!auth || !auth.startsWith("Basic ")) {
+    // eslint-disable-next-line no-console
+    console.log("[proxy.checkAdminAuth] FAIL: no Basic header (auth=", auth?.slice(0, 10), ")");
+    return false;
+  }
 
   let decoded = "";
   try {
     decoded = atob(auth.slice(6));
   } catch {
+    // eslint-disable-next-line no-console
+    console.log("[proxy.checkAdminAuth] FAIL: atob threw");
     return false;
   }
   const sep = decoded.indexOf(":");
-  if (sep < 0) return false;
+  if (sep < 0) {
+    // eslint-disable-next-line no-console
+    console.log("[proxy.checkAdminAuth] FAIL: no separator in decoded");
+    return false;
+  }
   const user = decoded.slice(0, sep);
   const pass = decoded.slice(sep + 1);
-  return timingSafeEqual(user, expectedUser) && timingSafeEqual(pass, expectedPass);
+
+  const userMatch = timingSafeEqual(user, expectedUser);
+  const passMatch = timingSafeEqual(pass, expectedPass);
+  // eslint-disable-next-line no-console
+  console.log("[proxy.checkAdminAuth] gotUserLen:", user.length, "gotPassLen:", pass.length,
+              "userMatch:", userMatch, "passMatch:", passMatch);
+
+  return userMatch && passMatch;
 }
 
 function unauthorizedAdmin(): NextResponse {
