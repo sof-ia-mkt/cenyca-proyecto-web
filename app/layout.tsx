@@ -83,7 +83,7 @@ export async function generateMetadata(): Promise<Metadata> {
     publisher: title,
     alternates: { canonical: "/" },
     openGraph: {
-      siteName: title,
+      siteName: "CENYCA Universidad",
       title,
       description,
       locale: "es_MX",
