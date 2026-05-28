@@ -11,7 +11,7 @@
 // paso 2 sí guardó, devolvemos 200 al cliente — el lead está a salvo
 // y podemos reintentar a Emma desde el panel de admin.
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 import { sql } from "@/lib/db";
 import { enviarLeadAEmmaServer, type EmmaServerPayload } from "@/lib/emma-server";
 
@@ -273,28 +273,36 @@ export async function POST(req: NextRequest) {
   const dashboardUrl = process.env.DASHBOARD_WEBHOOK_URL;
   const dashboardToken = process.env.DASHBOARD_WEBHOOK_TOKEN;
   if (dashboardUrl && dashboardToken) {
-    fetch(dashboardUrl, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "x-webhook-token": dashboardToken,
-      },
-      body: JSON.stringify({
-        nombre,
-        telefono,
-        email,
-        fuente: "web",
-        campania: source, // ej. "landing-licenciaturas", "promo-becas"
-        plantel,           // "Casa Blanca", "Palmas", "Otay", "Tecate"
-        // Lo extra queda en la columna `raw` del dashboard para auditoría
-        carrera,
-        ciudad,
-        turno,
-        mensaje,
-      }),
-    }).catch((err) => {
-      // eslint-disable-next-line no-console
-      console.error("[/api/leads] dashboard webhook falló:", err);
+    // `after()` mantiene viva la función serverless después de responder al
+    // usuario hasta que el fetch termine. Antes usábamos fire-and-forget
+    // (sin await), pero en Vercel serverless eso muere apenas responde la
+    // función, así que el dashboard nunca recibía los leads.
+    after(async () => {
+      try {
+        await fetch(dashboardUrl, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            "x-webhook-token": dashboardToken,
+          },
+          body: JSON.stringify({
+            nombre,
+            telefono,
+            email,
+            fuente: "web",
+            campania: source, // ej. "landing-licenciaturas", "promo-becas"
+            plantel,           // "Casa Blanca", "Palmas", "Otay", "Tecate"
+            // Lo extra queda en la columna `raw` del dashboard para auditoría
+            carrera,
+            ciudad,
+            turno,
+            mensaje,
+          }),
+        });
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error("[/api/leads] dashboard webhook falló:", err);
+      }
     });
   }
 
