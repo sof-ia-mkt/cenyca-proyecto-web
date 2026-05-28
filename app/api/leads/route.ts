@@ -260,5 +260,43 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // ──────────────────────────────────────────────────────────────────────────
+  // 8) Espejo al Dashboard de analítica (NO es un CRM, solo reporting).
+  //
+  // Fire-and-forget: no usamos await. La respuesta al usuario sale ya mismo;
+  // el dashboard recibe el lead en paralelo. Si el dashboard está caído o
+  // tarda, el form no se afecta — Neon y Emma ya tienen el respaldo.
+  //
+  // Las dos env vars (URL + TOKEN) son opcionales: si no están seteadas,
+  // el bloque ni se ejecuta. Útil para entornos sin dashboard configurado.
+  // ──────────────────────────────────────────────────────────────────────────
+  const dashboardUrl = process.env.DASHBOARD_WEBHOOK_URL;
+  const dashboardToken = process.env.DASHBOARD_WEBHOOK_TOKEN;
+  if (dashboardUrl && dashboardToken) {
+    fetch(dashboardUrl, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-webhook-token": dashboardToken,
+      },
+      body: JSON.stringify({
+        nombre,
+        telefono,
+        email,
+        fuente: "web",
+        campania: source, // ej. "landing-licenciaturas", "promo-becas"
+        plantel,           // "Casa Blanca", "Palmas", "Otay", "Tecate"
+        // Lo extra queda en la columna `raw` del dashboard para auditoría
+        carrera,
+        ciudad,
+        turno,
+        mensaje,
+      }),
+    }).catch((err) => {
+      // eslint-disable-next-line no-console
+      console.error("[/api/leads] dashboard webhook falló:", err);
+    });
+  }
+
   return NextResponse.json({ ok: true });
 }
