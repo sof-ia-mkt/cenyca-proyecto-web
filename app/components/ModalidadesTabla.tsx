@@ -1,10 +1,11 @@
-import { Calendar, Clock, Check, type LucideIcon } from "lucide-react";
+import { Calendar, Clock, GraduationCap, Check, type LucideIcon } from "lucide-react";
 import { MODALIDAD_COPY, type ModalidadDerivada } from "@/lib/horarios";
 
 // Las modalidades se derivan de los horarios reales de la carrera (inversion.cards).
-// CENYCA no oferta escolarizado, así que esa modalidad nunca se renderiza.
+// Se renderizan hasta tres: escolarizada (Lun–Jue), un día entre semana y ejecutivo.
 
 const ICONO: Record<ModalidadDerivada["categoria"], LucideIcon> = {
+  "escolarizado": GraduationCap,
   "entre-semana": Calendar,
   "fin-de-semana": Clock,
 };
@@ -32,7 +33,11 @@ export default function ModalidadesTabla({
             Elige tu modalidad
           </span>
           <h2 className="font-bebas text-[#121B33] text-4xl sm:text-5xl lg:text-6xl tracking-wide leading-[1.05] mt-3 text-balance">
-            {cols > 1 ? "Dos formas de estudiar tu carrera" : "Tu horario para este ciclo"}
+            {cols >= 3
+              ? "Tres formas de estudiar tu carrera"
+              : cols === 2
+                ? "Dos formas de estudiar tu carrera"
+                : "Tu horario para este ciclo"}
           </h2>
           <p className="font-montserrat text-[#555] text-base sm:text-lg leading-relaxed mt-4 text-pretty">
             Todas con RVOE y el mismo plan de estudios. Elige la que mejor se acomoda
@@ -43,7 +48,7 @@ export default function ModalidadesTabla({
         {/* Tabla comparativa */}
         <div
           className={`grid grid-cols-1 gap-px bg-[#E8E8E8] rounded-2xl overflow-hidden border border-[#E8E8E8] ${
-            cols >= 2 ? "md:grid-cols-2" : ""
+            cols >= 3 ? "md:grid-cols-3" : cols === 2 ? "md:grid-cols-2" : ""
           }`}
         >
           {modalidades.map((m) => {

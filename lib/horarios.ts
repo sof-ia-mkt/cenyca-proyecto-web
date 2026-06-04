@@ -3,16 +3,23 @@ import type { CardInversion } from "@/components/BloqueInversion";
 // ─── Derivación de horarios desde inversion.cards ──────────────────────────────
 // Fuente única de verdad: las cards de inversión ya codifican exactamente qué
 // días/horarios abren en el ciclo. El HERO y la tabla de modalidades derivan su
-// contenido de acá — nunca texto hardcodeado. CENYCA no oferta escolarizado, así
-// que ningún día entre Lunes-Viernes de 4 días aparece; cada card es 1 día.
+// contenido de acá — nunca texto hardcodeado. Las modalidades por día son de 1
+// día; la modalidad escolarizada (tipo "escolarizada") es de 4 días (Lun–Jue).
 
-export type ModalidadCategoria = "entre-semana" | "fin-de-semana";
+export type ModalidadCategoria = "escolarizado" | "entre-semana" | "fin-de-semana";
 
 const DIAS_ENTRE_SEMANA = ["Lunes", "Martes", "Miércoles", "Miercoles", "Jueves", "Viernes"];
 
-/** Categoriza por nombre de día (robusto: ignora el campo `tipo`, que a veces
- *  marca "entre-semana" para un Domingo de Casa Blanca en Gastronomía). */
-function categoriaDeDia(dia?: string): ModalidadCategoria {
+/** Categoriza una card. El escolarizado se identifica por `tipo` (abarca varios
+ *  días Lun–Jue, no por un solo nombre de día). El resto se clasifica por el día
+ *  (robusto: ignora `tipo`, que a veces marca "entre-semana" para un Domingo de
+ *  Casa Blanca en Gastronomía). */
+function categoriaDeCard(card: CardInversion): ModalidadCategoria {
+  if (card.tipo === "escolarizada") return "escolarizado";
+  return categoriaDeDia(card.diaPrincipal);
+}
+
+function categoriaDeDia(dia?: string): Exclude<ModalidadCategoria, "escolarizado"> {
   const d = (dia ?? "").trim();
   return DIAS_ENTRE_SEMANA.some((x) => d.startsWith(x)) ? "entre-semana" : "fin-de-semana";
 }
@@ -64,9 +71,21 @@ function ordenDeLabel(label: string): number {
   return ORDEN_DIA[primera] ?? 99;
 }
 
-const COPY: Record<ModalidadCategoria, { tag: string; freqUnit: string; idealPara: string; features: string[] }> = {
+const COPY: Record<ModalidadCategoria, { tag: string; freq: string; freqUnit: string; idealPara: string; features: string[] }> = {
+  "escolarizado": {
+    tag: "Escolarizada",
+    freq: "4 días",
+    freqUnit: "/sem",
+    idealPara: "Quien puede dedicar las mañanas de lunes a jueves a estudiar de tiempo completo y avanzar más rápido.",
+    features: [
+      "Clases de lunes a jueves por la mañana",
+      "Ambiente universitario de tiempo completo",
+      "Disponible en planteles seleccionados",
+    ],
+  },
   "entre-semana": {
     tag: "Un día entre semana",
+    freq: "1 día",
     freqUnit: "/sem",
     idealPara: "Quien combina la carrera con trabajo, familia o emprendimiento entre semana.",
     features: [
@@ -77,6 +96,7 @@ const COPY: Record<ModalidadCategoria, { tag: string; freqUnit: string; idealPar
   },
   "fin-de-semana": {
     tag: "Ejecutivo",
+    freq: "1 día",
     freqUnit: "/fin",
     idealPara: "Profesionistas con compromisos de lunes a viernes que quieren su próximo nivel.",
     features: [
@@ -90,8 +110,17 @@ const COPY: Record<ModalidadCategoria, { tag: string; freqUnit: string; idealPar
 export const MODALIDAD_COPY = COPY;
 
 /** Modalidades genéricas para páginas de área (varias carreras, sin contexto de
- *  una sola). Refleja las dos formas reales de CENYCA — nunca escolarizado. */
+ *  una sola). Refleja las tres formas de CENYCA; la disponibilidad de cada una
+ *  varía por carrera y plantel (nota al pie de la tabla). */
 export const MODALIDADES_GENERICAS: ModalidadDerivada[] = [
+  {
+    categoria: "escolarizado",
+    tag: COPY["escolarizado"].tag,
+    dias: "Lunes a Jueves",
+    horario: "8:00 am – 12:00 pm",
+    freq: COPY["escolarizado"].freq,
+    freqUnit: COPY["escolarizado"].freqUnit,
+  },
   {
     categoria: "entre-semana",
     tag: COPY["entre-semana"].tag,
@@ -117,8 +146,8 @@ export function derivarHorarios(cards?: CardInversion[]): HorariosDerivados {
   const porCategoria = new Map<ModalidadCategoria, { dias: string[]; horario?: string }>();
 
   for (const card of lista) {
-    const cat = categoriaDeDia(card.diaPrincipal);
-    let label = diaLabelDeCard(card);
+    const cat = categoriaDeCard(card);
+    let label = diaLabelDeCard(card) || (cat === "escolarizado" ? "Lunes a Jueves" : "");
     if (!label) continue;
     if (card.soloCasaBlanca) label = `${label} (Casa Blanca)`;
 
@@ -128,7 +157,7 @@ export function derivarHorarios(cards?: CardInversion[]): HorariosDerivados {
     porCategoria.set(cat, entry);
   }
 
-  const modalidades: ModalidadDerivada[] = (["entre-semana", "fin-de-semana"] as ModalidadCategoria[])
+  const modalidades: ModalidadDerivada[] = (["escolarizado", "entre-semana", "fin-de-semana"] as ModalidadCategoria[])
     .filter((cat) => porCategoria.has(cat))
     .map((cat) => {
       const entry = porCategoria.get(cat)!;
@@ -138,7 +167,7 @@ export function derivarHorarios(cards?: CardInversion[]): HorariosDerivados {
         tag: COPY[cat].tag,
         dias: dias.join(" · "),
         horario: entry.horario,
-        freq: "1 día",
+        freq: COPY[cat].freq,
         freqUnit: COPY[cat].freqUnit,
       };
     });
@@ -149,10 +178,12 @@ export function derivarHorarios(cards?: CardInversion[]): HorariosDerivados {
     .sort((a, b) => ordenDeLabel(a) - ordenDeLabel(b));
   const diasResumen = todosLabels.join(" · ");
 
+  const tieneEsc = porCategoria.has("escolarizado");
   const tieneEntre = porCategoria.has("entre-semana");
   const tieneFin = porCategoria.has("fin-de-semana");
-  const modalidadLabel =
-    tieneEntre && tieneFin
+  const modalidadLabel = tieneEsc
+    ? "Escolarizada o ejecutiva"
+    : tieneEntre && tieneFin
       ? "Entre semana o fin de semana · 1 día"
       : tieneFin
         ? "Ejecutivo · fin de semana"

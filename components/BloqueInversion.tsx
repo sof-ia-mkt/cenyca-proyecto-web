@@ -6,7 +6,7 @@ import { MapPin, Star, Sparkles, Check, AlertTriangle } from "lucide-react";
 // ─── Tipos ────────────────────────────────────────────────────────────────────
 
 export type CardInversion = {
-  tipo?: "entre-semana" | "fin-de-semana";
+  tipo?: "escolarizada" | "entre-semana" | "fin-de-semana";
   tag?: string;
   destacada?: boolean;
   etiquetaDestacada?: string;
@@ -221,12 +221,14 @@ function CardInversionUI({
   accent: string;
   mensajeAparta?: string;
 }) {
-  // Cálculo de mensualidad
-  const esEntreSemana = card.tipo === "entre-semana";
+  // Cálculo de mensualidad.
+  // Escolarizada y entre-semana comparten el toggle de boletos (regular ↔ especial).
+  // Fin de semana usa el selector de becas.
+  const usaBoletos = card.tipo === "entre-semana" || card.tipo === "escolarizada";
   const mensualidadCalc = (() => {
-    if (esEntreSemana) {
+    if (usaBoletos) {
       return martesEsp
-        ? card.mensualidadEspecial ?? 2200
+        ? card.mensualidadEspecial ?? card.mensualidadBase ?? 2200
         : card.mensualidadBase ?? 4000;
     }
     const base = card.mensualidadBase ?? 4000;
@@ -237,7 +239,7 @@ function CardInversionUI({
 
   // Horario dinámico por campus (solo aplica a fin de semana)
   const horarioFinal = (() => {
-    if (esEntreSemana) return card.horario;
+    if (usaBoletos) return card.horario;
     if (campus === "cb" && card.horarioCasaBlanca) return card.horarioCasaBlanca;
     if (campus !== "cb" && card.horarioOtros) return card.horarioOtros;
     return card.horario;
@@ -311,10 +313,10 @@ function CardInversionUI({
           </strong>
           <span className="font-montserrat text-white/45 text-sm">/mes</span>
         </div>
-        {esEntreSemana && martesEsp && card.notaEspecial && (
+        {usaBoletos && martesEsp && card.notaEspecial && (
           <div className="font-montserrat text-[12px] text-[#FFB4B4] mt-1">{card.notaEspecial}</div>
         )}
-        {!esEntreSemana && becaPct > 0 && (
+        {!usaBoletos && becaPct > 0 && (
           <div className="font-montserrat text-[12px] text-[#FFB4B4] mt-1">
             Beca sujeta a venta de {becaPct} boletos
           </div>
@@ -322,7 +324,7 @@ function CardInversionUI({
       </div>
 
       {/* Toggle (entre semana: boletos | fin de semana: becas) */}
-      {esEntreSemana && (
+      {usaBoletos && (
         <div className="flex gap-1 bg-white/[0.06] rounded-full p-1">
           <ToggleButton active={martesEsp} onClick={() => setMartesEsp(true)} accent={accent}>
             {card.labelToggleEspecial ?? "Con 20 boletos"}
@@ -332,7 +334,7 @@ function CardInversionUI({
           </ToggleButton>
         </div>
       )}
-      {!esEntreSemana && card.becasOpciones && card.becasOpciones.length > 0 && (
+      {!usaBoletos && card.becasOpciones && card.becasOpciones.length > 0 && (
         <div className="flex gap-1 bg-white/[0.06] rounded-full p-1">
           {card.becasOpciones.map((pct) => (
             <ToggleButton

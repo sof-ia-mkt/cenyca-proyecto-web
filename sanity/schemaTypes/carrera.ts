@@ -69,7 +69,10 @@ export const carrera = defineType({
       group: "info",
       of: [{ type: "string" }],
       options: {
-        list: [{ title: "Ejecutivo", value: "ejecutivo" }],
+        list: [
+          { title: "Ejecutivo", value: "ejecutivo" },
+          { title: "Escolarizada", value: "escolarizada" },
+        ],
       },
       initialValue: ["ejecutivo"],
       validation: (Rule) => Rule.required().min(1),
@@ -296,7 +299,7 @@ export const carrera = defineType({
         defineField({
           name: "cards",
           title: "Tarjetas",
-          description: "1 a 3 cards (entre semana / jueves Casa Blanca / fin de semana). Cada una con su lógica.",
+          description: "1 a 4 cards (escolarizada Lun–Jue / entre semana / jueves Casa Blanca / fin de semana). Cada una con su lógica.",
           type: "array",
           of: [
             {
@@ -309,6 +312,7 @@ export const carrera = defineType({
                   type: "string",
                   options: {
                     list: [
+                      { title: "Escolarizada (Lun–Jue)", value: "escolarizada" },
                       { title: "Entre semana (martes)", value: "entre-semana" },
                       { title: "Fin de semana", value: "fin-de-semana" },
                     ],
@@ -412,7 +416,7 @@ export const carrera = defineType({
               },
             },
           ],
-          validation: (Rule) => Rule.max(3),
+          validation: (Rule) => Rule.max(4),
         }),
       ],
     }),
