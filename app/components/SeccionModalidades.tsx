@@ -38,7 +38,7 @@ const MODALIDADES: Modalidad[] = [
     tag: "Un solo día",
     big: "1 día",
     bigUnit: "/sem",
-    horario: "Martes · Una vez por semana",
+    horario: "Martes o Jueves · Una vez por semana",
     descripcion:
       "Combina tu carrera con tu trabajo, familia o emprendimiento. Solo un día y sigues con tu vida.",
     features: [
