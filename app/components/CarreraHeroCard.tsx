@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { CalendarClock, Clock, GraduationCap, MapPin, Sparkles, MessageCircle, ArrowRight } from "lucide-react";
+import { CalendarClock, Clock, GraduationCap, MapPin, Sparkles, ArrowRight } from "lucide-react";
 
 type Props = {
   accent: string;
@@ -8,16 +7,18 @@ type Props = {
   gradoLabel: string;
   duracion?: string;
   promoActiva?: boolean;
+  /** Modalidad derivada de los horarios reales de la carrera. */
+  modalidadLabel: string;
+  /** Días reales que aperturan en el ciclo, p.ej. "Martes · Sábado o Domingo". */
+  horariosLabel: string;
+  /** Etiqueta de becas ya resuelta (boletos o promoción de inscripción). */
+  becasLabel: string;
 };
 
 // ⚠️ Próximo inicio: actualizar cuando cambie el ciclo de admisión activo.
 const PROXIMO_INICIO = {
   ciclo: "Septiembre 2026",
 };
-
-const MODALIDAD_LABEL = "Ejecutivo (1 día a la semana) · Escolarizado (Lun-Jue)";
-const HORARIOS_LABEL = "Martes, sábado, domingo o escolarizado (Lun-Jue)";
-const BECAS_LABEL = "Hasta 30%";
 
 export default function CarreraHeroCard({
   accent,
@@ -26,6 +27,9 @@ export default function CarreraHeroCard({
   gradoLabel,
   duracion,
   promoActiva,
+  modalidadLabel,
+  horariosLabel,
+  becasLabel,
 }: Props) {
   const waText = encodeURIComponent(
     `Hola, me interesa la ${gradoLabel} en ${carreraNombre}.`,
@@ -71,17 +75,17 @@ export default function CarreraHeroCard({
         <Row
           icon={<GraduationCap size={15} className="text-white/55" strokeWidth={2} />}
           label="Modalidad"
-          value={MODALIDAD_LABEL}
+          value={modalidadLabel}
         />
         <Row
           icon={<MapPin size={15} className="text-white/55" strokeWidth={2} />}
           label="Horarios"
-          value={HORARIOS_LABEL}
+          value={horariosLabel}
         />
         <Row
           icon={<Sparkles size={15} className="text-white/55" strokeWidth={2} />}
           label="Becas"
-          value={BECAS_LABEL}
+          value={becasLabel}
         />
       </dl>
 

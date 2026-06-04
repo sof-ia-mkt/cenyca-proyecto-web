@@ -53,12 +53,13 @@ export const carreraBySlugQuery = groq`
       paqueteCuatrimestral,
       paqueteCuatrimestralTecate,
       mostrarToggleCampus,
+      plantelesDisponibles,
       mensajeAparta,
       disclaimer,
       cards[]{
         tipo, tag, destacada, etiquetaDestacada,
         diaPrincipal, diaSecundario, horario,
-        horarioCasaBlanca, horarioOtros, ocultarDomingoEnOtay,
+        horarioCasaBlanca, horarioOtros, ocultarDomingoEnOtay, soloCasaBlanca,
         mensualidadBase, mensualidadEspecial, notaEspecial,
         labelToggleEspecial, labelToggleRegular,
         becasOpciones, sinReinscripcion, ctaLabel

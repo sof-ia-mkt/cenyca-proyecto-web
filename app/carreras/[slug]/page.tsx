@@ -17,6 +17,7 @@ import { client } from "@/sanity/lib/client";
 import { carreraBySlugQuery, configuracionQuery, todasCarrerasQuery } from "@/sanity/lib/queries";
 import { SITE_URL } from "@/lib/siteUrl";
 import { breadcrumbJsonLd } from "@/lib/jsonLd";
+import { derivarHorarios } from "@/lib/horarios";
 import BeneficioIcon from "@/components/BeneficioIcon";
 import StatsCounter, { type Stat } from "@/components/StatsCounter";
 import LazyYouTubeEmbed from "@/components/LazyYouTubeEmbed";
@@ -201,6 +202,14 @@ export default async function CarreraPage(
   const accentStyle = { "--accent": accent } as CSSProperties;
   const hasDescripcionLarga = Array.isArray(carrera.descripcionLarga) && carrera.descripcionLarga.length > 0;
 
+  // Días/horarios/modalidades reales del ciclo, derivados de inversion.cards.
+  const horarios = derivarHorarios(carrera.inversion?.cards);
+  const promoPorcentaje = config?.promocionInscripcion?.porcentaje ?? 20;
+  const becasLabel =
+    horarios.becasMax > 0
+      ? `Hasta ${horarios.becasMax}%`
+      : `${promoPorcentaje}% en inscripción`;
+
   const courseJsonLd = {
     "@context": "https://schema.org",
     "@type": "Course",
@@ -320,6 +329,9 @@ export default async function CarreraPage(
                 gradoLabel={gradoLabel}
                 duracion={carrera.duracion}
                 promoActiva={config?.promocionInscripcion?.activa}
+                modalidadLabel={horarios.modalidadLabel}
+                horariosLabel={horarios.diasResumen}
+                becasLabel={becasLabel}
               />
             </div>
           </div>
@@ -396,7 +408,7 @@ export default async function CarreraPage(
       )}
 
       {/* ── MODALIDADES (tabla comparativa) ───────────────────────────────── */}
-      <ModalidadesTabla accent={accent} />
+      <ModalidadesTabla accent={accent} modalidades={horarios.modalidades} />
 
       {/* ── PROMOCIÓN / FORMULARIO DE INSCRIPCIÓN ─────────────────────────── */}
       {config?.promocionInscripcion?.activa && (

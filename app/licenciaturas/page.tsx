@@ -37,7 +37,7 @@ export default async function LicenciaturasPage() {
   const stats: AreaStat[] = [
     { value: carreras.length, label: "Licenciaturas activas" },
     { value: 3, label: "Años para titularte" },
-    { value: 3, label: "Modalidades de estudio" },
+    { value: 2, label: "Modalidades de estudio" },
     { value: 100, suffix: "%", label: "Programas con RVOE" },
   ];
 
@@ -45,7 +45,7 @@ export default async function LicenciaturasPage() {
     {
       Icon: CalendarClock,
       titulo: "Horarios flexibles",
-      desc: "Modalidades ejecutiva y escolarizada para que estudies sin pausar tu vida profesional o familiar.",
+      desc: "Estudia un solo día a la semana — entre semana o fin de semana — sin pausar tu vida profesional o familiar.",
     },
     {
       Icon: Users,

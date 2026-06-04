@@ -37,7 +37,7 @@ export default async function IngenieriasPage() {
   const stats: AreaStat[] = [
     { value: carreras.length, label: "Programas de ingeniería" },
     { value: 3, label: "Años para titularte" },
-    { value: 3, label: "Modalidades de estudio" },
+    { value: 2, label: "Modalidades de estudio" },
     { value: 100, suffix: "%", label: "Programas con RVOE" },
   ];
 

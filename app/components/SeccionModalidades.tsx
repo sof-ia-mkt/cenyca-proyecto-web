@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import SectionAccentLine from "./SectionAccentLine";
 import {
-  GraduationCap,
   Calendar,
   Clock,
   Check,
@@ -35,23 +34,6 @@ type Modalidad = {
 };
 
 const MODALIDADES: Modalidad[] = [
-  {
-    tag: "Escolarizada",
-    big: "4 días",
-    bigUnit: "/sem",
-    horario: "Lunes a jueves · Matutino",
-    descripcion:
-      "La experiencia universitaria completa. Convive en campus y construye tu red profesional desde el primer cuatrimestre.",
-    features: [
-      "Vida universitaria activa todos los días",
-      "Aprendizaje continuo con seguimiento diario",
-      "Red de compañeros sólida desde el primer cuatrimestre",
-      "RVOE con validez oficial",
-      "Mismo plan de estudios",
-    ],
-    icon: GraduationCap,
-    pill: "Experiencia completa",
-  },
   {
     tag: "Un solo día",
     big: "1 día",
@@ -288,8 +270,8 @@ function ModalidadCard({
 // ─── Sección ──────────────────────────────────────────────────────────────────
 
 export default function SeccionModalidades() {
-  // Inicia con la card del medio destacada (Un solo día).
-  const [activeIdx, setActiveIdx] = useState(1);
+  // Inicia con la primera card destacada (Un solo día).
+  const [activeIdx, setActiveIdx] = useState(0);
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
   // Card que recibe el spotlight: si hay hover, manda el hover; si no, el ciclo.
   const featuredIdx = hoveredIdx !== null ? hoveredIdx : activeIdx;
@@ -342,7 +324,7 @@ export default function SeccionModalidades() {
             </h2>
 
             <p className="text-white/65 text-lg leading-relaxed max-w-2xl text-pretty">
-              Tres modalidades pensadas para etapas de vida distintas. Elige la
+              Dos modalidades pensadas para etapas de vida distintas. Elige la
               que se acopla a tu trabajo, tu familia y tu energía — sin sacrificar
               calidad académica ni validez SEP.
             </p>
@@ -350,7 +332,7 @@ export default function SeccionModalidades() {
         </FadeUp>
 
         {/* Grid 3 cards — la spotlight rota cada 5s, se pausa con hover */}
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-7 md:items-stretch md:pt-4">
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-7 md:items-stretch md:pt-4 max-w-4xl mx-auto">
           {MODALIDADES.map((m, i) => (
             <StaggerItem key={m.tag}>
               <ModalidadCard

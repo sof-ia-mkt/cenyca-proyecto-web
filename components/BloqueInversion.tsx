@@ -16,6 +16,7 @@ export type CardInversion = {
   horarioCasaBlanca?: string;
   horarioOtros?: string;
   ocultarDomingoEnOtay?: boolean;
+  soloCasaBlanca?: boolean;
   mensualidadBase?: number;
   mensualidadEspecial?: number;
   notaEspecial?: string;
@@ -32,6 +33,7 @@ export type InversionConfig = {
   paqueteCuatrimestral?: number;
   paqueteCuatrimestralTecate?: number;
   mostrarToggleCampus?: boolean;
+  plantelesDisponibles?: Campus[];
   mensajeAparta?: string;
   disclaimer?: string;
   cards?: CardInversion[];
@@ -52,6 +54,8 @@ const CAMPUS_LABEL: Record<Campus, string> = {
   tc: "Tecate",
 };
 
+const CAMPUS_ORDEN: Campus[] = ["cb", "palmas", "otay", "tc"];
+
 const fmt = (n: number) => `$${n.toLocaleString("es-MX")}`;
 
 // ─── Componente ───────────────────────────────────────────────────────────────
@@ -65,12 +69,32 @@ export default function BloqueInversion({ data, promo, accent = "#00D4FF" }: Pro
 
   if (!data?.activa || !data.cards?.length) return null;
 
+  // Planteles a mostrar: solo los disponibles para esta carrera. Si no se
+  // especifica ninguno, se muestran los 4 (comportamiento anterior).
+  const plantelesDisponibles =
+    data.plantelesDisponibles?.length
+      ? CAMPUS_ORDEN.filter((c) => data.plantelesDisponibles!.includes(c))
+      : CAMPUS_ORDEN;
+
+  // Si el plantel seleccionado no está disponible, usar el primero de la lista.
+  const campusEfectivo = plantelesDisponibles.includes(campus)
+    ? campus
+    : plantelesDisponibles[0];
+
+  const mostrarToggle = data.mostrarToggleCampus && plantelesDisponibles.length > 1;
+
+  // Tarjetas visibles según plantel: las marcadas "solo Casa Blanca" se ocultan
+  // cuando el plantel efectivo no es Casa Blanca.
+  const cardsVisibles = data.cards.filter(
+    (card) => !(card.soloCasaBlanca && campusEfectivo !== "cb")
+  );
+
   const porcentajePromo = (promo?.activa ? promo.porcentaje : null) ?? 20;
   const inscripcionBase = data.inscripcionBase ?? 2000;
   const inscripcionConPromo = Math.round(inscripcionBase * (1 - porcentajePromo / 100));
 
   const paquete =
-    campus === "tc"
+    campusEfectivo === "tc"
       ? data.paqueteCuatrimestralTecate ?? 800
       : data.paqueteCuatrimestral ?? 950;
 
@@ -97,15 +121,15 @@ export default function BloqueInversion({ data, promo, accent = "#00D4FF" }: Pro
         </div>
 
         {/* Toggle de campus */}
-        {data.mostrarToggleCampus && (
+        {mostrarToggle && (
           <div className="mb-8 max-w-xl mx-auto rounded-2xl px-4 py-3 sm:px-5 sm:py-4 border border-white/10 bg-white/[0.04]">
             <div className="flex items-center justify-center gap-2 font-montserrat text-xs uppercase tracking-wider font-bold mb-3" style={{ color: accent }}>
               <MapPin size={14} />
               ¿En qué plantel estudiarías?
             </div>
             <div className="flex flex-wrap gap-1 justify-center bg-white/[0.06] rounded-full p-1">
-              {(Object.keys(CAMPUS_LABEL) as Campus[]).map((c) => {
-                const active = campus === c;
+              {plantelesDisponibles.map((c) => {
+                const active = campusEfectivo === c;
                 return (
                   <button
                     key={c}
@@ -128,12 +152,20 @@ export default function BloqueInversion({ data, promo, accent = "#00D4FF" }: Pro
         )}
 
         {/* Grid de cards */}
-        <div className={`grid gap-5 ${data.cards.length === 2 ? "md:grid-cols-2" : "max-w-xl mx-auto"}`}>
-          {data.cards.map((card, i) => (
+        <div
+          className={`grid gap-5 ${
+            cardsVisibles.length >= 3
+              ? "md:grid-cols-3"
+              : cardsVisibles.length === 2
+              ? "md:grid-cols-2"
+              : "max-w-xl mx-auto"
+          }`}
+        >
+          {cardsVisibles.map((card, i) => (
             <CardInversionUI
               key={`${card.tipo}-${i}`}
               card={card}
-              campus={campus}
+              campus={campusEfectivo}
               martesEsp={martesEsp}
               setMartesEsp={setMartesEsp}
               becaPct={becaPct}

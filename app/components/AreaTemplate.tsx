@@ -5,6 +5,7 @@ import { FadeUp, FadeLeft, FadeRight } from "@/app/components/ScrollReveal";
 import AnimatedCounter from "@/app/components/AnimatedCounter";
 import AreaCarreraGrid, { type CarreraCard } from "@/app/components/AreaCarreraGrid";
 import ModalidadesTabla from "@/app/components/ModalidadesTabla";
+import { MODALIDADES_GENERICAS } from "@/lib/horarios";
 import FormularioLead from "@/app/components/FormularioLead";
 
 export type AreaStat = {
@@ -165,7 +166,7 @@ export default function AreaTemplate({
       </section>
 
       {/* ── Modalidades (tabla comparativa compartida) ───────────────────── */}
-      <ModalidadesTabla accent="#00D4FF" />
+      <ModalidadesTabla accent="#00D4FF" modalidades={MODALIDADES_GENERICAS} />
 
       {/* ── Por qué CENYCA ───────────────────────────────────────────────── */}
       <section className="bg-white py-24 md:py-28 px-6 md:px-12 border-t border-[#121B33]/8">

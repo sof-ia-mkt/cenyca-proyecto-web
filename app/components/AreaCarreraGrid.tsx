@@ -19,9 +19,7 @@ export type CarreraCard = {
 };
 
 const MODALIDAD_LABEL: Record<string, string> = {
-  escolarizado: "Escolarizado",
   ejecutivo: "Ejecutivo",
-  "en-linea": "En línea",
 };
 
 const GRADO_LABEL: Record<string, string> = {

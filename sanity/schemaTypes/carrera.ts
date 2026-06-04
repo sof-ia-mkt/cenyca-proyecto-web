@@ -69,12 +69,9 @@ export const carrera = defineType({
       group: "info",
       of: [{ type: "string" }],
       options: {
-        list: [
-          { title: "Escolarizado", value: "escolarizado" },
-          { title: "Ejecutivo", value: "ejecutivo" },
-          { title: "En línea", value: "en-linea" },
-        ],
+        list: [{ title: "Ejecutivo", value: "ejecutivo" }],
       },
+      initialValue: ["ejecutivo"],
       validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
@@ -268,6 +265,22 @@ export const carrera = defineType({
           initialValue: true,
         }),
         defineField({
+          name: "plantelesDisponibles",
+          title: "Planteles donde se imparte",
+          description:
+            "Marca SOLO los planteles que abren esta carrera en septiembre. El selector mostrará únicamente estos. Si lo dejas vacío, se muestran los 4 (comportamiento anterior).",
+          type: "array",
+          of: [{ type: "string" }],
+          options: {
+            list: [
+              { title: "Casa Blanca", value: "cb" },
+              { title: "Palmas", value: "palmas" },
+              { title: "Otay", value: "otay" },
+              { title: "Tecate", value: "tc" },
+            ],
+          },
+        }),
+        defineField({
           name: "mensajeAparta",
           title: 'Mensaje "Aparta tu lugar" (opcional)',
           type: "text",
@@ -283,7 +296,7 @@ export const carrera = defineType({
         defineField({
           name: "cards",
           title: "Tarjetas",
-          description: "1 o 2 cards (entre semana / fin de semana). Cada una con su lógica.",
+          description: "1 a 3 cards (entre semana / jueves Casa Blanca / fin de semana). Cada una con su lógica.",
           type: "array",
           of: [
             {
@@ -334,6 +347,14 @@ export const carrera = defineType({
                   name: "ocultarDomingoEnOtay",
                   title: "¿Ocultar 'o Domingo' en plantel Otay?",
                   type: "boolean",
+                  initialValue: false,
+                }),
+                defineField({
+                  name: "soloCasaBlanca",
+                  title: "¿Mostrar solo en Casa Blanca?",
+                  type: "boolean",
+                  description:
+                    "Si está activo, esta tarjeta solo aparece cuando el plantel seleccionado es Casa Blanca (ej. horario de Jueves).",
                   initialValue: false,
                 }),
                 defineField({
@@ -391,7 +412,7 @@ export const carrera = defineType({
               },
             },
           ],
-          validation: (Rule) => Rule.max(2),
+          validation: (Rule) => Rule.max(3),
         }),
       ],
     }),
