@@ -89,7 +89,7 @@ export default function BloqueInversion({ data, promo, accent = "#00D4FF" }: Pro
     (card) => !(card.soloCasaBlanca && campusEfectivo !== "cb")
   );
 
-  const porcentajePromo = (promo?.activa ? promo.porcentaje : null) ?? 20;
+  const porcentajePromo = (promo?.activa ? promo.porcentaje : null) ?? 25;
   const inscripcionBase = data.inscripcionBase ?? 2000;
   const inscripcionConPromo = Math.round(inscripcionBase * (1 - porcentajePromo / 100));
 

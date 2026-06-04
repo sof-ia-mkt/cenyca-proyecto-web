@@ -91,7 +91,7 @@ export default function PromocionFormulario({
   whatsappFallback,
   accent = "#00D4FF",
 }: Props) {
-  const porcentaje = promo.porcentaje ?? 20;
+  const porcentaje = promo.porcentaje ?? 25;
   const dias = promo.diasExpiracion ?? 30;
   const tituloRaw = promo.titulo ?? "Reclama tu descuento del {porcentaje}%";
   const titulo = tituloRaw.replace(/\{porcentaje\}/g, String(porcentaje));
@@ -338,7 +338,12 @@ export default function PromocionFormulario({
               )}
             </button>
 
-            <div className="mt-4 flex items-center justify-center gap-2 font-montserrat text-xs text-white/40">
+            <p className="mt-4 text-center font-montserrat text-[11px] leading-snug text-white/45">
+              El {porcentaje}% de descuento aplica únicamente sobre la inscripción y
+              al registrar tus datos en este formulario.
+            </p>
+
+            <div className="mt-3 flex items-center justify-center gap-2 font-montserrat text-xs text-white/40">
               <ShieldCheck size={14} style={{ color: accent }} />
               Tus datos están protegidos. Respuesta en menos de 24 hrs.
             </div>

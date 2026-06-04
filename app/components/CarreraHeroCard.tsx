@@ -7,6 +7,8 @@ type Props = {
   gradoLabel: string;
   duracion?: string;
   promoActiva?: boolean;
+  /** Porcentaje de descuento de inscripción vigente. */
+  porcentaje?: number;
   /** Modalidad derivada de los horarios reales de la carrera. */
   modalidadLabel: string;
   /** Días reales que aperturan en el ciclo, p.ej. "Martes · Sábado o Domingo". */
@@ -27,6 +29,7 @@ export default function CarreraHeroCard({
   gradoLabel,
   duracion,
   promoActiva,
+  porcentaje = 25,
   modalidadLabel,
   horariosLabel,
   becasLabel,
@@ -110,7 +113,7 @@ export default function CarreraHeroCard({
           style={{ backgroundColor: accent, color: "#121B33" }}
         >
           <span className="inline-flex flex-col items-center leading-tight text-center">
-            <span>Solicitar 20% de descuento</span>
+            <span>Solicitar {porcentaje}% de descuento</span>
             <span className="text-[10px] font-semibold opacity-70 mt-0.5">
               Sobre la inscripción
             </span>

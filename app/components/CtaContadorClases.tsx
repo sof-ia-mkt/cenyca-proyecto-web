@@ -69,7 +69,7 @@ function useCountdown(targetISO?: string) {
 
 export default function CtaContadorClases({
   data,
-  porcentajeDescuento = 20,
+  porcentajeDescuento = 25,
   whatsappFallback = "526631300236",
 }: Props) {
   const countdown = useCountdown(data?.fecha);
@@ -302,6 +302,11 @@ export default function CtaContadorClases({
                   </>
                 )}
               </button>
+
+              <p className="mt-4 text-center font-montserrat text-[11px] leading-snug text-white/45">
+                El {porcentajeDescuento}% de descuento aplica únicamente sobre la
+                inscripción y al registrar tus datos en este formulario.
+              </p>
             </form>
           )}
         </div>

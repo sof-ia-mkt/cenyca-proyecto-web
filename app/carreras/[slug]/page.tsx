@@ -204,7 +204,7 @@ export default async function CarreraPage(
 
   // Días/horarios/modalidades reales del ciclo, derivados de inversion.cards.
   const horarios = derivarHorarios(carrera.inversion?.cards);
-  const promoPorcentaje = config?.promocionInscripcion?.porcentaje ?? 20;
+  const promoPorcentaje = config?.promocionInscripcion?.porcentaje ?? 25;
   const becasLabel =
     horarios.becasMax > 0
       ? `Hasta ${horarios.becasMax}%`
@@ -329,6 +329,7 @@ export default async function CarreraPage(
                 gradoLabel={gradoLabel}
                 duracion={carrera.duracion}
                 promoActiva={config?.promocionInscripcion?.activa}
+                porcentaje={promoPorcentaje}
                 modalidadLabel={horarios.modalidadLabel}
                 horariosLabel={horarios.diasResumen}
                 becasLabel={becasLabel}

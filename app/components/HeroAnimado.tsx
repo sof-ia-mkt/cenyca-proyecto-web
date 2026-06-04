@@ -153,6 +153,7 @@ export default function HeroAnimado({ slides }: { slides: HeroSlide[] }) {
             letterSpacing: "-0.03em",
           }}
         >
+          <span className="sr-only">CENYCA Universidad — </span>
           <AnimatedText
             text="Donde tu potencial"
             delay={0.2}

@@ -644,7 +644,7 @@ export default async function HomePage() {
       <SeccionModalidades />
       <CtaContadorClases
         data={config?.cicloInicio}
-        porcentajeDescuento={config?.promocionInscripcion?.porcentaje ?? 20}
+        porcentajeDescuento={config?.promocionInscripcion?.porcentaje ?? 25}
         whatsappFallback={config?.contacto?.whatsapp}
       />
       <SeccionPlanteles campus={campus} />
