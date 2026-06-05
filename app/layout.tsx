@@ -8,6 +8,7 @@ import PromoPopup from "./components/PromoPopup";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { client } from "@/sanity/lib/client";
+import { SanityLive } from "@/sanity/lib/live";
 import { configuracionQuery } from "@/sanity/lib/queries";
 import { SITE_URL } from "@/lib/siteUrl";
 
@@ -240,6 +241,7 @@ export default async function RootLayout({
         <PromoPopup backgroundUrl={popupBg} />
         <Analytics />
         <SpeedInsights />
+        <SanityLive />
       </body>
     </html>
   );
