@@ -142,7 +142,7 @@ export default async function RootLayout({
       )
       .catch(() => null),
   ]);
-  const whatsapp = config?.contacto?.whatsapp || "526641300236";
+  const whatsapp = config?.contacto?.whatsapp || "526642344919";
   const mostrarVidaEstudiantil = config?.navegacion?.mostrarVidaEstudiantil ?? false;
   // Prioridad: imagen específica del popup → imagen/galeria del campus principal
   const popupBg = popupConfig?.imagenUrl || campusFoto?.imagenUrl;

@@ -174,7 +174,7 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
   })
   const relacionadas = (relacionadasRaw ?? []) as Noticia[]
 
-  const whatsapp: string = config?.contacto?.whatsapp ?? '526641300236'
+  const whatsapp: string = config?.contacto?.whatsapp ?? '526642344919'
   const inscripciones: string =
     config?.sistemas?.inscripciones ?? 'https://inscripciones.cenyca.edu.mx'
 

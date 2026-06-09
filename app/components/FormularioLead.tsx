@@ -321,7 +321,7 @@ export default function FormularioLead({
               <p className="text-center text-[#76777E] text-xs mt-6">
                 ¿Prefieres hablar ahora?{" "}
                 <a
-                  href="https://wa.me/526631300236"
+                  href="https://wa.me/526642344919"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[#121B33] font-semibold underline-offset-2 hover:underline"

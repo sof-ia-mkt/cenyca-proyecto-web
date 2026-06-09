@@ -59,7 +59,7 @@ export default async function PreguntasFrecuentesPage() {
   const validCategoriaIds = new Set(categorias.map((c) => c._id));
   const faqsValidas = faqs.filter((f) => validCategoriaIds.has(f.categoriaId));
 
-  const whatsapp = config?.contacto?.whatsapp ?? "526631300236";
+  const whatsapp = config?.contacto?.whatsapp ?? "526642344919";
   const waText = encodeURIComponent(
     "Hola, vengo de la sección de preguntas frecuentes y me gustaría más información.",
   );

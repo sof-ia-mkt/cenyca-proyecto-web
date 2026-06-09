@@ -194,7 +194,7 @@ export default async function CarreraPage(
 
   if (!carrera) notFound();
 
-  const whatsapp = config?.contacto?.whatsapp ?? "526631300236";
+  const whatsapp = config?.contacto?.whatsapp ?? "526642344919";
   const inscripciones = config?.sistemas?.inscripciones ?? "https://inscripciones.cenyca.edu.mx";
   const areaLabel = AREA_LABEL[carrera.area] ?? carrera.area;
   const gradoLabel = GRADO_LABEL[carrera.grado] ?? carrera.grado;
