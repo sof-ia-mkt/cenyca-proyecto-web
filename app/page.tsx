@@ -490,7 +490,7 @@ function CampusHero({ campus: c, otros = [] }: { campus: Campus; otros?: Campus[
             </p>
 
             <a
-              href="https://wa.me/526642344919?text=Hola%2C%20me%20gustar%C3%ADa%20agendar%20un%20recorrido%20por%20el%20campus%20Casa%20Blanca."
+              href="https://wa.me/526647719475?text=Hola%2C%20me%20gustar%C3%ADa%20agendar%20un%20recorrido%20por%20el%20campus%20Casa%20Blanca."
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 bg-[#00D4FF] text-[#121B33] px-8 py-4 rounded-full font-extrabold text-sm md:text-base uppercase tracking-wider hover:bg-[#33DDFF] hover:-translate-y-0.5 hover:shadow-[0_14px_40px_rgba(0,212,255,0.55)] shadow-[0_8px_28px_rgba(0,212,255,0.35)] transition-all"
