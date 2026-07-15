@@ -19,6 +19,35 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 // ──────────────────────────────────────────────────────────────────────────────
+// CORS — permite que las landing pages estáticas (otro dominio) posteen aquí.
+// Solo orígenes propios de CENYCA. El endpoint ya es público y rate-limited, y no
+// devuelve datos sensibles, pero igual restringimos a nuestros dominios.
+
+const ALLOWED_ORIGINS = new Set([
+  "https://www.cenycauniversidad.mx",
+  "https://cenycauniversidad.mx",
+]);
+
+function corsHeaders(origin: string | null): Record<string, string> {
+  if (origin && ALLOWED_ORIGINS.has(origin)) {
+    return {
+      "Access-Control-Allow-Origin": origin,
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+      Vary: "Origin",
+    };
+  }
+  return { Vary: "Origin" };
+}
+
+export function OPTIONS(req: NextRequest) {
+  return new NextResponse(null, {
+    status: 204,
+    headers: corsHeaders(req.headers.get("origin")),
+  });
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
 // Validación
 
 function esTelefonoValido(tel: string): boolean {
@@ -114,27 +143,28 @@ type LeadRow = { id: string };
 // Handler
 
 export async function POST(req: NextRequest) {
+  const cors = corsHeaders(req.headers.get("origin"));
+  const reply = (data: unknown, status = 200) =>
+    NextResponse.json(data, { status, headers: cors });
+
   // 1) Parse del body
   let body: Payload;
   try {
     body = (await req.json()) as Payload;
   } catch {
-    return NextResponse.json(
-      { ok: false, reason: "invalid_body", message: "Body inválido." },
-      { status: 400 },
-    );
+    return reply({ ok: false, reason: "invalid_body", message: "Body inválido." }, 400);
   }
 
   // 2) Rate limit
   const ip = getClientIp(req);
   if (!checkRateLimit(ip)) {
-    return NextResponse.json(
+    return reply(
       {
         ok: false,
         reason: "rate_limited",
         message: "Demasiados intentos. Espera un momento e intenta de nuevo.",
       },
-      { status: 429 },
+      429,
     );
   }
 
@@ -142,21 +172,21 @@ export async function POST(req: NextRequest) {
   const telefonoRaw = toStr(body.telefono, 50) || "";
   const telefono = normalizarTelefono(telefonoRaw);
   if (!esTelefonoValido(telefono)) {
-    return NextResponse.json(
+    return reply(
       {
         ok: false,
         reason: "invalid_phone",
         message: "Verifica tu teléfono. Debe ser un número mexicano válido de 10 dígitos.",
       },
-      { status: 422 },
+      422,
     );
   }
 
   const nombre = toStr(body.nombre, 200);
   if (!nombre) {
-    return NextResponse.json(
+    return reply(
       { ok: false, reason: "invalid_name", message: "Por favor escribe tu nombre completo." },
-      { status: 422 },
+      422,
     );
   }
 
@@ -194,13 +224,13 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error("[/api/leads] Error INSERT:", err);
-    return NextResponse.json(
+    return reply(
       {
         ok: false,
         reason: "server",
         message: "No pudimos guardar tus datos. Intenta de nuevo o escríbenos por WhatsApp.",
       },
-      { status: 503 },
+      503,
     );
   }
 
@@ -250,13 +280,13 @@ export async function POST(req: NextRequest) {
   //    podemos reintentarlo desde admin. Solo devolvemos error si
   //    el problema es del lado del cliente (teléfono inválido).
   if (!emmaResult.ok && emmaResult.reason === "invalid_phone") {
-    return NextResponse.json(
+    return reply(
       {
         ok: false,
         reason: "invalid_phone",
         message: "Verifica tu teléfono. Debe ser un número válido.",
       },
-      { status: 422 },
+      422,
     );
   }
 
@@ -306,5 +336,60 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  return NextResponse.json({ ok: true });
+  // ──────────────────────────────────────────────────────────────────────────
+  // 9) WhatsApp de bienvenida al prospecto (Meta Cloud API, envío directo).
+  //
+  // Fire-and-forget con after() para que el fetch sobreviva a la respuesta en
+  // Vercel serverless. Solo se ejecuta si están las 3 env vars necesarias; si
+  // falta alguna, el lead igual se guardó y respondemos OK normal.
+  //
+  // El número se manda como 52 + 10 dígitos; Meta lo normaliza al wa_id.
+  // La plantilla `confirmacion_formulario_web` tiene 1 variable: {{1}} = nombre.
+  // ──────────────────────────────────────────────────────────────────────────
+  const waToken = process.env.WHATSAPP_TOKEN;
+  const waPhoneId = process.env.WHATSAPP_PHONE_NUMBER_ID;
+  const waTemplate = process.env.WHATSAPP_TEMPLATE_NAME;
+  const waVersion = process.env.WHATSAPP_API_VERSION || "v25.0";
+  const waLang = process.env.WHATSAPP_LANG_CODE || "es_MX";
+  if (waToken && waPhoneId && waTemplate) {
+    after(async () => {
+      try {
+        const res = await fetch(
+          `https://graph.facebook.com/${waVersion}/${waPhoneId}/messages`,
+          {
+            method: "POST",
+            headers: {
+              authorization: `Bearer ${waToken}`,
+              "content-type": "application/json",
+            },
+            body: JSON.stringify({
+              messaging_product: "whatsapp",
+              to: `52${telefono}`,
+              type: "template",
+              template: {
+                name: waTemplate,
+                language: { code: waLang },
+                components: [
+                  {
+                    type: "body",
+                    parameters: [{ type: "text", text: nombre }],
+                  },
+                ],
+              },
+            }),
+          },
+        );
+        if (!res.ok) {
+          const detail = await res.text();
+          // eslint-disable-next-line no-console
+          console.error("[/api/leads] WhatsApp rechazado:", res.status, detail);
+        }
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error("[/api/leads] WhatsApp falló:", err);
+      }
+    });
+  }
+
+  return reply({ ok: true });
 }
