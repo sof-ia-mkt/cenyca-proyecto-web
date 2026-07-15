@@ -1,10 +1,10 @@
 // POST /admin/leads/api/retry/[id]
-// Reintenta enviar a Emma un lead que falló previamente.
+// Reintenta entregar al Dashboard de inscripciones un lead que falló.
 // Protegido por proxy.ts (basic auth en /admin/*).
 
 import { NextRequest, NextResponse } from "next/server";
 import { sql } from "@/lib/db";
-import { enviarLeadAEmmaServer, type EmmaServerPayload } from "@/lib/emma-server";
+import { enviarLeadADashboard, type DashboardLeadPayload } from "@/lib/dashboard-server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -52,13 +52,13 @@ export async function POST(
   }
   if (lead.emma_status === "sent") {
     return NextResponse.json(
-      { ok: false, message: "Este lead ya fue enviado a Emma." },
+      { ok: false, message: "Este lead ya fue entregado al dashboard." },
       { status: 409 },
     );
   }
 
-  // Reintentar Emma
-  const payload: EmmaServerPayload = {
+  // Reintentar la entrega al dashboard
+  const payload: DashboardLeadPayload = {
     telefono: lead.telefono,
     nombre: lead.nombre,
     email: lead.email || undefined,
@@ -69,7 +69,7 @@ export async function POST(
     mensaje: lead.mensaje || undefined,
     source: lead.source,
   };
-  const result = await enviarLeadAEmmaServer(payload);
+  const result = await enviarLeadADashboard(payload);
 
   if (result.ok) {
     await sql`

@@ -3,17 +3,20 @@
 // Flujo (dual-write):
 //   1. Valida payload (mismas reglas que tenía lib/emma.ts).
 //   2. INSERT en Neon con emma_status='pending'. SIEMPRE se ejecuta —
-//      aunque Emma esté caída, el lead queda respaldado.
-//   3. POST a Emma con la key server-only.
-//   4. UPDATE del registro con emma_status final (sent | failed | invalid).
+//      aunque el dashboard esté caído, el lead queda respaldado.
+//   3. POST al Dashboard de inscripciones (plataforma propia).
+//   4. UPDATE del registro con emma_status final (sent | failed).
+//
+// (La columna se sigue llamando emma_status por historia — desde jul 2026
+// significa "entregado al dashboard". El CRM Emma de Novai fue apagado.)
 //
 // Si paso 2 falla, devolvemos 503 al cliente. Si paso 3 falla pero
 // paso 2 sí guardó, devolvemos 200 al cliente — el lead está a salvo
-// y podemos reintentar a Emma desde el panel de admin.
+// y podemos reintentarlo desde el panel de admin.
 
 import { NextRequest, NextResponse, after } from "next/server";
 import { sql } from "@/lib/db";
-import { enviarLeadAEmmaServer, type EmmaServerPayload } from "@/lib/emma-server";
+import { enviarLeadADashboard, type DashboardLeadPayload } from "@/lib/dashboard-server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -234,8 +237,9 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 5) Llamada a Emma. Aunque falle, el lead ya está respaldado.
-  const emmaPayload: EmmaServerPayload = {
+  // 5) Entrega al Dashboard de inscripciones. Aunque falle, el lead ya está
+  //    respaldado en Neon y se puede reintentar desde el panel de admin.
+  const dashPayload: DashboardLeadPayload = {
     telefono,
     nombre,
     email: email || undefined,
@@ -246,7 +250,7 @@ export async function POST(req: NextRequest) {
     mensaje: mensaje || undefined,
     source,
   };
-  const emmaResult = await enviarLeadAEmmaServer(emmaPayload);
+  const emmaResult = await enviarLeadADashboard(dashPayload);
 
   // 6) UPDATE del registro con el resultado de Emma
   try {
@@ -291,53 +295,7 @@ export async function POST(req: NextRequest) {
   }
 
   // ──────────────────────────────────────────────────────────────────────────
-  // 8) Espejo al Dashboard de analítica (NO es un CRM, solo reporting).
-  //
-  // Fire-and-forget: no usamos await. La respuesta al usuario sale ya mismo;
-  // el dashboard recibe el lead en paralelo. Si el dashboard está caído o
-  // tarda, el form no se afecta — Neon y Emma ya tienen el respaldo.
-  //
-  // Las dos env vars (URL + TOKEN) son opcionales: si no están seteadas,
-  // el bloque ni se ejecuta. Útil para entornos sin dashboard configurado.
-  // ──────────────────────────────────────────────────────────────────────────
-  const dashboardUrl = process.env.DASHBOARD_WEBHOOK_URL;
-  const dashboardToken = process.env.DASHBOARD_WEBHOOK_TOKEN;
-  if (dashboardUrl && dashboardToken) {
-    // `after()` mantiene viva la función serverless después de responder al
-    // usuario hasta que el fetch termine. Antes usábamos fire-and-forget
-    // (sin await), pero en Vercel serverless eso muere apenas responde la
-    // función, así que el dashboard nunca recibía los leads.
-    after(async () => {
-      try {
-        await fetch(dashboardUrl, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-            "x-webhook-token": dashboardToken,
-          },
-          body: JSON.stringify({
-            nombre,
-            telefono,
-            email,
-            fuente: "web",
-            campania: source, // ej. "landing-licenciaturas", "promo-becas"
-            plantel,           // "Casa Blanca", "Palmas", "Otay", "Tecate"
-            // Lo extra queda en la columna `raw` del dashboard para auditoría
-            carrera,
-            ciudad,
-            turno,
-            mensaje,
-          }),
-        });
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error("[/api/leads] dashboard webhook falló:", err);
-      }
-    });
-  }
-
-  // ──────────────────────────────────────────────────────────────────────────
-  // 9) WhatsApp de bienvenida al prospecto (Meta Cloud API, envío directo).
+  // 8) WhatsApp de bienvenida al prospecto (Meta Cloud API, envío directo).
   //
   // Fire-and-forget con after() para que el fetch sobreviva a la respuesta en
   // Vercel serverless. Solo se ejecuta si están las 3 env vars necesarias; si

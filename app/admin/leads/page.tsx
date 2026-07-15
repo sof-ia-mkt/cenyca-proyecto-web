@@ -6,8 +6,8 @@
 //
 // Funciones:
 //   - Lista paginada de leads (50 por página por defecto)
-//   - Filtros por estado de Emma y por source/plantel
-//   - Botón para reenviar a Emma los leads fallidos
+//   - Filtros por estado de entrega al dashboard y por source/plantel
+//   - Botón para reenviar al dashboard los leads fallidos
 //   - Link para exportar CSV con los filtros aplicados
 
 import { sql } from "@/lib/db";
@@ -152,7 +152,7 @@ export default async function LeadsAdminPage({
           </p>
           <h1 className="text-3xl sm:text-4xl font-bold">Leads CENYCA</h1>
           <p className="text-white/55 text-sm mt-2">
-            Respaldo interno de prospectos capturados desde la web. Sincronizado con Emma.
+            Respaldo interno de prospectos capturados desde la web. Sincronizado con el dashboard de inscripciones.
           </p>
         </header>
 
@@ -160,7 +160,7 @@ export default async function LeadsAdminPage({
         <section className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-8">
           <StatCard label="Total" value={stats.total} color="#FFFFFF" />
           <StatCard label="Últimos 7 días" value={stats.ultimos_7_dias} color="#00D4FF" />
-          <StatCard label="Enviados a Emma" value={stats.sent} color="#22C55E" />
+          <StatCard label="Enviados al dashboard" value={stats.sent} color="#22C55E" />
           <StatCard label="Pendientes" value={stats.pending} color="#FACC15" />
           <StatCard label="Fallidos" value={stats.failed} color="#F87171" />
           <StatCard label="Inválidos" value={stats.invalid} color="#A78BFA" />
