@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ReactDOM from "react-dom";
 import type { LucideIcon } from "lucide-react";
 import { ArrowLeft } from "lucide-react";
 import { FadeUp, FadeLeft, FadeRight } from "@/app/components/ScrollReveal";
@@ -43,6 +44,12 @@ export default function AreaTemplate({
   cierreDescripcion?: string;
 }) {
   const nombresCarreras = carreras.map((c) => c.nombre);
+
+  // El hero usa background-image (se descubre tarde en el CSS y mata el LCP);
+  // el preload lo anuncia desde el HTML inicial — mismo patrón que el home.
+  if (imagenHero) {
+    ReactDOM.preload(imagenHero, { as: "image", fetchPriority: "high" });
+  }
 
   return (
     <>

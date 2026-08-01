@@ -66,7 +66,9 @@ export default function HeroVideo({
       {...({ "webkit-playsinline": "true" } as Record<string, string>)}
       disablePictureInPicture
       controls={false}
-      preload="auto"
+      // "metadata": no descargar el MP4 completo por adelantado — el autoplay
+      // dispara la descarga real en cuanto arranca; el poster cubre el hueco.
+      preload="metadata"
       poster={poster}
       className={className}
     >

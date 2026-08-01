@@ -8,6 +8,7 @@ export const metadata = {
 };
 
 import Link from "next/link";
+import Image from "next/image";
 import ReactDOM from "react-dom";
 import {
   BarChart2, DollarSign, Scale, Search, ChefHat, BookOpen,
@@ -109,7 +110,8 @@ const ingenierias = [
 ] as const;
 
 function SeccionExcelencia({ carreras }: { carreras: Carrera[] }) {
-  const imgBySlug = new Map(carreras.map((c) => [c.slug, sanityImg(c.imagenTarjetaUrl ?? c.imagenUrl, 1600)]));
+  // URL cruda: next/image genera srcset + AVIF/WebP y lazy-load por sí solo.
+  const imgBySlug = new Map(carreras.map((c) => [c.slug, c.imagenTarjetaUrl ?? c.imagenUrl]));
   return (
     <section className="relative py-32 px-6 md:px-12 bg-[#F9F9FB]">
       <SectionAccentLine accent="#00D4FF" position="top" />
@@ -168,9 +170,12 @@ function SeccionExcelencia({ carreras }: { carreras: Carrera[] }) {
               <StaggerItem key={ing.titulo} className={`${ing.span} ${ing.aspect} group relative overflow-hidden rounded-xl bg-[#121B33]`}>
                 <Link href={`/carreras/${ing.slug}`} className="block w-full h-full">
                   {img ? (
-                    <div
-                      className="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                      style={{ backgroundImage: `url(${img})` }}
+                    <Image
+                      src={img}
+                      alt=""
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-[#1E2D4A] to-[#121B33]" />
@@ -222,7 +227,8 @@ const COMPACT_LICENCIATURAS = [
 ] as const;
 
 function SeccionLicenciaturas({ carreras }: { carreras: Carrera[] }) {
-  const imgBySlug = new Map(carreras.map((c) => [c.slug, sanityImg(c.imagenTarjetaUrl ?? c.imagenUrl, 1600)]));
+  // URL cruda: next/image genera srcset + AVIF/WebP y lazy-load por sí solo.
+  const imgBySlug = new Map(carreras.map((c) => [c.slug, c.imagenTarjetaUrl ?? c.imagenUrl]));
 
   return (
     <section className="relative py-32 px-6 md:px-12 bg-white">
@@ -286,9 +292,12 @@ function SeccionLicenciaturas({ carreras }: { carreras: Carrera[] }) {
               >
                 <Link href={`/carreras/${lic.slug}`} className="block w-full h-full">
                   {img ? (
-                    <div
-                      className="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                      style={{ backgroundImage: `url(${img})` }}
+                    <Image
+                      src={img}
+                      alt=""
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-[#E9C176] to-[#8B6A2E]" />
@@ -328,9 +337,12 @@ function SeccionLicenciaturas({ carreras }: { carreras: Carrera[] }) {
                 >
                   {/* Foto de fondo o gradient fallback */}
                   {img ? (
-                    <div
-                      className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                      style={{ backgroundImage: `url(${img})` }}
+                    <Image
+                      src={img}
+                      alt=""
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1280px) 33vw, 20vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   ) : (
                     <div className="absolute inset-0 bg-gradient-to-br from-[#E9C176] via-[#c19a4a] to-[#5a3f15]" />

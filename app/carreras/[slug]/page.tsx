@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { client } from "@/sanity/lib/client";
 import { carreraBySlugQuery, configuracionQuery, todasCarrerasQuery } from "@/sanity/lib/queries";
+import { sanityImg } from "@/sanity/lib/image-url";
 import { SITE_URL } from "@/lib/siteUrl";
 import { breadcrumbJsonLd } from "@/lib/jsonLd";
 import { derivarHorarios } from "@/lib/horarios";
@@ -258,7 +259,7 @@ export default async function CarreraPage(
         {carrera.heroVideoUrl ? (
           <HeroVideo
             src={carrera.heroVideoUrl}
-            poster={carrera.imagenUrl}
+            poster={sanityImg(carrera.imagenUrl, 1920)}
             className="absolute inset-0 w-full h-full object-cover opacity-40"
           />
         ) : carrera.imagenUrl ? (

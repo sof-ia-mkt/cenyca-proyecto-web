@@ -10,12 +10,14 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { client } from "@/sanity/lib/client";
 import { SanityLive } from "@/sanity/lib/live";
 import { configuracionQuery } from "@/sanity/lib/queries";
+import { sanityImg } from "@/sanity/lib/image-url";
 import { SITE_URL } from "@/lib/siteUrl";
 
+// Sin `weight`: next/font sirve la versión VARIABLE de Inter — un solo woff2
+// cubre todos los pesos (antes: 7 archivos estáticos en el critical path).
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
   display: "swap",
 });
 
@@ -157,8 +159,10 @@ export default async function RootLayout({
   ]);
   const whatsapp = config?.contacto?.whatsapp || "526647719475";
   const mostrarVidaEstudiantil = config?.navegacion?.mostrarVidaEstudiantil ?? false;
-  // Prioridad: imagen específica del popup → imagen/galeria del campus principal
-  const popupBg = popupConfig?.imagenUrl || campusFoto?.imagenUrl;
+  // Prioridad: imagen específica del popup → imagen/galeria del campus principal.
+  // sanityImg: sin él se descarga el ORIGINAL de Sanity (una foto de campus
+  // puede pesar varios MB); con w=1120 el popup baja ~100-200KB.
+  const popupBg = sanityImg(popupConfig?.imagenUrl || campusFoto?.imagenUrl, 1120);
 
   const orgJsonLd = {
     "@context": "https://schema.org",

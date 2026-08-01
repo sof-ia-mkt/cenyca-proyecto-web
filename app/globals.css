@@ -132,3 +132,19 @@ h3, h4, h5, h6 {
 }
 
 
+
+/* ── Reduced motion global (WCAG 2.3.3) ─────────────────────────────────
+   Neutraliza animaciones y transiciones para usuarios que piden menos
+   movimiento (trastornos vestibulares, migrañas). Cubre keyframes CSS
+   (Ken Burns, shimmers, tickers) y transiciones largas; framer-motion
+   sigue con su propio manejo, pero los efectos infinitos quedan quietos. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

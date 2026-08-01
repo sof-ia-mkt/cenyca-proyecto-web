@@ -6,7 +6,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { client } from "@/sanity/lib/client";
 import { todasCarrerasQuery, todosCampusQuery, configuracionQuery } from "@/sanity/lib/queries";
-import { sanityImg } from "@/sanity/lib/image-url";
+import Image from "next/image";
 import { FadeUp, FadeLeft, FadeRight } from "@/app/components/ScrollReveal";
 import FormularioLead from "@/app/components/FormularioLead";
 import AnimatedCounter from "@/app/components/AnimatedCounter";
@@ -54,8 +54,9 @@ export default async function OfertaAcademicaPage() {
   const totalProgramas = carreras.length;
   const nombresCarreras = carreras.map((c) => c.nombre);
 
-  const imgIngenierias = sanityImg(config?.imagenesOferta?.ingenierias, 1600);
-  const imgLicenciaturas = sanityImg(config?.imagenesOferta?.licenciaturas, 1600);
+  // URL cruda: next/image genera srcset + AVIF/WebP y lazy-load por sí solo.
+  const imgIngenierias = config?.imagenesOferta?.ingenierias;
+  const imgLicenciaturas = config?.imagenesOferta?.licenciaturas;
 
   // Reel: foto principal + galería de cada campus, sin duplicar.
   const reelPhotos: { url: string; alt?: string }[] = [];
@@ -269,9 +270,12 @@ function BloqueOferta({
         className="group relative block overflow-hidden rounded-3xl bg-[#121B33] min-h-[620px] md:min-h-[680px]"
       >
         {imagen ? (
-          <div
-            className="absolute inset-0 bg-cover bg-center transition-transform duration-[1100ms] ease-out group-hover:scale-[1.04]"
-            style={{ backgroundImage: `url(${imagen})` }}
+          <Image
+            src={imagen}
+            alt=""
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-[1.04]"
           />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-[#1E2D4A] to-[#121B33]" />

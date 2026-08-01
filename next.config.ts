@@ -134,6 +134,12 @@ const nextConfig: NextConfig = {
         hostname: "cdn.sanity.io",
       },
     ],
+    // AVIF primero (20-40% más ligero que WebP en fotos); WebP como fallback.
+    formats: ["image/avif", "image/webp"],
+    // Los assets de cdn.sanity.io y /public son inmutables (URL cambia si
+    // cambia el contenido): cachear las transformaciones 31 días reduce
+    // invocaciones de optimización en Vercel.
+    minimumCacheTTL: 2678400,
   },
 
   // Compresión habilitada
