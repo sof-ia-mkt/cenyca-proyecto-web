@@ -41,7 +41,7 @@ const publicHeaders = [
       "font-src 'self' https://fonts.gstatic.com",
       // i.ytimg.com: thumbnails de LazyYouTubeEmbed (testimoniales en video).
       "img-src 'self' data: blob: https://cdn.sanity.io https://www.facebook.com https://i.ytimg.com",
-      "connect-src 'self' https://*.api.sanity.io https://*.apicdn.sanity.io wss://*.api.sanity.io https://emma-sistema.up.railway.app",
+      "connect-src 'self' https://*.api.sanity.io https://*.apicdn.sanity.io wss://*.api.sanity.io",
       "frame-src 'self' https://www.youtube-nocookie.com https://www.youtube.com",
       "media-src 'self' https://cdn.sanity.io",
       "object-src 'none'",

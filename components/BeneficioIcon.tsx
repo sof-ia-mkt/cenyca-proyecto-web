@@ -54,7 +54,7 @@ const KEYWORD_MAP: Array<[RegExp, LucideIcon]> = [
   [/crecimient|impulso|acelerad|avanz|lider/i, Rocket],
 ];
 
-export function getBeneficioIcon(titulo: string): LucideIcon {
+function getBeneficioIcon(titulo: string): LucideIcon {
   if (!titulo) return Sparkles;
   const normalized = titulo.normalize("NFD").replace(/\p{Diacritic}/gu, "");
   for (const [pattern, icon] of KEYWORD_MAP) {
