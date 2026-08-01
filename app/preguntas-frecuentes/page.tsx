@@ -20,12 +20,12 @@ type FaqQueryResult = {
 };
 
 export const metadata: Metadata = {
-  title: "Preguntas frecuentes — CENYCA Universidad",
+  title: "Preguntas frecuentes",
   description:
     "Respuestas claras a las dudas más comunes sobre CENYCA Universidad: RVOE, becas, horarios, inscripción, modalidades, titulación y más.",
   alternates: { canonical: "/preguntas-frecuentes" },
   openGraph: {
-    title: "Preguntas frecuentes — CENYCA Universidad",
+    title: "Preguntas frecuentes",
     description:
       "Becas, horarios, RVOE, inscripción, titulación: todo lo que un prospecto pregunta antes de inscribirse en CENYCA.",
     url: `${SITE_URL}/preguntas-frecuentes`,
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image" as const,
-    title: "Preguntas frecuentes — CENYCA Universidad",
+    title: "Preguntas frecuentes",
   },
 };
 

@@ -3,9 +3,10 @@ import { sanityFetch } from '@/sanity/lib/live'
 import { todosAvisosQuery } from '@/sanity/lib/queries'
 
 export const metadata = {
-  title: 'Avisos de Privacidad — CENYCA',
+  title: 'Avisos de Privacidad',
   description:
     'Avisos de privacidad de CENYCA Universidad conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.',
+  alternates: { canonical: '/avisos-de-privacidad' },
   openGraph: {
     title: 'Avisos de Privacidad | CENYCA Universidad',
     description: 'Avisos de privacidad de CENYCA Universidad.',

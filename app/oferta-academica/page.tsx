@@ -1,4 +1,5 @@
-export const revalidate = 0;
+// ISR 60s: mismo patrón que carreras/nosotros; frescura real la da el CDN de Sanity.
+export const revalidate = 60;
 
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
   title: "Oferta Académica",
   description:
     "Conoce todos los programas de licenciatura e ingeniería de CENYCA Universidad: planes flexibles, modelo cuatrimestral y validez oficial SEP.",
+  alternates: { canonical: "/oferta-academica" },
   openGraph: {
     title: "Oferta Académica | CENYCA Universidad",
     description:

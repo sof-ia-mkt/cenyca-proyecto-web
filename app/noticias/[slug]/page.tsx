@@ -105,10 +105,10 @@ type Noticia = {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const { data } = await sanityFetch({ query: noticiaBySlugQuery, params: { slug } })
-  const noticia = data as (Noticia & { resumen?: string; extracto?: string }) | null
+  const noticia = data as (Noticia & { extracto?: string }) | null
   if (!noticia) return { title: 'Noticia no encontrada' }
   const titulo = noticia.titulo
-  const descripcion = noticia.extracto ?? noticia.resumen ?? `Lee "${titulo}" en CENYCA Comunica.`
+  const descripcion = noticia.extracto ?? `Lee "${titulo}" en CENYCA Comunica.`
   // Forzamos formato JPG y compresión para garantizar <300KB y máxima
   // compatibilidad con WhatsApp/FB (que rechazan imágenes muy pesadas).
   const ogImage = noticia.imagen
@@ -123,6 +123,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: titulo,
     description: descripcion,
+    alternates: { canonical: `/noticias/${slug}` },
     openGraph: {
       title: titulo,
       description: descripcion,
@@ -310,7 +311,7 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
             </div>
 
             <Link
-              href="/licenciaturas"
+              href="/oferta-academica"
               className="block rounded-2xl border border-white/10 bg-[#1E2D4A]/60 p-6 hover:border-[#00D4FF]/40 transition"
             >
               <span className="text-[10px] font-bold uppercase tracking-widest text-white/40 block mb-2">

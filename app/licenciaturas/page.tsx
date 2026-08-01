@@ -1,4 +1,5 @@
-export const revalidate = 0;
+// ISR 60s: mismo patrón que carreras/nosotros; frescura real la da el CDN de Sanity.
+export const revalidate = 60;
 
 import type { Metadata } from "next";
 import { CalendarClock, Users, Award, Lightbulb } from "lucide-react";
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
   title: "Licenciaturas",
   description:
     "Licenciaturas en CENYCA Universidad: Derecho, Administración, Contaduría, Criminología, Gastronomía y Educación. RVOE SEP, horarios flexibles.",
+  alternates: { canonical: "/licenciaturas" },
   openGraph: {
     title: "Licenciaturas | CENYCA Universidad",
     description:

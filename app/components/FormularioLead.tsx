@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Check, Sparkles, Clock, HeartHandshake } from "lucide-react";
 import { FadeLeft, FadeRight, FadeUp } from "@/app/components/ScrollReveal";
@@ -181,11 +181,15 @@ export default function FormularioLead({
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-bold tracking-[0.18em] uppercase text-white/70 mb-2">
+                      <label
+                        htmlFor="lead-carrera"
+                        className="block text-[11px] font-bold tracking-[0.18em] uppercase text-white/70 mb-2"
+                      >
                         Carrera de interés
                       </label>
                       <div className="relative">
                         <select
+                          id="lead-carrera"
                           value={form.carrera}
                           onChange={(e) =>
                             setForm({ ...form, carrera: e.target.value })
@@ -218,11 +222,15 @@ export default function FormularioLead({
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-bold tracking-[0.18em] uppercase text-white/70 mb-2">
+                      <label
+                        htmlFor="lead-plantel"
+                        className="block text-[11px] font-bold tracking-[0.18em] uppercase text-white/70 mb-2"
+                      >
                         Plantel de interés
                       </label>
                       <div className="relative">
                         <select
+                          id="lead-plantel"
                           required
                           value={form.plantel}
                           onChange={(e) =>
@@ -259,7 +267,10 @@ export default function FormularioLead({
                     </div>
 
                     {errorMsg && (
-                      <div className="text-[#FFB4B4] bg-[#FFB4B4]/10 border border-[#FFB4B4]/30 rounded-lg px-4 py-3 text-xs leading-relaxed">
+                      <div
+                        role="alert"
+                        className="text-[#FFB4B4] bg-[#FFB4B4]/10 border border-[#FFB4B4]/30 rounded-lg px-4 py-3 text-xs leading-relaxed"
+                      >
                         {errorMsg}
                       </div>
                     )}
@@ -275,7 +286,7 @@ export default function FormularioLead({
                           }
                           className="peer sr-only"
                         />
-                        <span className="w-5 h-5 rounded-md border border-white/25 bg-white/[0.06] peer-checked:bg-[#00D4FF] peer-checked:border-[#00D4FF] flex items-center justify-center transition-all">
+                        <span className="w-5 h-5 rounded-md border border-white/25 bg-white/[0.06] peer-checked:bg-[#00D4FF] peer-checked:border-[#00D4FF] peer-focus-visible:ring-2 peer-focus-visible:ring-[#00D4FF] peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-[#121B33] flex items-center justify-center transition-all">
                           {form.acepta && (
                             <Check
                               size={14}
@@ -352,12 +363,17 @@ function Field({
   value: string;
   onChange: (v: string) => void;
 }) {
+  const id = useId();
   return (
     <div>
-      <label className="block text-[11px] font-bold tracking-[0.18em] uppercase text-white/70 mb-2">
+      <label
+        htmlFor={id}
+        className="block text-[11px] font-bold tracking-[0.18em] uppercase text-white/70 mb-2"
+      >
         {label}
       </label>
       <input
+        id={id}
         type={type}
         placeholder={placeholder}
         required={required}

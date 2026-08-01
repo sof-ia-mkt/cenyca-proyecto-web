@@ -29,14 +29,42 @@ export default function PromoPopup({
     return () => clearTimeout(timer);
   }, [pathname]);
 
-  // ESC cierra
+  // ESC cierra + trap de Tab dentro del diálogo (a11y): al abrirse solo,
+  // el foco se mueve al diálogo y no puede escapar al contenido de atrás.
+  const dialogRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!open) return;
+    const previo = document.activeElement as HTMLElement | null;
+    // Foco inicial al contenedor del diálogo (no roba el foco a un CTA).
+    dialogRef.current?.focus();
+
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") {
+        setOpen(false);
+        return;
+      }
+      if (e.key !== "Tab" || !dialogRef.current) return;
+      const focusables = dialogRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey && (active === first || active === dialogRef.current)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      // Devuelve el foco a donde estaba antes de que el popup se abriera solo.
+      previo?.focus?.();
+    };
   }, [open]);
 
   // Bloquea scroll del body — iOS Safari-safe (position:fixed trick)
@@ -79,8 +107,10 @@ export default function PromoPopup({
 
       {/* Card cinematográfica con foto */}
       <div
+        ref={dialogRef}
+        tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-[560px] rounded-3xl overflow-hidden border border-white/10 shadow-[0_50px_140px_rgba(0,0,0,0.7)]"
+        className="relative w-full max-w-[560px] rounded-3xl overflow-hidden border border-white/10 shadow-[0_50px_140px_rgba(0,0,0,0.7)] outline-none"
         style={{ animation: "promoPopupIn 0.5s cubic-bezier(0.22, 1, 0.36, 1)" }}
       >
         {/* Foto de fondo */}
@@ -129,6 +159,15 @@ export default function PromoPopup({
 
         {/* Contenido */}
         <div className="relative z-10 p-7 md:p-10 pt-10 md:pt-14 md:min-h-[540px] flex flex-col justify-end">
+          {/* Badge de urgencia */}
+          <span className="self-start inline-flex items-center gap-2 rounded-full bg-[#00D4FF] text-[#121B33] font-black text-xs md:text-sm uppercase tracking-[0.16em] px-4 py-2 mb-5 shadow-[0_10px_32px_rgba(0,212,255,0.45)]">
+            <span
+              aria-hidden
+              className="w-2 h-2 rounded-full bg-[#121B33] animate-pulse"
+            />
+            Últimos días
+          </span>
+
           {/* Headline */}
           <h2
             className="text-white font-black mb-4 drop-shadow-[0_4px_24px_rgba(0,0,0,0.7)]"
@@ -138,7 +177,7 @@ export default function PromoPopup({
               lineHeight: 1.02,
             }}
           >
-            Iniciamos en{" "}
+            Inscripciones abiertas hasta el{" "}
             <span
               className="bg-clip-text text-transparent inline-block"
               style={{
@@ -150,15 +189,15 @@ export default function PromoPopup({
                   "drop-shadow(0 0 18px rgba(0,212,255,0.55)) drop-shadow(0 0 6px rgba(0,212,255,0.45))",
               }}
             >
-              septiembre.
+              20 de agosto.
             </span>
           </h2>
 
           {/* Body */}
           <p className="text-white/85 text-base md:text-lg leading-relaxed mb-8 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)] max-w-md text-pretty">
-            Sé de los <span className="text-white font-bold">primeros 50 en inscribirte</span> y
-            recibe un <span className="text-[#E9C176] font-bold">descuento exclusivo</span> en tu
-            inscripción.
+            El tiempo se agota.{" "}
+            <span className="text-white font-bold">Asegura tu lugar hoy</span> y comienza
+            clases este septiembre.
           </p>
 
           {/* CTAs */}
@@ -181,7 +220,7 @@ export default function PromoPopup({
               }}
               className="group inline-flex items-center justify-center gap-2 whitespace-nowrap bg-[#00D4FF] hover:bg-[#33DDFF] text-[#121B33] font-extrabold text-[13px] md:text-base uppercase tracking-[0.08em] md:tracking-[0.18em] px-5 py-3.5 md:px-7 md:py-4 rounded-full transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_50px_rgba(0,212,255,0.65)] shadow-[0_10px_32px_rgba(0,212,255,0.4)]"
             >
-              Quiero la promoción
+              ¡Inscríbete hoy!
               <ArrowRight
                 size={16}
                 strokeWidth={2.5}

@@ -113,10 +113,16 @@ export default function CarreraHeroCard({
           style={{ backgroundColor: accent, color: "#121B33" }}
         >
           <span className="inline-flex flex-col items-center leading-tight text-center">
-            <span>Solicitar {porcentaje}% de descuento</span>
-            <span className="text-[10px] font-semibold opacity-70 mt-0.5">
-              Sobre la inscripción
-            </span>
+            {promoActiva ? (
+              <>
+                <span>Solicitar {porcentaje}% de descuento</span>
+                <span className="text-[10px] font-semibold opacity-70 mt-0.5">
+                  Sobre la inscripción
+                </span>
+              </>
+            ) : (
+              <span>Solicitar información</span>
+            )}
           </span>
           <ArrowRight
             size={16}

@@ -45,7 +45,10 @@ const STATUS_LABEL: Record<string, { label: string; color: string }> = {
   invalid: { label: "Inválido", color: "#A78BFA" },
 };
 
-const PLANTELES = ["casablanca", "palmas", "otay", "tecate"];
+// Valores tal como se guardan en la DB: los formularios envían el label
+// bonito (PLANTEL_LABEL de lib/emma.ts), no el slug. El filtro compara
+// con igualdad exacta en SQL, así que debe usar los mismos valores.
+const PLANTELES = ["Casa Blanca", "Palmas", "Otay", "Tecate"];
 
 function formatDate(iso: string): string {
   const d = new Date(iso);

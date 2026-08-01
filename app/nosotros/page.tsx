@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   title: "Nosotros",
   description:
     "La historia de CENYCA Universidad: de un centro de capacitación en Tijuana en 2007 a una universidad líder en Baja California con 4 campus.",
+  alternates: { canonical: "/nosotros" },
   openGraph: {
     title: "Nosotros | CENYCA Universidad",
     description:

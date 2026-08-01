@@ -32,9 +32,16 @@ type LeadRow = {
 
 // Escapa un valor para CSV (RFC 4180): envuelve en comillas si contiene
 // coma, comillas o saltos de línea; las comillas internas se duplican.
+// Además neutraliza inyección de fórmulas: los datos vienen del formulario
+// público, y Excel ejecuta como fórmula cualquier celda que empiece con
+// = + - @ (p.ej. un lead con nombre "=HYPERLINK(...)"). Se antepone ' para
+// que Excel la trate como texto.
 function csvCell(value: string | number | null | undefined): string {
   if (value === null || value === undefined) return "";
-  const s = String(value);
+  let s = String(value);
+  if (/^[=+\-@\t\r]/.test(s)) {
+    s = `'${s}`;
+  }
   if (s.includes(",") || s.includes('"') || s.includes("\n") || s.includes("\r")) {
     return `"${s.replace(/"/g, '""')}"`;
   }

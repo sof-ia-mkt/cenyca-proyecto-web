@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, type CSSProperties } from "react";
+import { cloneElement, isValidElement, useId, useMemo, useState, type CSSProperties } from "react";
 import {
   User,
   Mail,
@@ -317,7 +317,10 @@ export default function PromocionFormulario({
             </div>
 
             {status.kind === "error" && (
-              <div className="mt-4 flex gap-2 items-start text-[#FFB4B4] bg-[#FFB4B4]/10 border border-[#FFB4B4]/30 rounded-lg px-4 py-3 font-montserrat text-sm">
+              <div
+                role="alert"
+                className="mt-4 flex gap-2 items-start text-[#FFB4B4] bg-[#FFB4B4]/10 border border-[#FFB4B4]/30 rounded-lg px-4 py-3 font-montserrat text-sm"
+              >
                 <AlertTriangle size={16} className="mt-0.5 flex-shrink-0" />
                 <span>{status.message}</span>
               </div>
@@ -407,9 +410,20 @@ function Campo({
   children: React.ReactNode;
   wrapperClassName?: string;
 }) {
+  // Asocia el label al control (a11y): el hijo único es siempre el
+  // input/select/textarea, así que le inyectamos el id generado.
+  const id = useId();
+  const control = isValidElement(children)
+    ? cloneElement(children as React.ReactElement<{ id?: string }>, { id })
+    : children;
   return (
     <div className={wrapperClassName}>
-      <label className="block font-montserrat text-xs font-semibold text-white/70 mb-1.5">{label}</label>
+      <label
+        htmlFor={id}
+        className="block font-montserrat text-xs font-semibold text-white/70 mb-1.5"
+      >
+        {label}
+      </label>
       <div className="relative">
         {icon && (
           <span
@@ -419,7 +433,7 @@ function Campo({
             {icon}
           </span>
         )}
-        {children}
+        {control}
       </div>
     </div>
   );

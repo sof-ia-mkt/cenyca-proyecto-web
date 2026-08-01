@@ -58,7 +58,10 @@ export async function generateMetadata(): Promise<Metadata> {
         ogImageUrl?: string;
       };
     }>(configuracionQuery)
-    .catch(() => null);
+    .catch((err) => {
+      console.warn("[layout] configuracionQuery (metadata) falló; usando defaults", err);
+      return null;
+    });
 
   const title = config?.seo?.tituloBase || DEFAULT_TITLE;
   const description = config?.seo?.descripcion || DEFAULT_DESCRIPTION;
@@ -82,7 +85,8 @@ export async function generateMetadata(): Promise<Metadata> {
     authors: [{ name: title }],
     creator: title,
     publisher: title,
-    alternates: { canonical: "/" },
+    // El canonical se define por página (app/page.tsx para el home). Ponerlo
+    // aquí lo heredaría todo el sitio y marcaría cada página como duplicado de "/".
     openGraph: {
       siteName: "CENYCA Universidad",
       title,
@@ -126,21 +130,30 @@ export default async function RootLayout({
         sistemas?: { inscripciones?: string };
         navegacion?: { mostrarVidaEstudiantil?: boolean };
       }>(configuracionQuery)
-      .catch(() => null),
+      .catch((err) => {
+        console.warn("[layout] configuracionQuery falló; usando defaults", err);
+        return null;
+      }),
     client
       .fetch<{ imagenUrl?: string } | null>(
         `*[_type == "configuracion" && _id == "configuracion-general"][0]{
           "imagenUrl": popupPromo.imagen.asset->url
         }`
       )
-      .catch(() => null),
+      .catch((err) => {
+        console.warn("[layout] query de imagen del popup falló", err);
+        return null;
+      }),
     client
       .fetch<{ imagenUrl?: string } | null>(
         `*[_type == "campus" && esPrincipal == true][0]{
           "imagenUrl": coalesce(imagen.asset->url, galeria[0].asset->url)
         }`
       )
-      .catch(() => null),
+      .catch((err) => {
+        console.warn("[layout] query de foto de campus falló", err);
+        return null;
+      }),
   ]);
   const whatsapp = config?.contacto?.whatsapp || "526647719475";
   const mostrarVidaEstudiantil = config?.navegacion?.mostrarVidaEstudiantil ?? false;

@@ -1,4 +1,5 @@
-export const revalidate = 0;
+// ISR 60s: mismo patrón que carreras/nosotros; frescura real la da el CDN de Sanity.
+export const revalidate = 60;
 
 import type { Metadata } from "next";
 import { Cpu, Wrench, Briefcase, ShieldCheck } from "lucide-react";
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
   title: "Ingenierías",
   description:
     "Programas de ingeniería en CENYCA Universidad: Mecatrónica, Sistemas, Industrial y Electromecánica. RVOE SEP, modelo cuatrimestral, titúlate en 3 años.",
+  alternates: { canonical: "/ingenierias" },
   openGraph: {
     title: "Ingenierías | CENYCA Universidad",
     description:

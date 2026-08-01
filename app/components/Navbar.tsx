@@ -147,7 +147,8 @@ export default function Navbar({ mostrarVidaEstudiantil = false }: NavbarProps) 
           <button
             onClick={() => setMenuAbierto(!menuAbierto)}
             className="flex flex-col gap-1.5 p-3 -mr-1 rounded-md hover:bg-white/10 transition-colors min-w-[44px] min-h-[44px] items-center justify-center"
-            aria-label="Abrir menú"
+            aria-label={menuAbierto ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={menuAbierto}
           >
             <span className={`block w-6 h-0.5 bg-white transition-transform duration-300 ${menuAbierto ? "rotate-45 translate-y-2" : ""}`} />
             <span className={`block w-6 h-0.5 bg-white transition-opacity duration-300 ${menuAbierto ? "opacity-0" : ""}`} />
@@ -157,8 +158,12 @@ export default function Navbar({ mostrarVidaEstudiantil = false }: NavbarProps) 
         </div>
       </div>
 
-      {/* Menú mobile */}
-      <div className={`lg:hidden overflow-hidden transition-all duration-300 ${menuAbierto ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}`}>
+      {/* Menú mobile — inert al estar cerrado: saca sus enlaces (invisibles)
+          del orden de tabulación y de los lectores de pantalla. */}
+      <div
+        inert={!menuAbierto}
+        className={`lg:hidden overflow-hidden transition-all duration-300 ${menuAbierto ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}`}
+      >
         <div className="bg-[#1E2D4A] px-4 py-4 flex flex-col gap-1 border-t border-white/10">
           {navLinks.map((link) => (
             <Link

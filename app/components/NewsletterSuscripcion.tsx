@@ -82,6 +82,7 @@ export default function NewsletterSuscripcion() {
                   />
                   <input
                     type="email"
+                    aria-label="Correo electrónico"
                     placeholder="tu@email.com"
                     required
                     value={email}
@@ -99,7 +100,7 @@ export default function NewsletterSuscripcion() {
                       onChange={(e) => setAcepta(e.target.checked)}
                       className="peer sr-only"
                     />
-                    <span className="w-5 h-5 rounded-md border border-white/25 bg-white/[0.06] peer-checked:bg-[#00D4FF] peer-checked:border-[#00D4FF] flex items-center justify-center transition-all">
+                    <span className="w-5 h-5 rounded-md border border-white/25 bg-white/[0.06] peer-checked:bg-[#00D4FF] peer-checked:border-[#00D4FF] peer-focus-visible:ring-2 peer-focus-visible:ring-[#00D4FF] peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-[#121B33] flex items-center justify-center transition-all">
                       {acepta && (
                         <Check
                           size={14}

@@ -205,10 +205,13 @@ export default async function CarreraPage(
   // Días/horarios/modalidades reales del ciclo, derivados de inversion.cards.
   const horarios = derivarHorarios(carrera.inversion?.cards);
   const promoPorcentaje = config?.promocionInscripcion?.porcentaje ?? 25;
+  const promoActiva = config?.promocionInscripcion?.activa ?? false;
   const becasLabel =
     horarios.becasMax > 0
       ? `Hasta ${horarios.becasMax}%`
-      : `${promoPorcentaje}% en inscripción`;
+      : promoActiva
+        ? `${promoPorcentaje}% en inscripción`
+        : "Pregunta por opciones";
 
   const courseJsonLd = {
     "@context": "https://schema.org",
@@ -290,10 +293,10 @@ export default async function CarreraPage(
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           {/* Breadcrumb */}
           <Link
-            href="/licenciaturas"
+            href={carrerasIndexUrl}
             className="inline-flex items-center gap-2 text-white/60 hover:text-[var(--accent)] font-montserrat text-sm mb-10 transition-colors"
           >
-            <ArrowLeft size={14} /> Todas las carreras
+            <ArrowLeft size={14} /> Todas las {carrerasIndexLabel.toLowerCase()}
           </Link>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
@@ -434,6 +437,7 @@ export default async function CarreraPage(
           data={carrera.inversion}
           promo={config?.promocionInscripcion}
           accent={accent}
+          whatsapp={config?.contacto?.whatsapp}
         />
       )}
 

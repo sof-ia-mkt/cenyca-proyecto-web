@@ -43,6 +43,8 @@ type Props = {
   data: InversionConfig;
   promo?: { porcentaje?: number; activa?: boolean };
   accent?: string;
+  /** Número de WhatsApp (config Sanity); fallback del CTA cuando la promo está apagada. */
+  whatsapp?: string;
 };
 
 type Campus = "cb" | "palmas" | "otay" | "tc";
@@ -60,7 +62,7 @@ const fmt = (n: number) => `$${n.toLocaleString("es-MX")}`;
 
 // ─── Componente ───────────────────────────────────────────────────────────────
 
-export default function BloqueInversion({ data, promo, accent = "#00D4FF" }: Props) {
+export default function BloqueInversion({ data, promo, accent = "#00D4FF", whatsapp }: Props) {
   const [campus, setCampus] = useState<Campus>("cb");
   const [martesEsp, setMartesEsp] = useState(true);
   const [becaPct, setBecaPct] = useState(0);
@@ -89,9 +91,18 @@ export default function BloqueInversion({ data, promo, accent = "#00D4FF" }: Pro
     (card) => !(card.soloCasaBlanca && campusEfectivo !== "cb")
   );
 
-  const porcentajePromo = (promo?.activa ? promo.porcentaje : null) ?? 25;
+  // Con la promo apagada en Sanity: sin descuento, sin precio tachado, y el
+  // CTA va a WhatsApp porque el formulario #promocion no se renderiza.
+  const promoActiva = promo?.activa ?? false;
+  const porcentajePromo = promoActiva ? promo?.porcentaje ?? 25 : 0;
   const inscripcionBase = data.inscripcionBase ?? 2000;
   const inscripcionConPromo = Math.round(inscripcionBase * (1 - porcentajePromo / 100));
+  const waNumero = (whatsapp || "526647719475").replace(/\D/g, "");
+  const ctaHref = promoActiva
+    ? "#promocion"
+    : `https://wa.me/${waNumero}?text=${encodeURIComponent(
+        "Hola, me interesa información sobre horarios y costos en CENYCA Universidad."
+      )}`;
 
   const paquete =
     campusEfectivo === "tc"
@@ -176,6 +187,7 @@ export default function BloqueInversion({ data, promo, accent = "#00D4FF" }: Pro
               paquete={paquete}
               accent={accent}
               mensajeAparta={data.mensajeAparta}
+              ctaHref={ctaHref}
             />
           ))}
         </div>
@@ -207,6 +219,7 @@ function CardInversionUI({
   paquete,
   accent,
   mensajeAparta,
+  ctaHref,
 }: {
   card: CardInversion;
   campus: Campus;
@@ -220,6 +233,7 @@ function CardInversionUI({
   paquete: number;
   accent: string;
   mensajeAparta?: string;
+  ctaHref: string;
 }) {
   // Cálculo de mensualidad.
   // Escolarizada y entre-semana comparten el toggle de boletos (regular ↔ especial).
@@ -354,12 +368,16 @@ function CardInversionUI({
       {/* Desglose */}
       <div className="space-y-2 font-montserrat text-sm">
         <Row
-          label={`Inscripción (con promo -${porcentajePromo}%)`}
+          label={porcentajePromo > 0 ? `Inscripción (con promo -${porcentajePromo}%)` : "Inscripción"}
           value={
-            <span>
-              <span className="line-through text-white/30 mr-1.5">{fmt(inscripcionBase)}</span>
-              <strong className="text-white">{fmt(inscripcionConPromo)}</strong>
-            </span>
+            porcentajePromo > 0 ? (
+              <span>
+                <span className="line-through text-white/30 mr-1.5">{fmt(inscripcionBase)}</span>
+                <strong className="text-white">{fmt(inscripcionConPromo)}</strong>
+              </span>
+            ) : (
+              <strong className="text-white">{fmt(inscripcionBase)}</strong>
+            )
           }
         />
         <Row label="Paquete cuatrimestral" value={<strong className="text-white">{fmt(paquete)}</strong>} />
@@ -391,9 +409,12 @@ function CardInversionUI({
         </div>
       )}
 
-      {/* CTA */}
+      {/* CTA — al formulario de promo si está activa; a WhatsApp si no */}
       <a
-        href="#promocion"
+        href={ctaHref}
+        {...(ctaHref.startsWith("http")
+          ? { target: "_blank", rel: "noopener noreferrer" }
+          : {})}
         className="mt-auto text-center font-montserrat font-bold text-sm px-5 py-3 rounded-full transition-all hover:-translate-y-[1px] hover:shadow-lg"
         style={
           card.destacada

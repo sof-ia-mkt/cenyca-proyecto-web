@@ -1,4 +1,11 @@
-export const revalidate = 0;
+// ISR 60s: mismo patrón que carreras/nosotros; frescura real la da el CDN de Sanity.
+export const revalidate = 60;
+
+// El resto de la metadata (title, OG, etc.) viene del root layout vía Sanity;
+// aquí solo el canonical, que ya no se hereda desde el layout.
+export const metadata = {
+  alternates: { canonical: "/" },
+};
 
 import Link from "next/link";
 import ReactDOM from "react-dom";
@@ -145,7 +152,7 @@ function SeccionExcelencia({ carreras }: { carreras: Carrera[] }) {
             </FadeRight>
             <FadeRight delay={0.65}>
               <Link
-                href="/licenciaturas"
+                href="/ingenierias"
                 className="group inline-flex items-center gap-2 text-[#00D4FF] font-bold text-sm uppercase tracking-[0.15em] hover:gap-3 transition-all duration-300"
               >
                 Ver las 4 ingenierías <ArrowRight size={14} />

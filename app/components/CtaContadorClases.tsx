@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { cloneElement, isValidElement, useEffect, useId, useState } from "react";
 import {
   User,
   Phone,
@@ -76,7 +76,43 @@ export default function CtaContadorClases({
   const [form, setForm] = useState<FormState>({ nombre: "", telefono: "", plantel: "" });
   const [status, setStatus] = useState<Status>({ kind: "idle" });
 
-  if (!data?.activo) return null;
+  const waNumero = (whatsappFallback || "526647719475").replace(/\D/g, "");
+
+  // El ancla #contacto tiene que existir SIEMPRE: apuntan a ella el popup,
+  // los CTAs de modalidades, el buscador y los redirects permanentes
+  // /contacto, /inscripcion e /inscripciones. Si el editor apaga el
+  // contador en Sanity, mostramos un CTA compacto a WhatsApp en su lugar.
+  if (!data?.activo) {
+    return (
+      <section
+        id="contacto"
+        className="relative py-20 px-4 sm:px-6 lg:px-8 scroll-mt-24"
+        style={{
+          background:
+            "linear-gradient(135deg, #121B33 0%, #1A2748 45%, #142042 70%, #121B33 100%)",
+        }}
+      >
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-white font-black text-3xl md:text-4xl mb-4 tracking-tight">
+            ¿Listo para dar el siguiente paso?
+          </h2>
+          <p className="text-white/75 text-base md:text-lg mb-8 text-pretty">
+            Escríbenos y un asesor te acompaña en tu proceso de inscripción.
+          </p>
+          <a
+            href={`https://wa.me/${waNumero}?text=${encodeURIComponent(
+              "Hola, me interesa información sobre inscripciones en CENYCA Universidad."
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 bg-[#00D4FF] hover:bg-[#33DDFF] text-[#121B33] font-extrabold text-sm md:text-base uppercase tracking-[0.12em] px-8 py-4 rounded-full transition-all hover:-translate-y-0.5 shadow-[0_10px_32px_rgba(0,212,255,0.4)]"
+          >
+            <MessageCircle size={18} /> Hablar con un asesor
+          </a>
+        </div>
+      </section>
+    );
+  }
 
   const slogan = data.slogan ?? "Donde tu potencial se vuelve éxito";
   const kicker = data.kicker ?? "Iniciamos clases pronto";
@@ -283,7 +319,10 @@ export default function CtaContadorClases({
               </div>
 
               {status.kind === "error" && (
-                <div className="mt-3 flex gap-2 items-start text-[#FFB4B4] bg-[#FFB4B4]/10 border border-[#FFB4B4]/30 rounded-lg px-3 py-2 font-montserrat text-xs">
+                <div
+                  role="alert"
+                  className="mt-3 flex gap-2 items-start text-[#FFB4B4] bg-[#FFB4B4]/10 border border-[#FFB4B4]/30 rounded-lg px-3 py-2 font-montserrat text-xs"
+                >
                   <AlertTriangle size={14} className="mt-0.5 flex-shrink-0" />
                   <span>{status.message}</span>
                 </div>
@@ -359,16 +398,24 @@ function Campo({
   label: string;
   children: React.ReactNode;
 }) {
+  // Asocia el label al control (a11y): el hijo único es el input/select.
+  const id = useId();
+  const control = isValidElement(children)
+    ? cloneElement(children as React.ReactElement<{ id?: string }>, { id })
+    : children;
   return (
     <div>
-      <label className="block font-montserrat text-[11px] font-semibold text-white/65 mb-1 uppercase tracking-wider">
+      <label
+        htmlFor={id}
+        className="block font-montserrat text-[11px] font-semibold text-white/65 mb-1 uppercase tracking-wider"
+      >
         {label}
       </label>
       <div className="relative">
         <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[#00D4FF]/80">
           {icon}
         </span>
-        {children}
+        {control}
       </div>
     </div>
   );

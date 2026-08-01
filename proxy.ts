@@ -23,21 +23,36 @@ import { projectId, dataset, apiVersion } from "@/sanity/env";
 
 type RedirectRow = { from: string; to: string; permanent: boolean };
 
-const REDIRECTS_URL = `https://${projectId}.api.sanity.io/v${apiVersion}/data/query/${dataset}?query=${encodeURIComponent(
+// apicdn: la API con CDN de Sanity — misma data, cacheada y sin quemar la
+// cuota de "API requests" del plan (la API directa se topó en jul 2026).
+const REDIRECTS_URL = `https://${projectId}.apicdn.sanity.io/v${apiVersion}/data/query/${dataset}?query=${encodeURIComponent(
   `*[_type == "redirect" && defined(from) && defined(to)]{ from, to, "permanent": coalesce(permanent, true) }`
 )}`;
 
+// Caché en memoria del módulo: dentro del Proxy las opciones next.revalidate
+// de fetch NO tienen efecto (docs de Next 16), así que la frescura se maneja
+// aquí. Vive mientras viva la instancia; cada instancia hace ~1 fetch/min en
+// lugar de 1 por página vista.
+const REDIRECTS_TTL_MS = 60_000;
+let redirectsCache: { rows: RedirectRow[]; fetchedAt: number } | null = null;
+
 async function fetchRedirects(): Promise<RedirectRow[]> {
+  const now = Date.now();
+  if (redirectsCache && now - redirectsCache.fetchedAt < REDIRECTS_TTL_MS) {
+    return redirectsCache.rows;
+  }
   try {
-    const res = await fetch(REDIRECTS_URL, {
-      // Re-fetch cada 60s. Next dedupea entre requests.
-      next: { revalidate: 60, tags: ["redirects"] },
-    });
-    if (!res.ok) return [];
+    const res = await fetch(REDIRECTS_URL);
+    if (!res.ok) {
+      console.warn(`[proxy] redirects: Sanity respondió ${res.status}; usando caché previa`);
+      return redirectsCache?.rows ?? [];
+    }
     const json = (await res.json()) as { result?: RedirectRow[] };
-    return json.result ?? [];
-  } catch {
-    return [];
+    redirectsCache = { rows: json.result ?? [], fetchedAt: now };
+    return redirectsCache.rows;
+  } catch (err) {
+    console.warn("[proxy] redirects: fetch a Sanity falló; usando caché previa", err);
+    return redirectsCache?.rows ?? [];
   }
 }
 

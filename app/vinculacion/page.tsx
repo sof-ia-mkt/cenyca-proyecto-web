@@ -254,9 +254,10 @@ const DEFAULTS: Required<Pick<
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "Vinculación | CENYCA Universidad",
+  title: "Vinculación",
   description:
     "Conoce los convenios, alianzas y programas de vinculación de CENYCA Universidad con la industria, el deporte y la sociedad en Baja California.",
+  alternates: { canonical: "/vinculacion" },
   openGraph: {
     title: "Vinculación | CENYCA Universidad",
     description:

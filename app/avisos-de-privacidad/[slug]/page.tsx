@@ -34,12 +34,13 @@ export async function generateMetadata({
     params: { slug },
   })
   const aviso = data as Aviso | null
-  if (!aviso) return { title: 'Aviso no encontrado — CENYCA' }
-  const titulo = `${aviso.titulo} — CENYCA`
+  if (!aviso) return { title: 'Aviso no encontrado' }
+  const titulo = aviso.titulo
   const description = 'Aviso de privacidad de CENYCA Universidad.'
   return {
     title: titulo,
     description,
+    alternates: { canonical: `/avisos-de-privacidad/${slug}` },
     openGraph: { title: titulo, description, type: 'article' as const },
     twitter: { card: 'summary' as const, title: titulo, description },
   }

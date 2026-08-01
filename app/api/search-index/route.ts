@@ -135,7 +135,9 @@ const noticiasQuery = groq`*[_type == "noticia"] | order(fecha desc){
   _id,
   titulo,
   "slug": slug.current,
-  resumen,
+  // El schema llama "extracto" a la descripción corta; se expone como
+  // "resumen" para el índice.
+  "resumen": extracto,
   "contenidoText": pt::text(contenido)
 }`;
 
