@@ -124,14 +124,6 @@ export default function Navbar({ mostrarVidaEstudiantil = false }: NavbarProps) 
             >
               Plataforma Alumnos
             </a>
-            <a
-              href="https://inscripciones.cenyca.edu.mx"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#00D4FF] text-[#121B33] text-[13px] font-bold px-6 py-2.5 rounded-full hover:bg-white transition-all duration-300 hover:scale-[1.03] shadow-[0_0_20px_rgba(0,212,255,0.45)] whitespace-nowrap inline-flex items-center"
-            >
-              Inscríbete
-            </a>
           </div>
 
           {/* Buscador + Hamburger — mobile */}
@@ -183,14 +175,6 @@ export default function Navbar({ mostrarVidaEstudiantil = false }: NavbarProps) 
               className="text-white text-sm font-medium px-3 py-3 rounded-md border border-white/20 text-center hover:bg-white/10 transition-colors"
             >
               Plataforma Alumnos
-            </a>
-            <a
-              href="https://inscripciones.cenyca.edu.mx"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#00D4FF] text-[#121B33] text-sm font-bold px-5 py-3 rounded-full text-center hover:bg-[#00B8DB] transition-colors"
-            >
-              Inscríbete
             </a>
           </div>
         </div>

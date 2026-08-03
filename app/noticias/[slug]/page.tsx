@@ -164,7 +164,6 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
   }) | null
   const config = configRaw as {
     contacto?: { whatsapp?: string }
-    sistemas?: { inscripciones?: string }
   } | null
 
   if (!noticia) notFound()
@@ -176,8 +175,6 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
   const relacionadas = (relacionadasRaw ?? []) as Noticia[]
 
   const whatsapp: string = config?.contacto?.whatsapp ?? '526647719475'
-  const inscripciones: string =
-    config?.sistemas?.inscripciones ?? 'https://inscripciones.cenyca.edu.mx'
 
   const shareUrl = `${SITE_URL}/noticias/${slug}`
 
@@ -294,13 +291,6 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
               <p className="text-sm text-white/60 mb-5 leading-relaxed text-pretty">
                 Licenciaturas e ingenierías con RVOE oficial. Titúlate en 3 años.
               </p>
-              <a
-                href={inscripciones}
-                target="_blank" rel="noopener noreferrer"
-                className="block text-center bg-gradient-to-r from-[#00D4FF] to-[#00B8DB] text-[#121B33] font-black uppercase tracking-wider text-sm px-5 py-3.5 rounded-full transition-all duration-300 hover:shadow-[0_8px_24px_-4px_rgba(0,212,255,0.55)] hover:-translate-y-0.5 mb-3"
-              >
-                Inscríbete
-              </a>
               <a
                 href={`https://wa.me/${whatsapp}?text=Hola%2C%20me%20gustar%C3%ADa%20m%C3%A1s%20informaci%C3%B3n%20sobre%20la%20oferta%20acad%C3%A9mica`}
                 target="_blank" rel="noopener noreferrer"

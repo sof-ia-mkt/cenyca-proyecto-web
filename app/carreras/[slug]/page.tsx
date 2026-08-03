@@ -91,7 +91,6 @@ type VideoTestimonial = {
 
 type Configuracion = {
   contacto?: { whatsapp?: string };
-  sistemas?: { inscripciones?: string };
   redesSociales?: RedesSociales;
   stats?: Stat[];
   videoTestimonial?: VideoTestimonial | null;
@@ -196,7 +195,6 @@ export default async function CarreraPage(
   if (!carrera) notFound();
 
   const whatsapp = config?.contacto?.whatsapp ?? "526647719475";
-  const inscripciones = config?.sistemas?.inscripciones ?? "https://inscripciones.cenyca.edu.mx";
   const areaLabel = AREA_LABEL[carrera.area] ?? carrera.area;
   const gradoLabel = GRADO_LABEL[carrera.grado] ?? carrera.grado;
   const accent = carrera.color || "#00D4FF";

@@ -124,12 +124,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Obtiene config desde Sanity (whatsapp + inscripciones + imagen del popup) + fallback foto campus.
+  // Obtiene config desde Sanity (whatsapp + navegación + imagen del popup) + fallback foto campus.
   const [config, popupConfig, campusFoto] = await Promise.all([
     client
       .fetch<{
         contacto?: { whatsapp?: string };
-        sistemas?: { inscripciones?: string };
         navegacion?: { mostrarVidaEstudiantil?: boolean };
       }>(configuracionQuery)
       .catch((err) => {
