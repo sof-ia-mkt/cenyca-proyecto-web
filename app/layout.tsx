@@ -12,6 +12,7 @@ import { SanityLive } from "@/sanity/lib/live";
 import { configuracionQuery } from "@/sanity/lib/queries";
 import { sanityImg } from "@/sanity/lib/image-url";
 import { SITE_URL } from "@/lib/siteUrl";
+import type { CicloInicio } from "@/lib/ciclo";
 
 // Sin `weight`: next/font sirve la versión VARIABLE de Inter — un solo woff2
 // cubre todos los pesos (antes: 7 archivos estáticos en el critical path).
@@ -124,12 +125,14 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Obtiene config desde Sanity (whatsapp + navegación + imagen del popup) + fallback foto campus.
+  // Obtiene config desde Sanity (whatsapp, navegación, redes, ciclo, imagen del popup) + fallback foto campus.
   const [config, popupConfig, campusFoto] = await Promise.all([
     client
       .fetch<{
         contacto?: { whatsapp?: string };
         navegacion?: { mostrarVidaEstudiantil?: boolean };
+        redesSociales?: Partial<Record<"facebook" | "instagram" | "tiktok" | "youtube" | "linkedin" | "twitter", string>>;
+        cicloInicio?: CicloInicio;
       }>(configuracionQuery)
       .catch((err) => {
         console.warn("[layout] configuracionQuery falló; usando defaults", err);
@@ -157,6 +160,12 @@ export default async function RootLayout({
       }),
   ]);
   const whatsapp = config?.contacto?.whatsapp || "526647719475";
+  // Perfiles sociales para JSON-LD `sameAs`: los edita marketing en Sanity
+  // (configuracion.redesSociales), nada quemado en código.
+  const redes = config?.redesSociales ?? {};
+  const sameAs = [redes.facebook, redes.instagram, redes.tiktok, redes.youtube, redes.linkedin, redes.twitter].filter(
+    (u): u is string => typeof u === "string" && u.trim().length > 0
+  );
   const mostrarVidaEstudiantil = config?.navegacion?.mostrarVidaEstudiantil ?? false;
   // Prioridad: imagen específica del popup → imagen/galeria del campus principal.
   // sanityImg: sin él se descarga el ORIGINAL de Sanity (una foto de campus
@@ -190,10 +199,7 @@ export default async function RootLayout({
       areaServed: "MX",
       availableLanguage: ["Spanish"],
     },
-    sameAs: [
-      "https://www.facebook.com/cenycauniversidad",
-      "https://www.instagram.com/cenycauniversidad",
-    ],
+    ...(sameAs.length > 0 ? { sameAs } : {}),
   };
 
   // WebSite — ayuda a Google a entender la marca y formatear el resultado
@@ -254,7 +260,7 @@ export default async function RootLayout({
         </main>
         <Footer />
         <WhatsAppChat phone={whatsapp} />
-        <PromoPopup backgroundUrl={popupBg} />
+        <PromoPopup backgroundUrl={popupBg} ciclo={config?.cicloInicio} />
         <Analytics />
         <SpeedInsights />
         <SanityLive />

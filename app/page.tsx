@@ -31,6 +31,7 @@ import {
   StaggerContainer, StaggerItem,
   WordReveal,
 } from "@/app/components/ScrollReveal";
+import { nombreCiclo } from "@/lib/ciclo";
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
 
@@ -387,7 +388,7 @@ function SeccionLicenciaturas({ carreras }: { carreras: Carrera[] }) {
 
 // ─── Planteles ────────────────────────────────────────────────────────────────
 
-function SeccionPlanteles({ campus }: { campus: Campus[] }) {
+function SeccionPlanteles({ campus, cicloLabel }: { campus: Campus[]; cicloLabel?: string }) {
   const principal = campus.find((c) => c.esPrincipal) ?? campus[0];
   const otros = campus.filter((c) => c._id !== principal?._id);
 
@@ -401,7 +402,7 @@ function SeccionPlanteles({ campus }: { campus: Campus[] }) {
       <div className="relative z-10 max-w-screen-xl mx-auto">
         {principal && (
           <FadeUp delay={0.05}>
-            <CampusHero campus={principal} otros={otros} />
+            <CampusHero cicloLabel={cicloLabel} campus={principal} otros={otros} />
           </FadeUp>
         )}
       </div>
@@ -409,7 +410,16 @@ function SeccionPlanteles({ campus }: { campus: Campus[] }) {
   );
 }
 
-function CampusHero({ campus: c, otros = [] }: { campus: Campus; otros?: Campus[] }) {
+function CampusHero({
+  campus: c,
+  otros = [],
+  cicloLabel,
+}: {
+  campus: Campus;
+  otros?: Campus[];
+  /** "Enero 2027" — derivado de configuracion.cicloInicio.fecha. */
+  cicloLabel?: string;
+}) {
   const ciudadLabel = CIUDAD_LABEL[c.ciudad] ?? c.ciudad;
   // Construye la lista de fotos: principal + galería (sin duplicar la principal).
   const photos: CampusFoto[] = [];
@@ -476,7 +486,8 @@ function CampusHero({ campus: c, otros = [] }: { campus: Campus; otros?: Campus[
           <div className="text-center lg:text-left">
             {/* Pill admisiones */}
             <span className="inline-flex items-center gap-2 bg-[#00D4FF]/15 border border-[#00D4FF]/40 text-[#00D4FF] px-3.5 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-[0.28em] mb-6 shadow-[0_4px_14px_rgba(0,212,255,0.18)]">
-              <span aria-hidden>★</span> Admisiones Septiembre 2026 · Abiertas
+              <span aria-hidden>★</span>{" "}
+              {cicloLabel ? `Admisiones ${cicloLabel} · Abiertas` : "Admisiones abiertas"}
             </span>
 
             {/* Headline en 2 líneas */}
@@ -666,7 +677,10 @@ export default async function HomePage() {
         porcentajeDescuento={config?.promocionInscripcion?.porcentaje ?? 25}
         whatsappFallback={config?.contacto?.whatsapp}
       />
-      <SeccionPlanteles campus={campus} />
+      <SeccionPlanteles
+        campus={campus}
+        cicloLabel={nombreCiclo(config?.cicloInicio?.fecha) ?? undefined}
+      />
     </>
   );
 }

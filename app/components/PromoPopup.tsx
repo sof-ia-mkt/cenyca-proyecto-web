@@ -4,11 +4,21 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { X, ArrowRight } from "lucide-react";
+import {
+  type CicloInicio,
+  cicloVigente,
+  diasParaCiclo,
+  fechaCicloCorta,
+  mesCiclo,
+} from "@/lib/ciclo";
 
 export default function PromoPopup({
   backgroundUrl,
+  ciclo,
 }: {
   backgroundUrl?: string;
+  /** configuracion.cicloInicio de Sanity: fecha de inicio de clases y toggle. */
+  ciclo?: CicloInicio;
 }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -17,9 +27,13 @@ export default function PromoPopup({
   // porque el componente vive en el layout y no se desmonta.
   const shownRef = useRef(false);
 
+  const cicloActivo = ciclo?.activo;
+  const cicloFecha = ciclo?.fecha;
   useEffect(() => {
-    // Solo en home; en otras rutas no se dispara.
+    // Solo en home, y solo si el ciclo está activo en Sanity y su fecha no
+    // ha pasado. Así el popup nunca vuelve a anunciar una fecha vencida.
     if (pathname !== "/") return;
+    if (!cicloVigente({ activo: cicloActivo, fecha: cicloFecha })) return;
     const timer = setTimeout(() => {
       if (!shownRef.current) {
         shownRef.current = true;
@@ -27,7 +41,7 @@ export default function PromoPopup({
       }
     }, 25000);
     return () => clearTimeout(timer);
-  }, [pathname]);
+  }, [pathname, cicloActivo, cicloFecha]);
 
   // ESC cierra + trap de Tab dentro del diálogo (a11y): al abrirse solo,
   // el foco se mueve al diálogo y no puede escapar al contenido de atrás.
@@ -90,11 +104,18 @@ export default function PromoPopup({
 
   if (!open) return null;
 
+  // Textos derivados de la fecha del ciclo (solo se calculan con el popup abierto,
+  // ya en cliente: sin riesgo de mismatch de hidratación).
+  const fechaCorta = fechaCicloCorta(ciclo?.fecha);
+  const mes = mesCiclo(ciclo?.fecha);
+  const dias = diasParaCiclo(ciclo?.fecha);
+  const ultimosDias = dias !== null && dias <= 14;
+
   return (
     <div
       role="dialog"
       aria-modal="true"
-      aria-label="Promoción de inscripción"
+      aria-label="Inscripciones abiertas"
       className="fixed inset-0 z-[90] flex items-center justify-center p-4 md:p-6"
       style={{ animation: "promoPopupBackdropIn 0.3s ease-out" }}
       onClick={dismiss}
@@ -165,7 +186,7 @@ export default function PromoPopup({
               aria-hidden
               className="w-2 h-2 rounded-full bg-[#121B33] animate-pulse"
             />
-            Últimos días
+            {ultimosDias ? "Últimos días" : "Nuevo ciclo"}
           </span>
 
           {/* Headline */}
@@ -177,7 +198,7 @@ export default function PromoPopup({
               lineHeight: 1.02,
             }}
           >
-            Inscripciones abiertas hasta el{" "}
+            Inscripciones abiertas.{" "}
             <span
               className="bg-clip-text text-transparent inline-block"
               style={{
@@ -189,15 +210,15 @@ export default function PromoPopup({
                   "drop-shadow(0 0 18px rgba(0,212,255,0.55)) drop-shadow(0 0 6px rgba(0,212,255,0.45))",
               }}
             >
-              20 de agosto.
+              {fechaCorta ? `Clases inician el ${fechaCorta}.` : "Nuevo ciclo."}
             </span>
           </h2>
 
           {/* Body */}
           <p className="text-white/85 text-base md:text-lg leading-relaxed mb-8 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)] max-w-md text-pretty">
-            El tiempo se agota.{" "}
+            {ultimosDias ? "El tiempo se agota. " : ""}
             <span className="text-white font-bold">Asegura tu lugar hoy</span> y comienza
-            clases este septiembre.
+            clases{mes ? ` en ${mes}` : ""}.
           </p>
 
           {/* CTAs */}

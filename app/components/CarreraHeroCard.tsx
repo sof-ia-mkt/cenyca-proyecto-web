@@ -15,11 +15,8 @@ type Props = {
   horariosLabel: string;
   /** Etiqueta de becas ya resuelta (boletos o promoción de inscripción). */
   becasLabel: string;
-};
-
-// ⚠️ Próximo inicio: actualizar cuando cambie el ciclo de admisión activo.
-const PROXIMO_INICIO = {
-  ciclo: "Septiembre 2026",
+  /** Nombre del ciclo derivado de configuracion.cicloInicio.fecha, p.ej. "Enero 2027". */
+  cicloLabel?: string;
 };
 
 export default function CarreraHeroCard({
@@ -33,7 +30,9 @@ export default function CarreraHeroCard({
   modalidadLabel,
   horariosLabel,
   becasLabel,
+  cicloLabel,
 }: Props) {
+  const ciclo = cicloLabel ?? "Próximo ciclo";
   const waText = encodeURIComponent(
     `Hola, me interesa la ${gradoLabel} en ${carreraNombre}.`,
   );
@@ -61,7 +60,7 @@ export default function CarreraHeroCard({
           </span>
         </div>
         <p className="font-bebas text-white text-3xl sm:text-4xl tracking-wide leading-none">
-          {PROXIMO_INICIO.ciclo}
+          {ciclo}
         </p>
       </div>
 
@@ -96,7 +95,7 @@ export default function CarreraHeroCard({
       <p className="mt-4 text-white/55 text-[11px] leading-snug italic">
         Consulta la disponibilidad de tu horario para{" "}
         <span className="font-semibold text-white/75 not-italic">
-          {PROXIMO_INICIO.ciclo.toLowerCase()}
+          {ciclo.toLowerCase()}
         </span>
         .
       </p>

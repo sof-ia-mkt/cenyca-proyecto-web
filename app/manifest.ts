@@ -22,12 +22,10 @@ export default function manifest(): MetadataRoute.Manifest {
     lang: "es-MX",
     categories: ["education"],
     icons: [
-      // Iconos generados dinámicamente vía app/icon.tsx y app/apple-icon.tsx
-      // (monograma "C" sobre fondo de marca). Reemplazo temporal hasta tener
-      // un isotipo cuadrado oficial — el logo.png es horizontal y se
-      // distorsiona como icono de PWA.
-      { src: "/icon", sizes: "32x32", type: "image/png", purpose: "any" },
-      { src: "/apple-icon", sizes: "180x180", type: "image/png", purpose: "any" },
+      // Next sirve app/icon.png y app/apple-icon.png en estas rutas (con la
+      // extensión). Sin ".png" devolvían 404: ~300 peticiones fallidas por semana.
+      { src: "/icon.png", sizes: "512x512", type: "image/png", purpose: "any" },
+      { src: "/apple-icon.png", sizes: "180x180", type: "image/png", purpose: "any" },
       { src: "/favicon.ico", sizes: "32x32", type: "image/x-icon" },
     ],
   };

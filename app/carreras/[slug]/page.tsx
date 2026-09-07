@@ -31,6 +31,7 @@ import ModalidadesTabla from "@/app/components/ModalidadesTabla";
 import PromocionFormulario, { type PromocionConfig } from "@/components/PromocionFormulario";
 import BloqueInversion, { type InversionConfig } from "@/components/BloqueInversion";
 import RedesSocialesCTA, { type RedesSociales } from "@/components/RedesSocialesCTA";
+import { nombreCiclo } from "@/lib/ciclo";
 
 // ─── Mapeos UI ────────────────────────────────────────────────────────────────
 
@@ -95,6 +96,7 @@ type Configuracion = {
   stats?: Stat[];
   videoTestimonial?: VideoTestimonial | null;
   promocionInscripcion?: PromocionConfig;
+  cicloInicio?: { activo?: boolean; fecha?: string };
 };
 
 // ─── PortableText renderer ────────────────────────────────────────────────────
@@ -335,6 +337,7 @@ export default async function CarreraPage(
                 modalidadLabel={horarios.modalidadLabel}
                 horariosLabel={horarios.diasResumen}
                 becasLabel={becasLabel}
+                cicloLabel={nombreCiclo(config?.cicloInicio?.fecha) ?? undefined}
               />
             </div>
           </div>
