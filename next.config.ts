@@ -158,6 +158,15 @@ const nextConfig: NextConfig = {
       { source: "/inscripcion", destination: "/#contacto", permanent: true },
       { source: "/inscripciones", destination: "/#contacto", permanent: true },
 
+      // URLs del sitio anterior que siguen recibiendo tráfico (medido en los
+      // logs de Vercel). Sin esto caen en 404 y se pierde el enlace entrante.
+      { source: "/licenciatura-en-:slug", destination: "/carreras/:slug", permanent: true },
+      { source: "/ingenieria-en-:slug", destination: "/carreras/ingenieria-en-:slug", permanent: true },
+      { source: "/oferta/:path*", destination: "/oferta-academica", permanent: true },
+      { source: "/licenciaturas/cyc", destination: "/carreras/criminologia-y-criminalistica", permanent: true },
+      { source: "/vida_estudiantil/:path*", destination: "/noticias", permanent: true },
+      { source: "/contact-us", destination: "/#contacto", permanent: true },
+
       // Alias EN/típicos
       { source: "/about", destination: "/nosotros", permanent: true },
       { source: "/acerca", destination: "/nosotros", permanent: true },

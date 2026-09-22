@@ -143,7 +143,7 @@ export default async function LeadsAdminPage({
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
   return (
-    <main className="min-h-screen bg-[#0E1530] text-white px-6 py-10">
+    <div className="min-h-screen bg-[#0E1530] text-white px-6 py-10">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <header className="mb-8">
@@ -175,7 +175,7 @@ export default async function LeadsAdminPage({
           params={params}
         />
       </div>
-    </main>
+    </div>
   );
 }
 

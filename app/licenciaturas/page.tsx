@@ -1,27 +1,23 @@
 // ISR 60s: mismo patrón que carreras/nosotros; frescura real la da el CDN de Sanity.
 export const revalidate = 60;
 
-import type { Metadata } from "next";
 import { CalendarClock, Users, Award, Lightbulb } from "lucide-react";
 import { client } from "@/sanity/lib/client";
 import { todasCarrerasQuery, configuracionQuery } from "@/sanity/lib/queries";
 import { sanityImg } from "@/sanity/lib/image-url";
 import AreaTemplate, { type AreaStat, type AreaValor } from "@/app/components/AreaTemplate";
 import type { CarreraCard } from "@/app/components/AreaCarreraGrid";
+import { metadataDePagina } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Licenciaturas",
-  description:
-    "Licenciaturas en CENYCA Universidad: Derecho, Administración, Contaduría, Criminología, Gastronomía y Educación. RVOE SEP, horarios flexibles.",
-  alternates: { canonical: "/licenciaturas" },
-  openGraph: {
-    title: "Licenciaturas | CENYCA Universidad",
+export const generateMetadata = () =>
+  metadataDePagina({
+    title: "Licenciaturas",
     description:
+      "Licenciaturas en CENYCA Universidad: Derecho, Administración, Contaduría, Criminología, Gastronomía y Educación. RVOE SEP, horarios flexibles.",
+    path: "/licenciaturas",
+    ogDescription:
       "Licenciaturas con RVOE SEP: Derecho, Administración, Contaduría, Criminología, Gastronomía y Educación.",
-    type: "website",
-  },
-  twitter: { card: "summary_large_image", title: "Licenciaturas | CENYCA Universidad" },
-};
+  });
 
 type Configuracion = {
   imagenesOferta?: { licenciaturas?: string };

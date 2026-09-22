@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -10,22 +9,19 @@ import SectionAccentLine from "@/app/components/SectionAccentLine";
 import LazySelfHostedVideo from "@/components/LazySelfHostedVideo";
 import { client } from "@/sanity/lib/client";
 import { nosotrosPageQuery } from "@/sanity/lib/queries";
+import { metadataDePagina } from "@/lib/seo";
 
 export const revalidate = 60;
 
-export const metadata: Metadata = {
-  title: "Nosotros",
-  description:
-    "La historia de CENYCA Universidad: de un centro de capacitación en Tijuana en 2007 a una universidad líder en Baja California con 4 campus.",
-  alternates: { canonical: "/nosotros" },
-  openGraph: {
-    title: "Nosotros | CENYCA Universidad",
+export const generateMetadata = () =>
+  metadataDePagina({
+    title: "Nosotros",
     description:
+      "La historia de CENYCA Universidad: de un centro de capacitación en Tijuana en 2007 a una universidad líder en Baja California con 4 campus.",
+    path: "/nosotros",
+    ogDescription:
       "De un sueño a una universidad líder en Baja California. Conoce la historia de CENYCA.",
-    type: "website",
-  },
-  twitter: { card: "summary_large_image", title: "Nosotros | CENYCA Universidad" },
-};
+  });
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
 

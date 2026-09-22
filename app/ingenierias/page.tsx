@@ -1,27 +1,23 @@
 // ISR 60s: mismo patrón que carreras/nosotros; frescura real la da el CDN de Sanity.
 export const revalidate = 60;
 
-import type { Metadata } from "next";
 import { Cpu, Wrench, Briefcase, ShieldCheck } from "lucide-react";
 import { client } from "@/sanity/lib/client";
 import { todasCarrerasQuery, configuracionQuery } from "@/sanity/lib/queries";
 import { sanityImg } from "@/sanity/lib/image-url";
 import AreaTemplate, { type AreaStat, type AreaValor } from "@/app/components/AreaTemplate";
 import type { CarreraCard } from "@/app/components/AreaCarreraGrid";
+import { metadataDePagina } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Ingenierías",
-  description:
-    "Programas de ingeniería en CENYCA Universidad: Mecatrónica, Sistemas, Industrial y Electromecánica. RVOE SEP, modelo cuatrimestral, titúlate en 3 años.",
-  alternates: { canonical: "/ingenierias" },
-  openGraph: {
-    title: "Ingenierías | CENYCA Universidad",
+export const generateMetadata = () =>
+  metadataDePagina({
+    title: "Ingenierías",
     description:
+      "Programas de ingeniería en CENYCA Universidad: Mecatrónica, Sistemas, Industrial y Electromecánica. RVOE SEP, modelo cuatrimestral, titúlate en 3 años.",
+    path: "/ingenierias",
+    ogDescription:
       "Ingenierías con RVOE SEP: Mecatrónica, Sistemas, Industrial y Electromecánica. Titúlate en 3 años.",
-    type: "website",
-  },
-  twitter: { card: "summary_large_image", title: "Ingenierías | CENYCA Universidad" },
-};
+  });
 
 type Configuracion = {
   imagenesOferta?: { ingenierias?: string };

@@ -2,19 +2,16 @@ import Link from 'next/link'
 import { sanityFetch } from '@/sanity/lib/live'
 import { todosAvisosQuery } from '@/sanity/lib/queries'
 import { fechaLarga } from "@/lib/fechas";
+import { metadataDePagina } from "@/lib/seo";
 
-export const metadata = {
-  title: 'Avisos de Privacidad',
-  description:
-    'Avisos de privacidad de CENYCA Universidad conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.',
-  alternates: { canonical: '/avisos-de-privacidad' },
-  openGraph: {
-    title: 'Avisos de Privacidad | CENYCA Universidad',
-    description: 'Avisos de privacidad de CENYCA Universidad.',
-    type: 'website' as const,
-  },
-  twitter: { card: 'summary' as const, title: 'Avisos de Privacidad | CENYCA Universidad' },
-}
+export const generateMetadata = () =>
+  metadataDePagina({
+    title: 'Avisos de Privacidad',
+    description:
+      'Avisos de privacidad de CENYCA Universidad conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.',
+    path: '/avisos-de-privacidad',
+    ogDescription: 'Avisos de privacidad de CENYCA Universidad.',
+  })
 
 type AvisoListItem = {
   _id: string;

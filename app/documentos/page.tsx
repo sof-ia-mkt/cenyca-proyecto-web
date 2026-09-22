@@ -1,26 +1,25 @@
 import type { Metadata } from 'next'
 import { sanityFetch } from '@/sanity/lib/live'
 import { todosDocumentosQuery } from '@/sanity/lib/queries'
+import { metadataDePagina } from '@/lib/seo'
 
 const TITLE = 'Documentos institucionales'
 const DESCRIPTION =
   'Descarga reglamentos, RVOE, planes de estudio y formatos oficiales de CENYCA Universidad.'
 
-export const metadata: Metadata = {
-  title: TITLE,
-  description: DESCRIPTION,
-  alternates: { canonical: '/documentos' },
-  openGraph: {
+// La página se indexa SOLO si hay documentos publicados. Mientras esté
+// vacía, Google la vería como contenido pobre ("No hay documentos publicados
+// aún") y el sitemap la excluye en paralelo. En cuanto se publique el primero
+// vuelve a indexarse sola, sin tocar código.
+export async function generateMetadata(): Promise<Metadata> {
+  const { data } = await sanityFetch({ query: todosDocumentosQuery })
+  const hayDocumentos = ((data ?? []) as unknown[]).length > 0
+  return metadataDePagina({
     title: TITLE,
     description: DESCRIPTION,
-    url: '/documentos',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: TITLE,
-    description: DESCRIPTION,
-  },
+    path: '/documentos',
+    noIndex: !hayDocumentos,
+  })
 }
 
 type DocumentoItem = {

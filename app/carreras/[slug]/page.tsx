@@ -32,6 +32,7 @@ import PromocionFormulario, { type PromocionConfig } from "@/components/Promocio
 import BloqueInversion, { type InversionConfig } from "@/components/BloqueInversion";
 import RedesSocialesCTA, { type RedesSociales } from "@/components/RedesSocialesCTA";
 import { nombreCiclo } from "@/lib/ciclo";
+import { ogImagen } from "@/lib/seo";
 
 // ─── Mapeos UI ────────────────────────────────────────────────────────────────
 
@@ -159,7 +160,9 @@ export async function generateMetadata(
 
   const title = carrera.seo?.titulo ?? carrera.nombre;
   const description = carrera.seo?.descripcion ?? carrera.descripcionCorta;
-  const ogImage = carrera.seo?.imagenUrl ?? carrera.imagenUrl;
+  // Tres carreras no tienen imagen SEO propia y caían al hero, que no mide
+  // 1200x630 aunque así lo declarábamos. Se recorta siempre.
+  const ogImage = ogImagen(carrera.seo?.imagenUrl ?? carrera.imagenUrl);
   const url = `/carreras/${carrera.slug}`;
 
   return {

@@ -49,10 +49,13 @@ export async function generateMetadata({
 
 const portableComponents: PortableTextComponents = {
   block: {
+    // El h1 de la página ya es el título del aviso. Si el contenido trae un
+    // bloque con estilo h1 se renderiza como h2: dos h1 en la misma página
+    // confunden a los buscadores y a los lectores de pantalla.
     h1: ({ children }) => (
-      <h1 className="text-3xl sm:text-4xl font-black uppercase text-white mt-12 mb-6 tracking-tight">
+      <h2 className="text-3xl sm:text-4xl font-black uppercase text-white mt-12 mb-6 tracking-tight">
         {children}
-      </h1>
+      </h2>
     ),
     h2: ({ children }) => (
       <h2 className="text-xl sm:text-2xl font-bold text-white mt-10 mb-4">

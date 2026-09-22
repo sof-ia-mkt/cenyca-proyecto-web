@@ -11,14 +11,16 @@ export const revalidate = 3600;
 const carrerasSlugsQuery = groq`*[_type == "carrera" && activa == true]{ "slug": slug.current }`;
 const noticiasSlugsQuery = groq`*[_type == "noticia"]{ "slug": slug.current, "fecha": fecha }`;
 const avisosSlugsQuery = groq`*[_type == "avisoPrivacidad"]{ "slug": slug.current, "fecha": fecha }`;
+const documentosCountQuery = groq`count(*[_type == "documento"])`;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? SITE_URL_FALLBACK;
 
-  const [carreras, noticias, avisos] = await Promise.all([
+  const [carreras, noticias, avisos, documentosCount] = await Promise.all([
     client.fetch<{ slug: string }[]>(carrerasSlugsQuery).catch(() => []),
     client.fetch<{ slug: string; fecha?: string }[]>(noticiasSlugsQuery).catch(() => []),
     client.fetch<{ slug: string; fecha?: string }[]>(avisosSlugsQuery).catch(() => []),
+    client.fetch<number>(documentosCountQuery).catch(() => 0),
   ]);
 
   const now = new Date();
@@ -37,9 +39,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/vinculacion`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/preguntas-frecuentes`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/noticias`, lastModified: now, changeFrequency: "weekly", priority: 0.6 },
-    { url: `${base}/documentos`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: `${base}/avisos-de-privacidad`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
   ];
+
+  // /documentos se anuncia solo si tiene contenido. Vacía lleva un noindex
+  // (ver su generateMetadata) y enviarla al sitemap generaría el aviso
+  // "URL enviada marcada como noindex" en Search Console.
+  if (documentosCount > 0) {
+    staticRoutes.push({
+      url: `${base}/documentos`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.5,
+    });
+  }
 
   const carreraRoutes: MetadataRoute.Sitemap = carreras
     .filter((c) => c.slug)

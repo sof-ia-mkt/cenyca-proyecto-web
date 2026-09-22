@@ -16,6 +16,7 @@ import type { CicloInicio } from "@/lib/ciclo";
 import Analitica from "./components/Analitica";
 import { META_PIXEL_ID, GTM_ID } from "@/lib/analitica";
 import { jsonLdHtml } from "@/lib/jsonLd";
+import { ogImagen } from "@/lib/seo";
 
 // Sin `weight`: next/font sirve la versión VARIABLE de Inter — un solo woff2
 // cubre todos los pesos (antes: 7 archivos estáticos en el critical path).
@@ -71,7 +72,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
   const title = config?.seo?.tituloBase || DEFAULT_TITLE;
   const description = config?.seo?.descripcion || DEFAULT_DESCRIPTION;
-  const ogImage = config?.seo?.ogImageUrl;
+  // Recortada a 1200x630: antes se servía el original (un PNG de 3750px).
+  const ogImage = ogImagen(config?.seo?.ogImageUrl);
 
   return {
     title: { default: title, template: `%s | ${BRAND_SHORT}` },

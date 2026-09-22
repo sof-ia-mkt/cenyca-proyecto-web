@@ -233,7 +233,8 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
 
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_320px] gap-12 lg:gap-16 items-start">
           {/* ── Columna principal ──────────────────────────────────────────── */}
-          <main className="min-w-0">
+          {/* <article> y no <main>: el layout raíz ya aporta el <main> de la página. */}
+          <article className="min-w-0">
             {noticia.categoria && (
               <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#00D4FF] block mb-3">
                 {noticia.categoria}
@@ -277,7 +278,7 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
             <div className="mt-14">
               <NewsletterSuscripcion />
             </div>
-          </main>
+          </article>
 
           {/* ── Sidebar sticky (solo desktop) ───────────────────────────────── */}
           <aside className="hidden lg:block sticky top-24 self-start space-y-6">

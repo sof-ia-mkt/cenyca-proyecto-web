@@ -1,41 +1,32 @@
 // Revalida cada 60s — cambios en Sanity se reflejan en menos de 1 min.
 export const revalidate = 60;
 
-import type { Metadata } from "next";
 import Link from "next/link";
 import { HelpCircle, MessageCircle } from "lucide-react";
 import type { PortableTextBlock } from "@portabletext/types";
 import { client } from "@/sanity/lib/client";
 import { faqsQuery, configuracionQuery } from "@/sanity/lib/queries";
-import { SITE_URL } from "@/lib/siteUrl";
 import { jsonLdHtml, breadcrumbJsonLd, faqPageJsonLd } from "@/lib/jsonLd";
 import FaqAccordion, {
   type FaqCategoria,
   type FaqItem,
 } from "@/app/components/FaqAccordion";
+import { metadataDePagina } from "@/lib/seo";
 
 type FaqQueryResult = {
   categorias: FaqCategoria[];
   faqs: FaqItem[];
 };
 
-export const metadata: Metadata = {
-  title: "Preguntas frecuentes",
-  description:
-    "Respuestas claras a las dudas más comunes sobre CENYCA Universidad: RVOE, becas, horarios, inscripción, modalidades, titulación y más.",
-  alternates: { canonical: "/preguntas-frecuentes" },
-  openGraph: {
+export const generateMetadata = () =>
+  metadataDePagina({
     title: "Preguntas frecuentes",
     description:
+      "Respuestas claras a las dudas más comunes sobre CENYCA Universidad: RVOE, becas, horarios, inscripción, modalidades, titulación y más.",
+    path: "/preguntas-frecuentes",
+    ogDescription:
       "Becas, horarios, RVOE, inscripción, titulación: todo lo que un prospecto pregunta antes de inscribirse en CENYCA.",
-    url: `${SITE_URL}/preguntas-frecuentes`,
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image" as const,
-    title: "Preguntas frecuentes",
-  },
-};
+  });
 
 function blocksToPlainText(blocks: PortableTextBlock[]): string {
   if (!blocks) return "";

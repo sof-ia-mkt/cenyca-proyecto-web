@@ -1,7 +1,6 @@
 // ISR 60s: mismo patrón que carreras/nosotros; frescura real la da el CDN de Sanity.
 export const revalidate = 60;
 
-import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { client } from "@/sanity/lib/client";
@@ -11,20 +10,16 @@ import { FadeUp, FadeLeft, FadeRight } from "@/app/components/ScrollReveal";
 import FormularioLead from "@/app/components/FormularioLead";
 import AnimatedCounter from "@/app/components/AnimatedCounter";
 import CampusCarrusel from "@/app/components/CampusCarrusel";
+import { metadataDePagina } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Oferta Académica",
-  description:
-    "Conoce todos los programas de licenciatura e ingeniería de CENYCA Universidad: planes flexibles, modelo cuatrimestral y validez oficial SEP.",
-  alternates: { canonical: "/oferta-academica" },
-  openGraph: {
-    title: "Oferta Académica | CENYCA Universidad",
+export const generateMetadata = () =>
+  metadataDePagina({
+    title: "Oferta Académica",
     description:
-      "Licenciaturas e ingenierías con RVOE SEP en Tijuana y Tecate.",
-    type: "website",
-  },
-  twitter: { card: "summary_large_image", title: "Oferta Académica | CENYCA Universidad" },
-};
+      "Conoce todos los programas de licenciatura e ingeniería de CENYCA Universidad: planes flexibles, modelo cuatrimestral y validez oficial SEP.",
+    path: "/oferta-academica",
+    ogDescription: "Licenciaturas e ingenierías con RVOE SEP en Tijuana y Tecate.",
+  });
 
 type Carrera = { _id: string; nombre: string; area: string };
 

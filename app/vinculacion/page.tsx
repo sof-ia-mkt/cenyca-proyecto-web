@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import {
   ArrowRight,
@@ -32,6 +31,7 @@ import HeroVideo from "@/app/components/HeroVideo";
 import aliadosData from "@/public/vinculacion/aliados.json";
 import { client } from "@/sanity/lib/client";
 import { vinculacionPageQuery } from "@/sanity/lib/queries";
+import { metadataDePagina } from "@/lib/seo";
 
 type ImagenSanity = {
   imagenUrl?: string;
@@ -253,22 +253,15 @@ const DEFAULTS: Required<Pick<
 
 export const revalidate = 60;
 
-export const metadata: Metadata = {
-  title: "Vinculación",
-  description:
-    "Conoce los convenios, alianzas y programas de vinculación de CENYCA Universidad con la industria, el deporte y la sociedad en Baja California.",
-  alternates: { canonical: "/vinculacion" },
-  openGraph: {
-    title: "Vinculación | CENYCA Universidad",
+export const generateMetadata = () =>
+  metadataDePagina({
+    title: "Vinculación",
     description:
+      "Conoce los convenios, alianzas y programas de vinculación de CENYCA Universidad con la industria, el deporte y la sociedad en Baja California.",
+    path: "/vinculacion",
+    ogDescription:
       "Alianzas estratégicas entre CENYCA y el sector productivo, deportivo y social de Baja California.",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Vinculación | CENYCA Universidad",
-  },
-};
+  });
 
 export default async function VinculacionPage() {
   const data = await client

@@ -8,19 +8,19 @@ import NewsletterSuscripcion from "@/app/components/NewsletterSuscripcion";
 import NoticiasGrid, { type NoticiaItem } from "@/app/components/NoticiasGrid";
 import { FadeUp, FadeLeft, FadeRight } from "@/app/components/ScrollReveal";
 import { fechaLarga } from "@/lib/fechas";
+import { metadataDePagina } from "@/lib/seo";
 
-export const metadata = {
-  title: "Noticias — CENYCA Comunica",
-  description:
-    "Noticias, comunicados y novedades académicas de CENYCA Universidad. Mantente al día con la vida universitaria en Baja California.",
-  alternates: { canonical: "/noticias" },
-  openGraph: {
-    title: "Noticias — CENYCA Comunica",
-    description: "Noticias y novedades académicas de CENYCA Universidad.",
-    type: "website",
-  },
-  twitter: { card: "summary_large_image" as const, title: "Noticias — CENYCA Comunica" },
-};
+// Título sin repetir la marca: la plantilla del layout ya añade
+// "| CENYCA Universidad" y antes salía dos veces.
+export const generateMetadata = () =>
+  metadataDePagina({
+    title: "CENYCA Comunica",
+    description:
+      "Noticias, comunicados y novedades académicas de CENYCA Universidad. Mantente al día con la vida universitaria en Baja California.",
+    path: "/noticias",
+    ogTitle: "Noticias — CENYCA Comunica",
+    ogDescription: "Noticias y novedades académicas de CENYCA Universidad.",
+  });
 
 export default async function NoticiasPage() {
   const { data: noticiasData } = await sanityFetch({ query: todasNoticiasQuery });
