@@ -28,6 +28,49 @@ const commonHeaders = [
 
 const isDev = process.env.NODE_ENV !== "production";
 
+// ── Dominios de analítica y publicidad ──────────────────────────────────────
+// Meta Pixel y Google Tag Manager viven en app/components/Analitica.tsx.
+// Se incluyen también los dominios de Google Analytics 4 y Google Ads: el
+// contenedor de GTM está vacío hoy, y sin estos permisos cualquier etiqueta
+// que marketing agregue después quedaría bloqueada por el navegador y haría
+// falta un deploy para desbloquearla. Sigue siendo una lista cerrada.
+const META = {
+  script: ["https://connect.facebook.net"],
+  img: ["https://www.facebook.com"],
+  connect: ["https://www.facebook.com"],
+  // El pixel sincroniza cookies con un iframe a facebook.com y, como respaldo,
+  // envía un formulario a facebook.com/tr/. Sin estas dos el navegador lo bloquea.
+  frame: ["https://www.facebook.com"],
+  form: ["https://www.facebook.com"],
+};
+
+const GOOGLE = {
+  script: [
+    "https://www.googletagmanager.com",
+    "https://www.googleadservices.com",
+    "https://googleads.g.doubleclick.net",
+  ],
+  img: [
+    "https://www.googletagmanager.com",
+    "https://www.google-analytics.com",
+    "https://*.google-analytics.com",
+    "https://www.google.com",
+    "https://www.google.com.mx",
+    "https://googleads.g.doubleclick.net",
+    "https://stats.g.doubleclick.net",
+  ],
+  connect: [
+    "https://www.googletagmanager.com",
+    "https://www.google-analytics.com",
+    "https://*.google-analytics.com",
+    "https://*.analytics.google.com",
+    "https://stats.g.doubleclick.net",
+  ],
+  frame: ["https://www.googletagmanager.com", "https://td.doubleclick.net"],
+};
+
+const lista = (...partes: string[][]) => partes.flat().join(" ");
+
 // Headers para el sitio público — sin unsafe-eval en producción
 const publicHeaders = [
   ...commonHeaders,
@@ -36,17 +79,19 @@ const publicHeaders = [
     key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
-      `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} https://connect.facebook.net`,
+      // 'unsafe-inline' lo exigen los scripts de hidratación de Next y las
+      // etiquetas HTML personalizadas de GTM.
+      `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} ${lista(META.script, GOOGLE.script)}`,
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
       // i.ytimg.com: thumbnails de LazyYouTubeEmbed (testimoniales en video).
-      "img-src 'self' data: blob: https://cdn.sanity.io https://www.facebook.com https://i.ytimg.com",
-      "connect-src 'self' https://*.api.sanity.io https://*.apicdn.sanity.io wss://*.api.sanity.io",
-      "frame-src 'self' https://www.youtube-nocookie.com https://www.youtube.com",
+      `img-src 'self' data: blob: https://cdn.sanity.io https://i.ytimg.com ${lista(META.img, GOOGLE.img)}`,
+      `connect-src 'self' https://*.api.sanity.io https://*.apicdn.sanity.io wss://*.api.sanity.io ${lista(META.connect, GOOGLE.connect)}`,
+      `frame-src 'self' https://www.youtube-nocookie.com https://www.youtube.com ${lista(META.frame, GOOGLE.frame)}`,
       "media-src 'self' https://cdn.sanity.io",
       "object-src 'none'",
       "base-uri 'self'",
-      "form-action 'self'",
+      `form-action 'self' ${lista(META.form)}`,
       "report-uri /api/csp-report",
     ].join("; "),
   },

@@ -13,6 +13,7 @@ import { configuracionQuery } from "@/sanity/lib/queries";
 import { sanityImg } from "@/sanity/lib/image-url";
 import { SITE_URL } from "@/lib/siteUrl";
 import type { CicloInicio } from "@/lib/ciclo";
+import Analitica, { META_PIXEL_ID, GTM_ID } from "./components/Analitica";
 
 // Sin `weight`: next/font sirve la versión VARIABLE de Inter — un solo woff2
 // cubre todos los pesos (antes: 7 archivos estáticos en el critical path).
@@ -242,6 +243,27 @@ export default async function RootLayout({
       className={`${inter.variable} h-full`}
     >
       <body className="min-h-full flex flex-col font-inter antialiased">
+        {/* Google Tag Manager (noscript) — debe ir al inicio del body */}
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+            title="Google Tag Manager"
+          />
+        </noscript>
+        {/* Meta Pixel (noscript) */}
+        <noscript>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
+            alt=""
+          />
+        </noscript>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
@@ -261,6 +283,7 @@ export default async function RootLayout({
         <Footer />
         <WhatsAppChat phone={whatsapp} />
         <PromoPopup backgroundUrl={popupBg} ciclo={config?.cicloInicio} />
+        <Analitica />
         <Analytics />
         <SpeedInsights />
         <SanityLive />
