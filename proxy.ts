@@ -42,17 +42,24 @@ async function fetchRedirects(): Promise<RedirectRow[]> {
     return redirectsCache.rows;
   }
   try {
-    const res = await fetch(REDIRECTS_URL);
+    // Sin tiempo límite, una respuesta lenta de Sanity bloquea TODA página
+    // HTML del sitio: este fetch corre antes del render en cada navegación.
+    const res = await fetch(REDIRECTS_URL, { signal: AbortSignal.timeout(1500) });
     if (!res.ok) {
       console.warn(`[proxy] redirects: Sanity respondió ${res.status}; usando caché previa`);
-      return redirectsCache?.rows ?? [];
+      redirectsCache = { rows: redirectsCache?.rows ?? [], fetchedAt: now };
+      return redirectsCache.rows;
     }
     const json = (await res.json()) as { result?: RedirectRow[] };
     redirectsCache = { rows: json.result ?? [], fetchedAt: now };
     return redirectsCache.rows;
   } catch (err) {
     console.warn("[proxy] redirects: fetch a Sanity falló; usando caché previa", err);
-    return redirectsCache?.rows ?? [];
+    // Se refresca `fetchedAt` aunque haya fallado: de lo contrario cada
+    // petición reintentaría contra un servicio ya caído, multiplicando la
+    // carga y quemando la cuota de API justo cuando menos conviene.
+    redirectsCache = { rows: redirectsCache?.rows ?? [], fetchedAt: now };
+    return redirectsCache.rows;
   }
 }
 
@@ -137,6 +144,8 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // Aplica a todo excepto assets de Next y archivos estáticos.
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\..*).*)"],
+  // Aplica a todo excepto assets de Next y archivos estáticos. El patrón
+  // exige una extensión al final (\.\w+$) en vez de "cualquier punto": así
+  // una ruta como /noticias/version-2.0 sí recibe los redirects de Sanity.
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\.\\w+$).*)"],
 };

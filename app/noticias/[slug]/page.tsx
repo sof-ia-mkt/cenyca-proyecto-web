@@ -10,6 +10,7 @@ import NewsletterSuscripcion from '@/app/components/NewsletterSuscripcion'
 import { SITE_URL } from '@/lib/siteUrl'
 import { breadcrumbJsonLd } from '@/lib/jsonLd'
 import { fechaLarga } from "@/lib/fechas";
+import { jsonLdHtml } from "@/lib/jsonLd";
 
 type ImageBlock = {
   _key: string
@@ -213,11 +214,11 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
     <article className="bg-[#121B33] min-h-screen">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdHtml(articleJsonLd) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdHtml(breadcrumbs) }}
       />
       <div className="max-w-6xl mx-auto px-4 lg:px-8 py-16">
         <Link

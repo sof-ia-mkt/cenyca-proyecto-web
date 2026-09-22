@@ -8,6 +8,25 @@
 
 import { SITE_URL } from "./siteUrl";
 
+/**
+ * Serializa un objeto para incrustarlo en <script type="application/ld+json">.
+ *
+ * JSON.stringify NO escapa la secuencia "</script>". Un título de noticia o de
+ * carrera que la contenga cerraría la etiqueta antes de tiempo y lo que
+ * siguiera se ejecutaría como JavaScript (la CSP del sitio permite scripts en
+ * línea). El contenido viene de Sanity, así que basta con un editor
+ * despistado o una cuenta comprometida.
+ *
+ * Se escapan también U+2028 y U+2029: son válidos dentro de una cadena JSON
+ * pero ilegales en JavaScript, y rompen el parseo en algunos navegadores.
+ */
+export function jsonLdHtml(objeto: unknown): string {
+  return JSON.stringify(objeto)
+    .replace(/</g, "\\u003c")
+    .replace(/\u2028/g, "\\u2028")
+    .replace(/\u2029/g, "\\u2029");
+}
+
 export type Crumb = { name: string; url: string };
 
 /**

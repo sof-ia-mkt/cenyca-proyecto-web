@@ -8,7 +8,7 @@ import type { PortableTextBlock } from "@portabletext/types";
 import { client } from "@/sanity/lib/client";
 import { faqsQuery, configuracionQuery } from "@/sanity/lib/queries";
 import { SITE_URL } from "@/lib/siteUrl";
-import { breadcrumbJsonLd, faqPageJsonLd } from "@/lib/jsonLd";
+import { jsonLdHtml, breadcrumbJsonLd, faqPageJsonLd } from "@/lib/jsonLd";
 import FaqAccordion, {
   type FaqCategoria,
   type FaqItem,
@@ -81,11 +81,11 @@ export default async function PreguntasFrecuentesPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdHtml(faqJsonLd) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdHtml(breadcrumb) }}
       />
 
       {/* Hero oscuro */}

@@ -17,7 +17,7 @@ import { client } from "@/sanity/lib/client";
 import { carreraBySlugQuery, configuracionQuery, todasCarrerasQuery } from "@/sanity/lib/queries";
 import { sanityImg } from "@/sanity/lib/image-url";
 import { SITE_URL } from "@/lib/siteUrl";
-import { breadcrumbJsonLd } from "@/lib/jsonLd";
+import { jsonLdHtml, breadcrumbJsonLd } from "@/lib/jsonLd";
 import { derivarHorarios } from "@/lib/horarios";
 import BeneficioIcon from "@/components/BeneficioIcon";
 import StatsCounter, { type Stat } from "@/components/StatsCounter";
@@ -245,11 +245,11 @@ export default async function CarreraPage(
     <div style={accentStyle}>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdHtml(courseJsonLd) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdHtml(breadcrumbs) }}
       />
       {/* ── HERO ─────────────────────────────────────────────────────────────
          Full-bleed con video de fondo (o imagen fallback) + overlays para

@@ -15,6 +15,7 @@ import { SITE_URL } from "@/lib/siteUrl";
 import type { CicloInicio } from "@/lib/ciclo";
 import Analitica from "./components/Analitica";
 import { META_PIXEL_ID, GTM_ID } from "@/lib/analitica";
+import { jsonLdHtml } from "@/lib/jsonLd";
 
 // Sin `weight`: next/font sirve la versión VARIABLE de Inter — un solo woff2
 // cubre todos los pesos (antes: 7 archivos estáticos en el critical path).
@@ -267,15 +268,15 @@ export default async function RootLayout({
         </noscript>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: jsonLdHtml(orgJsonLd) }}
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: jsonLdHtml(websiteJsonLd) }}
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteNavJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: jsonLdHtml(siteNavJsonLd) }}
         />
         <Navbar mostrarVidaEstudiantil={mostrarVidaEstudiantil} />
         <main className="flex-1 pt-[72px]">

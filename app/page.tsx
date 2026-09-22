@@ -25,7 +25,7 @@ import SectionAccentLine from "@/app/components/SectionAccentLine";
 import SeccionNoticias, { type NoticiaCard } from "@/app/components/SeccionNoticias";
 import CampusCarrusel from "@/app/components/CampusCarrusel";
 import { sanityImg } from "@/sanity/lib/image-url";
-import { campusJsonLd } from "@/lib/jsonLd";
+import { jsonLdHtml, campusJsonLd } from "@/lib/jsonLd";
 import {
   FadeUp, FadeLeft, FadeRight,
   StaggerContainer, StaggerItem,
@@ -663,7 +663,7 @@ export default async function HomePage() {
         <script
           key={i}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}
+          dangerouslySetInnerHTML={{ __html: jsonLdHtml(ld) }}
         />
       ))}
       <HeroAnimado slides={heroSlides} />

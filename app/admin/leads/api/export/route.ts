@@ -8,6 +8,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { sql } from "@/lib/db";
+import { credencialesValidas, respuestaNoAutorizado } from "@/lib/admin-auth";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -53,6 +54,11 @@ function toCsvRow(values: Array<string | number | null | undefined>): string {
 }
 
 export async function GET(req: NextRequest) {
+  // No dependemos solo del proxy: su matcher ignora rutas con punto.
+  if (!(await credencialesValidas(req.headers.get("authorization")))) {
+    return respuestaNoAutorizado();
+  }
+
   const sp = req.nextUrl.searchParams;
   const status = sp.get("status")?.trim() || "";
   const plantel = sp.get("plantel")?.trim() || "";
