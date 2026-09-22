@@ -3,6 +3,7 @@
 import Script from "next/script";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
+import { META_PIXEL_ID, GTM_ID } from "@/lib/analitica";
 
 /**
  * ANALÍTICA — Meta Pixel + Google Tag Manager
@@ -21,9 +22,6 @@ import { useEffect, useRef } from "react";
  * Content-Security-Policy de `next.config.ts`. Una etiqueta nueva en GTM que
  * cargue desde un dominio no listado ahí será bloqueada por el navegador.
  */
-
-export const META_PIXEL_ID = "2316731552126622";
-export const GTM_ID = "GTM-5TXHQXFV";
 
 declare global {
   interface Window {

@@ -13,7 +13,8 @@ import { configuracionQuery } from "@/sanity/lib/queries";
 import { sanityImg } from "@/sanity/lib/image-url";
 import { SITE_URL } from "@/lib/siteUrl";
 import type { CicloInicio } from "@/lib/ciclo";
-import Analitica, { META_PIXEL_ID, GTM_ID } from "./components/Analitica";
+import Analitica from "./components/Analitica";
+import { META_PIXEL_ID, GTM_ID } from "@/lib/analitica";
 
 // Sin `weight`: next/font sirve la versión VARIABLE de Inter — un solo woff2
 // cubre todos los pesos (antes: 7 archivos estáticos en el critical path).
