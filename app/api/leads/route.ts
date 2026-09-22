@@ -225,7 +225,6 @@ export async function POST(req: NextRequest) {
     if (!inserted[0]?.id) throw new Error("INSERT no devolvió id");
     leadId = inserted[0].id;
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.error("[/api/leads] Error INSERT:", err);
     return reply(
       {
@@ -275,7 +274,6 @@ export async function POST(req: NextRequest) {
     }
   } catch (err) {
     // No es crítico — el lead está guardado. Log y seguimos.
-    // eslint-disable-next-line no-console
     console.error("[/api/leads] Error UPDATE emma_status:", err);
   }
 
@@ -339,12 +337,10 @@ export async function POST(req: NextRequest) {
         );
         if (!res.ok) {
           const detail = await res.text();
-          // eslint-disable-next-line no-console
-          console.error("[/api/leads] WhatsApp rechazado:", res.status, detail);
+                console.error("[/api/leads] WhatsApp rechazado:", res.status, detail);
         }
       } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error("[/api/leads] WhatsApp falló:", err);
+            console.error("[/api/leads] WhatsApp falló:", err);
       }
     });
   }

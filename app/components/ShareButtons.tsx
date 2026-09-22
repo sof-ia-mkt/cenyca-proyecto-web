@@ -18,8 +18,29 @@
  * En desktop el botón no aparece (no tiene sentido).
  */
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { MessageCircle, Link2, Check } from "lucide-react";
+
+/**
+ * Tooltip vive a nivel de módulo: declararlo dentro del render creaba un
+ * componente nuevo en cada pasada, y React descartaba y remontaba el nodo
+ * en vez de actualizarlo.
+ */
+const Tooltip = ({ label }: { label: string }) => (
+  <span className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-[#121B33] border border-white/10 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-white opacity-0 group-hover:opacity-100 transition-opacity">
+    {label}
+  </span>
+);
+
+// El botón de Instagram Stories solo tiene sentido en móvil.
+let consulta: MediaQueryList | null = null;
+const mq = () => (consulta ??= window.matchMedia("(max-width: 768px)"));
+
+function suscribirAMovil(avisar: () => void) {
+  const m = mq();
+  m.addEventListener("change", avisar);
+  return () => m.removeEventListener("change", avisar);
+}
 
 const InstagramIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -54,16 +75,12 @@ type Props = {
 
 export default function ShareButtons({ url, title }: Props) {
   const [copied, setCopied] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    // Detección simple de mobile para mostrar el botón de IG Stories.
-    const mq = window.matchMedia("(max-width: 768px)");
-    setIsMobile(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
+  // En el servidor asumimos escritorio; tras hidratar se corrige solo.
+  const isMobile = useSyncExternalStore(
+    suscribirAMovil,
+    () => mq().matches,
+    () => false,
+  );
 
   const text = encodeURIComponent(title);
   const encodedUrl = encodeURIComponent(url);
@@ -101,12 +118,6 @@ export default function ShareButtons({ url, title }: Props) {
 
   const baseBtn =
     "group relative inline-flex items-center justify-center w-10 h-10 rounded-full border border-white/15 text-white/70 transition-all duration-200 hover:scale-110";
-
-  const Tooltip = ({ label }: { label: string }) => (
-    <span className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-[#121B33] border border-white/10 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-white opacity-0 group-hover:opacity-100 transition-opacity">
-      {label}
-    </span>
-  );
 
   return (
     <div className="flex items-center gap-2 flex-wrap">

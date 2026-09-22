@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
+import { usePathname } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
 export type KnownRoute = { label: string; href: string };
@@ -43,15 +44,14 @@ function dice(a: string, b: string): number {
 }
 
 export default function SmartNotFoundSuggestions({ routes }: { routes: KnownRoute[] }) {
-  const [suggestions, setSuggestions] = useState<KnownRoute[]>([]);
-  const [pathname, setPathname] = useState<string>("");
+  // usePathname en vez de leer window en un efecto: el valor está disponible
+  // en el primer render y las sugerencias salen de un cálculo, no de estado.
+  const pathname = usePathname();
 
-  useEffect(() => {
-    const path = window.location.pathname;
-    setPathname(path);
-    const query = path.replace(/^\/+|\/+$/g, "").replace(/\//g, " ");
-    if (!query) return;
-    const scored = routes
+  const suggestions = useMemo<KnownRoute[]>(() => {
+    const query = pathname.replace(/^\/+|\/+$/g, "").replace(/\//g, " ");
+    if (!query) return [];
+    return routes
       .map((r) => {
         const target = r.href.replace(/^\/+/, "").replace(/\//g, " ");
         return { route: r, score: dice(query, target) };
@@ -60,8 +60,7 @@ export default function SmartNotFoundSuggestions({ routes }: { routes: KnownRout
       .sort((a, b) => b.score - a.score)
       .slice(0, 3)
       .map((s) => s.route);
-    setSuggestions(scored);
-  }, [routes]);
+  }, [pathname, routes]);
 
   if (suggestions.length === 0) return null;
 

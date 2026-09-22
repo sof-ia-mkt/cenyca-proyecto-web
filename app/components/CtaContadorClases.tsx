@@ -1,6 +1,6 @@
 "use client";
 
-import { cloneElement, isValidElement, useEffect, useId, useState } from "react";
+import { cloneElement, isValidElement, useId, useState, useSyncExternalStore } from "react";
 import {
   User,
   Phone,
@@ -41,18 +41,36 @@ type Status =
   | { kind: "error"; message: string }
   | { kind: "success" };
 
-function useCountdown(targetISO?: string) {
-  // Arranca en null: el servidor y el primer render del cliente no pintan el
-  // contador, evitando un mismatch de hidratación (el segundo avanza entre
-  // SSR e hidratación). Se llena al montar.
-  const [now, setNow] = useState<number | null>(null);
+// Reloj de un segundo compartido. Un solo intervalo para toda la app, y un
+// valor estable entre tics: useSyncExternalStore exige que la lectura
+// devuelva siempre lo mismo mientras no haya cambio, o React entra en bucle
+// (por eso no se puede leer Date.now() directamente).
+let ahora = Date.now();
+const oyentes = new Set<() => void>();
+let tic: ReturnType<typeof setInterval> | null = null;
 
-  useEffect(() => {
-    if (!targetISO) return;
-    setNow(Date.now());
-    const id = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(id);
-  }, [targetISO]);
+function suscribirAlReloj(avisar: () => void) {
+  ahora = Date.now();
+  oyentes.add(avisar);
+  if (tic === null) {
+    tic = setInterval(() => {
+      ahora = Date.now();
+      oyentes.forEach((f) => f());
+    }, 1000);
+  }
+  return () => {
+    oyentes.delete(avisar);
+    if (oyentes.size === 0 && tic !== null) {
+      clearInterval(tic);
+      tic = null;
+    }
+  };
+}
+
+function useCountdown(targetISO?: string) {
+  // En el servidor la lectura es null: el contador no se pinta en el HTML y
+  // así no hay desajuste al hidratar (los segundos avanzan entre uno y otro).
+  const now = useSyncExternalStore(suscribirAlReloj, () => ahora, () => null);
 
   if (!targetISO || now === null) return null;
   const target = new Date(targetISO).getTime();
