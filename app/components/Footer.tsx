@@ -3,6 +3,7 @@ import { HelpCircle, Shield, ArrowRight } from "lucide-react";
 import { client } from "@/sanity/lib/client";
 import { configuracionQuery } from "@/sanity/lib/queries";
 import FooterSocialBar from "@/app/components/FooterSocialBar";
+import { anioActual } from "@/lib/fechas";
 
 type RedesSociales = {
   facebook?: string;
@@ -137,7 +138,7 @@ export default async function Footer() {
         {/* Copyright + RVOE */}
         <div className="py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-white/40 text-xs font-montserrat">
-            © {new Date().getFullYear()} CENYCA Universidad. Todos los derechos reservados.
+            © {anioActual()} CENYCA Universidad. Todos los derechos reservados.
           </p>
           <span className="text-white/30 text-xs font-montserrat">
             RVOE · SEP · Baja California

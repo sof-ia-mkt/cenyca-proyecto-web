@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { sanityFetch } from '@/sanity/lib/live'
 import { todosAvisosQuery } from '@/sanity/lib/queries'
+import { fechaLarga } from "@/lib/fechas";
 
 export const metadata = {
   title: 'Avisos de Privacidad',
@@ -47,9 +48,7 @@ export default async function AvisosPage() {
                 <h2 className="font-bold text-white">{aviso.titulo}</h2>
                 {aviso.fecha && (
                   <p className="text-xs text-white/40 mt-1">
-                    {new Date(aviso.fecha).toLocaleDateString('es-MX', {
-                      year: 'numeric', month: 'long', day: 'numeric',
-                    })}
+                    {fechaLarga(aviso.fecha)}
                   </p>
                 )}
               </div>

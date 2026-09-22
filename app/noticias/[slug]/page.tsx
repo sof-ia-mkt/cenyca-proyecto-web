@@ -9,6 +9,7 @@ import { urlFor } from '@/sanity/lib/image'
 import NewsletterSuscripcion from '@/app/components/NewsletterSuscripcion'
 import { SITE_URL } from '@/lib/siteUrl'
 import { breadcrumbJsonLd } from '@/lib/jsonLd'
+import { fechaLarga } from "@/lib/fechas";
 
 type ImageBlock = {
   _key: string
@@ -244,9 +245,7 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
 
             {noticia.fecha && (
               <p className="text-sm text-white/40 mb-6">
-                {new Date(noticia.fecha).toLocaleDateString('es-MX', {
-                  year: 'numeric', month: 'long', day: 'numeric',
-                })}
+                {fechaLarga(noticia.fecha)}
               </p>
             )}
 
@@ -348,9 +347,7 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
                     </h3>
                     {n.fecha && (
                       <p className="text-xs text-white/40">
-                        {new Date(n.fecha).toLocaleDateString('es-MX', {
-                          year: 'numeric', month: 'long', day: 'numeric',
-                        })}
+                        {fechaLarga(n.fecha)}
                       </p>
                     )}
                   </div>

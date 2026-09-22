@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { urlFor } from "@/sanity/lib/image";
+import { fechaLarga } from "@/lib/fechas";
 
 export type NoticiaItem = {
   _id: string;
@@ -22,15 +23,6 @@ const CATEGORIAS: { value: string; label: string }[] = [
   { value: "cultural", label: "Cultural" },
   { value: "deportivo", label: "Deportivo" },
 ];
-
-function fmtFecha(d?: string) {
-  if (!d) return null;
-  return new Date(d).toLocaleDateString("es-MX", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
 
 export default function NoticiasGrid({
   noticias,
@@ -125,7 +117,7 @@ export default function NoticiasGrid({
                 </h3>
                 <div className="mt-auto flex items-center justify-between pt-3 border-t border-[#121B33]/8">
                   <span className="text-[#76777E] text-xs">
-                    {fmtFecha(n.fecha)}
+                    {fechaLarga(n.fecha)}
                   </span>
                   <ArrowUpRight
                     size={16}

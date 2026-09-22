@@ -5,6 +5,7 @@ import { PortableText, type PortableTextComponents } from '@portabletext/react'
 import { sanityFetch } from '@/sanity/lib/live'
 import { client } from '@/sanity/lib/client'
 import { avisoBySlugQuery, todosAvisosQuery } from '@/sanity/lib/queries'
+import { fechaLarga } from "@/lib/fechas";
 
 export const revalidate = 60
 
@@ -137,11 +138,7 @@ export default async function AvisoPage({
         {aviso.fecha && (
           <p className="text-sm text-white/40 mt-4">
             Última actualización:{' '}
-            {new Date(aviso.fecha).toLocaleDateString('es-MX', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
+            {fechaLarga(aviso.fecha)}
           </p>
         )}
       </header>

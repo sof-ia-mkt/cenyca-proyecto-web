@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import SectionAccentLine from "@/app/components/SectionAccentLine";
+import { fechaCorta } from "@/lib/fechas";
 
 export type NoticiaCard = {
   _id: string;
@@ -235,13 +236,7 @@ export default function SeccionNoticias({ noticias }: { noticias: NoticiaCard[] 
 }
 
 function NoticiaCardItem({ noticia }: { noticia: NoticiaCard }) {
-  const fecha = noticia.fecha
-    ? new Date(noticia.fecha).toLocaleDateString("es-MX", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      })
-    : null;
+  const fecha = fechaCorta(noticia.fecha);
 
   return (
     <Link

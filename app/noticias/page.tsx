@@ -7,6 +7,7 @@ import { urlFor } from "@/sanity/lib/image";
 import NewsletterSuscripcion from "@/app/components/NewsletterSuscripcion";
 import NoticiasGrid, { type NoticiaItem } from "@/app/components/NoticiasGrid";
 import { FadeUp, FadeLeft, FadeRight } from "@/app/components/ScrollReveal";
+import { fechaLarga } from "@/lib/fechas";
 
 export const metadata = {
   title: "Noticias — CENYCA Comunica",
@@ -20,15 +21,6 @@ export const metadata = {
   },
   twitter: { card: "summary_large_image" as const, title: "Noticias — CENYCA Comunica" },
 };
-
-function fmtFecha(d?: string) {
-  if (!d) return null;
-  return new Date(d).toLocaleDateString("es-MX", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
 
 export default async function NoticiasPage() {
   const { data: noticiasData } = await sanityFetch({ query: todasNoticiasQuery });
@@ -119,7 +111,7 @@ export default async function NoticiasPage() {
                     {featured.titulo}
                   </h2>
                   <p className="text-[#76777E] text-sm mb-8">
-                    {fmtFecha(featured.fecha)}
+                    {fechaLarga(featured.fecha)}
                   </p>
                   <span className="inline-flex items-center gap-2 text-[#121B33] font-bold text-sm uppercase tracking-[0.18em] group-hover:gap-4 transition-all duration-300">
                     Leer noticia
