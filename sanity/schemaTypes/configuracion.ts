@@ -400,15 +400,16 @@ export const configuracion = defineType({
         defineField({
           name: "fecha",
           title: "Fecha y hora del inicio de clases",
-          description: "Define a qué fecha cuenta hacia atrás el contador.",
+          description:
+            "Define a qué fecha cuenta hacia atrás el contador Y hasta cuándo son válidos los cupones de descuento que se generan en las páginas de carrera.",
           type: "datetime",
         }),
         defineField({
           name: "kicker",
           title: "Kicker (texto pequeño arriba)",
           type: "string",
-          description: 'Ejemplo: "Iniciamos clases en septiembre".',
-          initialValue: "Iniciamos clases en septiembre",
+          description: 'Ejemplo: "Iniciamos clases el 11 de enero".',
+          initialValue: "Iniciamos clases en el próximo ciclo",
         }),
         defineField({
           name: "slogan",

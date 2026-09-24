@@ -271,7 +271,7 @@ export const carrera = defineType({
           name: "plantelesDisponibles",
           title: "Planteles donde se imparte",
           description:
-            "Marca SOLO los planteles que abren esta carrera en septiembre. El selector mostrará únicamente estos. Si lo dejas vacío, se muestran los 4 (comportamiento anterior).",
+            "Marca SOLO los planteles que abren esta carrera en el ciclo actual. El selector mostrará únicamente estos. Si lo dejas vacío, se muestran los 4 (comportamiento anterior).",
           type: "array",
           of: [{ type: "string" }],
           options: {

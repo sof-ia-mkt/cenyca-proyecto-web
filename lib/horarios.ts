@@ -40,7 +40,7 @@ export type ModalidadDerivada = {
   categoria: ModalidadCategoria;
   /** Tag corto para la card de la tabla. */
   tag: string;
-  /** Días reales de septiembre de esta categoría, p.ej. "Martes · Jueves (Casa Blanca)". */
+  /** Días reales del ciclo para esta categoría, p.ej. "Martes · Jueves (Casa Blanca)". */
   dias: string;
   /** Horario representativo. */
   horario?: string;

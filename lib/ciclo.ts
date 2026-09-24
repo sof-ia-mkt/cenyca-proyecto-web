@@ -50,6 +50,30 @@ export function diasParaCiclo(fechaISO?: string | null, ahora: number = Date.now
   return Math.ceil((d.getTime() - ahora) / 86_400_000);
 }
 
+/**
+ * Vencimiento del cupón de descuento.
+ *
+ * El cupón existe para inscribirse a un ciclo concreto, así que caduca el día
+ * que inician las clases, no N días después de reclamarlo. Antes eran 30 días
+ * fijos: alguien que lo pedía en septiembre recibía un comprobante que moría
+ * en octubre, casi tres meses antes del ciclo de enero al que se inscribiría.
+ *
+ * Si la fecha del ciclo ya pasó o no está configurada, se vuelve al plazo de
+ * respaldo. Eso hace que el día que arrancan las clases los cupones nuevos
+ * recuperen solos un plazo razonable, sin quedar con vencimiento en el pasado.
+ */
+export function vencimientoCupon(
+  fechaCicloISO?: string | null,
+  diasRespaldo = 30,
+  ahora: Date = new Date()
+): Date {
+  const inicio = parse(fechaCicloISO);
+  if (inicio && inicio.getTime() > ahora.getTime()) return inicio;
+  const respaldo = new Date(ahora);
+  respaldo.setDate(respaldo.getDate() + diasRespaldo);
+  return respaldo;
+}
+
 /** true si el ciclo está activo en Sanity y su fecha aún no pasó. */
 export function cicloVigente(ciclo?: CicloInicio | null, ahora: number = Date.now()): boolean {
   if (!ciclo || ciclo.activo === false) return false;

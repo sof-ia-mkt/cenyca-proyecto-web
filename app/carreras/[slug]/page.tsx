@@ -426,6 +426,7 @@ export default async function CarreraPage(
           carreraNombre={carrera.nombre}
           gradoLabel={gradoLabel}
           promo={config.promocionInscripcion}
+          cicloFecha={config?.cicloInicio?.fecha}
           whatsappFallback={whatsapp}
           accent={accent}
         />

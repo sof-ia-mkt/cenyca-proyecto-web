@@ -25,6 +25,7 @@ import {
   normalizarTelefono,
   trackLead,
 } from "@/lib/emma";
+import { vencimientoCupon } from "@/lib/ciclo";
 
 export type PromocionConfig = {
   activa?: boolean;
@@ -42,6 +43,8 @@ type Props = {
   carreraNombre: string;
   gradoLabel: string;
   promo: PromocionConfig;
+  /** configuracion.cicloInicio.fecha: el cupón caduca cuando inician clases. */
+  cicloFecha?: string;
   whatsappFallback: string;
   accent?: string;
 };
@@ -88,6 +91,7 @@ export default function PromocionFormulario({
   carreraNombre,
   gradoLabel,
   promo,
+  cicloFecha,
   whatsappFallback,
   accent = "#00D4FF",
 }: Props) {
@@ -140,8 +144,7 @@ export default function PromocionFormulario({
 
     if (resultado.ok) {
       const emitidoEn = new Date();
-      const expiraEn = new Date(emitidoEn);
-      expiraEn.setDate(expiraEn.getDate() + dias);
+      const expiraEn = vencimientoCupon(cicloFecha, dias, emitidoEn);
       trackLead();
       setStatus({
         kind: "success",
