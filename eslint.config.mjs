@@ -20,6 +20,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // `sanity deploy` deja aquí el build del Studio: bundles de varios MB que
+    // hacían reventar a ESLint por falta de memoria. Git ya lo ignora.
+    "dist/**",
   ]),
 ]);
 
