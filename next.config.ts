@@ -56,17 +56,35 @@ const GOOGLE = {
     "https://*.google-analytics.com",
     "https://www.google.com",
     "https://www.google.com.mx",
-    "https://googleads.g.doubleclick.net",
-    "https://stats.g.doubleclick.net",
+    "https://ad.doubleclick.net",
+    "https://*.g.doubleclick.net",
   ],
   connect: [
     "https://www.googletagmanager.com",
     "https://www.google-analytics.com",
     "https://*.google-analytics.com",
+    // analytics.google.com SIN comodín: `*.analytics.google.com` no cubre el
+    // dominio a secas, y es justo el que GA4 usa para enviar las visitas.
+    // Por eso Analytics cargaba pero no reportaba nada.
+    "https://analytics.google.com",
     "https://*.analytics.google.com",
-    "https://stats.g.doubleclick.net",
+    // Endpoints de conversión de Google Ads (/ccm/collect, /rmkt/collect).
+    // Llegan al dominio del país del visitante, de ahí las variantes.
+    "https://www.google.com",
+    "https://www.google.com.mx",
+    "https://ad.doubleclick.net",
+    "https://*.g.doubleclick.net",
   ],
   frame: ["https://www.googletagmanager.com", "https://td.doubleclick.net"],
+};
+
+// Microsoft Clarity — mapas de calor y grabación de sesiones, añadido por
+// marketing dentro de GTM. Sube los datos a subdominios regionales
+// (x.clarity.ms, k.clarity.ms...), de ahí el comodín en connect.
+const CLARITY = {
+  script: ["https://www.clarity.ms", "https://*.clarity.ms"],
+  img: ["https://www.clarity.ms", "https://*.clarity.ms", "https://c.bing.com"],
+  connect: ["https://www.clarity.ms", "https://*.clarity.ms", "https://c.bing.com"],
 };
 
 const lista = (...partes: string[][]) => partes.flat().join(" ");
@@ -81,12 +99,12 @@ const publicHeaders = [
       "default-src 'self'",
       // 'unsafe-inline' lo exigen los scripts de hidratación de Next y las
       // etiquetas HTML personalizadas de GTM.
-      `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} ${lista(META.script, GOOGLE.script)}`,
+      `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} ${lista(META.script, GOOGLE.script, CLARITY.script)}`,
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
       // i.ytimg.com: thumbnails de LazyYouTubeEmbed (testimoniales en video).
-      `img-src 'self' data: blob: https://cdn.sanity.io https://i.ytimg.com ${lista(META.img, GOOGLE.img)}`,
-      `connect-src 'self' https://*.api.sanity.io https://*.apicdn.sanity.io wss://*.api.sanity.io ${lista(META.connect, GOOGLE.connect)}`,
+      `img-src 'self' data: blob: https://cdn.sanity.io https://i.ytimg.com ${lista(META.img, GOOGLE.img, CLARITY.img)}`,
+      `connect-src 'self' https://*.api.sanity.io https://*.apicdn.sanity.io wss://*.api.sanity.io ${lista(META.connect, GOOGLE.connect, CLARITY.connect)}`,
       `frame-src 'self' https://www.youtube-nocookie.com https://www.youtube.com ${lista(META.frame, GOOGLE.frame)}`,
       "media-src 'self' https://cdn.sanity.io",
       "object-src 'none'",
