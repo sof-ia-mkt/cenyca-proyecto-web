@@ -1,5 +1,6 @@
 "use client";
 
+import CampoTrampa, { leerCampoTrampa } from "@/components/CampoTrampa";
 import { cloneElement, isValidElement, useId, useMemo, useState, type CSSProperties } from "react";
 import {
   User,
@@ -139,6 +140,7 @@ export default function PromocionFormulario({
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const trampa = leerCampoTrampa(e.currentTarget);
     if (status.kind === "submitting") return;
 
     setStatus({ kind: "submitting" });
@@ -156,6 +158,7 @@ export default function PromocionFormulario({
       turno: form.turno || undefined,
       mensaje: form.mensaje.trim() || undefined,
       source,
+      campo_extra: trampa,
     });
 
     if (resultado.ok) {
@@ -242,8 +245,9 @@ export default function PromocionFormulario({
         <div className="lg:col-span-7">
           <form
             onSubmit={handleSubmit}
-            className="bg-gradient-to-br from-[#1E2348] to-[#161A35] rounded-2xl border border-white/10 p-6 sm:p-8 shadow-2xl"
+            className="relative bg-gradient-to-br from-[#1E2348] to-[#161A35] rounded-2xl border border-white/10 p-6 sm:p-8 shadow-2xl"
           >
+            <CampoTrampa />
             <h3 className="font-montserrat font-bold text-white text-xl mb-2">Regístrate ahora</h3>
             <p className="font-montserrat text-white/60 text-sm mb-6">
               Completa tus datos y un asesor te contactará.

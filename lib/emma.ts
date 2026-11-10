@@ -37,6 +37,8 @@ export type EmmaPayload = {
   turno?: string;
   mensaje?: string;
   source: string;
+  /** Campo trampa contra bots (components/CampoTrampa). Vacío en un envío real. */
+  campo_extra?: string;
 };
 
 export type EmmaResult =

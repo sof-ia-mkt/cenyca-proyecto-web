@@ -23,8 +23,9 @@ export const dynamic = "force-dynamic";
 
 // ──────────────────────────────────────────────────────────────────────────────
 // CORS — permite que las landing pages estáticas (otro dominio) posteen aquí.
-// Solo orígenes propios de CENYCA. El endpoint ya es público y rate-limited, y no
-// devuelve datos sensibles, pero igual restringimos a nuestros dominios.
+// Solo orígenes propios de CENYCA. El endpoint es público y no devuelve datos
+// sensibles; CORS solo frena a otros sitios en el navegador, no a un script: los
+// candados reales están en «Candados contra abuso», más abajo.
 
 const ALLOWED_ORIGINS = new Set([
   "https://www.cenycauniversidad.mx",
@@ -74,7 +75,69 @@ type Payload = {
   turno?: unknown;
   mensaje?: unknown;
   source?: unknown;
+  /** Campo trampa: los formularios lo mandan vacío; un bot lo rellena. */
+  campo_extra?: unknown;
 };
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Candados contra abuso
+//
+// Este endpoint es público y, al guardar un lead, manda una plantilla de
+// WhatsApp desde el número oficial al teléfono que venga en el formulario, con
+// el «nombre» dentro del mensaje. Sin candados, un script puede usarlo para
+// mandar mensajes (con un enlace en el nombre) a números ajenos.
+
+const MAX_BODY_BYTES = 10_000;
+
+/** Un nombre de persona no trae enlaces ni marcado. */
+function nombreSospechoso(nombre: string): boolean {
+  return /https?:|www\.|:\/\/|[<>{}\[\]]|\.(com|mx|net|org|io|ly|me|co|xyz|info|link|site)\b/i.test(
+    nombre,
+  );
+}
+
+/** Nombre apto para ir dentro de la plantilla de WhatsApp: solo letras y
+ *  separadores de nombre, sin saltos de línea, máximo 60 caracteres. */
+function nombreParaWhatsApp(nombre: string): string {
+  return nombre
+    .replace(/[^\p{L}\p{M} .'’-]/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 60)
+    .trim();
+}
+
+function esEmailValido(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+}
+
+// Topes que se cuentan en la base (valen entre instancias, a diferencia del
+// contador en memoria de abajo):
+const MAX_LEADS_IP_10MIN = 10; // mismo origen: más de esto en 10 min se rechaza
+const MAX_LEADS_HORA_PARA_WA = 60; // ráfaga global: se guarda el lead, sin WhatsApp
+
+type Conteos = { ip10: number; tel24: number; hora: number };
+
+/** Cuenta lo ya guardado para decidir. Si la consulta falla devuelve null y el
+ *  lead se guarda igual, pero sin WhatsApp (ante la duda no se manda). */
+async function contarRecientes(ipHash: string, telefono: string): Promise<Conteos | null> {
+  try {
+    const filas = (await sql`
+      SELECT
+        COUNT(*) FILTER (
+          WHERE ip_hash = ${ipHash} AND created_at > NOW() - INTERVAL '10 minutes'
+        )::int AS ip10,
+        COUNT(*) FILTER (WHERE telefono = ${telefono})::int AS tel24,
+        COUNT(*) FILTER (WHERE created_at > NOW() - INTERVAL '1 hour')::int AS hora
+      FROM leads
+      WHERE created_at > NOW() - INTERVAL '24 hours'
+    `) as Conteos[];
+    return filas[0] ?? { ip10: 0, tel24: 0, hora: 0 };
+  } catch (err) {
+    console.error("[/api/leads] Error al contar recientes:", err);
+    return null;
+  }
+}
 
 function toStr(v: unknown, max = 500): string | null {
   if (typeof v !== "string") return null;
@@ -150,18 +213,8 @@ export async function POST(req: NextRequest) {
   const reply = (data: unknown, status = 200) =>
     NextResponse.json(data, { status, headers: cors });
 
-  // 1) Parse del body
-  let body: Payload;
-  try {
-    body = (await req.json()) as Payload;
-  } catch {
-    return reply({ ok: false, reason: "invalid_body", message: "Body inválido." }, 400);
-  }
-
-  // 2) Rate limit
-  const ip = getClientIp(req);
-  if (!checkRateLimit(ip)) {
-    return reply(
+  const demasiados = () =>
+    reply(
       {
         ok: false,
         reason: "rate_limited",
@@ -169,6 +222,35 @@ export async function POST(req: NextRequest) {
       },
       429,
     );
+
+  // 1) Rate limit en memoria (primer filtro, barato; el tope firme se cuenta en
+  //    la base más abajo) y tamaño del cuerpo, antes de leerlo.
+  const ip = getClientIp(req);
+  if (!checkRateLimit(ip)) return demasiados();
+
+  const declarado = Number(req.headers.get("content-length") ?? "0");
+  if (declarado > MAX_BODY_BYTES) {
+    return reply({ ok: false, reason: "invalid_body", message: "Body inválido." }, 413);
+  }
+
+  // 2) Parse del body
+  let body: Payload;
+  try {
+    const crudo = await req.text();
+    if (crudo.length > MAX_BODY_BYTES) {
+      return reply({ ok: false, reason: "invalid_body", message: "Body inválido." }, 413);
+    }
+    body = JSON.parse(crudo) as Payload;
+    if (!body || typeof body !== "object") throw new Error("no es objeto");
+  } catch {
+    return reply({ ok: false, reason: "invalid_body", message: "Body inválido." }, 400);
+  }
+
+  // Campo trampa: una persona no lo ve ni lo llena. Se responde OK para que el
+  // bot no sepa que fue descartado; no se guarda nada ni se manda WhatsApp.
+  if (typeof body.campo_extra === "string" && body.campo_extra.trim() !== "") {
+    console.warn("[/api/leads] Descartado por campo trampa");
+    return reply({ ok: true });
   }
 
   // 3) Validación
@@ -186,7 +268,7 @@ export async function POST(req: NextRequest) {
   }
 
   const nombre = toStr(body.nombre, 200);
-  if (!nombre) {
+  if (!nombre || nombreSospechoso(nombre)) {
     return reply(
       { ok: false, reason: "invalid_name", message: "Por favor escribe tu nombre completo." },
       422,
@@ -194,7 +276,9 @@ export async function POST(req: NextRequest) {
   }
 
   const source = toStr(body.source, 100) || "unknown";
-  const email = toStr(body.email, 200);
+  const emailCrudo = toStr(body.email, 200);
+  // Un correo mal escrito no debe costar el prospecto: se guarda sin correo.
+  const email = emailCrudo && esEmailValido(emailCrudo) ? emailCrudo : null;
   const carrera = toStr(body.carrera, 200);
   const plantel = toStr(body.plantel, 100);
   const ciudad = toStr(body.ciudad, 100);
@@ -204,6 +288,17 @@ export async function POST(req: NextRequest) {
   const referer = req.headers.get("referer")?.slice(0, 500) || null;
   const userAgent = req.headers.get("user-agent")?.slice(0, 500) || null;
   const ipHash = await hashIp(ip);
+
+  // Topes contados en la base, ANTES de guardar este lead.
+  const conteos = await contarRecientes(ipHash, telefono);
+  if (conteos && ipHash !== "unknown" && conteos.ip10 >= MAX_LEADS_IP_10MIN) {
+    console.warn("[/api/leads] Tope por origen alcanzado:", conteos.ip10);
+    return demasiados();
+  }
+  // El WhatsApp de bienvenida solo sale si: se pudo contar, este teléfono no
+  // tuvo otro lead en 24 h (ya recibió su mensaje) y no hay una ráfaga global.
+  const waPermitido =
+    conteos !== null && conteos.tel24 === 0 && conteos.hora < MAX_LEADS_HORA_PARA_WA;
 
   // 4) INSERT en Neon — esto es lo crítico. Si falla, devolvemos 503
   //    porque sin respaldo no queremos perder el lead intentando Emma.
@@ -307,7 +402,19 @@ export async function POST(req: NextRequest) {
   const waTemplate = process.env.WHATSAPP_TEMPLATE_NAME;
   const waVersion = process.env.WHATSAPP_API_VERSION || "v25.0";
   const waLang = process.env.WHATSAPP_LANG_CODE || "es_MX";
-  if (waToken && waPhoneId && waTemplate) {
+  const nombreWa = nombreParaWhatsApp(nombre);
+  if (!waPermitido || !nombreWa) {
+    console.warn(
+      "[/api/leads] WhatsApp de bienvenida omitido:",
+      !nombreWa
+        ? "nombre sin letras"
+        : conteos === null
+          ? "no se pudo contar"
+          : conteos.tel24 > 0
+            ? "teléfono repetido en 24 h"
+            : "ráfaga de leads en la última hora",
+    );
+  } else if (waToken && waPhoneId && waTemplate) {
     after(async () => {
       try {
         const res = await fetch(
@@ -328,7 +435,7 @@ export async function POST(req: NextRequest) {
                 components: [
                   {
                     type: "body",
-                    parameters: [{ type: "text", text: nombre }],
+                    parameters: [{ type: "text", text: nombreWa }],
                   },
                 ],
               },

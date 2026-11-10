@@ -1,5 +1,6 @@
 "use client";
 
+import CampoTrampa, { leerCampoTrampa } from "@/components/CampoTrampa";
 import { useId, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Check, Sparkles, Clock, HeartHandshake } from "lucide-react";
@@ -42,6 +43,7 @@ export default function FormularioLead({
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    const trampa = leerCampoTrampa(e.currentTarget);
     if (!form.acepta || enviando) return;
     setErrorMsg(null);
     setEnviando(true);
@@ -56,6 +58,7 @@ export default function FormularioLead({
       plantel: PLANTEL_LABEL[form.plantel] || form.plantel,
       ciudad: CIUDAD_POR_PLANTEL[form.plantel] || "",
       source: "oferta-academica-web",
+      campo_extra: trampa,
     });
 
     setEnviando(false);
@@ -153,6 +156,7 @@ export default function FormularioLead({
                   </p>
 
                   <form onSubmit={handleSubmit} className="space-y-5">
+                    <CampoTrampa />
                     <Field
                       label="Nombre completo"
                       type="text"

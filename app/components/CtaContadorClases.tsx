@@ -1,5 +1,6 @@
 "use client";
 
+import CampoTrampa, { leerCampoTrampa } from "@/components/CampoTrampa";
 import { cloneElement, isValidElement, useId, useState, useSyncExternalStore } from "react";
 import {
   User,
@@ -141,6 +142,7 @@ export default function CtaContadorClases({
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const trampa = leerCampoTrampa(e.currentTarget);
     if (status.kind === "submitting") return;
     setStatus({ kind: "submitting" });
 
@@ -154,6 +156,7 @@ export default function CtaContadorClases({
       plantel: PLANTEL_LABEL[form.plantel] || form.plantel,
       ciudad: CIUDAD_POR_PLANTEL[form.plantel] || "Tijuana",
       source: "home-cta-contador",
+      campo_extra: trampa,
     });
 
     if (resultado.ok) {
@@ -286,8 +289,9 @@ export default function CtaContadorClases({
           ) : (
             <form
               onSubmit={handleSubmit}
-              className="bg-gradient-to-br from-[#1E2348] to-[#161A35] rounded-2xl border border-white/10 p-6 sm:p-7 shadow-2xl"
+              className="relative bg-gradient-to-br from-[#1E2348] to-[#161A35] rounded-2xl border border-white/10 p-6 sm:p-7 shadow-2xl"
             >
+              <CampoTrampa />
               <h3 className="font-montserrat font-bold text-white text-xl mb-1">
                 Reclama tu {porcentajeDescuento}%
               </h3>
