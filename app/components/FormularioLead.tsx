@@ -250,9 +250,6 @@ export default function FormularioLead({
                           <option value="palmas" style={{ background: "#121B33", color: "white" }}>
                             CENYCA Palmas (Tijuana)
                           </option>
-                          <option value="otay" style={{ background: "#121B33", color: "white" }}>
-                            CENYCA Otay (Tijuana)
-                          </option>
                           <option value="tecate" style={{ background: "#121B33", color: "white" }}>
                             CENYCA Tecate
                           </option>

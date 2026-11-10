@@ -330,7 +330,6 @@ export default function CtaContadorClases({
                     </option>
                     <option value="casablanca">Casa Blanca</option>
                     <option value="palmas">Palmas</option>
-                    <option value="otay">Otay</option>
                     <option value="tecate">Tecate</option>
                   </select>
                 </Campo>

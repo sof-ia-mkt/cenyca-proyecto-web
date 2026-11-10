@@ -17,6 +17,8 @@ export type CardInversion = {
   horarioOtros?: string;
   ocultarDomingoEnOtay?: boolean;
   soloCasaBlanca?: boolean;
+  /** Planteles donde aplica la tarjeta. Vacío = todos los de la carrera. */
+  planteles?: Campus[];
   mensualidadBase?: number;
   mensualidadEspecial?: number;
   notaEspecial?: string;
@@ -47,7 +49,7 @@ type Props = {
   whatsapp?: string;
 };
 
-type Campus = "cb" | "palmas" | "otay" | "tc";
+export type Campus = "cb" | "palmas" | "otay" | "tc";
 
 const CAMPUS_LABEL: Record<Campus, string> = {
   cb: "Casa Blanca",
@@ -85,10 +87,13 @@ export default function BloqueInversion({ data, promo, accent = "#00D4FF", whats
 
   const mostrarToggle = data.mostrarToggleCampus && plantelesDisponibles.length > 1;
 
-  // Tarjetas visibles según plantel: las marcadas "solo Casa Blanca" se ocultan
-  // cuando el plantel efectivo no es Casa Blanca.
-  const cardsVisibles = data.cards.filter(
-    (card) => !(card.soloCasaBlanca && campusEfectivo !== "cb")
+  // Tarjetas visibles según plantel. Si la tarjeta declara sus planteles, solo
+  // aparece en ellos (día y precio cambian por plantel). Si no, vale la regla
+  // anterior: las marcadas "solo Casa Blanca" se ocultan fuera de Casa Blanca.
+  const cardsVisibles = data.cards.filter((card) =>
+    card.planteles?.length
+      ? card.planteles.includes(campusEfectivo)
+      : !(card.soloCasaBlanca && campusEfectivo !== "cb")
   );
 
   // Con la promo apagada en Sanity: sin descuento, sin precio tachado, y el
@@ -157,7 +162,7 @@ export default function BloqueInversion({ data, promo, accent = "#00D4FF", whats
               })}
             </div>
             <div className="text-center font-montserrat text-[11px] text-white/40 mt-2">
-              El costo del paquete varía según plantel
+              Los horarios y costos varían según plantel
             </div>
           </div>
         )}

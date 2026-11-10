@@ -24,11 +24,27 @@ function categoriaDeDia(dia?: string): Exclude<ModalidadCategoria, "escolarizado
   return DIAS_ENTRE_SEMANA.some((x) => d.startsWith(x)) ? "entre-semana" : "fin-de-semana";
 }
 
-/** Etiqueta de día de una card: "Sábado o Domingo", "Jueves", etc. */
-function diaLabelDeCard(card: CardInversion): string {
+const PLANTEL_NOMBRE: Record<string, string> = {
+  cb: "Casa Blanca",
+  palmas: "Palmas",
+  otay: "Otay",
+  tc: "Tecate",
+};
+
+/** Días sueltos de una card: "Sábado" + "o Domingo" → ["Sábado", "Domingo"].
+ *  La escolarizada (un rango Lun–Jue) se trata aparte y devuelve []. */
+function diasDeCard(card: CardInversion): string[] {
+  if (card.tipo === "escolarizada") return [];
   const principal = (card.diaPrincipal ?? "").trim();
-  const secundario = (card.diaSecundario ?? "").trim();
-  return secundario ? `${principal} ${secundario}` : principal;
+  const secundario = (card.diaSecundario ?? "").trim().replace(/^[oy]\s+/i, "");
+  return [principal, secundario].filter(Boolean);
+}
+
+/** Planteles donde aplica una card; null = todos los de la carrera. */
+function plantelesDeCard(card: CardInversion): string[] | null {
+  if (card.planteles?.length) return card.planteles;
+  if (card.soloCasaBlanca) return ["cb"];
+  return null;
 }
 
 /** Horario representativo de una card (el de Casa Blanca si existe split). */
@@ -114,14 +130,6 @@ export const MODALIDAD_COPY = COPY;
  *  varía por carrera y plantel (nota al pie de la tabla). */
 export const MODALIDADES_GENERICAS: ModalidadDerivada[] = [
   {
-    categoria: "escolarizado",
-    tag: COPY["escolarizado"].tag,
-    dias: "Lunes a Jueves",
-    horario: "8:00 am – 12:00 pm",
-    freq: COPY["escolarizado"].freq,
-    freqUnit: COPY["escolarizado"].freqUnit,
-  },
-  {
     categoria: "entre-semana",
     tag: COPY["entre-semana"].tag,
     dias: "Martes",
@@ -133,7 +141,7 @@ export const MODALIDADES_GENERICAS: ModalidadDerivada[] = [
     categoria: "fin-de-semana",
     tag: COPY["fin-de-semana"].tag,
     dias: "Sábado o Domingo",
-    horario: "Matutino",
+    horario: "8:00 am – 12:00 pm",
     freq: "1 día",
     freqUnit: COPY["fin-de-semana"].freqUnit,
   },
@@ -145,14 +153,47 @@ export function derivarHorarios(cards?: CardInversion[]): HorariosDerivados {
   // Agrupar días por categoría, deduplicando y anotando "Casa Blanca" si aplica.
   const porCategoria = new Map<ModalidadCategoria, { dias: string[]; horario?: string }>();
 
+  // Planteles donde se ofrece cada día (null = todos los de la carrera). Con las
+  // tarjetas por plantel un mismo día aparece en varias tarjetas: aquí se junta.
+  const plantelesPorDia = new Map<string, Set<string> | null>();
+  const alcances = new Set<string>();
+  for (const card of lista) {
+    const alcance = plantelesDeCard(card);
+    alcances.add(alcance ? [...alcance].sort().join(",") : "*");
+    for (const dia of diasDeCard(card)) {
+      if (!plantelesPorDia.has(dia)) {
+        plantelesPorDia.set(dia, alcance ? new Set(alcance) : null);
+        continue;
+      }
+      const previo = plantelesPorDia.get(dia);
+      if (previo === null || previo === undefined || !alcance) plantelesPorDia.set(dia, null);
+      else alcance.forEach((p) => previo.add(p));
+    }
+  }
+  // Un día se anota con su plantel solo si existe en un único plantel y la
+  // carrera tiene otras tarjetas con otro alcance (si toda la carrera es de un
+  // plantel, anotarlo en cada día sería ruido).
+  const etiquetaDia = (dia: string): string => {
+    const set = plantelesPorDia.get(dia);
+    if (set && set.size === 1 && alcances.size > 1) {
+      const unico = [...set][0];
+      return `${dia} (${PLANTEL_NOMBRE[unico] ?? unico})`;
+    }
+    return dia;
+  };
+
   for (const card of lista) {
     const cat = categoriaDeCard(card);
-    let label = diaLabelDeCard(card) || (cat === "escolarizado" ? "Lunes a Jueves" : "");
-    if (!label) continue;
-    if (card.soloCasaBlanca) label = `${label} (Casa Blanca)`;
+    const dias = diasDeCard(card);
+    const labels = dias.length
+      ? dias.map(etiquetaDia)
+      : cat === "escolarizado"
+        ? ["Lunes a Jueves"]
+        : [];
+    if (!labels.length) continue;
 
     const entry = porCategoria.get(cat) ?? { dias: [], horario: undefined };
-    if (!entry.dias.includes(label)) entry.dias.push(label);
+    for (const label of labels) if (!entry.dias.includes(label)) entry.dias.push(label);
     if (!entry.horario) entry.horario = horarioDeCard(card);
     porCategoria.set(cat, entry);
   }

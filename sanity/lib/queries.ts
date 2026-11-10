@@ -60,11 +60,13 @@ export const carreraBySlugQuery = groq`
         tipo, tag, destacada, etiquetaDestacada,
         diaPrincipal, diaSecundario, horario,
         horarioCasaBlanca, horarioOtros, ocultarDomingoEnOtay, soloCasaBlanca,
+        planteles,
         mensualidadBase, mensualidadEspecial, notaEspecial,
         labelToggleEspecial, labelToggleRegular,
         becasOpciones, sinReinscripcion, ctaLabel
       }
     },
+    proximamente,
     "seo": {
       "titulo": seo.titulo,
       "descripcion": seo.descripcion,

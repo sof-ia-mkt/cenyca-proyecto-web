@@ -17,6 +17,8 @@ type Props = {
   becasLabel: string;
   /** Nombre del ciclo derivado de configuracion.cicloInicio.fecha, p.ej. "Enero 2027". */
   cicloLabel?: string;
+  /** La carrera no abre en el ciclo actual: se anuncia «Próximamente». */
+  proximamente?: boolean;
 };
 
 export default function CarreraHeroCard({
@@ -31,8 +33,9 @@ export default function CarreraHeroCard({
   horariosLabel,
   becasLabel,
   cicloLabel,
+  proximamente = false,
 }: Props) {
-  const ciclo = cicloLabel ?? "Próximo ciclo";
+  const ciclo = proximamente ? "Próximamente" : cicloLabel ?? "Próximo ciclo";
   const waText = encodeURIComponent(
     `Hola, me interesa la ${gradoLabel} en ${carreraNombre}.`,
   );
@@ -56,7 +59,7 @@ export default function CarreraHeroCard({
             className="font-montserrat text-[10px] font-bold tracking-[0.25em] uppercase"
             style={{ color: accent }}
           >
-            Próximo inicio
+            {proximamente ? "Inicio de clases" : "Próximo inicio"}
           </span>
         </div>
         <p className="font-bebas text-white text-3xl sm:text-4xl tracking-wide leading-none">
@@ -93,11 +96,17 @@ export default function CarreraHeroCard({
 
       {/* Leyenda */}
       <p className="mt-4 text-white/55 text-[11px] leading-snug italic">
-        Consulta la disponibilidad de tu horario para{" "}
-        <span className="font-semibold text-white/75 not-italic">
-          {ciclo.toLowerCase()}
-        </span>
-        .
+        {proximamente ? (
+          "Pregunta a un asesor por la fecha de apertura."
+        ) : (
+          <>
+            Consulta la disponibilidad de tu horario para{" "}
+            <span className="font-semibold text-white/75 not-italic">
+              {ciclo.toLowerCase()}
+            </span>
+            .
+          </>
+        )}
       </p>
 
       {/* Divider */}

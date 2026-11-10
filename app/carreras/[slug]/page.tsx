@@ -77,6 +77,8 @@ type Carrera = {
   heroVideoUrl?: string;
   galeria?: GaleriaItem[];
   inversion?: InversionConfig;
+  /** La carrera no abre en el ciclo actual (se anuncia «Próximamente»). */
+  proximamente?: boolean;
   seo?: { titulo?: string; descripcion?: string; imagenUrl?: string };
 };
 
@@ -341,6 +343,7 @@ export default async function CarreraPage(
                 horariosLabel={horarios.diasResumen}
                 becasLabel={becasLabel}
                 cicloLabel={nombreCiclo(config?.cicloInicio?.fecha) ?? undefined}
+                proximamente={carrera.proximamente === true}
               />
             </div>
           </div>
@@ -429,6 +432,7 @@ export default async function CarreraPage(
           cicloFecha={config?.cicloInicio?.fecha}
           whatsappFallback={whatsapp}
           accent={accent}
+          planteles={carrera.inversion?.plantelesDisponibles}
         />
       )}
 

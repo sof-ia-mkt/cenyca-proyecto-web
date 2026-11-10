@@ -47,7 +47,17 @@ type Props = {
   cicloFecha?: string;
   whatsappFallback: string;
   accent?: string;
+  /** Planteles que abren la carrera (claves de Sanity: cb, palmas, tc). Si no
+   *  llega ninguno se ofrecen los tres. */
+  planteles?: string[];
 };
+
+// Plantel del formulario (valor que viaja en el lead) por clave de Sanity.
+const OPCIONES_PLANTEL: { clave: string; valor: string; etiqueta: string }[] = [
+  { clave: "cb", valor: "casablanca", etiqueta: "CENYCA Casa Blanca" },
+  { clave: "palmas", valor: "palmas", etiqueta: "CENYCA Palmas" },
+  { clave: "tc", valor: "tecate", etiqueta: "CENYCA Tecate" },
+];
 
 type FormState = {
   nombre: string;
@@ -94,7 +104,12 @@ export default function PromocionFormulario({
   cicloFecha,
   whatsappFallback,
   accent = "#00D4FF",
+  planteles,
 }: Props) {
+  // Solo los planteles donde abre la carrera; si la lista no llega o no
+  // coincide con ninguno conocido, se ofrecen todos.
+  const filtradas = OPCIONES_PLANTEL.filter((o) => planteles?.includes(o.clave));
+  const opcionesPlantel = filtradas.length ? filtradas : OPCIONES_PLANTEL;
   const porcentaje = promo.porcentaje ?? 25;
   const dias = promo.diasExpiracion ?? 30;
   const tituloRaw = promo.titulo ?? "Reclama tu descuento del {porcentaje}%";
@@ -109,7 +124,8 @@ export default function PromocionFormulario({
     nombre: "",
     email: "",
     telefono: "",
-    plantel: "",
+    // Con un solo plantel posible no hay nada que elegir: va preseleccionado.
+    plantel: opcionesPlantel.length === 1 ? opcionesPlantel[0].valor : "",
     turno: "",
     mensaje: "",
   });
@@ -285,10 +301,11 @@ export default function PromocionFormulario({
                   <option value="" disabled>
                     Selecciona un plantel
                   </option>
-                  <option value="casablanca">CENYCA Casa Blanca</option>
-                  <option value="palmas">CENYCA Palmas</option>
-                  <option value="otay">CENYCA Otay</option>
-                  <option value="tecate">CENYCA Tecate</option>
+                  {opcionesPlantel.map((o) => (
+                    <option key={o.valor} value={o.valor}>
+                      {o.etiqueta}
+                    </option>
+                  ))}
                 </select>
               </Campo>
 

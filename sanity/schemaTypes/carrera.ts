@@ -362,6 +362,22 @@ export const carrera = defineType({
                   initialValue: false,
                 }),
                 defineField({
+                  name: "planteles",
+                  title: "Planteles donde aplica esta tarjeta",
+                  description:
+                    "Marca los planteles que ofrecen este día y este precio. La tarjeta solo aparece cuando el visitante elige uno de ellos. Si lo dejas vacío, aparece en todos los planteles de la carrera.",
+                  type: "array",
+                  of: [{ type: "string" }],
+                  options: {
+                    list: [
+                      { title: "Casa Blanca", value: "cb" },
+                      { title: "Palmas", value: "palmas" },
+                      { title: "Otay", value: "otay" },
+                      { title: "Tecate", value: "tc" },
+                    ],
+                  },
+                }),
+                defineField({
                   name: "mensualidadBase",
                   title: "Mensualidad (base)",
                   type: "number",
@@ -416,7 +432,7 @@ export const carrera = defineType({
               },
             },
           ],
-          validation: (Rule) => Rule.max(4),
+          validation: (Rule) => Rule.max(8),
         }),
       ],
     }),
@@ -457,6 +473,15 @@ export const carrera = defineType({
       group: "info",
       description: "Desactiva para ocultar temporalmente sin eliminar.",
       initialValue: true,
+    }),
+    defineField({
+      name: "proximamente",
+      title: "¿Mostrar «Próximamente»?",
+      type: "boolean",
+      group: "info",
+      description:
+        "Actívalo cuando la carrera no abre en el ciclo actual. La página sigue visible, pero en lugar del próximo inicio (ej. «Enero 2027») dice «Próximamente».",
+      initialValue: false,
     }),
     defineField({
       name: "seo",

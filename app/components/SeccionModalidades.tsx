@@ -6,7 +6,6 @@ import SectionAccentLine from "./SectionAccentLine";
 import {
   Calendar,
   Clock,
-  GraduationCap,
   Check,
   ArrowRight,
   type LucideIcon,
@@ -36,27 +35,10 @@ type Modalidad = {
 
 const MODALIDADES: Modalidad[] = [
   {
-    tag: "Escolarizada",
-    big: "4 días",
-    bigUnit: "/sem",
-    horario: "Lunes a Jueves · 8:00 a.m – 12:00 p.m",
-    descripcion:
-      "Estudia de tiempo completo por las mañanas y avanza más rápido. La experiencia universitaria clásica.",
-    features: [
-      "Clases de lunes a jueves por la mañana",
-      "Ambiente universitario de tiempo completo",
-      "Disponible en planteles seleccionados",
-      "RVOE con validez oficial",
-      "Mismo plan de estudios",
-    ],
-    icon: GraduationCap,
-    pill: "Tiempo completo",
-  },
-  {
     tag: "Un solo día",
     big: "1 día",
     bigUnit: "/sem",
-    horario: "Martes o Jueves · Una vez por semana",
+    horario: "Martes · 6:00 p.m – 10:00 p.m",
     descripcion:
       "Combina tu carrera con tu trabajo, familia o emprendimiento. Solo un día y sigues con tu vida.",
     features: [
@@ -73,7 +55,7 @@ const MODALIDADES: Modalidad[] = [
     tag: "Ejecutivo",
     big: "1 día",
     bigUnit: "/fin",
-    horario: "Sábado o domingo",
+    horario: "Sábado o domingo · 8:00 a.m – 12:00 p.m",
     descripcion:
       "Para profesionistas con compromisos de lunes a viernes. Dedica el fin de semana a tu próximo nivel.",
     features: [
@@ -342,15 +324,15 @@ export default function SeccionModalidades() {
             </h2>
 
             <p className="text-white/65 text-lg leading-relaxed max-w-2xl text-pretty">
-              Tres modalidades pensadas para etapas de vida distintas. Elige la
+              Dos modalidades pensadas para etapas de vida distintas. Elige la
               que se acopla a tu trabajo, tu familia y tu energía — sin sacrificar
               calidad académica ni validez SEP.
             </p>
           </div>
         </FadeUp>
 
-        {/* Grid 3 cards — la spotlight rota cada 5s, se pausa con hover */}
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-7 md:items-stretch md:pt-4 max-w-6xl mx-auto">
+        {/* Grid de cards — la spotlight rota cada 5s, se pausa con hover */}
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-7 md:items-stretch md:pt-4 max-w-4xl mx-auto">
           {MODALIDADES.map((m, i) => (
             <StaggerItem key={m.tag}>
               <ModalidadCard
